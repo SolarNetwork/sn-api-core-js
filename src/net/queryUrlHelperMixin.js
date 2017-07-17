@@ -4,7 +4,7 @@ export const SolarQueryDefaultPath = '/solarquery';
 /** The {@link UrlHelper} parameters key for the SolarQuery path. */
 export const SolarQueryPathKey = 'solarQueryPath';
 
-/** The SolarUser REST API path. */
+/** The SolarQuery REST API path. */
 export const SolarQueryApiPathV1 = '/api/v1';
 
 /** 
