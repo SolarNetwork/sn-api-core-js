@@ -11,10 +11,10 @@
     "name": "Matt Magoffin",
     "email": "matt@solarnetwork.net"
   },
-  "main": "dist/solarnetwork-api-core.js",
-  "module": "src/index",
-  "jsnext:main": "src/index",
-  "files": ["lib", "src"],
+  "main": "lib/solarnetwork-api-core.js",
+  "module": "lib/solarnetwork-api-core.es.js",
+  "jsnext:main": "lib/solarnetwork-api-core.es.js",
+  "files": ["lib.js", "lib", "src"],
   "repository": {
     "type": "git",
     "url": "https://github.com/SolarNetwork/sn-api-core-js.git"
@@ -45,8 +45,8 @@
   },
   "scripts": {
     "apidoc": "jsdoc --configure jsdoc.config.json --template ./node_modules/ink-docstrap/template --package package.json --recurse --destination docs/api src",
-    "prebuild": "eslint index.js src",
-    "build": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -c -f umd -n sn -m -o lib/solarnetwork-api-core.js -- index.js && rollup --banner \"$(preamble)\" -c -f es -m -o lib/solarnetwork-api-core.es.js -- index.js",
+    "prebuild": "eslint lib.js src",
+    "build": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -c -f umd -n sn -m -o lib/solarnetwork-api-core.js -- lib.js && rollup --banner \"$(preamble)\" -c -f es -m -o lib/solarnetwork-api-core.es.js -- lib.js",
     "postbuild": "uglifyjs --preamble \"$(preamble)\" lib/solarnetwork-api-core.js --in-source-map lib/solarnetwork-api-core.js.map --source-map lib/solarnetwork-api-core.min.js.map -c -m -o lib/solarnetwork-api-core.min.js",
     "prepublish": "npm run test && npm run build",
     "test": "ava",
