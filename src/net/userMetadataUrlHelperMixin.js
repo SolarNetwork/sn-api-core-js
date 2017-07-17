@@ -1,5 +1,5 @@
-import UrlHelper from 'net/urlHelper';
-import UserUrlHelperMixin from 'net/userUrlHelperMixin'
+import UrlHelper from './urlHelper';
+import UserUrlHelperMixin from './userUrlHelperMixin'
 
 /**
  * A mixin class that adds user metadata support to <code>UrlHelper</code>.

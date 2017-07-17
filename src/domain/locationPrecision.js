@@ -1,4 +1,4 @@
-import ComparableEnum from 'comparableEnum';
+import ComparableEnum from '../util/comparableEnum';
 
 /**
  * A location precision object for use with defining named geographic precision.

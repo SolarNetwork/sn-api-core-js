@@ -1,4 +1,4 @@
-import ComparableEnum from 'comparableEnum';
+import ComparableEnum from '../util/comparableEnum';
 
 /**
  * A named aggregation.

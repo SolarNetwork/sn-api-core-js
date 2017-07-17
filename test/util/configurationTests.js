@@ -1,8 +1,6 @@
-'use strict';
-
 import test from 'ava';
 
-import Configuration from 'configuration'
+import Configuration from 'util/configuration'
 
 test('core:configuration:create', t => {
 	const conf = new Configuration();

@@ -1,8 +1,6 @@
-'use strict';
-
 import test from 'ava';
 
-import InstructionStates from 'instructionState';
+import InstructionStates from 'domain/instructionState';
 import { NodeInstructionUrlHelper, instructionParameter } from 'net/nodeInstructionUrlHelperMixin'
 
 test('user:nodeInstructionUrlHelperMixin:create', t => {

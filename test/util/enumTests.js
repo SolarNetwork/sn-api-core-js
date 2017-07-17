@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import Enum from 'enum';
+import Enum from 'util/enum';
 
 class TestEnum extends Enum {
     constructor(name) {

@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import ComparableEnum from 'comparableEnum';
+import ComparableEnum from 'util/comparableEnum';
 
 class TestEnum extends ComparableEnum {
     constructor(name, value) {

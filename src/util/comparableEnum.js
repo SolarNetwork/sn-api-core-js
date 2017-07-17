@@ -1,4 +1,4 @@
-import Enum from 'enum';
+import Enum from './enum';
 
 /**
  * An immutable enum-like object with an associated comparable value.

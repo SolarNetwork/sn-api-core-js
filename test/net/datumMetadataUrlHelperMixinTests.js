@@ -1,7 +1,7 @@
 import test from 'ava';
 
-import Pagination from 'pagination';
-import SortDescriptor from 'sortDescriptor';
+import Pagination from 'domain/pagination';
+import SortDescriptor from 'domain/sortDescriptor';
 
 import { DatumMetadataUrlHelper } from 'net/datumMetadataUrlHelperMixin'
 

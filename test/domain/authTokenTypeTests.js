@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import {default as AuthTokenTypes, AuthTokenType } from 'authTokenType';
+import {default as AuthTokenTypes, AuthTokenType } from 'domain/authTokenType';
 
 test('user:authTokenType:create', t => {
 	const obj = new AuthTokenType('foo');

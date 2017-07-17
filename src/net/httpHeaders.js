@@ -1,4 +1,4 @@
-import MultiMap from 'multiMap';
+import MultiMap from '../util/multiMap';
 
 export const HttpMethod = Object.freeze({
 	GET: 'GET',
