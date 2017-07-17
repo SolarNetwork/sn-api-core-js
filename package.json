@@ -44,7 +44,7 @@
     ]
   },
   "scripts": {
-    "apidoc": "jsdoc --configure jsdoc.config.json --template ./node_modules/ink-docstrap/template --package package.json --recurse --destination lib/apidoc src",
+    "apidoc": "jsdoc --configure jsdoc.config.json --template ./node_modules/ink-docstrap/template --package package.json --recurse --destination docs/api src",
     "prebuild": "eslint index.js src",
     "build": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -c -f umd -n sn -m -o lib/solarnetwork-api-core.js -- index.js && rollup --banner \"$(preamble)\" -c -f es -m -o lib/solarnetwork-api-core.es.js -- index.js",
     "postbuild": "uglifyjs --preamble \"$(preamble)\" lib/solarnetwork-api-core.js --in-source-map lib/solarnetwork-api-core.js.map --source-map lib/solarnetwork-api-core.min.js.map -c -m -o lib/solarnetwork-api-core.min.js",
