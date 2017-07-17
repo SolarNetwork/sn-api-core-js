@@ -66,6 +66,35 @@ test('core:net:urlHelper:hostUrl:customPort', t => {
     t.is(helper.hostUrl(), 'https://data.solarnetwork.net:8443');
 });
 
+test('core:net:urlHelper:hostWebSocketUrl', t => {
+    const helper = new UrlHelper();
+    t.is(helper.hostWebSocketUrl(), 'wss://data.solarnetwork.net');
+});
+
+test('core:net:urlHelper:hostWebSocketUrl:ws', t => {
+    const env = new Environment({
+			protocol: 'http',
+		});
+	const helper = new UrlHelper(env);
+    t.is(helper.hostWebSocketUrl(), 'ws://data.solarnetwork.net');
+});
+
+test('core:net:urlHelper:hostWebSocketUrl:customHost', t => {
+    const env = new Environment({
+			host: 'foo.example.com:8443',
+		});
+	const helper = new UrlHelper(env);
+    t.is(helper.hostWebSocketUrl(), 'wss://foo.example.com:8443');
+});
+
+test('core:net:urlHelper:hostWebSocketUrl:customPort', t => {
+    const env = new Environment({
+			port: 8443,
+		});
+	const helper = new UrlHelper(env);
+    t.is(helper.hostWebSocketUrl(), 'wss://data.solarnetwork.net:8443');
+});
+
 test('core:net:urlHelper:baseUrl', t => {
     const helper = new UrlHelper();
     t.is(helper.baseUrl(), 'https://data.solarnetwork.net');

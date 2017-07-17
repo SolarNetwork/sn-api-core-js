@@ -75,7 +75,22 @@ class UrlHelper {
             url += ':' +port;
         }
         return url;
-	}
+    }
+    
+    /**
+     * Get a URL for just the SolarNet host using the WebSocket protocol, without any path.
+     * 
+     * @returns {string} the URL to the SolarNet host WebSocket
+     */
+    hostWebSocketUrl() {
+        const tls = this.environment.useTls();
+        const port = +this.environment.value('port');
+		let url = 'ws' +(tls ? 's' : '') +'://' +this.environment.value('host');
+        if ( (tls && port > 0 && port !== 443) || (!tls && port > 0 && port !== 80) ) {
+            url += ':' +port;
+        }
+        return url;
+    }
 
 	/**
 	 * Get the base URL to the REST API.
