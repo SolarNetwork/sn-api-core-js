@@ -1,5 +1,5 @@
-import { Aggregation } from 'aggregation';
-import { LocationPrecision } from 'locationPrecision';
+import { Aggregation } from './aggregation';
+import { LocationPrecision } from './locationPrecision';
 
 /**
  * Get a Set from a Set or array or object, returning <code>null</code> if the set would be empty.

@@ -1,11 +1,7 @@
-'use strict';
-
 import test from 'ava';
 
-import AuthTokenStatuses from 'authTokenStatus';
-import AuthTokenTypes from 'authTokenType';
-import UrlHelper from 'net/urlHelper';
-import UserUrlHelperMixin from 'net/userUrlHelperMixin';
+import AuthTokenStatuses from 'domain/authTokenStatus';
+import AuthTokenTypes from 'domain/authTokenType';
 import { UserAuthTokenUrlHelper } from 'net/userAuthTokenUrlHelperMixin';
 
 test('user:userAuthTokenUrlHelperMixin:create', t => {

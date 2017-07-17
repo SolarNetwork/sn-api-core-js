@@ -1,8 +1,6 @@
-'use strict';
-
 import test from 'ava';
 
-import MultiMap from 'multiMap';
+import MultiMap from 'util/multiMap';
 
 test('core:multiMap:create', t => {
 	const map = new MultiMap();

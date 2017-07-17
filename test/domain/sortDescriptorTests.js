@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import SortDescriptor from 'sortDescriptor';
+import SortDescriptor from 'domain/sortDescriptor';
 
 test('core:sortDescriptor:create', t => {
     const s = new SortDescriptor('foo');

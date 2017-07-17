@@ -1,4 +1,4 @@
-import Enum from 'enum';
+import Enum from '../util/enum';
 
 /**
  * A named instruction state.

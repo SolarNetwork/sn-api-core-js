@@ -2,7 +2,7 @@
 
 import test from 'ava';
 
-import Pagination from 'pagination';
+import Pagination from 'domain/pagination';
 
 test('core:pagination:create', t => {
     const p = new Pagination();

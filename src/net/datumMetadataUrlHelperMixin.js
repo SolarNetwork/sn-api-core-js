@@ -1,8 +1,8 @@
-import Pagination from 'pagination';
-import SortDescriptor from 'sortDescriptor';
-import UrlHelper from 'net/urlHelper';
-import NodeUrlHelperMixin from 'net/nodeUrlHelperMixin';
-import QueryUrlHelperMixin from 'net/queryUrlHelperMixin'
+import Pagination from '../domain/pagination';
+import SortDescriptor from '../domain/sortDescriptor';
+import UrlHelper from './urlHelper';
+import NodeUrlHelperMixin from './nodeUrlHelperMixin';
+import QueryUrlHelperMixin from './queryUrlHelperMixin'
 
 /**
  * A mixin class that adds SolarNode datum metadata support to {@link UrlHelper}.

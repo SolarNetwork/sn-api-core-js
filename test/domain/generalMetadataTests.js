@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import GeneralMetadata from 'generalMetadata';
+import GeneralMetadata from 'domain/generalMetadata';
 
 test('core:generalMetadata:create:empty', t => {
     const meta = new GeneralMetadata();

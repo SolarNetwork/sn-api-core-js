@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import {default as LocationPrecisions, LocationPrecision } from 'locationPrecision';
+import {default as LocationPrecisions, LocationPrecision } from 'domain/locationPrecision';
 
 test('core:locationPrecision:create', t => {
 	const obj = new LocationPrecision('foo', 1);

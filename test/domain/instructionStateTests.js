@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import {default as InstructionStates, InstructionState } from 'InstructionState';
+import {default as InstructionStates, InstructionState } from 'domain/instructionState';
 
 test('user:instructionState:create', t => {
 	const obj = new InstructionState('foo');

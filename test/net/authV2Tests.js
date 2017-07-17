@@ -1,10 +1,7 @@
-'use strict';
-
 import test from 'ava';
 
 import Base64 from 'crypto-js/enc-base64';
 import Hex from 'crypto-js/enc-hex';
-import SHA256 from 'crypto-js/sha256';
 import { HttpMethod, default as HttpHeaders } from 'net/httpHeaders';
 
 import AuthV2 from 'net/authV2';

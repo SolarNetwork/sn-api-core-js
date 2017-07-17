@@ -1,4 +1,4 @@
-import Configuration from 'configuration';
+import Configuration from '../util/configuration';
 
 /**
  * An environment configuration utility object.

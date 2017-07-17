@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import {default as AuthTokenStatuses, AuthTokenStatus } from 'authTokenStatus';
+import {default as AuthTokenStatuses, AuthTokenStatus } from 'domain/authTokenStatus';
 
 test('user:authTokenStatus:create', t => {
 	const obj = new AuthTokenStatus('foo');

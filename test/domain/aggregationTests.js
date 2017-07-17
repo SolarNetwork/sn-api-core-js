@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import {default as Aggregations, Aggregation } from 'aggregation';
+import {default as Aggregations, Aggregation } from 'domain/aggregation';
 
 test('core:aggregation:create', t => {
 	const obj = new Aggregation('foo', 1);

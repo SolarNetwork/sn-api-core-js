@@ -1,6 +1,6 @@
-import UrlHelper from 'net/urlHelper';
-import NodeUrlHelperMixin from 'net/nodeUrlHelperMixin';
-import UserUrlHelperMixin from 'net/userUrlHelperMixin'
+import UrlHelper from './urlHelper';
+import NodeUrlHelperMixin from './nodeUrlHelperMixin';
+import UserUrlHelperMixin from './userUrlHelperMixin'
 
 /**
  * A mixin class that adds SolarNode instruction support to {@link UrlHelper}.

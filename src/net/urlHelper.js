@@ -1,5 +1,5 @@
-import Configuration from 'configuration';
-import Environment from 'net/environment';
+import Configuration from '../util/configuration';
+import Environment from './environment';
 
 /**
  * A utility class for helping to compose SolarNet URLs for the REST API.

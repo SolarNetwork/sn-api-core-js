@@ -1,8 +1,8 @@
 import test from 'ava';
 
-import Aggregations from 'aggregation';
-import LocationPrecisions from 'locationPrecision';
-import { default as SecurityPolicy, SecurityPolicyBuilder } from 'securityPolicy';
+import Aggregations from 'domain/aggregation';
+import LocationPrecisions from 'domain/locationPrecision';
+import { default as SecurityPolicy, SecurityPolicyBuilder } from 'domain/securityPolicy';
 
 test('core:securityPolicy:create', t => {
     const p = new SecurityPolicy();

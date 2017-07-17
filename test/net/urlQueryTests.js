@@ -1,5 +1,3 @@
-'use strict';
-
 import test from 'ava';
 
 import { urlQueryParse, urlQueryEncode } from 'net/urlQuery';

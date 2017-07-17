@@ -3,11 +3,11 @@ import HmacSHA256 from 'crypto-js/hmac-sha256';
 import SHA256 from 'crypto-js/sha256';
 import { parse as uriParse } from 'uri-js';
 
-import MultiMap from 'multiMap';
-import { iso8601Date } from 'format/date';
-import Environment from 'net/environment';
-import { HttpMethod, default as HttpHeaders } from 'net/httpHeaders';
-import { urlQueryParse } from 'net/urlQuery';
+import { iso8601Date } from '../format/date';
+import MultiMap from '../util/multiMap';
+import Environment from './environment';
+import { HttpMethod, default as HttpHeaders } from './httpHeaders';
+import { urlQueryParse } from './urlQuery';
 
 /**
  * A builder object for the SNWS2 HTTP authorization scheme.
