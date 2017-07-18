@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import GeneralMetadata from 'domain/generalMetadata';
+import { default as GeneralMetadata, objectToStringMap, stringMapToObject } from 'domain/generalMetadata';
 
 test('core:generalMetadata:create:empty', t => {
     const meta = new GeneralMetadata();
@@ -39,4 +39,16 @@ test('core:generalMetadata:toJsonEncoding', t => {
     const meta = new GeneralMetadata(m, pm, tags);
     const json = meta.toJsonEncoding();
     t.is(json, '{"m":{"a":1},"pm":{"b":{"c":2}},"t":["3","4"]}');
+});
+
+test('core:domain:generalMetadata:objectToStringMap:empty', t => {
+    const m = objectToStringMap();
+    t.truthy(m);
+    t.is(m.size, 0);
+});
+
+test('core:domain:generalMetadata:stringMapToObject:empty', t => {
+    const o = stringMapToObject();
+    t.truthy(o);
+    t.deepEqual(o, {});
 });

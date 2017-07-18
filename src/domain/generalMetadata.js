@@ -74,8 +74,10 @@ class GeneralMetadata {
  */
 function stringMapToObject(strMap) {
     const obj = Object.create(null);
-    for (const [k,v] of strMap) {
-        obj[k] = (v instanceof Map ? stringMapToObject(v) : v);
+    if ( strMap ) {
+        for (const [k,v] of strMap) {
+            obj[k] = (v instanceof Map ? stringMapToObject(v) : v);
+        }
     }
     return obj;
 }
@@ -92,9 +94,11 @@ function stringMapToObject(strMap) {
  */
 function objectToStringMap(obj) {
     const strMap = new Map();
-    for (const k of Object.keys(obj)) {
-        const v = obj[k];
-        strMap.set(k, (typeof v === 'object' ? objectToStringMap(v) : v));
+    if ( obj ) {
+        for (const k of Object.keys(obj)) {
+            const v = obj[k];
+            strMap.set(k, (typeof v === 'object' ? objectToStringMap(v) : v));
+        }
     }
     return strMap;
 }
