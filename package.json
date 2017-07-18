@@ -52,9 +52,11 @@
     "prebuild": "eslint lib.js src",
     "build": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -c -f umd -n sn -m -o lib/solarnetwork-api-core.js -- lib.js && rollup --banner \"$(preamble)\" -c -f es -m -o lib/solarnetwork-api-core.es.js -- lib.js",
     "postbuild": "./node_modules/uglify-es/bin/uglifyjs --preamble \"$(preamble)\" lib/solarnetwork-api-core.js --source-map content=lib/solarnetwork-api-core.js.map,filename=lib/solarnetwork-api-core.min.js.map -c -m -o lib/solarnetwork-api-core.min.js && ./node_modules/uglify-es/bin/uglifyjs --preamble \"$(preamble)\" lib/solarnetwork-api-core.es.js --source-map content=lib/solarnetwork-api-core.es.js.map,filename=lib/solarnetwork-api-core.es.min.js.map -c -m -o lib/solarnetwork-api-core.es.min.js",
-    "prepublish": "npm run test && npm run build",
     "test": "ava",
-    "coverage": "nyc --reporter=html ./node_modules/.bin/ava"
+    "coverage": "nyc --reporter=html ./node_modules/.bin/ava",
+    "preversion": "npm test",
+    "version": "npm run build && git add -A lib",
+    "postversion": "git push && git push --tags"
   },
   "devDependencies": {
     "ava": "^0.20.0",
