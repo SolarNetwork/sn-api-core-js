@@ -4,6 +4,5 @@
 build
 coverage
 docs/api
-lib
 node_modules
 npm-debug.log
