@@ -59,9 +59,16 @@ class PropMap {
      * by a comma.
      * 
      * @param {string} [propertyName] an optional object property prefix to add to all properties
+     * @param {function} [singletonArrayFn] An optional function that should be called for any array
+     *                   value that contains just one element. The function will be passed the
+     *                   property name and value as arguments, and should return either a new 
+     *                   string property name to use for the single value or `null` to keep the
+     *                   property name unchanged. The inspiration here is to provide a hook for 
+     *                   changing plural property names into singular form for such cases.
+     *                                      
      * @return {string} the URI encoded string
      */
-    toUriEncoding(propertyName) {
+    toUriEncoding(propertyName, singletonArrayFn) {
         let result = '';
         for ( const k of Object.keys(this.props) ) {
             if ( result.length > 0 ) {
@@ -70,17 +77,23 @@ class PropMap {
             if ( propertyName ) {
                 result += encodeURIComponent(propertyName) + '.';
             }
-            result += encodeURIComponent(k) + '=';
             const v = this.props[k];
             if ( Array.isArray(v) ) {
-                v.forEach((e, i) => {
-                    if ( i > 0 ) {
-                        result += ',';
-                    }
-                    result += encodeURIComponent(e);
-                });
+                const singletonKey = (singletonArrayFn && v.length === 1
+                    ? singletonArrayFn(k, v) : null);
+                if ( singletonKey ) {
+                    result += encodeURIComponent(singletonKey) + '=' + encodeURIComponent(v[0]);
+                } else {
+                    result += encodeURIComponent(k) + '=';
+                    v.forEach((e, i) => {
+                        if ( i > 0 ) {
+                            result += ',';
+                        }
+                        result += encodeURIComponent(e);
+                    });
+                }
             } else {
-                result += encodeURIComponent(v);
+                result += encodeURIComponent(k) + '=' + encodeURIComponent(v);
             }
         }
         return result;

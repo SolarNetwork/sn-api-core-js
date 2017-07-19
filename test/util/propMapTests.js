@@ -54,5 +54,18 @@ test('core:util:propMap:toUriEncoding:array:multi', t => {
 test('core:util:propMap:toUriEncoding:escaped', t => {
 	const m = new PropMap({'$foo!':'=bar',bim:['&?y','e','!@#']});
     t.is(m.toUriEncoding(), '%24foo!=%3Dbar&bim=%26%3Fy,e,!%40%23');
-    t.is(m.toUriEncoding('$m'), '%24f.%24foo!=%3Dbar&%24f.bim=%26%3Fy,e,!%40%23');
+    t.is(m.toUriEncoding('$f'), '%24f.%24foo!=%3Dbar&%24f.bim=%26%3Fy,e,!%40%23');
+});
+
+test('core:util:propMap:toUriEncoding:array:singletonKeyFn:single', t => {
+	const m = new PropMap({foos:[1],bars:[2],bams:[3,4]});
+    t.is(m.toUriEncoding(null, (k) => {
+            if ( k === 'foos' ) {
+                return 'foo';
+            } else if ( k === 'bams' ) {
+                // should not get here because bams.length > 1
+                return 'bam';
+            }
+            return null;
+        }), 'foo=1&bars=2&bams=3,4');
 });
