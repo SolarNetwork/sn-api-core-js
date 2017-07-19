@@ -14,13 +14,21 @@ export const SolarQueryApiPathV1 = '/api/v1';
 export const SolarQueryPublicPathKey = 'publicQuery';
 
 /**
- * A mixin class that adds SolarQuery specific support to {@link UrlHelper}.
- * 
- * @param {UrlHelper} superclass the UrlHelper class to mix onto
- * @mixin
- * @returns {*} the mixin
+ * Create a QueryUrlHelperMixin class.
+ *
+ * @exports net
+ * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
+ * @return {module:net~QueryUrlHelperMixin} the mixin class
  */
-const QueryUrlHelperMixin = (superclass) => class extends superclass {
+const QueryUrlHelperMixin = (superclass) => 
+
+/**
+ * A mixin class that adds SolarQuery specific support to {@link module:net~UrlHelper}.
+ * 
+ * @mixin
+ * @alias module:net~QueryUrlHelperMixin
+ */
+class extends superclass {
 
 	/**
 	 * Get the base URL to the SolarQuery v1 REST API.
@@ -31,7 +39,6 @@ const QueryUrlHelperMixin = (superclass) => class extends superclass {
      * available, it will default to <code>/solarquery</code>.
 	 * 
 	 * @returns {string} the base URL to SolarQuery
-	 * @memberof QueryUrlHelperMixin#
 	 */
 	baseUrl() {
 		const path = this.env(SolarQueryPathKey) || SolarQueryDefaultPath;

@@ -1,15 +1,25 @@
+/** @module net */
+
 import UrlHelper from './urlHelper';
 import NodeUrlHelperMixin from './nodeUrlHelperMixin';
 import QueryUrlHelperMixin from './queryUrlHelperMixin';
 
 /**
- * A mixin class that adds SolarNode datum query support to {@link UrlHelper}.
+ * Create a NodeDatumUrlHelperMixin class.
  *
- * @param {UrlHelper} superclass the UrlHelper class to mix onto
- * @mixin
- * @returns {*} the mixin
+ * @exports net
+ * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
+ * @return {module:net~NodeDatumUrlHelperMixin} the mixin class
  */
-const NodeDatumUrlHelperMixin = (superclass) => class extends superclass {
+const NodeDatumUrlHelperMixin = (superclass) => 
+
+/**
+ * A mixin class that adds SolarNode datum query support to {@link module:net~UrlHelper}.
+ * 
+ * @mixin
+ * @alias module:net~NodeDatumUrlHelperMixin
+ */
+class extends superclass {
 
 	/**
 	 * Generate a URL for the "reportable interval" for a node, optionally limited to a specific set of source IDs.
@@ -20,7 +30,6 @@ const NodeDatumUrlHelperMixin = (superclass) => class extends superclass {
 	 * @param {number} [nodeId] a specific node ID to use; if not provided the <code>nodeId</code> property of this class will be used
 	 * @param {string[]} [sourceIds] an array of source IDs to limit query to; if not provided the <code>sourceIds</code> property of this class will be used
 	 * @returns {string} the URL
-	 * @memberof NodeDatumUrlHelperMixin#
 	 */
 	reportableIntervalUrl(nodeId, sourceIds) {
 		let url = (this.baseUrl() +'/range/interval?nodeId=' +(nodeId || this.nodeId));
@@ -39,7 +48,6 @@ const NodeDatumUrlHelperMixin = (superclass) => class extends superclass {
 	 *                                   is passed in which case no node IDs will be added to the URL
 	 * @param {string} [metadataFilter] the LDAP-style metadata filter
 	 * @returns {string} the URL
-	 * @memberof NodeDatumUrlHelperMixin#
 	 */
 	availableSourcesUrl(nodeId, metadataFilter) {
 		const nodeIds = (Array.isArray(nodeId) ? nodeId : nodeId ? [nodeId] : nodeId !== null ? this.nodeIds : undefined);
@@ -71,8 +79,9 @@ const NodeDatumUrlHelperMixin = (superclass) => class extends superclass {
  * @mixes NodeUrlHelperMixin
  * @extends UrlHelper
  */
-export class NodeDatumUrlHelper extends NodeDatumUrlHelperMixin(QueryUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))) {
+class NodeDatumUrlHelper extends NodeDatumUrlHelperMixin(QueryUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))) {
 
 }
 
 export default NodeDatumUrlHelperMixin;
+export { NodeDatumUrlHelper };

@@ -1,31 +1,44 @@
+/** @module net */
+
 export const NodeIdsKey = 'nodeIds';
 
 export const SourceIdsKey = 'sourceIds';
 
 /**
- * A mixin class that adds support for SolarNode properties to a {@link UrlHelper}.
- * 
- * @param {UrlHelper} superclass the UrlHelper class to mix onto
- * @mixin
- * @property {number} nodeId the first available node ID from the <code>nodeIds</code> property;
- *                           setting this replaces any existing node IDs with an array of just that value
- * @property {number[]} nodeIds an array of node IDs, set on the <code>nodeIds</code> parameter
- * @property {string} sourceId the first available source ID from the <code>sourceIds</code> property;
- *                             setting this replaces any existing node IDs with an array of just that value 
- * @property {string[]} sourceIds an array of source IDs, set on the <code>sourceIds</code> parameter
- * @returns {*} the mixin
+ * Create a NodeUrlHelperMixin class.
+ *
+ * @exports net
+ * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
+ * @return {module:net~NodeUrlHelperMixin} the mixin class
  */
-const NodeUrlHelperMixin = (superclass) => class extends superclass {
+const NodeUrlHelperMixin = (superclass) => 
 
+/**
+ * A mixin class that adds support for SolarNode properties to a {@link module:net~UrlHelper}.
+ * 
+ * @mixin
+ * @alias module:net~NodeUrlHelperMixin
+ */
+class extends superclass {
+
+    /**
+     * The first available node ID from the `nodeIds` property.
+     * Setting this replaces any existing node IDs with an array of just that value.
+     * @type {number}
+     */
     get nodeId() {
-        const nodeIds = this.parameter(NodeIdsKey);
+        const nodeIds = this.nodeIds;
         return (Array.isArray(nodeIds) && nodeIds.length > 0 ? nodeIds[0] : null);
     }
 
     set nodeId(nodeId) {
-        this.parameter(NodeIdsKey, [nodeId]);
+        this.parameter(NodeIdsKey, nodeId ? [nodeId] : null);
     }
 
+    /**
+     * An array of node IDs, set on the `nodeIds` parameter
+     * @type {number[]}
+     */
     get nodeIds() {
         return this.parameter(NodeIdsKey);
     }
@@ -34,15 +47,24 @@ const NodeUrlHelperMixin = (superclass) => class extends superclass {
         this.parameter(NodeIdsKey, nodeIds);
     }
 
+    /**
+     * The first available source ID from the `sourceIds` property.
+     * Setting this replaces any existing node IDs with an array of just that value.
+     * @type {string}
+     */
     get sourceId() {
-        const sourceIds = this.parameter(SourceIdsKey);
+        const sourceIds = this.sourceIds;
         return (Array.isArray(sourceIds) && sourceIds.length > 0 ? sourceIds[0] : null);
     }
 
     set sourceId(sourceId) {
-        this.parameter(SourceIdsKey, [sourceId]);
+        this.parameter(SourceIdsKey, sourceId ? [sourceId] : sourceId);
     }
 
+    /**
+     * An array of source IDs, set on the `sourceIds` parameter
+     * @type {string[]}
+     */
     get sourceIds() {
         return this.parameter(SourceIdsKey);
     }

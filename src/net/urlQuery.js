@@ -1,3 +1,5 @@
+/** @module net */
+
 /**
  * Parse the query portion of a URL string, and return a parameter object for the
  * parsed key/value pairs.

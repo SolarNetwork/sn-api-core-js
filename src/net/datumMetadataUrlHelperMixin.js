@@ -1,20 +1,31 @@
+/** @module net */
+
 import Pagination from '../domain/pagination';
 import SortDescriptor from '../domain/sortDescriptor';
 import UrlHelper from './urlHelper';
 import NodeUrlHelperMixin from './nodeUrlHelperMixin';
 import QueryUrlHelperMixin from './queryUrlHelperMixin'
 
+
 /**
- * A mixin class that adds SolarNode datum metadata support to {@link UrlHelper}.
+ * Create a NodeDatumUrlHelperMixin class.
+ *
+ * @exports net
+ * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
+ * @return {module:net~DatumMetadataUrlHelperMixin} the mixin class
+ */
+const DatumMetadataUrlHelperMixin = (superclass) => 
+
+/**
+ * A mixin class that adds SolarNode datum metadata support to {@link module:net~UrlHelper}.
  * 
  * <p>Datum metadata is metadata associated with a specific node and source, i.e. 
  * a <code>nodeId</code> and a <code>sourceId</code>.
  * 
- * @param {UrlHelper} superclass the UrlHelper class to mix onto
  * @mixin
- * @returns {*} the mixin
+ * @alias module:net~DatumMetadataUrlHelperMixin
  */
-const DatumMetadataUrlHelperMixin = (superclass) => class extends superclass {
+class extends superclass {
 
     /**
      * Get a base URL for datum metadata operations using a specific node ID.
@@ -22,7 +33,6 @@ const DatumMetadataUrlHelperMixin = (superclass) => class extends superclass {
      * @param {number} [nodeId] a specific node ID to use; if not provided the <code>nodeId</code> property of this class will be used
      * @returns {string} the base URL
      * @private
-     * @memberof DatumMetadataUrlHelperMixin#
      */
     baseDatumMetadataUrl(nodeId) {
         return this.baseUrl() + '/datum/meta/' +(nodeId || this.nodeId);
@@ -47,7 +57,6 @@ const DatumMetadataUrlHelperMixin = (superclass) => class extends superclass {
      *                            if not provided the <code>sourceId</code> property of this class will be used;
      *                            if <code>null</code> then ignore any <code>sourceId</code> property of this class
      * @returns {string} the URL
-     * @memberof DatumMetadataUrlHelperMixin#
 	 */
 	viewDatumMetadataUrl(nodeId, sourceId) {
         return this.datumMetadataUrlWithSource(nodeId, sourceId);
@@ -59,7 +68,6 @@ const DatumMetadataUrlHelperMixin = (superclass) => class extends superclass {
 	 * @param {number} [nodeId] a specific node ID to use; if not provided the <code>nodeId</code> property of this class will be used
 	 * @param {string} [sourceId] a specific source ID to use; if not provided the <code>sourceId</code> property of this class will be used
      * @returns {string} the URL
-     * @memberof DatumMetadataUrlHelperMixin#
 	 */
     addDatumMetadataUrl(nodeId, sourceId) {
         return this.datumMetadataUrlWithSource(nodeId, sourceId);
@@ -71,7 +79,6 @@ const DatumMetadataUrlHelperMixin = (superclass) => class extends superclass {
 	 * @param {number} [nodeId] a specific node ID to use; if not provided the <code>nodeId</code> property of this class will be used
 	 * @param {string} [sourceId] a specific source ID to use; if not provided the <code>sourceId</code> property of this class will be used
      * @returns {string} the URL
-     * @memberof DatumMetadataUrlHelperMixin#
 	 */
     replaceDatumMetadataUrl(nodeId, sourceId) {
         return this.datumMetadataUrlWithSource(nodeId, sourceId);
@@ -83,7 +90,6 @@ const DatumMetadataUrlHelperMixin = (superclass) => class extends superclass {
 	 * @param {number} [nodeId] a specific node ID to use; if not provided the <code>nodeId</code> property of this class will be used
 	 * @param {string} [sourceId] a specific source ID to use; if not provided the <code>sourceId</code> property of this class will be used
      * @returns {string} the URL
-     * @memberof DatumMetadataUrlHelperMixin#
 	 */
     deleteDatumMetadataUrl(nodeId, sourceId) {
         return this.datumMetadataUrlWithSource(nodeId, sourceId);
@@ -99,7 +105,6 @@ const DatumMetadataUrlHelperMixin = (superclass) => class extends superclass {
 	 * @param {SortDescriptor[]} [sorts] optional sort settings to use
 	 * @param {Pagination} [pagination] optional pagination settings to use
 	 * @returns {string} the URL
-	 * @memberof DatumMetadataUrlHelperMixin#
 	 */
 	findDatumMetadataUrl(nodeId, sourceId, sorts, pagination) {
         let result = this.baseDatumMetadataUrl(nodeId);
@@ -132,8 +137,6 @@ const DatumMetadataUrlHelperMixin = (superclass) => class extends superclass {
 
 };
 
-export default DatumMetadataUrlHelperMixin;
-
 /**
  * A concrete {@link UrlHelper} with the {@link DatumMetadataUrlHelperMixin},  {@link QueryUrlHelperMixin}, and
  * {@link NodeUrlHelperMixin} mixins.
@@ -143,6 +146,9 @@ export default DatumMetadataUrlHelperMixin;
  * @mixes NodeUrlHelperMixin
  * @extends UrlHelper
  */
-export class DatumMetadataUrlHelper extends DatumMetadataUrlHelperMixin(QueryUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))) {
+class DatumMetadataUrlHelper extends DatumMetadataUrlHelperMixin(QueryUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))) {
 
 }
+
+export default DatumMetadataUrlHelperMixin;
+export { DatumMetadataUrlHelper };

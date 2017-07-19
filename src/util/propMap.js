@@ -9,6 +9,10 @@ class PropMap {
      * @param {object} props the initial properties 
      */
     constructor(props) {
+        /**
+         * The object that all properties are stored on. 
+         * @member {object} 
+         */
         this.props = (typeof props === 'object' ? props : {});
     }
 

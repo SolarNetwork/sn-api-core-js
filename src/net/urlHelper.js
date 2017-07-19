@@ -1,3 +1,5 @@
+/** @module net */
+
 import Configuration from '../util/configuration';
 import Environment from './environment';
 
@@ -18,7 +20,13 @@ class UrlHelper {
     constructor(environment) {
         let env = (environment instanceof Environment ? environment
             : new Environment(environment));
+        
+        /**
+         * The environment associated with this helper.
+         * @member {Environment}
+         */
         this.environment = env;
+
         this._parameters = new Configuration();
     }
 

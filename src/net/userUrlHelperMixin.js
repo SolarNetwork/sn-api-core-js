@@ -1,3 +1,5 @@
+/** @module: net */
+
 /** The SolarUser default path. */
 export const SolarUserDefaultPath = '/solaruser';
 
@@ -11,16 +13,21 @@ export const SolarUserApiPathV1 = '/api/v1/sec';
 export const UserIdsKey = 'userIds';
 
 /**
- * A mixin class that adds SolarUser specific support to <code>UrlHelper</code>.
- * 
- * @param {UrlHelper} superclass the UrlHelper class to mix onto 
- * @mixin
- * @property {number} userId the first available user ID from the <code>userIds</code> property;
- *                           setting this replaces any existing user IDs with an array of just that value
- * @property {number[]} userIds an array of user IDs, set on the <code>userIds</code> parameter
- * @returns {*} the mixin
+ * Create a UserUrlHelperMixin class.
+ *
+ * @exports net
+ * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
+ * @return {module:net~UserUrlHelperMixin} the mixin class
  */
-const UserUrlHelperMixin = (superclass) => class extends superclass {
+const UserUrlHelperMixin = (superclass) => 
+
+/**
+ * A mixin class that adds SolarUser specific support to {@link module:net~UrlHelper}.
+ * 
+ * @mixin
+ * @alias module:net~UserUrlHelperMixin
+ */
+class extends superclass {
 
     /**
      * Get the default user ID.
@@ -28,7 +35,6 @@ const UserUrlHelperMixin = (superclass) => class extends superclass {
      * This gets the first available user ID from the <code>userIds</code> property.
      * 
      * @returns {number} the default user ID, or <code>null</code>
-	 * @memberof UserUrlHelperMixin#
      */
     get userId() {
         const userIds = this.parameter(UserIdsKey);
@@ -41,7 +47,6 @@ const UserUrlHelperMixin = (superclass) => class extends superclass {
      * This will set the <code>userIds</code> property to a new array of just the given value.
      * 
      * @param {number} userId the user ID to set
-	 * @memberof UserUrlHelperMixin#
      */
     set userId(userId) {
         this.parameter(UserIdsKey, [userId]);
@@ -64,7 +69,6 @@ const UserUrlHelperMixin = (superclass) => class extends superclass {
 	 * <code>/solaruser</code>.
 	 * 
 	 * @returns {string} the base URL to SolarUser
-	 * @memberof UserUrlHelperMixin#
 	 */
 	baseUrl() {
 		const path = this.env(SolarUserPathKey) || SolarUserDefaultPath;
@@ -75,7 +79,6 @@ const UserUrlHelperMixin = (superclass) => class extends superclass {
 	 * Generate a URL to get a list of all active nodes for the user account.
 	 *
 	 * @return {string} the URL to access the user's active nodes
-	 * @memberof UserUrlHelperMixin#
 	 */
 	viewNodesUrl() {
 		return this.baseUrl() + '/nodes';
@@ -85,7 +88,6 @@ const UserUrlHelperMixin = (superclass) => class extends superclass {
 	 * Generate a URL to get a list of all pending nodes for the user account.
 	 *
 	 * @return {string} the URL to access the user's pending nodes
-	 * @memberof UserUrlHelperMixin#
 	 */
 	viewPendingNodesUrl() {
 		return this.baseUrl() + '/nodes/pending';
@@ -95,7 +97,6 @@ const UserUrlHelperMixin = (superclass) => class extends superclass {
 	 * Generate a URL to get a list of all archived nodes for the user account.
 	 *
 	 * @return {string} the URL to access the user's archived nodes
-	 * @memberof UserUrlHelperMixin#
 	 */
 	viewArchivedNodesUrl() {
 		return this.baseUrl() + '/nodes/archived';
@@ -109,7 +110,6 @@ const UserUrlHelperMixin = (superclass) => class extends superclass {
 	 * @param {boolean} archived <code>true</code> to mark the nodes as archived; <code>false</code> to un-mark
 	 *                           and return to normal status
 	 * @return {string} the URL to update the nodes archived status
-	 * @memberof UserUrlHelperMixin#
 	 */
 	updateNodeArchivedStatusUrl(nodeId, archived) {
 		const nodeIds = Array.isArray(nodeId) ? nodeId : nodeId ? [nodeId] : this.nodeIds;
