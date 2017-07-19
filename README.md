@@ -69,6 +69,20 @@ yarn run coverage
 
 That will produce a HTML code coverage report at `coverage/index.html`.
 
+# Releases
+
+Releases are done using the gitflow branching model. Gitflow must 
+be installed on your host system. Then you can run
+
+```shell
+npm run release
+```
+
+to version, build, commit, and publish the release. See the 
+[generate-release][generate-release] site for more information.
+
+
   [npm]: https://www.npmjs.com/
   [yarn]: https://yarnpkg.com/
   [solarnet-api]: https://github.com/SolarNetwork/solarnetwork/wiki/API-Developer-Guide
+  [generate-release]: https://github.com/mrkmg/node-generate-release
