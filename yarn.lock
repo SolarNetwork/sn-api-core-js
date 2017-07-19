@@ -2460,9 +2460,9 @@ jschardet@^1.4.2:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/jschardet/-/jschardet-1.5.0.tgz#a61f310306a5a71188e1b1acd08add3cfbb08b1e"
 
-jsdoc@^3.5.3:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/jsdoc/-/jsdoc-3.5.3.tgz#c8bb6a452548e3c778d4eff38f66ac20df2cac87"
+jsdoc@jsdoc3/jsdoc#releases/3.5:
+  version "3.5.4-dev"
+  resolved "https://codeload.github.com/jsdoc3/jsdoc/tar.gz/bafc5385e6b7987428b2a92ece31f6946d1e4243"
   dependencies:
     babylon "~7.0.0-beta.16"
     bluebird "~3.5.0"
