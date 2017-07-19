@@ -57,15 +57,14 @@ test('core:util:propMap:toUriEncoding:escaped', t => {
     t.is(m.toUriEncoding('$f'), '%24f.%24foo!=%3Dbar&%24f.bim=%26%3Fy,e,!%40%23');
 });
 
-test('core:util:propMap:toUriEncoding:array:singletonKeyFn:single', t => {
+test('core:util:propMap:toUriEncoding:array:callbackFn:single', t => {
 	const m = new PropMap({foos:[1],bars:[2],bams:[3,4]});
-    t.is(m.toUriEncoding(null, (k) => {
+    t.is(m.toUriEncoding(null, (k, v) => {
             if ( k === 'foos' ) {
-                return 'foo';
-            } else if ( k === 'bams' ) {
-                // should not get here because bams.length > 1
-                return 'bam';
+                return ['foo', v];
+            } else if ( k === 'bars' ) {
+                return null;
             }
-            return null;
-        }), 'foo=1&bars=2&bams=3,4');
+            return k;
+        }), 'foo=1&&bams=3,4');
 });

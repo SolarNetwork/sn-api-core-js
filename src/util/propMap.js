@@ -59,41 +59,41 @@ class PropMap {
      * by a comma.
      * 
      * @param {string} [propertyName] an optional object property prefix to add to all properties
-     * @param {function} [singletonArrayFn] An optional function that should be called for any array
-     *                   value that contains just one element. The function will be passed the
-     *                   property name and value as arguments, and should return either a new 
-     *                   string property name to use for the single value or `null` to keep the
-     *                   property name unchanged. The inspiration here is to provide a hook for 
-     *                   changing plural property names into singular form for such cases.
-     *                                      
+     * @param {function} [callbackFn] An optional function that will be called for each property.
+     *                   The function will be passed property name and value arguments, and must
+     *                   return either `null` to skip the property, a 2-element array with the property
+     *                   name and value to use, or anything else to use the property as- is.
      * @return {string} the URI encoded string
      */
-    toUriEncoding(propertyName, singletonArrayFn) {
+    toUriEncoding(propertyName, callbackFn) {
         let result = '';
-        for ( const k of Object.keys(this.props) ) {
+        for ( let k of Object.keys(this.props) ) {
             if ( result.length > 0 ) {
                 result += '&';
             }
             if ( propertyName ) {
                 result += encodeURIComponent(propertyName) + '.';
             }
-            const v = this.props[k];
-            if ( Array.isArray(v) ) {
-                const singletonKey = (singletonArrayFn && v.length === 1
-                    ? singletonArrayFn(k, v) : null);
-                if ( singletonKey ) {
-                    result += encodeURIComponent(singletonKey) + '=' + encodeURIComponent(v[0]);
-                } else {
-                    result += encodeURIComponent(k) + '=';
-                    v.forEach((e, i) => {
-                        if ( i > 0 ) {
-                            result += ',';
-                        }
-                        result += encodeURIComponent(e);
-                    });
+            let v = this.props[k];
+            if ( callbackFn ) {
+                const kv = callbackFn(k, v);
+                if ( kv === null ) {
+                    continue;
+                } else if ( Array.isArray(kv) && kv.length > 1 ) {
+                    k = kv[0];
+                    v = kv[1];
                 }
+            }
+            result += encodeURIComponent(k) + '=';
+            if ( Array.isArray(v) ) {
+                v.forEach((e, i) => {
+                    if ( i > 0 ) {
+                        result += ',';
+                    }
+                    result += encodeURIComponent(e);
+                });
             } else {
-                result += encodeURIComponent(k) + '=' + encodeURIComponent(v);
+                result += encodeURIComponent(v);
             }
         }
         return result;
