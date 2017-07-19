@@ -1,6 +1,7 @@
 import test from 'ava';
 
 import DatumFilter from 'domain/datumFilter';
+import { dateTimeUrlFormat } from 'format/date'
 
 test('core:domain:datumFilter:create', t => {
 	const f = new DatumFilter();
@@ -15,7 +16,7 @@ test('core:domain:datumFilter:create:data', t => {
     t.is(f.props, d);
 });
 
-test('core:domain:datumFilter:nodeId', t => {
+test('core:domain:datumFilter:userId', t => {
 	const filter = new DatumFilter();
 	filter.nodeId = 123;
     t.is(filter.nodeId, 123);
@@ -59,4 +60,79 @@ test('core:domain:datumFilter:sourceIds:resetSourceId', t => {
 	t.deepEqual(filter.sourceIds, ['abc', '234']);
 	filter.sourceId = 'def';
 	t.deepEqual(filter.sourceIds, ['def'], 'sourceIds array reset to just sourceId');
+});
+
+test('core:domain:datumFilter:userId', t => {
+	const filter = new DatumFilter();
+	filter.userId = 123;
+    t.is(filter.userId, 123);
+    t.deepEqual(filter.props, {userIds:[123]});
+});
+
+test('core:domain:datumFilter:userIds', t => {
+    const filter = new DatumFilter();
+	filter.userIds = [123, 234];
+	t.is(filter.userId, 123);
+    t.deepEqual(filter.userIds, [123, 234]);
+    t.deepEqual(filter.props, {userIds:[123, 234]})
+});
+
+test('core:domain:datumFilter:userIds:resetNodeId', t => {
+	const filter = new DatumFilter();
+	filter.userIds = [123, 234];
+	t.deepEqual(filter.userIds, [123, 234]);
+	filter.userId = 456;
+	t.deepEqual(filter.userIds, [456], 'userIds array reset to just userId');
+});
+
+test('core:domain:datumFilter:mostRecent', t => {
+	const filter = new DatumFilter();
+	t.is(filter.mostRecent, false);
+	filter.mostRecent = true;
+	t.is(filter.mostRecent, true);
+    t.deepEqual(filter.props, {mostRecent:true});
+});
+
+test('core:domain:datumFilter:toUriEncoding', t => {
+	const date = new Date();
+	const filter = new DatumFilter();
+	filter.startDate = date;
+	filter.nodeId = 123;
+	filter.sourceId = 'abc';
+	filter.dataPath = 'i.watts';
+	t.is(filter.toUriEncoding(), 
+		'startDate='+encodeURIComponent(dateTimeUrlFormat(date))
+		+'&nodeId=123&sourceId=abc&dataPath=i.watts');
+});
+
+test('core:domain:datumFilter:toUriEncoding:startDate', t => {
+	const date = new Date();
+	const filter = new DatumFilter();
+	filter.startDate = date;
+	t.is(filter.toUriEncoding(), 'startDate='+encodeURIComponent(dateTimeUrlFormat(date)));
+});
+
+test('core:domain:datumFilter:toUriEncoding:endDate', t => {
+	const date = new Date();
+	const filter = new DatumFilter();
+	filter.endDate = date;
+	t.is(filter.toUriEncoding(), 'endDate='+encodeURIComponent(dateTimeUrlFormat(date)));
+});
+
+test('core:domain:datumFilter:toUriEncoding:mostRecent', t => {
+	const filter = new DatumFilter();
+	filter.mostRecent = false;
+	t.is(filter.toUriEncoding(), '', 'mostRecent not included when false');
+	filter.mostRecent = true;
+	t.is(filter.toUriEncoding(), 'mostRecent=true', 'mostRecent included when true');
+});
+
+test('core:domain:datumFilter:toUriEncoding:pluralProps:single', t => {
+	const filter = new DatumFilter({nodeIds:[1], sourceIds:['&foo'], userIds:[2]});
+	t.is(filter.toUriEncoding(), 'nodeId=1&sourceId=%26foo&userId=2');
+});
+
+test('core:domain:datumFilter:toUriEncoding:pluralProps:multi', t => {
+	const filter = new DatumFilter({nodeIds:[1,2], sourceIds:['&foo','bar'], userIds:[3,4]});
+	t.is(filter.toUriEncoding(), 'nodeIds=1,2&sourceIds=%26foo,bar&userIds=3,4');
 });
