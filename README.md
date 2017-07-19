@@ -28,6 +28,16 @@ That will produce `lib/solarnetwork-api-core.js` and `lib/solarnetwork-api-core.
 of all sources, transpiled into an ES5 compatible UMD module, suitable for use in both browsers
 and Node.
 
+Additionally the build produces `lib/solarnetwork-api-core.es.js` and 
+`lib/solarnetwork-api-core.es.min.js` bundels of all sources, transpiled into an ES6 compatible
+module, suitable for use in other projects with build tools that know how to use ES6 modules
+(like Rollup or Webpack).
+
+Finally, the non-transpiled source is available via the `lib.js` file which exports ES6
+modules for all the modules in the project. This is suitable for use by other projects with
+build tools that know how to use ES6 modules (like Rollup or Webpack) where you'd like to
+transpile the source for a different target, for example ES2015.
+
 # API docs
 
 You can build the API documentation by running the `apidoc` script:
