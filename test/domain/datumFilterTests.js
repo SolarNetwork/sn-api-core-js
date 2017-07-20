@@ -1,6 +1,7 @@
 import test from 'ava';
 
 import DatumFilter from 'domain/datumFilter';
+import Aggregations from 'domain/aggregation';
 import { dateTimeUrlFormat } from 'format/date'
 
 test('core:domain:datumFilter:create', t => {
@@ -135,4 +136,10 @@ test('core:domain:datumFilter:toUriEncoding:pluralProps:single', t => {
 test('core:domain:datumFilter:toUriEncoding:pluralProps:multi', t => {
 	const filter = new DatumFilter({nodeIds:[1,2], sourceIds:['&foo','bar'], userIds:[3,4]});
 	t.is(filter.toUriEncoding(), 'nodeIds=1,2&sourceIds=%26foo,bar&userIds=3,4');
+});
+
+test('core:domain:datumFilter:toUriEncoding:aggregation', t => {
+	const filter = new DatumFilter();
+	filter.aggregation = Aggregations.DayOfWeek;
+	t.is(filter.toUriEncoding(), 'aggregation=DayOfWeek');
 });

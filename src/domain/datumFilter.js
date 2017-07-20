@@ -1,7 +1,9 @@
+import { Aggregation } from './aggregation';
 import PropMap from '../util/propMap';
 
 import { dateTimeUrlFormat } from '../format/date'
 
+const AggregationKey = 'aggregation';
 const NodeIdsKey = 'nodeIds';
 const SourceIdsKey = 'sourceIds';
 const UserIdsKey = 'userIds';
@@ -168,6 +170,22 @@ class DatumFilter extends PropMap {
 
     set dataPath(path) {
         this.prop(DataPathKey, path);
+    }
+
+    /**
+     * An aggregation.
+     * 
+     * Including this in a filter will cause SolarNet to return aggregated results, rather
+     * than raw results.
+     * 
+     * @type {module:domain~Aggregation}
+     */
+    get aggregation() {
+        return this.prop(AggregationKey);
+    }
+
+    set aggregation(agg) {
+        this.prop(AggregationKey, agg instanceof Aggregation ? agg : null);
     }
 
      /**
