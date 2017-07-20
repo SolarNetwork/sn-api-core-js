@@ -1,5 +1,3 @@
-/** @module net */
-
 import Pagination from '../domain/pagination';
 import SortDescriptor from '../domain/sortDescriptor';
 import UrlHelper from './urlHelper';
@@ -9,7 +7,6 @@ import UserUrlHelperMixin from './userUrlHelperMixin'
 /**
  * Create a NodeMetadataUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~NodeMetadataUrlHelperMixin} the mixin class
  */
@@ -107,13 +104,14 @@ class extends superclass {
 };
 
 /**
- * A concrete {@link UrlHelper} with the {@link NodeMetadataUrlHelperMixin},  {@link UserUrlHelperMixin}, and
- * {@link NodeUrlHelperMixin} mixins.
+ * A concrete {@link module:net~UrlHelper} with the {@link module:net~NodeMetadataUrlHelperMixin},  
+ * {@link module:net~UserUrlHelperMixin}, and {@link module:net~NodeUrlHelperMixin} mixins.
  * 
- * @mixes NodeMetadataUrlHelperMixin
- * @mixes UserUrlHelperMixin
- * @mixes NodeUrlHelperMixin
- * @extends UrlHelper
+ * @mixes module:net~NodeMetadataUrlHelperMixin
+ * @mixes module:net~UserUrlHelperMixin
+ * @mixes module:net~NodeUrlHelperMixin
+ * @extends module:net~UrlHelper
+ * @alias module:net~NodeMetadataUrlHelper
  */
 class NodeMetadataUrlHelper extends NodeMetadataUrlHelperMixin(UserUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))) {
 

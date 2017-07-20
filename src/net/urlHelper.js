@@ -1,5 +1,3 @@
-/** @module net */
-
 import Configuration from '../util/configuration';
 import Environment from './environment';
 
@@ -7,15 +5,16 @@ import Environment from './environment';
  * A utility class for helping to compose SolarNet URLs for the REST API.
  *
  * This class is essentially abstract and meant to have mixin helper objects extend it.
+ * @alias module:net~UrlHelper
  */
 class UrlHelper {
 
     /**
      * Constructor.
      *
-     * @param {Environment|Object} [environment] the optional initial environment to use;
-     *        if a non-<code>Environment</code> object is passed then the properties of that object will
-     *        be used to construct a new <code>Environment</code> instance
+     * @param {module:net~Environment|object} [environment] the optional initial environment to use;
+     *        if a non-`Environment` object is passed then the properties of that object will
+     *        be used to construct a new `Environment` instance
      */
     constructor(environment) {
         let env = (environment instanceof Environment ? environment
@@ -23,7 +22,7 @@ class UrlHelper {
         
         /**
          * The environment associated with this helper.
-         * @member {Environment}
+         * @member {module:net~Environment}
          */
         this.environment = env;
 
@@ -34,7 +33,7 @@ class UrlHelper {
      * Get a parameters object that can be used to hold URL variables.
      * 
      * @readonly
-     * @type {Configuration}
+     * @type {module:util~Configuration}
      */
     get parameters() {
         return this._parameters;
@@ -43,12 +42,12 @@ class UrlHelper {
     /**
      * Get or set an environment parameter.
      * 
-     * This is a shortcut for calling {@link Configuration#value} on the
-     * <code>environment</code> object.
+     * This is a shortcut for calling {@link module:net~Configuration#value} on the
+     * `environment` object.
      * 
      * @param {string} key the environment parameter name to get
-     * @param {Object} [val] the optional value to set
-     * @returns {Object} when called as a getter, the environment parameter value;
+     * @param {object} [val] the optional value to set
+     * @returns {object} when called as a getter, the environment parameter value;
      *                   when called as a setter, the environment parameters object
      */
     env(...args) {
@@ -58,8 +57,8 @@ class UrlHelper {
     /**
      * Get or set a parameter.
      * 
-     * This is a shortcut for calling {@link Configuration#value} on the
-     * <code>parameters</code> object.
+     * This is a shortcut for calling {@link module:net~Configuration#value} on the
+     * `parameters` object.
      * 
      * @param {string} key the parameter name to get
      * @param {Object} [val] the optional value to set
@@ -104,7 +103,7 @@ class UrlHelper {
 	 * Get the base URL to the REST API.
 	 * 
 	 * This implementation is a stub, meant for subclasses to override. This implementation
-     * simply returns {@link UrlHelper#hostUrl}.
+     * simply returns {@link module:net~UrlHelper#hostUrl}.
 	 * 
      * @abstract
 	 * @returns {string} the base URL to the REST API
@@ -114,7 +113,7 @@ class UrlHelper {
 	}
 
     /**
-     * Replace occurances of URL template variables with values from the <code>parameters</code>
+     * Replace occurances of URL template variables with values from the `parameters`
      * property and append to the host URL.
      * 
      * This method provides a way to resolve an absolute URL based on the configured
@@ -122,19 +121,19 @@ class UrlHelper {
      * 
      * @param {string} template a URL path template
      * @returns {string} an absolute URL
-     * @see UrlHelper#resolveTemplateUrl
+     * @see module:net~UrlHelper#resolveTemplateUrl
      */
     resolveTemplatePath(template) {
         return this.hostUrl() + this.resolveTemplateUrl(template);
     }
 
      /**
-     * Replace occurances of URL template variables with values from the <code>parameters</code>
+     * Replace occurances of URL template variables with values from the `parameters`
      * property.
      * 
-     * URL template variables are specified as <code>{<em>name</em>}</code>. The variable
-     * will be replaced by the value associated with property <code>name</code> in the
-     * <code>parameters</code> object. The value will be URI encoded.
+     * URL template variables are specified as `{<em>name</em>}`. The variable
+     * will be replaced by the value associated with property `name` in the
+     * `parameters` object. The value will be URI encoded.
      * 
      * @param {string} template a URL template
      * @returns {string} the URL with template variables resolved
@@ -146,12 +145,12 @@ class UrlHelper {
     /**
      * Replace occurances of URL template variables with values from a parameter object.
      * 
-     * URL template variables are specified as <code>{<em>name</em>}</code>. The variable
-     * will be replaced by the value associated with property <code>name</code> in the
+     * URL template variables are specified as `{<em>name</em>}`. The variable
+     * will be replaced by the value associated with property `name` in the
      * provided parameter object. The value will be URI encoded.
      * 
      * @param {string} template a URL template
-     * @param {Object} params an object whose properties should serve as template variables
+     * @param {object} params an object whose properties should serve as template variables
      * @returns {string} the URL
      */
     static resolveTemplateUrl(template, params) {

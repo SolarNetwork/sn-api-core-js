@@ -1,5 +1,3 @@
-/** @module net */
-
 import Configuration from '../util/configuration';
 
 /**
@@ -9,6 +7,7 @@ import Configuration from '../util/configuration';
  * needed to access the SolarNetwork API, such as host and protocol values.
  *
  * @extends module:util~Configuration
+ * @alias module:net~Environment
  */
 class Environment extends Configuration {
 

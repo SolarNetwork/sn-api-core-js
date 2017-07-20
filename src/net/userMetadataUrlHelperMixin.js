@@ -1,12 +1,9 @@
-/** @module net */
-
 import UrlHelper from './urlHelper';
 import UserUrlHelperMixin from './userUrlHelperMixin'
 
 /**
  * Create a UserMetadataUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~UserMetadataUrlHelperMixin} the mixin class
  */
@@ -92,11 +89,13 @@ class extends superclass {
 };
 
 /**
- * A concrete {@link UrlHelper} with the {@link UserMetadataUrlHelperMixin} and  {@link UserUrlHelperMixin} mixins.
+ * A concrete {@link module:net~UrlHelper} with the {@link module:net~UserMetadataUrlHelperMixin}
+ * and {@link module:net~UserUrlHelperMixin} mixins.
  * 
- * @mixes UserMetadataUrlHelperMixin
- * @mixes UserUrlHelperMixin
- * @extends UrlHelper
+ * @mixes module:net~UserMetadataUrlHelperMixin
+ * @mixes module:net~UserUrlHelperMixin
+ * @extends module:net~UrlHelper
+ * @alias module:net~UserMetadataUrlHelper
  */
 class UserMetadataUrlHelper extends UserMetadataUrlHelperMixin(UserUrlHelperMixin(UrlHelper)) {
 

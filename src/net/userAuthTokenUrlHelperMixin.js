@@ -1,12 +1,9 @@
-/** @module net */
-
 import UrlHelper from './urlHelper';
 import UserUrlHelperMixin from './userUrlHelperMixin'
 
 /**
  * Create a UserAuthTokenUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~UserAuthTokenUrlHelperMixin} the mixin class
  */
@@ -30,9 +27,9 @@ class extends superclass {
     }
 
     /**
-     * Generate a URL for creating a new auth token, via a <code>POST</code> request.
+     * Generate a URL for creating a new auth token, via a `POST` request.
      * 
-     * The request body accepts a {@link SecurityPolicy} JSON document.
+     * The request body accepts a {@link module:domain~SecurityPolicy} JSON document.
      * 
      * @param {AuthTokenType} type the auth token type to generate
 	 * @returns {string} the URL
@@ -53,7 +50,7 @@ class extends superclass {
     }
 
     /**
-     * Generate a URL for deleting an auth token, via a <code>DELETE</code> request.
+     * Generate a URL for deleting an auth token, via a `DELETE` request.
      * 
      * @param {string} tokenId the token ID to delete
 	 * @returns {string} the URL
@@ -64,9 +61,9 @@ class extends superclass {
 
     /**
      * Generate a URL for updating (merging) a security policy on an auth token,
-     * via a <code>PATCH</code> request.
+     * via a `PATCH` request.
      * 
-     * The request body accepts a {@link SecurityPolicy} JSON document.
+     * The request body accepts a {@link module:net~SecurityPolicy} JSON document.
      * 
      * @param {string} tokenId the ID of the token to update
 	 * @returns {string} the URL
@@ -77,9 +74,9 @@ class extends superclass {
 
     /**
      * Generate a URL for replacing a security policy on an auth token,
-     * via a <code>PUT</code> request.
+     * via a `PUT` request.
      * 
-     * The request body accepts a {@link SecurityPolicy} JSON document.
+     * The request body accepts a {@link module:domain~SecurityPolicy} JSON document.
      * 
      * @param {string} tokenId the ID of the token to update
 	 * @returns {string} the URL
@@ -90,7 +87,7 @@ class extends superclass {
 
     /**
      * Generate a URL for updating the status of an auth token,
-     * via a <code>POST</code> request.
+     * via a `POST` request.
      * 
      * @param {string} tokenId the ID of the token to update
      * @param {AuthTokenStatus} status the status to change to
@@ -102,11 +99,13 @@ class extends superclass {
 }
 
 /**
- * A concrete {@link UrlHelper} with the {@link UserAuthTokenUrlHelperMixin} and  {@link UserUrlHelperMixin} mixins.
+ * A concrete {@link module:net~UrlHelper} with the {@link module:net~UserAuthTokenUrlHelperMixin} and  
+ * {@link module:net~UserUrlHelperMixin} mixins.
  * 
- * @mixes UserAuthTokenUrlHelperMixin
- * @mixes UserUrlHelperMixin
- * @extends UrlHelper
+ * @mixes module:net~UserAuthTokenUrlHelperMixin
+ * @mixes module:net~UserUrlHelperMixin
+ * @extends module:net~UrlHelper
+ * @alias module:net~UserAuthTokenUrlHelper
  */
 class UserAuthTokenUrlHelper extends UserAuthTokenUrlHelperMixin(UserUrlHelperMixin(UrlHelper)) {
 

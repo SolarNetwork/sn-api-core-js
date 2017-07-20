@@ -1,5 +1,3 @@
-/** @module net */
-
 import Hex from 'crypto-js/enc-hex';
 import HmacSHA256 from 'crypto-js/hmac-sha256';
 import SHA256 from 'crypto-js/sha256';
@@ -46,6 +44,7 @@ import { urlQueryParse } from './urlQuery';
  *     .path("/solarquery/api/v1/pub/...")
  *     .buildWithSavedKey(); // note previously generated key used
  * ```
+ * @alias module:net~AuthorizationV2Builder
  */
 class AuthorizationV2Builder {
 

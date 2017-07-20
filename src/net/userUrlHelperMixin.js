@@ -1,21 +1,29 @@
-/** @module: net */
-
-/** The SolarUser default path. */
+/** 
+ * The SolarUser default path.
+ * @type {string}
+ * @alias module:net~SolarUserDefaultPath
+ */
 export const SolarUserDefaultPath = '/solaruser';
 
-/** The {@link UrlHelper} parameters key for the SolarUser path. */
+/**
+ * The {@link module:net~UrlHelper} parameters key for the SolarUser path.
+ * @type {string}
+ * @alias module:net~SolarUserPathKey
+ */
 export const SolarUserPathKey = 'solarUserPath';
 
-/** The SolarUser REST API path. */
+/** 
+ * The SolarUser REST API path.
+ * @type {string}
+ * @alias module:net~SolarUserApiPathV1
+ */
 export const SolarUserApiPathV1 = '/api/v1/sec';
 
-/** The {@link UrlHelper} parameters key that holds the <code>userId</code>. */
-export const UserIdsKey = 'userIds';
+const UserIdsKey = 'userIds';
 
 /**
  * Create a UserUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~UserUrlHelperMixin} the mixin class
  */
@@ -32,9 +40,9 @@ class extends superclass {
     /**
      * Get the default user ID.
      * 
-     * This gets the first available user ID from the <code>userIds</code> property.
+     * This gets the first available user ID from the `userIds` property.
      * 
-     * @returns {number} the default user ID, or <code>null</code>
+     * @returns {number} the default user ID, or `null`
      */
     get userId() {
         const userIds = this.parameter(UserIdsKey);
@@ -44,7 +52,7 @@ class extends superclass {
     /**
      * Set the user ID.
      * 
-     * This will set the <code>userIds</code> property to a new array of just the given value.
+     * This will set the `userIds` property to a new array of just the given value.
      * 
      * @param {number} userId the user ID to set
      */
@@ -64,9 +72,9 @@ class extends superclass {
 	 * Get the base URL to the SolarUser v1 REST API.
 	 * 
 	 * The returned URL uses the configured environment to resolve
-	 * the <code>hostUrl</code> and a <code>solarUserPath</code> context path.
+	 * the `hostUrl` and a `solarUserPath` context path.
 	 * If the context path is not available, it will default to 
-	 * <code>/solaruser</code>.
+	 * `/solaruser`.
 	 * 
 	 * @returns {string} the base URL to SolarUser
 	 */
@@ -103,11 +111,11 @@ class extends superclass {
 	}
 
 	/**
-	 * Generate a URL to update the archived status of a set of nodes via a <code>POST</code> request.
+	 * Generate a URL to update the archived status of a set of nodes via a `POST` request.
 	 *
 	 * @param {number|number[]|null} nodeId a specific node ID, or array of node IDs, to update; if not provided the 
-	 *                                      <code>nodeIds</code> property of this class will be used
-	 * @param {boolean} archived <code>true</code> to mark the nodes as archived; <code>false</code> to un-mark
+	 *                                      `nodeIds` property of this class will be used
+	 * @param {boolean} archived `true` to mark the nodes as archived; `false` to un-mark
 	 *                           and return to normal status
 	 * @return {string} the URL to update the nodes archived status
 	 */

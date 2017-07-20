@@ -1,5 +1,3 @@
-/** @module net */
-
 import Pagination from '../domain/pagination';
 import SortDescriptor from '../domain/sortDescriptor';
 import UrlHelper from './urlHelper';
@@ -10,7 +8,6 @@ import QueryUrlHelperMixin from './queryUrlHelperMixin'
 /**
  * Create a NodeDatumUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~DatumMetadataUrlHelperMixin} the mixin class
  */
@@ -103,7 +100,7 @@ class extends superclass {
      *                            if not provided the <code>sourceId</code> property of this class will be used;
      *                            if <code>null</code> then ignore any <code>sourceId</code> property of this class
 	 * @param {SortDescriptor[]} [sorts] optional sort settings to use
-	 * @param {Pagination} [pagination] optional pagination settings to use
+	 * @param {module:domain~Pagination} [pagination] optional pagination settings to use
 	 * @returns {string} the URL
 	 */
 	findDatumMetadataUrl(nodeId, sourceId, sorts, pagination) {
@@ -138,13 +135,14 @@ class extends superclass {
 };
 
 /**
- * A concrete {@link UrlHelper} with the {@link DatumMetadataUrlHelperMixin},  {@link QueryUrlHelperMixin}, and
- * {@link NodeUrlHelperMixin} mixins.
+ * A concrete {@link module:net~UrlHelper} with the {@link module:net~DatumMetadataUrlHelperMixin},  
+ * {@link module:net~QueryUrlHelperMixin}, and {@link module:net~NodeUrlHelperMixin} mixins.
  * 
- * @mixes DatumMetadataUrlHelperMixin
- * @mixes QueryUrlHelperMixin
- * @mixes NodeUrlHelperMixin
- * @extends UrlHelper
+ * @mixes module:net~DatumMetadataUrlHelperMixin
+ * @mixes module:net~QueryUrlHelperMixin
+ * @mixes module:net~NodeUrlHelperMixin
+ * @extends module:net~UrlHelper
+ * @alias module:net~DatumMetadataUrlHelper
  */
 class DatumMetadataUrlHelper extends DatumMetadataUrlHelperMixin(QueryUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))) {
 

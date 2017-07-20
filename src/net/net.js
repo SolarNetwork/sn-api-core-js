@@ -1,3 +1,5 @@
+/** @module net */
+
 export { default as AuthorizationV2Builder } from './authV2';
 export { default as DatumMetadataUrlHelperMixin, 
     DatumMetadataUrlHelper } from './datumMetadataUrlHelperMixin';

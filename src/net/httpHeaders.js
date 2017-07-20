@@ -1,12 +1,13 @@
-/** @module net */
-
 import MultiMap from '../util/multiMap';
 
-/**
- * Enumeration of HTTP methods (verbs).
- * @enum {string}
- */
-export const HttpMethod = Object.freeze({
+const HttpMethod = Object.freeze(	
+	/**
+	 * Enumeration of HTTP methods (verbs).
+	 * @enum {string}
+	 * @alias module:net~HttpMethod
+	 * @constant
+	 */
+	{
 	GET: 'GET',
 	HEAD: 'HEAD',
 	POST: 'POST',
@@ -21,6 +22,7 @@ export const HttpMethod = Object.freeze({
  * Support for HTTP headers.
  * 
  * @extends module:util~MultiMap
+ * @alias module:net~HttpHeaders
  */
 class HttpHeaders extends MultiMap {
 	constructor() {
@@ -86,3 +88,4 @@ Object.defineProperties(HttpHeaders, {
 });
 
 export default HttpHeaders;
+export { HttpMethod };

@@ -1,5 +1,3 @@
-/** @module net */
-
 import UrlHelper from './urlHelper';
 import NodeUrlHelperMixin from './nodeUrlHelperMixin';
 import UserUrlHelperMixin from './userUrlHelperMixin'
@@ -7,7 +5,6 @@ import UserUrlHelperMixin from './userUrlHelperMixin'
 /**
  * Create a NodeInstructionUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~NodeInstructionUrlHelperMixin} the mixin class
  */
@@ -102,13 +99,14 @@ class extends superclass {
 };
 
 /**
- * A concrete {@link UrlHelper} with the {@link NodeInstructionUrlHelperMixin},  {@link UserUrlHelperMixin}, and
- * {@link NodeUrlHelperMixin} mixins.
+ * A concrete {@link UrlHelper} with the {@link module:net~NodeInstructionUrlHelperMixin},  
+ * {@link module:net~UserUrlHelperMixin}, and {@link module:net~NodeUrlHelperMixin} mixins.
  * 
- * @mixes NodeInstructionUrlHelperMixin
- * @mixes UserUrlHelperMixin
- * @mixes NodeUrlHelperMixin
- * @extends UrlHelper
+ * @mixes module:net~NodeInstructionUrlHelperMixin
+ * @mixes module:net~UserUrlHelperMixin
+ * @mixes module:net~NodeUrlHelperMixin
+ * @extends module:net~UrlHelper
+ * @alias module:net~NodeInstructionUrlHelper
  */
 class NodeInstructionUrlHelper extends NodeInstructionUrlHelperMixin(UserUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))) {
 
@@ -116,6 +114,8 @@ class NodeInstructionUrlHelper extends NodeInstructionUrlHelperMixin(UserUrlHelp
 
 /**
  * The static {@link NodeInstructionUrlHelperMixin#instructionParameter} method so it can be imported directly.
+ * 
+ * @alias module:net~instructionParameter
  */
 const instructionParameter = NodeInstructionUrlHelper.instructionParameter;
 

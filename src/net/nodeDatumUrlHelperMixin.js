@@ -1,5 +1,3 @@
-/** @module net */
-
 import UrlHelper from './urlHelper';
 import NodeUrlHelperMixin from './nodeUrlHelperMixin';
 import QueryUrlHelperMixin from './queryUrlHelperMixin';
@@ -7,7 +5,6 @@ import QueryUrlHelperMixin from './queryUrlHelperMixin';
 /**
  * Create a NodeDatumUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~NodeDatumUrlHelperMixin} the mixin class
  */
@@ -71,13 +68,14 @@ class extends superclass {
 }
 
 /**
- * A concrete {@link UrlHelper} with the {@link NodeDatumUrlHelperMixin}, {@link QueryUrlHelperMixin},
- * and {@link NodeUrlHelperMixin} mixins.
+ * A concrete {@link module:net~UrlHelper} with the {@link module:net~NodeDatumUrlHelperMixin}, 
+ * {@link module:net~QueryUrlHelperMixin}, and {@link module:net~NodeUrlHelperMixin} mixins.
  * 
- * @mixes NodeDatumUrlHelperMixin
- * @mixes QueryUrlHelperMixin
- * @mixes NodeUrlHelperMixin
- * @extends UrlHelper
+ * @mixes module:net~NodeDatumUrlHelperMixin
+ * @mixes module:net~QueryUrlHelperMixin
+ * @mixes module:net~NodeUrlHelperMixin
+ * @extends module:net~UrlHelper
+ * @alias module:net~NodeDatumUrlHelper
  */
 class NodeDatumUrlHelper extends NodeDatumUrlHelperMixin(QueryUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))) {
 
