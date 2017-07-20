@@ -23,7 +23,7 @@ class extends superclass {
 	/**
 	 * Generate a URL for viewing the configured node's metadata.
 	 *
-	 * @param {number} [nodeId] a specific node ID to use; if not provided the <code>nodeId</code> property of this class will be used
+	 * @param {number} [nodeId] a specific node ID to use; if not provided the `nodeId` property of this class will be used
 	 * @returns {string} the URL
 	 */
 	viewNodeMetadataUrl(nodeId) {
@@ -32,9 +32,9 @@ class extends superclass {
 	}
 
 	/**
-	 * Generate a URL for adding metadata to a node via a <code>POST</code> request.
+	 * Generate a URL for adding metadata to a node via a `POST` request.
 	 *
-	 * @param {number} [nodeId] a specific node ID to use; if not provided the <code>nodeId</code> property of this class will be used
+	 * @param {number} [nodeId] a specific node ID to use; if not provided the `nodeId` property of this class will be used
 	 * @returns {string} the URL
 	 */
 	addNodeMetadataUrl(nodeId) {
@@ -42,9 +42,9 @@ class extends superclass {
 	}
 
 	/**
-	 * Generate a URL for setting the metadata of a node via a <code>PUT</code> request.
+	 * Generate a URL for setting the metadata of a node via a `PUT` request.
 	 *
-	 * @param {number} [nodeId] a specific node ID to use; if not provided the <code>nodeId</code> property of this class will be used
+	 * @param {number} [nodeId] a specific node ID to use; if not provided the `nodeId` property of this class will be used
 	 * @returns {string} the URL
 	 */
 	replaceNodeMetadataUrl(nodeId) {
@@ -52,9 +52,9 @@ class extends superclass {
 	}
 
 	/**
-	 * Generate a URL for deleting the metadata of a node via a <code>DELETE</code> request.
+	 * Generate a URL for deleting the metadata of a node via a `DELETE` request.
 	 *
-	 * @param {number} [nodeId] a specific node ID to use; if not provided the <code>nodeId</code> property of this class will be used
+	 * @param {number} [nodeId] a specific node ID to use; if not provided the `nodeId` property of this class will be used
 	 * @returns {string} the URL
 	 */
 	deleteNodeMetadataUrl(nodeId) {
@@ -65,11 +65,11 @@ class extends superclass {
 	 * Generate a URL for searching for node metadata.
 	 * 
 	 * @param {number|number[]} [nodeId] a specific node ID, or array of node IDs, to use; if not provided the 
-	 *                                   <code>nodeIds</code> property of this class will be used, unless <code>null</code>
+	 *                                   `nodeIds` property of this class will be used, unless `null`
 	 *                                   is passed in which case no node IDs will be added to the URL so that all available
 	 *                                   node metadata objects will be returned
-	 * @param {SortDescriptor[]} [sorts] optional sort settings to use
-	 * @param {Pagination} [pagination] optional pagination settings to use
+	 * @param {module:domain~SortDescriptor[]} [sorts] optional sort settings to use
+	 * @param {module:domain~Pagination} [pagination] optional pagination settings to use
 	 * @returns {string} the URL
 	 */
 	findNodeMetadataUrl(nodeId, sorts, pagination) {

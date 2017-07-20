@@ -205,6 +205,7 @@ class DatumFilter extends PropMap {
  * 
  * @param {string} key the property key
  * @param {*} value the property value
+ * @returns {*} 2-element array for mapped key+value, `null` to skip, or `key` to keep as-is
  * @private
  */
 function datumFilterUriEncodingPropertyMapper(key, value) {

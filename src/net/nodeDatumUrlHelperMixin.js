@@ -1,3 +1,5 @@
+import Pagination from '../domain/pagination';
+import SortDescriptor from '../domain/sortDescriptor';
 import UrlHelper from './urlHelper';
 import NodeUrlHelperMixin from './nodeUrlHelperMixin';
 import QueryUrlHelperMixin from './queryUrlHelperMixin';
@@ -61,6 +63,42 @@ class extends superclass {
 		}
 		if ( params.length > 0 ) {
 			result += '?' +params;
+		}
+		return result;
+	}
+
+	/**
+	 * Generate a URL for querying for datum, in either raw or aggregate form.
+	 * 
+	 * If the `datumFilter` has an `aggregate` value set, then aggregate results will be
+	 * returned by SolarNet.
+	 * 
+	 * @param {module:domain~DatumFilter} datumFilter the search criteria
+	 * @param {module:domain~SortDescriptor[]} [sorts] optional sort settings to use
+	 * @param {module:domain~Pagination} [pagination] optional pagination settings to use
+	 * @returns {string} the URL
+	 */
+	listDatumUrl(datumFilter, sorts, pagination) {
+		let result = this.baseUrl() + '/datum/list';
+		let params = (datumFilter ? datumFilter.toUriEncoding() : '');
+		if ( Array.isArray(sorts) ) {
+			sorts.forEach((sort, i) => {
+				if ( sort instanceof SortDescriptor ) {
+					if ( params.length > 0 ) {
+						params += '&';
+					}
+					params += sort.toUriEncoding(i);
+				}
+			});
+		}
+		if ( pagination instanceof Pagination ) {
+			if ( params.length > 0 ) {
+				params += '&';
+			}
+			params += pagination.toUriEncoding();
+		}
+		if ( params.length > 0 ) {
+			result += '?' + params;
 		}
 		return result;
 	}

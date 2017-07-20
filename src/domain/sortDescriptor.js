@@ -37,17 +37,17 @@ class SortDescriptor {
      * Get this object as a standard URI encoded (query parameters) string value.
      * 
      * If `index` is provided and non-negative, then the query parameters will
-     * be encoded as an array property named `sortDescriptors`. Otherwise just
+     * be encoded as an array property named `sorts`. Otherwise just
      * bare `key` and `descending` properties will be used. The 
      * `descending` property is only added if it is `true`.
      * 
      * @param {number} [index] an optional array property index
-     * @param {string} [propertyName=sortDescriptors] an optional array property name, only used if `index` is also provided
+     * @param {string} [propertyName=sorts] an optional array property name, only used if `index` is also provided
      * @return {string} the URI encoded string
      */
     toUriEncoding(index, propertyName) {
         let result,
-            propName = (propertyName || 'sortDescriptors');
+            propName = (propertyName || 'sorts');
         if ( index !== undefined && index >= 0 ) {
             result = encodeURIComponent(propName +'[' +index +'].key') + '=';
         } else {
