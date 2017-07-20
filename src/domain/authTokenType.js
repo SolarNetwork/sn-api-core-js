@@ -3,7 +3,8 @@ import Enum from '../util/enum';
 /**
  * A named auth token type.
  * 
- * @extends Enum
+ * @extends module:util~Enum
+ * @alias module:domain~AuthTokenType
  */
 export class AuthTokenType extends Enum {
     /**
@@ -38,9 +39,10 @@ const AuthTokenTypeValues = Object.freeze([
  * The enumeration of supported AuthTokenType values.
  * 
  * @readonly
- * @enum {AuthTokenType}
- * @property {AuthTokenType} ReadNodeData a read-only token for reading SolarNode data
- * @property {AuthTokenType} User full access as the user that owns the token
+ * @enum {module:domain~AuthTokenType}
+ * @property {module:domain~AuthTokenType} ReadNodeData a read-only token for reading SolarNode data
+ * @property {module:domain~AuthTokenType} User full access as the user that owns the token
+ * @alias module:domain~AuthTokenTypes
  */
 const AuthTokenTypes = AuthTokenType.enumsValue(AuthTokenTypeValues);
 

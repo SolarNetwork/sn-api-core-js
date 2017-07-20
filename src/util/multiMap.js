@@ -1,5 +1,6 @@
 /**
  * A case-insensitive string key multi-value map object.
+ * @alias module:util~MultiMap
  */
 class MultiMap {
 
@@ -23,7 +24,7 @@ class MultiMap {
 	 * 
 	 * @param {string} key the key to use
 	 * @param {*} value the value to add
-	 * @returns {MultiMap} this object
+	 * @returns {module:util~MutliMap} this object
 	 */
 	add(key, value) {
 		return addValue(this, key, value);
@@ -36,7 +37,7 @@ class MultiMap {
 	 * 
 	 * @param {string} key the key to use
 	 * @param {*} value the value to set
-	 * @returns {MultiMap} this object
+	 * @returns {module:util~MutliMap} this object
 	 */
 	put(key, value) {
 		return addValue(this, key, value, true);
@@ -48,7 +49,7 @@ class MultiMap {
 	 * This method will replace any existing values with those provided on <code>values</code>.
 	 * 
 	 * @param {*} values an object who's enumerable properties will be added to this map
-	 * @returns {MultiMap} this object
+	 * @returns {module:util~MutliMap} this object
 	 */
 	putAll(values) {
 		for ( let key in values ) {
@@ -63,7 +64,7 @@ class MultiMap {
 	 * Get the values associated with a key.
 	 * 
 	 * @param {string} key the key of the values to get
-	 * @returns {Object[]} the array of values associated with the key, or <code>undefined</code> if not available
+	 * @returns {object[]} the array of values associated with the key, or <code>undefined</code> if not available
 	 */
 	value(key) {
 		const keyLc = key.toLowerCase();
@@ -85,7 +86,7 @@ class MultiMap {
 	/**
 	 * Remove all properties from this map.
 	 * 
-	 * @returns {MultiMap} this object
+	 * @returns {module:util~MutliMap} this object
 	 */
 	clear() {
 		this.mappingNames.length = 0;
@@ -97,7 +98,7 @@ class MultiMap {
 	 * Remove all values associated with a key.
 	 * 
 	 * @param {string} key the key of the values to remove
-	 * @returns {Object[]} the removed values, or <code>undefined</code> if no values were present for the given key
+	 * @returns {object[]} the removed values, or <code>undefined</code> if no values were present for the given key
 	 */
 	remove(key) {
 		const keyLc = key.toLowerCase();
@@ -156,12 +157,12 @@ class MultiMap {
 /**
  * Add/replace values on a map.
  * 
- * @param {MultiMap} map the map to mutate 
+ * @param {module:util~MutliMap} map the map to mutate 
  * @param {string} key the key to change 
  * @param {*} value the value to add
  * @param {boolean} replace if <code>true</code> then replace all existing values;
  *                          if <code>false</code> append to any existing values
- * @returns {MultiMap} the passed in <code>map</code>
+ * @returns {module:util~MutliMap} the passed in <code>map</code>
  * @private
  */
 function addValue(map, key, value, replace) {

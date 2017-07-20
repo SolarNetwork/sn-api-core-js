@@ -4,9 +4,10 @@
  *
  * <p>Multiple parameters of the same name will be stored as an array on the returned object.</p>
  *
- * @param {String} search the query portion of the URL, which may optionally include
- *                        the leading '?' character
- * @return {Object} the parsed query parameters, as a parameter object
+ * @param {string} search the query portion of the URL, which may optionally include
+ *                        the leading `?` character
+ * @return {object} the parsed query parameters, as a parameter object
+ * @alias module:net~urlQueryParse
  */
 function urlQueryParse(search) {
     var params = {};
@@ -43,14 +44,15 @@ function urlQueryParse(search) {
  *
  * <p>If an object property has an array value, multiple URL parameters will be encoded for that property.</p>
  *
- * <p>The optional <code>encoderFn</code> argument is a function that accepts a string value
+ * <p>The optional `encoderFn` argument is a function that accepts a string value
  * and should return a URI-safe string for that value.</p>
  *
- * @param {Object} parameters an object to encode as URL parameters
- * @param {Function} encoderFn an optional function to encode each URI component with;
- *                             if not provided the built-in encodeURIComponent() function
+ * @param {object} parameters an object to encode as URL parameters
+ * @param {function} encoderFn an optional function to encode each URI component with;
+ *                             if not provided the built-in `encodeURIComponent()` function
  *                             will be used
- * @return {String} the encoded query parameters
+ * @return {string} the encoded query parameters
+ * @alias module:net~urlQueryEncode
  */
 function urlQueryEncode(parameters, encoderFn) {
     var result = '',

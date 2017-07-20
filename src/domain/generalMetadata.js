@@ -3,6 +3,8 @@
  * 
  * This metadata can be associated with a variety of objects within SolarNetwork, such
  * as users, nodes, and datum.
+ * 
+ * @alias module:domain~GeneralMetadata
  */
 class GeneralMetadata {
 
@@ -43,12 +45,12 @@ class GeneralMetadata {
     }
 
     /**
-     * Parse a JSON string into a {@link GeneralMetadata} instance.
+     * Parse a JSON string into a {@link module:domain~GeneralMetadata} instance.
      * 
-     * The JSON must be encoded the same way {@link GeneralMetadata#toJsonEncoding} does.
+     * The JSON must be encoded the same way {@link module:domain~GeneralMetadata#toJsonEncoding} does.
      * 
      * @param {string} json the JSON to parse
-     * @returns {GeneralMetadata} the metadata instance 
+     * @returns {module:domain~GeneralMetadata} the metadata instance 
      */
     static fromJsonEncoding(json) {
         let m, pm, t;
@@ -63,14 +65,15 @@ class GeneralMetadata {
 }
 
 /**
- * Convert a <code>Map</code> into a simple object.
+ * Convert a `Map` into a simple object.
  * 
- * The keys are assumed to be strings. Values that are themselves <code>Map</code> instances
+ * The keys are assumed to be strings. Values that are themselves `Map` instances
  * will be converted to simple objects as well.
  * 
  * @param {Map<string, *>} strMap a Map with string keys; nested Map objects are also handled
- * @returns {Object} a simple object
+ * @returns {object} a simple object
  * @see {@link objectToStringMap} for the reverse conversion
+ * @alias module:domain~stringMapToObject
  */
 function stringMapToObject(strMap) {
     const obj = Object.create(null);
@@ -83,14 +86,15 @@ function stringMapToObject(strMap) {
 }
 
 /**
- * Convert a simple object into a <code>Map</code> instance.
+ * Convert a simple object into a `Map` instance.
  * 
- * Property values that are themselves objects will be converted into <code>Map</code>
+ * Property values that are themselves objects will be converted into `Map`
  * instances as well.
  * 
- * @param {Object} obj a simple object
+ * @param {object} obj a simple object
  * @returns {Map<string, *>} a Map with string keys; nested Map objects are also handled
- * @see {@link stringMapToObject} for the reverse conversion
+ * @see {@link module:domain~stringMapToObject} for the reverse conversion
+ * @alias module:domain~objectToStringMap
  */
 function objectToStringMap(obj) {
     const strMap = new Map();

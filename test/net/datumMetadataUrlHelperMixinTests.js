@@ -82,10 +82,10 @@ test('core:net:datumMetadataUrlHelperMixin:findDatumMetadataUrl:sorted', t => {
 	const helper = new DatumMetadataUrlHelper();
 	t.is(helper.findDatumMetadataUrl(123, 'foo', [new SortDescriptor('bar')]),
 		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/meta/123?'
-		+'sourceId=foo&sortDescriptors%5B0%5D.key=bar');
+		+'sourceId=foo&sorts%5B0%5D.key=bar');
 	t.is(helper.findDatumMetadataUrl(123, 'foo', [new SortDescriptor('bar', true)]),
 		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/meta/123?'
-		+'sourceId=foo&sortDescriptors%5B0%5D.key=bar&sortDescriptors%5B0%5D.descending=true');
+		+'sourceId=foo&sorts%5B0%5D.key=bar&sorts%5B0%5D.descending=true');
 });
 
 test('core:net:datumMetadataUrlHelperMixin:findDatumMetadataUrl:paginated', t => {
@@ -99,5 +99,5 @@ test('core:net:datumMetadataUrlHelperMixin:findDatumMetadataUrl:sortedAndPaginat
 	const helper = new DatumMetadataUrlHelper();
 	t.is(helper.findDatumMetadataUrl(123, 'foo', [new SortDescriptor('bar')], new Pagination(1, 2)),
 		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/meta/123?'
-		+'sourceId=foo&sortDescriptors%5B0%5D.key=bar&max=1&offset=2');
+		+'sourceId=foo&sorts%5B0%5D.key=bar&max=1&offset=2');
 });

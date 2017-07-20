@@ -1,37 +1,57 @@
-/** The SolarQuery default path. */
+/** 
+ * The SolarQuery default path.
+ * @type {string}
+ * @alias module:net~SolarQueryDefaultPath
+ */
 export const SolarQueryDefaultPath = '/solarquery';
 
-/** The {@link UrlHelper} parameters key for the SolarQuery path. */
+/** 
+ * The {@link module:net~UrlHelper#parameters} key for the SolarQuery path.
+ * @type {string}
+ * @alias module:net~SolarQueryPathKey
+ */
 export const SolarQueryPathKey = 'solarQueryPath';
 
-/** The SolarQuery REST API path. */
+/** 
+ * The SolarQuery REST API path.
+ * @type {string}
+ * @alias module:net~SolarQueryApiPathV1
+ */
 export const SolarQueryApiPathV1 = '/api/v1';
 
 /** 
- * The {@link UrlHelper} parameters key that holds a <code>boolean</code> flag to
- * use the public path scheme (<code>/pub</code>) when constructing URLs.
+ * The {@link module:net~UrlHelper#parameters} key that holds a `boolean` flag to
+ * use the public path scheme (`/pub`) when constructing URLs.
+ * @type {string}
+ * @alias module:net~SolarQueryPublicPathKey
  */
 export const SolarQueryPublicPathKey = 'publicQuery';
 
 /**
- * A mixin class that adds SolarQuery specific support to {@link UrlHelper}.
- * 
- * @param {UrlHelper} superclass the UrlHelper class to mix onto
- * @mixin
- * @returns {*} the mixin
+ * Create a QueryUrlHelperMixin class.
+ *
+ * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
+ * @return {module:net~QueryUrlHelperMixin} the mixin class
  */
-const QueryUrlHelperMixin = (superclass) => class extends superclass {
+const QueryUrlHelperMixin = (superclass) => 
+
+/**
+ * A mixin class that adds SolarQuery specific support to {@link module:net~UrlHelper}.
+ * 
+ * @mixin
+ * @alias module:net~QueryUrlHelperMixin
+ */
+class extends superclass {
 
 	/**
 	 * Get the base URL to the SolarQuery v1 REST API.
 	 * 
 	 * The returned URL uses the configured environment to resolve
-	 * the <code>hostUrl</code>, the <code>solarQueryPath</code> context path,
-     * and the <code>publicQuery</code> boolean flag. If the context path is not 
-     * available, it will default to <code>/solarquery</code>.
+	 * the `hostUrl`, the `solarQueryPath` context path,
+     * and the `publicQuery` boolean flag. If the context path is not 
+     * available, it will default to `/solarquery`.
 	 * 
 	 * @returns {string} the base URL to SolarQuery
-	 * @memberof QueryUrlHelperMixin#
 	 */
 	baseUrl() {
 		const path = this.env(SolarQueryPathKey) || SolarQueryDefaultPath;

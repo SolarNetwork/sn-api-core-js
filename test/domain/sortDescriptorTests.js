@@ -33,12 +33,12 @@ test('core:sortDescriptor:toUriEncoding:descending', t => {
 
 test('core:sortDescriptor:toUriEncoding:indexed:ascending', t => {
     const s = new SortDescriptor('foo', false);
-    t.is(s.toUriEncoding(0), 'sortDescriptors%5B0%5D.key=foo');
+    t.is(s.toUriEncoding(0), 'sorts%5B0%5D.key=foo');
 });
 
 test('core:sortDescriptor:toUriEncoding:indexed:descending', t => {
     const s = new SortDescriptor('foo', true);
-    t.is(s.toUriEncoding(0), 'sortDescriptors%5B0%5D.key=foo&sortDescriptors%5B0%5D.descending=true');
+    t.is(s.toUriEncoding(0), 'sorts%5B0%5D.key=foo&sorts%5B0%5D.descending=true');
 });
 
 test('core:sortDescriptor:toUriEncoding:indexed:descending:customPropName', t => {

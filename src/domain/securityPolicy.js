@@ -2,10 +2,10 @@ import { Aggregation } from './aggregation';
 import { LocationPrecision } from './locationPrecision';
 
 /**
- * Get a Set from a Set or array or object, returning <code>null</code> if the set would be empty.
+ * Get a Set from a Set or array or object, returning `null` if the set would be empty.
  * 
  * @param {Object[]|Set<*>} obj the array, Set, or singleton object to get as a Set
- * @returns {Set<*>} the Set, or <code>null</code>
+ * @returns {Set<*>} the Set, or `null`
  * @private
  */
 function setOrNull(obj) {
@@ -25,7 +25,7 @@ function setOrNull(obj) {
  * 
  * @param {Object[]|Set<*>} [set1] the first set 
  * @param {Object[]|Set<*>} [set2] the second set 
- * @returns {Set<*>} the merged Set, or <code>null</code> if neither arguments are sets or 
+ * @returns {Set<*>} the merged Set, or `null` if neither arguments are sets or 
  *                   neither argument have any values
  * @private
  */
@@ -50,21 +50,22 @@ function mergedSets(set1, set2) {
 /**
  * An immutable set of security restrictions that can be attached to other objects, like auth tokens.
  * 
- * Use the {@link SecurityPolicyBuilder} to create instances of this class with a fluent API.
+ * Use the {@link module:domain~SecurityPolicyBuilder} to create instances of this class with a fluent API.
+ * @alias module:domain~SecurityPolicy
  */
 class SecurityPolicy {
 
 	/**
 	 * Constructor.
 	 * 
-	 * @param {number[]|Set<number>} [nodeIds] the node IDs to restrict to, or <code>null</code> for no restriction
-	 * @param {string[]|Set<string>} [sourceIds] the source ID to restrict to, or <code>null</code> for no restriction
-	 * @param {Aggregation[]|Set<Aggregation>} [aggregations] the aggregation names to restrict to, or <code>null</code> for no restriction
-	 * @param {Aggregation} [minAggregation] if specified, a minimum aggregation level that is allowed
-	 * @param {Set<LocationPrecision>} [locationPrecisions] the location precision names to restrict to, or <code>null</code> for no restriction
-	 * @param {LocationPrecision} [minLocationPrecision] if specified, a minimum location precision that is allowed
-	 * @param {Set<string>} [nodeMetadataPaths] the <code>SolarNodeMetadata</code> paths to restrict to, or <code>null</code> for no restriction
-	 * @param {Set<string>} [userMetadataPaths] the <code>UserNodeMetadata</code> paths to restrict to, or <code>null</code> for no restriction
+	 * @param {number[]|Set<number>} [nodeIds] the node IDs to restrict to, or `null` for no restriction
+	 * @param {string[]|Set<string>} [sourceIds] the source ID to restrict to, or `null` for no restriction
+	 * @param {module:domain~Aggregation[]|Set<module:domain~Aggregation>} [aggregations] the aggregation names to restrict to, or `null` for no restriction
+	 * @param {module:domain~Aggregation} [minAggregation] if specified, a minimum aggregation level that is allowed
+	 * @param {Set<module:domain~LocationPrecision>} [locationPrecisions] the location precision names to restrict to, or `null` for no restriction
+	 * @param {module:domain~LocationPrecision} [minLocationPrecision] if specified, a minimum location precision that is allowed
+	 * @param {Set<string>} [nodeMetadataPaths] the `SolarNodeMetadata` paths to restrict to, or `null` for no restriction
+	 * @param {Set<string>} [userMetadataPaths] the `UserNodeMetadata` paths to restrict to, or `null` for no restriction
 	 */
     constructor(nodeIds, sourceIds, aggregations, minAggregation, locationPrecisions,
 			minLocationPrecision, nodeMetadataPaths, userMetadataPaths) {
@@ -84,7 +85,7 @@ class SecurityPolicy {
 	/**
 	 * Get the node IDs.
 	 * 
-	 * @returns {Set<number>} the node IDs, or <code>null</code>
+	 * @returns {Set<number>} the node IDs, or `null`
 	 */
 	get nodeIds() {
 		return this._nodeIds;
@@ -93,7 +94,7 @@ class SecurityPolicy {
 	/**
 	 * Get the source IDs.
 	 * 
-	 * @returns {Set<string>} the source IDs, or <code>null</code>
+	 * @returns {Set<string>} the source IDs, or `null`
 	 */
 	get sourceIds() {
 		return this._sourceIds;
@@ -102,7 +103,7 @@ class SecurityPolicy {
 	/**
 	 * Get the aggregations.
 	 * 
-	 * @returns {Set<Aggregation>} the aggregations, or <code>null</code>
+	 * @returns {Set<module:domain~Aggregation>} the aggregations, or `null`
 	 */
 	get aggregations() {
 		return this._aggregations;
@@ -111,7 +112,7 @@ class SecurityPolicy {
 	/**
 	 * Get the location precisions.
 	 * 
-	 * @returns {Set<LocationPrecision>} the precisions, or <code>null</code>
+	 * @returns {Set<module:domain~LocationPrecision>} the precisions, or `null`
 	 */
 	get locationPrecisions() {
 		return this._locationPrecisions;
@@ -120,7 +121,7 @@ class SecurityPolicy {
 	/**
 	 * Get the minimum aggregation.
 	 * 
-	 * @returns {Aggregation} the minimum aggregation, or <code>null</code>
+	 * @returns {module:domain~Aggregation} the minimum aggregation, or `null`
 	 */
 	get minAggregation() {
 		return this._minAggregation;
@@ -129,7 +130,7 @@ class SecurityPolicy {
 	/**
 	 * Get the minimum location precision.
 	 * 
-	 * @returns {LocationPrecision} the minimum precision, or <code>null</code>
+	 * @returns {module:domain~LocationPrecision} the minimum precision, or `null`
 	 */
 	get minLocationPrecision() {
 		return this._minLocationPrecision;
@@ -138,7 +139,7 @@ class SecurityPolicy {
 	/**
 	 * Get the node metadata paths.
 	 * 
-	 * @returns {Set<string>} the node metadata paths, or <code>null</code>
+	 * @returns {Set<string>} the node metadata paths, or `null`
 	 */
 	get nodeMetadataPaths() {
 		return this._nodeMetadataPaths;
@@ -147,7 +148,7 @@ class SecurityPolicy {
 	/**
 	 * Get the user metadata paths.
 	 * 
-	 * @returns {Set<string>} the user metadata paths, or <code>null</code>
+	 * @returns {Set<string>} the user metadata paths, or `null`
 	 */
 	get userMetadataPaths() {
 		return this._userMetadataPaths;
@@ -211,15 +212,16 @@ const MIN_AGGREGATION_CACHE = new Map(); // Map<string, Set<Aggregation>>
 const MIN_LOCATION_PRECISION_CACHE = new Map(); // Map<string, Set<LocationPrecision>>
 
 /**
- * A mutable builder object for {@link SecurityPolicy} instances.
+ * A mutable builder object for {@link module:domain~SecurityPolicy} instances.
+ * @alias module:domain~SecurityPolicyBuilder
  */
-export class SecurityPolicyBuilder {
+class SecurityPolicyBuilder {
 
 	/**
 	 * Apply all properties from another SecurityPolicy.
 	 * 
-	 * @param {SecurityPolicy} policy the SecurityPolicy to apply
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @param {module:domain~SecurityPolicy} policy the SecurityPolicy to apply
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	withPolicy(policy) {
 		if ( policy ) {
@@ -238,8 +240,8 @@ export class SecurityPolicyBuilder {
 	/**
 	 * Merge all properties from another SecurityPolicy.
 	 * 
-	 * @param {SecurityPolicy} policy the SecurityPolicy to merge
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @param {module:domain~SecurityPolicy} policy the SecurityPolicy to merge
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	addPolicy(policy) {
 		if ( policy ) {
@@ -263,7 +265,7 @@ export class SecurityPolicyBuilder {
 	 * Set the node IDs.
 	 * 
 	 * @param {number[]|Set<number>} nodeIds the node IDs to use
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	withNodeIds(nodeIds) {
 		this.nodeIds = setOrNull(nodeIds);
@@ -274,7 +276,7 @@ export class SecurityPolicyBuilder {
 	 * Add a set of node IDs.
 	 * 
 	 * @param {number[]|Set<number>} nodeIds the node IDs to add
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	addNodeIds(nodeIds) {
 		return this.withNodeIds(mergedSets(this.nodeIds, nodeIds));
@@ -284,7 +286,7 @@ export class SecurityPolicyBuilder {
 	 * Set the node metadata paths.
 	 * 
 	 * @param {string[]|Set<string>} nodeMetadataPaths the path expressions to use
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	withNodeMetadataPaths(nodeMetadataPaths) {
 		this.nodeMetadataPaths = setOrNull(nodeMetadataPaths);
@@ -295,7 +297,7 @@ export class SecurityPolicyBuilder {
 	 * Add a set of node metadata paths.
 	 * 
 	 * @param {string[]|Set<string>} nodeMetadataPaths the path expressions to add
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	addNodeMetadataPaths(nodeMetadataPaths) {
 		return this.withNodeMetadataPaths(mergedSets(this.nodeMetadataPaths, nodeMetadataPaths));
@@ -305,7 +307,7 @@ export class SecurityPolicyBuilder {
 	 * Set the user metadata paths.
 	 * 
 	 * @param {string[]|Set<string>} userMetadataPaths the path expressions to use
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	withUserMetadataPaths(userMetadataPaths) {
 		this.userMetadataPaths = setOrNull(userMetadataPaths);
@@ -316,7 +318,7 @@ export class SecurityPolicyBuilder {
 	 * Add a set of user metadata paths.
 	 * 
 	 * @param {string[]|Set<string>} userMetadataPaths the path expressions to add
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	addUserMetadataPaths(userMetadataPaths) {
 		return this.withUserMetadataPaths(mergedSets(this.userMetadataPaths, userMetadataPaths));
@@ -326,7 +328,7 @@ export class SecurityPolicyBuilder {
 	 * Set the source IDs.
 	 * 
 	 * @param {string[]|Set<string>} sourceIds the source IDs to use
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	withSourceIds(sourceIds) {
 		this.sourceIds = setOrNull(sourceIds);
@@ -337,7 +339,7 @@ export class SecurityPolicyBuilder {
 	 * Add source IDs.
 	 * 
 	 * @param {string[]|Set<string>} sourceIds the source IDs to add
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	addSourceIds(sourceIds) {
 		return this.withSourceIds(mergedSets(this.sourceIds, sourceIds));
@@ -346,8 +348,8 @@ export class SecurityPolicyBuilder {
 	/**
 	 * Set the aggregations.
 	 * 
-	 * @param {Aggregation[]|Set<Aggregation>} aggregations the aggregations to use
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @param {module:domain~Aggregation[]|Set<module:domain~Aggregation>} aggregations the aggregations to use
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	withAggregations(aggregations) {
 		this.aggregations = setOrNull(aggregations);
@@ -357,8 +359,8 @@ export class SecurityPolicyBuilder {
 	/**
 	 * Set the aggregations.
 	 * 
-	 * @param {Aggregation[]|Set<Aggregation>} aggregations the aggregations to add
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @param {module:domain~Aggregation[]|Set<module:domain~Aggregation>} aggregations the aggregations to add
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	addAggregations(aggregations) {
 		return this.withAggregations(mergedSets(this.aggregations, aggregations));
@@ -367,8 +369,8 @@ export class SecurityPolicyBuilder {
 	/**
 	 * Set the location precisions.
 	 * 
-	 * @param {LocationPrecision[]|Set<LocationPrecision>} locationPrecisions the precisions to use
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @param {module:domain~LocationPrecision[]|Set<module:domain~LocationPrecision>} locationPrecisions the precisions to use
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	withLocationPrecisions(locationPrecisions) {
 		this.locationPrecisions = setOrNull(locationPrecisions);
@@ -378,8 +380,8 @@ export class SecurityPolicyBuilder {
 	/**
 	 * Add location precisions.
 	 * 
-	 * @param {LocationPrecision[]|Set<LocationPrecision>} locationPrecisions the precisions to add
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @param {module:domain~LocationPrecision[]|Set<module:domain~LocationPrecision>} locationPrecisions the precisions to add
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	addLocationPrecisions(locationPrecisions) {
 		return this.withLocationPrecisions(mergedSets(this.locationPrecisions, locationPrecisions));
@@ -388,8 +390,8 @@ export class SecurityPolicyBuilder {
 	/**
 	 * Set a minimum aggregation level.
 	 * 
-	 * @param {Aggregation} minAggregation the minimum aggregation level to set
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @param {module:domain~Aggregation} minAggregation the minimum aggregation level to set
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	withMinAggregation(minAggregation) {
 		this.minAggregation = minAggregation;
@@ -399,10 +401,10 @@ export class SecurityPolicyBuilder {
 	/**
 	 * Build the effective aggregation level set from the policy settings.
 	 * 
-	 * This computes a set of aggregation levels based on the configured <code>minAggregation</code>
-	 * and <code>aggregations</code> values.
+	 * This computes a set of aggregation levels based on the configured `minAggregation`
+	 * and `aggregations` values.
 	 * 
-	 * @returns {Set<Aggregation>} the aggregation set
+	 * @returns {Set<module:domain~Aggregation>} the aggregation set
 	 * @private
 	 */
 	buildAggregations() {
@@ -417,22 +419,22 @@ export class SecurityPolicyBuilder {
 	}
 
 	/**
-	 * Treat the configured <code>locationPrecisions</code> set as a single
+	 * Treat the configured `locationPrecisions` set as a single
 	 * minimum value or a list of exact values.
 	 * 
-	 * By default if <code>locationPrecisions</code> is configured with a single
+	 * By default if `locationPrecisions` is configured with a single
 	 * value it will be treated as a <em>minimum</em> value, and any
-	 * {@link LocationPrecision} with a {@link LocationPrecision#precision} equal 
+	 * {@link module:domain~LocationPrecision} with a {@link module:domain~LocationPrecision#precision} equal 
 	 * to or higher than that value's level will be included in the generated
-	 * {@link SecurityPolicy#locationPrecisions} set. Set this to
-	 * <code>null</code> to disable that behavior and treat
-	 * <code>locationPrecisions</code> as the exact values to include in the
-	 * generated {@link SecurityPolicy#locationPrecisions} set.
+	 * {@link module:domain~SecurityPolicy#locationPrecisions} set. Set this to
+	 * `null` to disable that behavior and treat
+	 * `locationPrecisions` as the exact values to include in the
+	 * generated {@link module:domain~SecurityPolicy#locationPrecisions} set.
 	 * 
-	 * @param {LocationPrecision|null} minLocationPrecision
-	 *        <code>null</code> to treat configured location precision values
+	 * @param {module:domain~LocationPrecision|null} minLocationPrecision
+	 *        `null` to treat configured location precision values
 	 *        as-is, or else the minimum threshold
-	 * @returns {SecurityPolicyBuilder} this object
+	 * @returns {module:domain~SecurityPolicyBuilder} this object
 	 */
 	withMinLocationPrecision(minLocationPrecision) {
 		this.minLocationPrecision = minLocationPrecision;
@@ -442,10 +444,10 @@ export class SecurityPolicyBuilder {
 	/**
 	 * Build the effective aggregation level set from the policy settings.
 	 * 
-	 * This computes a set of location precision levels based on the configured <code>minLocationPrecision</code>
-	 * and <code>locationPrecisions</code> values.
+	 * This computes a set of location precision levels based on the configured `minLocationPrecision`
+	 * and `locationPrecisions` values.
 	 * 
-	 * @returns {Set<LocationPrecision>} the precision set
+	 * @returns {Set<module:domain~LocationPrecision>} the precision set
 	 * @private
 	 */
 	buildLocationPrecisions() {
@@ -462,7 +464,7 @@ export class SecurityPolicyBuilder {
 	/**
 	 * Create a new {@link SecurityPolicy} out of the properties configured on this builder.
 	 * 
-	 * @returns {SecurityPolicy} the new policy instance
+	 * @returns {module:domain~SecurityPolicy} the new policy instance
 	 */
 	build() {
 		return new SecurityPolicy(this.nodeIds, this.sourceIds, 
@@ -473,3 +475,4 @@ export class SecurityPolicyBuilder {
 }
 
 export default SecurityPolicy;
+export { SecurityPolicyBuilder };

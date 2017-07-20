@@ -1,18 +1,22 @@
 import test from 'ava';
 
 import { NodeDatumUrlHelper } from 'net/nodeDatumUrlHelperMixin';
+import Aggregations from 'domain/aggregation';
+import DatumFilter from 'domain/datumFilter';
+import Pagination from 'domain/pagination';
+import SortDescriptor from 'domain/sortDescriptor';
 
-test('query:net:nodeDatumUrlHelperMixin:create', t => {
+test('core:net:nodeDatumUrlHelperMixin:create', t => {
 	const helper = new NodeDatumUrlHelper();
 	t.truthy(helper);
 });
 
-test('query:net:nodeDatumUrlHelperMixin:baseUrl', t => {
+test('core:net:nodeDatumUrlHelperMixin:baseUrl', t => {
 	const helper = new NodeDatumUrlHelper();
 	t.is(helper.baseUrl(), 'https://data.solarnetwork.net/solarquery/api/v1/sec');
 });
 
-test('query:net:nodeDatumUrlHelperMixin:reportableintervalUrl', t => {
+test('core:net:nodeDatumUrlHelperMixin:reportableintervalUrl', t => {
     const helper = new NodeDatumUrlHelper();
     helper.nodeId = 123;
 
@@ -26,7 +30,7 @@ test('query:net:nodeDatumUrlHelperMixin:reportableintervalUrl', t => {
         'argument node ID used');        
 });
 
-test('query:net:nodeDatumUrlHelperMixin:reportableintervalUrl:sources', t => {
+test('core:net:nodeDatumUrlHelperMixin:reportableintervalUrl:sources', t => {
     const helper = new NodeDatumUrlHelper();
     helper.nodeId = 123;
     helper.sourceId = 'abc';
@@ -51,26 +55,26 @@ test('query:net:nodeDatumUrlHelperMixin:reportableintervalUrl:sources', t => {
         'source IDs URI escaped');        
 });
 
-test('query:net:nodeDatumUrlHelperMixin:availableSources:empty', t => {
+test('core:net:nodeDatumUrlHelperMixin:availableSources:empty', t => {
     const helper = new NodeDatumUrlHelper();
     t.is(helper.availableSourcesUrl(),
         'https://data.solarnetwork.net/solarquery/api/v1/sec/range/sources');
 });
 
-test('query:net:nodeDatumUrlHelperMixin:availableSources:emptyAndNullArgNodeId', t => {
+test('core:net:nodeDatumUrlHelperMixin:availableSources:emptyAndNullArgNodeId', t => {
     const helper = new NodeDatumUrlHelper();
     t.is(helper.availableSourcesUrl(null),
         'https://data.solarnetwork.net/solarquery/api/v1/sec/range/sources');
 });
 
-test('query:net:nodeDatumUrlHelperMixin:availableSources:emptyAndNullArgNodeId', t => {
+test('core:net:nodeDatumUrlHelperMixin:availableSources:emptyAndNullArgNodeId', t => {
     const helper = new NodeDatumUrlHelper();
     t.is(helper.availableSourcesUrl(null, '(foo=bar)'),
         'https://data.solarnetwork.net/solarquery/api/v1/sec/range/sources'
             +'?metadataFilter=(foo%3Dbar)');
 });
 
-test('query:net:nodeDatumUrlHelperMixin:availableSources:default', t => {
+test('core:net:nodeDatumUrlHelperMixin:availableSources:default', t => {
     const helper = new NodeDatumUrlHelper();
     helper.nodeId = 123;
     t.is(helper.availableSourcesUrl(),
@@ -83,7 +87,7 @@ test('query:net:nodeDatumUrlHelperMixin:availableSources:default', t => {
             +'?nodeIds=123,234');
 });
 
-test('query:net:nodeDatumUrlHelperMixin:availableSources:argNodeId', t => {
+test('core:net:nodeDatumUrlHelperMixin:availableSources:argNodeId', t => {
     const helper = new NodeDatumUrlHelper();
     helper.nodeId = 123;
     t.is(helper.availableSourcesUrl(234),
@@ -94,9 +98,22 @@ test('query:net:nodeDatumUrlHelperMixin:availableSources:argNodeId', t => {
             +'?nodeIds=234,345');
 });
 
-test('query:net:nodeDatumUrlHelperMixin:availableSources:metadataFilter', t => {
+test('core:net:nodeDatumUrlHelperMixin:availableSources:metadataFilter', t => {
     const helper = new NodeDatumUrlHelper();
     t.is(helper.availableSourcesUrl(123, '(foo=bar)'),
         'https://data.solarnetwork.net/solarquery/api/v1/sec/range/sources'
             +'?nodeIds=123&metadataFilter=(foo%3Dbar)');
+});
+
+test('core:net:nodeDatumUrlHelperMixin:listDatumUrl', t => {
+    const helper = new NodeDatumUrlHelper();
+    const filter = new DatumFilter();
+    filter.nodeId = 123;
+    filter.aggregation = Aggregations.Hour;
+    filter.startDate = new Date('2017-01-01T12:12:12.123Z');
+    filter.endDate = new Date(filter.startDate.getTime() + 24 * 60 * 60 * 1000);
+	t.is(helper.listDatumUrl(filter, [new SortDescriptor('foo')], new Pagination(1, 2)),
+		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/list?'
+        +'nodeId=123&aggregation=Hour&startDate=2017-01-01T12%3A12&endDate=2017-01-02T12%3A12'
+        +'&sorts%5B0%5D.key=foo&max=1&offset=2');
 });

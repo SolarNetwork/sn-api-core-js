@@ -18,17 +18,18 @@ function createProperty(me, prop) {
 /**
  * A configuration utility object.
  *
- * Properties can be get/set by using the {@link Configuration#value} function.
+ * Properties can be get/set by using the {@link module:util~Configuration#value} function.
+ * @alias module:util~Configuration
  */
 class Configuration {
 
 	/**
 	 * Constructor.
 	 *
-	 * For any properties passed on <code>initialMap</code>, {@link Configutration#value} will
+	 * For any properties passed on `initialMap`, {@link module:util~Configuration#value} will
 	 * be called so those properties are defined on this instance.
 	 *
-	 * @param {Object} initialMap the optional initial properties to store
+	 * @param {object} initialMap the optional initial properties to store
 	 */
 	constructor(initialMap) {
 		this.map = {};
@@ -40,8 +41,8 @@ class Configuration {
 	/**
 	 * Test if a key is truthy.
 	 *
-	 * @param {String} key the key to test
-	 * @returns {Boolean} <code>true</code> if the key is enabled
+	 * @param {string} key the key to test
+	 * @returns {boolean} `true` if the key is enabled
 	 */
 	enabled(key) {
 		if ( key === undefined ) {
@@ -53,12 +54,12 @@ class Configuration {
 	/**
 	 * Set or toggle the enabled status of a given key.
 	 *
-	 * <p>If the <em>enabled</em> parameter is not passed, then the enabled
+	 * <p>If the `enabled` parameter is not passed, then the enabled
 	 * status will be toggled to its opposite value.</p>
 	 *
-	 * @param {String} key they key to set
-	 * @param {Boolean} enabled the optional enabled value to set
-	 * @returns {Configuration} this object to allow method chaining
+	 * @param {string} key they key to set
+	 * @param {boolean} enabled the optional enabled value to set
+	 * @returns {module:util~Configuration} this object to allow method chaining
 	 */
 	toggle(key, enabled) {
 		var val = enabled;
@@ -75,10 +76,10 @@ class Configuration {
 	/**
 	 * Get or set a configuration value.
 	 *
-	 * @param {String} key The key to get or set the value for
-	 * @param {Object} [newValue] If defined, the new value to set for the given <code>key</code>.
-	 *                            If <code>null</code> then the value will be removed.
-	 * @returns {Object} If called as a getter, the associated value for the given <code>key</code>,
+	 * @param {string} key The key to get or set the value for
+	 * @param {object} [newValue] If defined, the new value to set for the given `key`.
+	 *                            If `null` then the value will be removed.
+	 * @returns {object} If called as a getter, the associated value for the given `key`,
 	 *                   otherwise this object.
 	 */
 	value(key, newValue) {
@@ -102,8 +103,8 @@ class Configuration {
 	/**
 	 * Get or set multiple properties.
 	 * 
-	 * @param {Object} [newMap] a map of values to set
-	 * @returns {Object} if called as a getter, all properties of this object copied into a simple object;
+	 * @param {object} [newMap] a map of values to set
+	 * @returns {object} if called as a getter, all properties of this object copied into a simple object;
 	 *                   otherwise this object
 	 */
 	values(newMap) {

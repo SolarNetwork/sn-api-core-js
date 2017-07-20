@@ -1,6 +1,9 @@
+/** @module domain */
+
 export { default as Aggregations, Aggregation } from './aggregation';
 export { default as AuthTokenStatuses, AuthTokenStatus } from './authTokenStatus';
 export { default as AuthTokenTypes, AuthTokenType } from './authTokenType';
+export { default as DatumFilter } from './datumFilter';
 export { default as GeneralMetadata,
     stringMapToObject,
     objectToStringMap } from './generalMetadata';

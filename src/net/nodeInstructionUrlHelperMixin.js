@@ -3,20 +3,26 @@ import NodeUrlHelperMixin from './nodeUrlHelperMixin';
 import UserUrlHelperMixin from './userUrlHelperMixin'
 
 /**
- * A mixin class that adds SolarNode instruction support to {@link UrlHelper}.
- * 
- * @param {UrlHelper} superclass the UrlHelper class to mix onto
- * @mixin
- * @returns {*} the mixin
+ * Create a NodeInstructionUrlHelperMixin class.
+ *
+ * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
+ * @return {module:net~NodeInstructionUrlHelperMixin} the mixin class
  */
-const NodeInstructionUrlHelperMixin = (superclass) => class extends superclass {
+const NodeInstructionUrlHelperMixin = (superclass) => 
+
+/**
+ * A mixin class that adds SolarNode instruction support to {@link module:net~UrlHelper}.
+ * 
+ * @mixin
+ * @alias module:net~NodeInstructionUrlHelperMixin
+ */
+class extends superclass {
 
 	/**
 	 * Generate a URL to get all details for a specific instruction.
 	 * 
 	 * @param {number} instructionId the instruction ID to get
 	 * @returns {string} the URL
-	 * @memberof NodeInstructionUrlHelperMixin#
 	 */
 	viewInstructionUrl(instructionId) {
 		return (this.baseUrl() +'/instr/view?id=' +encodeURIComponent(instructionId));
@@ -27,7 +33,6 @@ const NodeInstructionUrlHelperMixin = (superclass) => class extends superclass {
 	 * 
 	 * @param {number} [nodeId] a specific node ID to use; if not provided the <code>nodeId</code> property of this class will be used
 	 * @returns {string} the URL
-	 * @memberof NodeInstructionUrlHelperMixin#
 	 */
 	viewActiveInstructionsUrl(nodeId) {
 		return (this.baseUrl() +'/instr/viewActive?nodeId=' 
@@ -39,7 +44,6 @@ const NodeInstructionUrlHelperMixin = (superclass) => class extends superclass {
 	 * 
 	 * @param {number} [nodeId] a specific node ID to use; if not provided the <code>nodeId</code> property of this class will be used
 	 * @returns {string} the URL
-	 * @memberof NodeInstructionUrlHelperMixin#
 	 */
 	viewPendingInstructionsUrl(nodeId) {
 		return (this.baseUrl() +'/instr/viewPending?nodeId=' 
@@ -53,7 +57,6 @@ const NodeInstructionUrlHelperMixin = (superclass) => class extends superclass {
 	 * @param {InstructionState} state the instruction state to set
 	 * @returns {string} the URL
 	 * @see the {@link InstructionStates} enum for possible state values
-	 * @memberof NodeInstructionUrlHelperMixin#
 	 */
 	updateInstructionStateUrl(instructionId, state) {
 		return (this.baseUrl()
@@ -68,7 +71,6 @@ const NodeInstructionUrlHelperMixin = (superclass) => class extends superclass {
 	 * @param {Object[]} [parameters] an array of parameter objects in the form <code>{name:n1, value:v1}</code>.
 	 * @param {number} [nodeId] a specific node ID to use; if not provided the <code>nodeId</code> property of this class will be used
 	 * @returns {string} the URL
-	 * @memberof NodeInstructionUrlHelperMixin#
 	 */
 	queueInstructionUrl(topic, parameters, nodeId) {
 		var url = (this.baseUrl()
@@ -90,29 +92,32 @@ const NodeInstructionUrlHelperMixin = (superclass) => class extends superclass {
 	 * @param {string} name the parameter name 
 	 * @param {*} value the parameter value
 	 * @returns {object} with <code>name</code> and <code>value</code> properties
-	 * @memberof NodeInstructionUrlHelperMixin
 	 */
 	static instructionParameter(name, value) {
 		return {name:name, value:value};
 	}
 };
 
-export default NodeInstructionUrlHelperMixin;
-
 /**
- * A concrete {@link UrlHelper} with the {@link NodeInstructionUrlHelperMixin},  {@link UserUrlHelperMixin}, and
- * {@link NodeUrlHelperMixin} mixins.
+ * A concrete {@link UrlHelper} with the {@link module:net~NodeInstructionUrlHelperMixin},  
+ * {@link module:net~UserUrlHelperMixin}, and {@link module:net~NodeUrlHelperMixin} mixins.
  * 
- * @mixes NodeInstructionUrlHelperMixin
- * @mixes UserUrlHelperMixin
- * @mixes NodeUrlHelperMixin
- * @extends UrlHelper
+ * @mixes module:net~NodeInstructionUrlHelperMixin
+ * @mixes module:net~UserUrlHelperMixin
+ * @mixes module:net~NodeUrlHelperMixin
+ * @extends module:net~UrlHelper
+ * @alias module:net~NodeInstructionUrlHelper
  */
-export class NodeInstructionUrlHelper extends NodeInstructionUrlHelperMixin(UserUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))) {
+class NodeInstructionUrlHelper extends NodeInstructionUrlHelperMixin(UserUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))) {
 
 }
 
 /**
  * The static {@link NodeInstructionUrlHelperMixin#instructionParameter} method so it can be imported directly.
+ * 
+ * @alias module:net~instructionParameter
  */
-export const instructionParameter = NodeInstructionUrlHelper.instructionParameter;
+const instructionParameter = NodeInstructionUrlHelper.instructionParameter;
+
+export default NodeInstructionUrlHelperMixin;
+export { instructionParameter, NodeInstructionUrlHelper };

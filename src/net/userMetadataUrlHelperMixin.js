@@ -2,13 +2,20 @@ import UrlHelper from './urlHelper';
 import UserUrlHelperMixin from './userUrlHelperMixin'
 
 /**
- * A mixin class that adds user metadata support to <code>UrlHelper</code>.
- * 
- * @param {UrlHelper} superclass the UrlHelper class to mix onto 
- * @mixin
- * @returns {*} the mixin
+ * Create a UserMetadataUrlHelperMixin class.
+ *
+ * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
+ * @return {module:net~UserMetadataUrlHelperMixin} the mixin class
  */
-const UserMetadataUrlHelperMixin = (superclass) => class extends superclass {
+const UserMetadataUrlHelperMixin = (superclass) => 
+
+/**
+ * A mixin class that adds user metadata support to {@link module:net~UrlHelper}.
+ * 
+ * @mixin
+ * @alias module:net~UserMetadataUrlHelperMixin
+ */
+class extends superclass {
 
     /**
 	 * Generate a URL for viewing the configured user's metadata via a <code>GET</code> request.
@@ -17,7 +24,6 @@ const UserMetadataUrlHelperMixin = (superclass) => class extends superclass {
      *                                        if not provided the <code>userIds</code> property of this class will be used;
      *                                        if <code>null</code> then get the metadata for the requesting user
 	 * @returns {string} the URL
-     * @memberof UserMetadataUrlHelperMixin#
 	 */
 	viewUserMetadataUrl(userId) {
         let result = this.baseUrl() +'/users/meta';
@@ -52,7 +58,6 @@ const UserMetadataUrlHelperMixin = (superclass) => class extends superclass {
      *                               if not provided the <code>userId</code> property of this class will be used;
      *                               if <code>null</code> then add metadata to the requesting user
 	 * @returns {string} the URL
-     * @memberof UserMetadataUrlHelperMixin#
 	 */
 	addUserMetadataUrl(userId) {
         return this.userMetadataUrl(userId);
@@ -65,7 +70,6 @@ const UserMetadataUrlHelperMixin = (superclass) => class extends superclass {
      *                               if not provided the <code>userId</code> property of this class will be used;
      *                               if <code>null</code> then add metadata to the requesting user
 	 * @returns {string} the URL
-     * @memberof UserMetadataUrlHelperMixin#
 	 */
 	replaceUserMetadataUrl(userId) {
         return this.userMetadataUrl(userId);
@@ -78,22 +82,24 @@ const UserMetadataUrlHelperMixin = (superclass) => class extends superclass {
      *                               if not provided the <code>userId</code> property of this class will be used;
      *                               if <code>null</code> then add metadata to the requesting user
 	 * @returns {string} the URL
-     * @memberof UserMetadataUrlHelperMixin#
 	 */
 	deleteUserMetadataUrl(userId) {
         return this.userMetadataUrl(userId);
 	}
 };
 
-export default UserMetadataUrlHelperMixin;
-
 /**
- * A concrete {@link UrlHelper} with the {@link UserMetadataUrlHelperMixin} and  {@link UserUrlHelperMixin} mixins.
+ * A concrete {@link module:net~UrlHelper} with the {@link module:net~UserMetadataUrlHelperMixin}
+ * and {@link module:net~UserUrlHelperMixin} mixins.
  * 
- * @mixes UserMetadataUrlHelperMixin
- * @mixes UserUrlHelperMixin
- * @extends UrlHelper
+ * @mixes module:net~UserMetadataUrlHelperMixin
+ * @mixes module:net~UserUrlHelperMixin
+ * @extends module:net~UrlHelper
+ * @alias module:net~UserMetadataUrlHelper
  */
-export class UserMetadataUrlHelper extends UserMetadataUrlHelperMixin(UserUrlHelperMixin(UrlHelper)) {
+class UserMetadataUrlHelper extends UserMetadataUrlHelperMixin(UserUrlHelperMixin(UrlHelper)) {
 
 }
+
+export default UserMetadataUrlHelperMixin;
+export { UserMetadataUrlHelper };
