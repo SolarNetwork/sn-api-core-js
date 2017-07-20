@@ -6,9 +6,9 @@
  *
  * <p>Multiple parameters of the same name will be stored as an array on the returned object.</p>
  *
- * @param {String} search the query portion of the URL, which may optionally include
+ * @param {string} search the query portion of the URL, which may optionally include
  *                        the leading '?' character
- * @return {Object} the parsed query parameters, as a parameter object
+ * @return {object} the parsed query parameters, as a parameter object
  */
 function urlQueryParse(search) {
     var params = {};

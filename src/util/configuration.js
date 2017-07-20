@@ -1,5 +1,3 @@
-/** @module util */
-
 function createGetter(me, prop) {
 	return function() { return me.map[prop]; };
 }
@@ -21,6 +19,7 @@ function createProperty(me, prop) {
  * A configuration utility object.
  *
  * Properties can be get/set by using the {@link module:util~Configuration#value} function.
+ * @alias module:util~Configuration
  */
 class Configuration {
 

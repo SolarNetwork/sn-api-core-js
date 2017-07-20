@@ -1,7 +1,6 @@
-/** @module util */
-
 /**
  * A case-insensitive string key multi-value map object.
+ * @alias module:util~MultiMap
  */
 class MultiMap {
 

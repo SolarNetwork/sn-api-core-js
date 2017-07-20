@@ -1,7 +1,6 @@
-/** @module util */
-
 /**
  * A basic map-like object.
+ * @alias module:util~PropMap
  */
 class PropMap {
     /**
