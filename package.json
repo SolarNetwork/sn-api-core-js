@@ -64,7 +64,8 @@
         "npm run build"
       ],
       "post_commit_commands": [
-        "npm test"
+        "npm test",
+        "npm run apidoc"
       ],
       "post_complete_commands": [
         "npm publish",
