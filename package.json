@@ -67,7 +67,8 @@
         "npm test"
       ],
       "post_complete_commands": [
-        "npm publish"
+        "npm publish",
+        "npmversion --increment prepatch --preid dev --nogit-tag"
       ],
       "files_to_commit": [
         "./lib/*"
