@@ -1,3 +1,5 @@
+/** @module net */
+
 import Hex from 'crypto-js/enc-hex';
 import HmacSHA256 from 'crypto-js/hmac-sha256';
 import SHA256 from 'crypto-js/sha256';
@@ -51,18 +53,29 @@ class AuthorizationV2Builder {
      * Constructor.
      * 
      * @param {string} token the auth token to use
-     * @param {Environment} [environment] the environment to use; if not provided a default environment will be created 
+     * @param {module:net~Environment} [environment] the environment to use; if not provided a default environment will be created 
      */
     constructor(token, environment) {
+
+        /**
+         * The SolarNet auth token value.
+         * @member {string}
+         */
         this.tokenId = token;
+
+        /**
+         * The SolarNet environment.
+         * @member {module:net~Environment}
+         */
         this.environment = (environment || new Environment());
+
         this.reset();
     }
 
     /**
      * Reset to defalut property values.
      *
-     * @returns {AuthorizationV2Builder} this object
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     reset() {
         this.contentDigest = null;
@@ -80,13 +93,13 @@ class AuthorizationV2Builder {
      * Compute and cache the signing key.
      *
      * Signing keys are derived from the token secret and valid for 7 days, so
-     * this method can be used to compute a signing key so that {@link AuthorizationV2Builder#build}
+     * this method can be used to compute a signing key so that {@link module:net~AuthorizationV2Builder#build}
      * can be called later. The signing date will be set to whatever date is
-     * currently configured via {@link AuthorizationV2Builder#date}, which defaults to the
+     * currently configured via {@link module:net~AuthorizationV2Builder#date}, which defaults to the
      * current time for newly created builder instances.
      *
      * @param {string} tokenSecret the secret to sign the digest with
-     * @returns {AuthorizationV2Builder} this object
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     saveSigningKey(tokenSecret) {
         this.signingKey = this.computeSigningKey(tokenSecret);
@@ -97,7 +110,7 @@ class AuthorizationV2Builder {
      * Set the HTTP method (verb) to use.
      *
      * @param {string} val the method to use; see the {@link HttpMethod} enum for possible values
-     * @returns {AuthorizationV2Builder} this object
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     method(val) {
         this.httpMethod = val;
@@ -107,10 +120,10 @@ class AuthorizationV2Builder {
     /**
      * Set the HTTP host.
      *
-     * This is a shortcut for calling <code>HttpHeaders#put(HttpHeaders.HOST, val)</code>.
+     * This is a shortcut for calling `HttpHeaders#put(HttpHeaders.HOST, val)`.
      *
      * @param {string} val the HTTP host value to use
-     * @returns {AuthorizationV2Builder} this object
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     host(val) {
         this.httpHeaders.put(HttpHeaders.HOST, val);
@@ -121,7 +134,7 @@ class AuthorizationV2Builder {
      * Set the HTTP request path to use.
      *
      * @param {string} val the request path to use
-     * @returns {AuthorizationV2Builder} this object
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     path(val) {
         this.requestPath = val;
@@ -132,7 +145,7 @@ class AuthorizationV2Builder {
      * Set the host, path, and query parameters via a URL string.
      *
      * @param {string} url the URL value to use
-     * @returns {AuthorizationV2Builder} this object
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     url(url) {
         const uri = uriParse(url);
@@ -152,7 +165,7 @@ class AuthorizationV2Builder {
      * This is a shortcut for calling {@link HttpHeaders#put} with the key {@link HttpHeaders#CONTENT_TYPE}.
      *
      * @param {string} val the HTTP content type value to use
-     * @returns {AuthorizationV2Builder} this object
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     contentType(val) {
         this.httpHeaders.put(HttpHeaders.CONTENT_TYPE, val);
@@ -162,8 +175,8 @@ class AuthorizationV2Builder {
     /**
      * Set the authorization request date.
      *
-     * @param {Date} val the date to use; typically the current time, e.g. <code>new Date()</code>
-     * @returns {AuthorizationV2Builder} this object
+     * @param {Date} val the date to use; typically the current time, e.g. `new Date()`
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     date(val) {
         this.requestDate = (val ? val : new Date());
@@ -181,11 +194,11 @@ class AuthorizationV2Builder {
     }
 
     /**
-     * Control using the <code>X-SN-Date</code> HTTP header versus the <code>Date</code> header.
+     * Control using the `X-SN-Date` HTTP header versus the `Date` header.
      *
-     * <p>Set to <code>true</code> to use the <code>X-SN-Date</code> header, <code>false</code> to use 
-     * the <code>Date</code> header. This will return <code>true</code> if <code>X-SN-Date</code> has been
-     * added to the <code>signedHeaderNames</code> property or has been added to the <code>httpHeaders</code>
+     * <p>Set to `true` to use the `X-SN-Date` header, `false` to use 
+     * the `Date` header. This will return `true` if `X-SN-Date` has been
+     * added to the `signedHeaderNames` property or has been added to the `httpHeaders`
      * property.</p>
      *
      * @type {boolean}
@@ -218,10 +231,10 @@ class AuthorizationV2Builder {
     }
 
     /**
-     * Set the <code>useSnDate</code> property.
+     * Set the `useSnDate` property.
      *
-     * @param {boolean} enabled <code>true</code> to use the <code>X-SN-Date</code> header, <code>false</code> to use <code>Date</code>
-     * @returns {AuthorizationV2Builder} this object
+     * @param {boolean} enabled `true` to use the `X-SN-Date` header, `false` to use `Date`
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     snDate(enabled) {
         this.useSnDate = enabled;
@@ -231,11 +244,11 @@ class AuthorizationV2Builder {
     /**
      * Set a HTTP header value.
      *
-     * This is a shortcut for calling <code>HttpHeaders#put(headerName, val)</code>.
+     * This is a shortcut for calling `HttpHeaders#put(headerName, val)`.
      *
      * @param {string} headerName the header name to set
      * @param {string} headerValue the header value to set
-     * @returns {AuthorizationV2Builder} this object
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     header(headerName, headerValue) {
         this.httpHeaders.put(headerName, headerValue);
@@ -247,10 +260,10 @@ class AuthorizationV2Builder {
      *
      * The headers object must include all headers necessary by the
      * authentication scheme, and any additional headers also configured via
-     * {@link AuthorizationV2Builder#signedHttpHeaders}.
+     * {@link module:net~AuthorizationV2Builder#signedHttpHeaders}.
      *
      * @param {HttpHeaders} headers the HTTP headers to use
-     * @returns {AuthorizationV2Builder} this object
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     headers(headers) {
         this.httpHeaders = headers;
@@ -258,11 +271,11 @@ class AuthorizationV2Builder {
     }
 
     /**
-     * Set the HTTP <code>GET</code> query parameters, or <code>POST</code> form-encoded
+     * Set the HTTP `GET` query parameters, or `POST` form-encoded
      * parameters.
      *
-     * @param {MultiMap|Object} params the parameters to use, as either a {@link MultiMap} or simple <code>Object</code>
-     * @returns {AuthorizationV2Builder} this object
+     * @param {MultiMap|Object} params the parameters to use, as either a {@link MultiMap} or simple `Object`
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     queryParams(params) {
         if ( params instanceof MultiMap ) {
@@ -277,7 +290,7 @@ class AuthorizationV2Builder {
      * Set additional HTTP header names to sign with the authentication.
      *
      * @param {sring[]} signedHeaderNames additional HTTP header names to include in the signature
-     * @returns {AuthorizationV2Builder} this object
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     signedHttpHeaders(signedHeaderNames) {
         this.signedHeaderNames = signedHeaderNames;
@@ -287,8 +300,8 @@ class AuthorizationV2Builder {
     /**
      * Set the HTTP request body content SHA-256 digest value.
      *
-     * @param {string|WordArray} digest the digest value to use; if a string it is assumed to be Hex encoded
-     * @returns {AuthorizationV2Builder} this object
+     * @param {string|module:crypto-js/enc-hex~WordArray} digest the digest value to use; if a string it is assumed to be Hex encoded
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     contentSHA256(digest) {
         var contentDigest;
@@ -464,7 +477,7 @@ class AuthorizationV2Builder {
     /**
      * Compute the data to be signed by the signing key.
      * 
-     * @param {string} canonicalRequestData the request data, returned from {@link AuthorizationV2Builder#buildCanonicalRequestData}
+     * @param {string} canonicalRequestData the request data, returned from {@link module:net~AuthorizationV2Builder#buildCanonicalRequestData}
      * @returns {string} the data to sign
      * @private
      */
@@ -480,7 +493,7 @@ class AuthorizationV2Builder {
     }
 
     /**
-     * Compute a HTTP <code>Authorization</code> header value from the configured properties
+     * Compute a HTTP `Authorization` header value from the configured properties
      * on the builder, using the provided signing key.
      * 
      * @param {CryptoJS#Hash} signingKey the key to sign the computed signature data with
@@ -499,9 +512,9 @@ class AuthorizationV2Builder {
     }
 
     /**
-     * Compute a HTTP <code>Authorization</code> header value from the configured
+     * Compute a HTTP `Authorization` header value from the configured
      * properties on the builder, computing a new signing key based on the
-     * configured {@link AuthorizationV2Builder#date}.
+     * configured {@link module:net~AuthorizationV2Builder#date}.
      *
      * @param {string} tokenSecret the secret to sign the authorization with
      * @return {string} the SNWS2 HTTP Authorization header value
@@ -512,9 +525,9 @@ class AuthorizationV2Builder {
     }
 
     /**
-     * Compute a HTTP <code>Authorization</code> header value from the configured
+     * Compute a HTTP `Authorization` header value from the configured
      * properties on the builder, using a signing key configured from a previous
-     * call to {@link AuthorizationV2Builder#saveSigningKey}.
+     * call to {@link module:net~AuthorizationV2Builder#saveSigningKey}.
      *
      * @return {string} the SNWS2 HTTP Authorization header value.
      */
@@ -527,7 +540,7 @@ class AuthorizationV2Builder {
 /**
  * @function stringMatchFn
  * @param {string} e the element to test
- * @returns {boolean} <code>true</code> if the element matches
+ * @returns {boolean} `true` if the element matches
  * @private
  */
 

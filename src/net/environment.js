@@ -1,12 +1,14 @@
+/** @module net */
+
 import Configuration from '../util/configuration';
 
 /**
  * An environment configuration utility object.
  *
- * This extends <code>Configuration</code> to add support for standard properties
+ * This extends {@link module:util~Configuration} to add support for standard properties
  * needed to access the SolarNetwork API, such as host and protocol values.
  *
- * @extends Configuration
+ * @extends module:util~Configuration
  */
 class Environment extends Configuration {
 
@@ -14,12 +16,12 @@ class Environment extends Configuration {
 	 * Constructor.
 	 *
 	 * This will define the following default properties, if not supplied on the
-	 * <code>config</code> argument:
+	 * `config` argument:
 	 *
 	 * <dl>
-	 * <dt>host</dt><dd><code>data.solarnetwork.net</code></dd>
-	 * <dt>protocol</dt><dd><code>https</code></dd>
-	 * <dt>port</dt><dd><code>443</code></dd>
+	 * <dt>host</dt><dd>`data.solarnetwork.net`</dd>
+	 * <dt>protocol</dt><dd>`https`</dd>
+	 * <dt>port</dt><dd>`443`</dd>
 	 * </dl>
 	 *
 	 * @param {Object} [config] an optional set of properties to start with
@@ -33,9 +35,9 @@ class Environment extends Configuration {
 	}
 
     /**
-	 * Check if TLS is in use via the <code>https</code> protocol.
+	 * Check if TLS is in use via the `https` protocol.
 	 *
-     * @returns {boolean} <code>true</code> if the <code>protocol</code> is set to <code>https</code>
+     * @returns {boolean} `true` if the `protocol` is set to `https`
      */
 	useTls() {
 		return (this.value('protocol') === 'https');
