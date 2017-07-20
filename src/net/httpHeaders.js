@@ -1,5 +1,11 @@
+/** @module net */
+
 import MultiMap from '../util/multiMap';
 
+/**
+ * Enumeration of HTTP methods (verbs).
+ * @enum {string}
+ */
 export const HttpMethod = Object.freeze({
 	GET: 'GET',
 	HEAD: 'HEAD',
@@ -14,7 +20,7 @@ export const HttpMethod = Object.freeze({
 /**
  * Support for HTTP headers.
  * 
- * @extends MultiMap
+ * @extends module:util~MultiMap
  */
 class HttpHeaders extends MultiMap {
 	constructor() {
@@ -25,54 +31,54 @@ class HttpHeaders extends MultiMap {
 
 Object.defineProperties(HttpHeaders, {
 	/**
-	 * The <code>Content-MD5</code> header.
+	 * The `Content-MD5` header.
 	 * 
-	 * @memberof HttpHeaders
+	 * @memberof module:net~HttpHeaders
 	 * @readonly
 	 * @type {string}
 	 */
 	'CONTENT_MD5':		{ value: 'Content-MD5' },
 
 	/**
-	 * The <code>Content-Type</code> header.
+	 * The `Content-Type` header.
 	 * 
-	 * @memberof HttpHeaders
+	 * @memberof module:net~HttpHeaders
 	 * @readonly
 	 * @type {string}
 	 */
 	'CONTENT_TYPE': 	{ value: 'Content-Type' },
 
 	/**
-	 * The <code>Date</code> header.
+	 * The `Date` header.
 	 * 
-	 * @memberof HttpHeaders
+	 * @memberof module:net~HttpHeaders
 	 * @readonly
 	 * @type {string}
 	 */
 	'DATE':				{ value: 'Date' },
 
 	/**
-	 * The <code>Digest</code> header.
+	 * The `Digest` header.
 	 * 
-	 * @memberof HttpHeaders
+	 * @memberof module:net~HttpHeaders
 	 * @readonly
 	 * @type {string}
 	 */
 	'DIGEST':			{ value: 'Digest' },
 
 	/**
-	 * The <code>Host</code> header.
+	 * The `Host` header.
 	 * 
-	 * @memberof HttpHeaders
+	 * @memberof module:net~HttpHeaders
 	 * @readonly
 	 * @type {string}
 	 */
 	'HOST': 			{ value: 'Host' },
 
 	/**
-	 * The <code>X-SN-Date</code> header.
+	 * The `X-SN-Date` header.
 	 * 
-	 * @memberof HttpHeaders
+	 * @memberof module:net~HttpHeaders
 	 * @readonly
 	 * @type {string}
 	 */
