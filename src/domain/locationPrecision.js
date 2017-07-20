@@ -3,9 +3,10 @@ import ComparableEnum from '../util/comparableEnum';
 /**
  * A location precision object for use with defining named geographic precision.
  * 
- * @extends ComparableEnum
+ * @extends module:util~ComparableEnum
+ * @alias module:domain~LocationPrecision
  */
-export class LocationPrecision extends ComparableEnum {
+class LocationPrecision extends ComparableEnum {
 
     /**
      * Constructor.
@@ -32,7 +33,7 @@ export class LocationPrecision extends ComparableEnum {
     }
 
 	/**
-	 * Get the {@link LocationPrecisions} values.
+	 * Get the {@link module:domain~LocationPrecisions} values.
 	 * 
      * @override
 	 * @inheritdoc
@@ -58,17 +59,19 @@ const LocationPrecisionValues = Object.freeze([
  * The enumeration of supported LocationPrecision values.
  * 
  * @readonly
- * @enum {LocationPrecision}
- * @property {LocationPrecision} LatLong GPS coordinates
- * @property {LocationPrecision} Block a city block
- * @property {LocationPrecision} Street a street
- * @property {LocationPrecision} PostalCode a postal code (or "zip code")
- * @property {LocationPrecision} Locality a town or city
- * @property {LocationPrecision} StateOrProvince a state or province
- * @property {LocationPrecision} Region a large region
- * @property {LocationPrecision} TimeZone a time zone
- * @property {LocationPrecision} Country a country
+ * @enum {module:domain~LocationPrecision}
+ * @property {module:domain~LocationPrecision} LatLong GPS coordinates
+ * @property {module:domain~LocationPrecision} Block a city block
+ * @property {module:domain~LocationPrecision} Street a street
+ * @property {module:domain~LocationPrecision} PostalCode a postal code (or "zip code")
+ * @property {module:domain~LocationPrecision} Locality a town or city
+ * @property {module:domain~LocationPrecision} StateOrProvince a state or province
+ * @property {module:domain~LocationPrecision} Region a large region
+ * @property {module:domain~LocationPrecision} TimeZone a time zone
+ * @property {module:domain~LocationPrecision} Country a country
+ * @alias module:domain~LocationPrecisions
  */
 const LocationPrecisions = LocationPrecision.enumsValue(LocationPrecisionValues);
 
 export default LocationPrecisions;
+export { LocationPrecision };

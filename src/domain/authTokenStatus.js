@@ -3,7 +3,8 @@ import Enum from '../util/enum';
 /**
  * An auth token status.
  * 
- * @extends Enum
+ * @extends module:util~Enum
+ * @alias module:domain~AuthTokenStatus
  */
 export class AuthTokenStatus extends Enum {
     /**
@@ -19,7 +20,7 @@ export class AuthTokenStatus extends Enum {
     }
 
     /**
-	 * Get the {@link AuthTokenStatuses} values.
+	 * Get the {@link module:domain~AuthTokenStatuses} values.
 	 * 
 	 * @inheritdoc
 	 */
@@ -38,9 +39,10 @@ const AuthTokenStatusValues = Object.freeze([
  * The enumeration of supported AuthTokenStatus values.
  * 
  * @readonly
- * @enum {AuthTokenStatus}
- * @property {AuthTokenStatus} Active the token is active and usable
- * @property {AuthTokenStatus} Disabled the token is disabled and not usable
+ * @enum {module:domain~AuthTokenStatus}
+ * @property {module:domain~AuthTokenStatus} Active the token is active and usable
+ * @property {module:domain~AuthTokenStatus} Disabled the token is disabled and not usable
+ * @alias module:domain~AuthTokenStatuses
  */
 const AuthTokenStatuses = AuthTokenStatus.enumsValue(AuthTokenStatusValues);
 

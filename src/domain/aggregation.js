@@ -3,9 +3,10 @@ import ComparableEnum from '../util/comparableEnum';
 /**
  * A named aggregation.
  * 
- * @extends ComparableEnum
+ * @extends module:util~ComparableEnum
+ * @alias module:domain~Aggregation
  */
-export class Aggregation extends ComparableEnum {
+class Aggregation extends ComparableEnum {
 
 	/**
      * Constructor.
@@ -23,14 +24,14 @@ export class Aggregation extends ComparableEnum {
     /**
      * Get the aggregate level value.
 	 * 
-	 * This is an alias for {@link ComparableEnum#value}.
+	 * This is an alias for {@link module:util~ComparableEnum#value}.
      */
     get level() {
         return this.value;
 	}
 	
 	/**
-	 * Get the {@link Aggregations} values.
+	 * Get the {@link module:domain~Aggregations} values.
 	 * 
 	 * @override
 	 * @inheritdoc
@@ -64,23 +65,25 @@ const AggregationValues = Object.freeze([
  * The enumeration of supported Aggregation values.
  * 
  * @readonly
- * @enum {Aggregation}
- * @property {Aggregation} Minute minute
- * @property {Aggregation} FiveMinute 5 minutes
- * @property {Aggregation} TenMinute 10 minutes
- * @property {Aggregation} FifeteenMinute 15 minutes
- * @property {Aggregation} ThirtyMinute 30 minutes
- * @property {Aggregation} Hour an hour
- * @property {Aggregation} HourOfDay an hour of a day, e.g. 1-24
- * @property {Aggregation} SeasonalHourOfDay an hour of a day, further grouped into 4 seasons
- * @property {Aggregation} Day a day
- * @property {Aggregation} DayOfWeek a day of the week, e.g. Monday - Sunday
- * @property {Aggregation} SeasonalDayOfWeek a day of the week, further grouped into 4 seasons
- * @property {Aggregation} Week a week
- * @property {Aggregation} WeekOfYear the week within a year, e.g. 1 - 52
- * @property {Aggregation} Month a month
- * @property {Aggregation} RunningTotal a complete running total over a time span
+ * @enum {module:domain~Aggregation}
+ * @property {module:domain~Aggregation} Minute minute
+ * @property {module:domain~Aggregation} FiveMinute 5 minutes
+ * @property {module:domain~Aggregation} TenMinute 10 minutes
+ * @property {module:domain~Aggregation} FifeteenMinute 15 minutes
+ * @property {module:domain~Aggregation} ThirtyMinute 30 minutes
+ * @property {module:domain~Aggregation} Hour an hour
+ * @property {module:domain~Aggregation} HourOfDay an hour of a day, e.g. 1-24
+ * @property {module:domain~Aggregation} SeasonalHourOfDay an hour of a day, further grouped into 4 seasons
+ * @property {module:domain~Aggregation} Day a day
+ * @property {module:domain~Aggregation} DayOfWeek a day of the week, e.g. Monday - Sunday
+ * @property {module:domain~Aggregation} SeasonalDayOfWeek a day of the week, further grouped into 4 seasons
+ * @property {module:domain~Aggregation} Week a week
+ * @property {module:domain~Aggregation} WeekOfYear the week within a year, e.g. 1 - 52
+ * @property {module:domain~Aggregation} Month a month
+ * @property {module:domain~Aggregation} RunningTotal a complete running total over a time span
+ * @alias module:domain~Aggregations
  */
 const Aggregations = Aggregation.enumsValue(AggregationValues);
 
 export default Aggregations;
+export { Aggregation };

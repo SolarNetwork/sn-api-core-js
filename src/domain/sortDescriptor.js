@@ -1,5 +1,6 @@
 /**
  * A description of a sort applied to a property of a collection.
+ * @alias module:domain~SortDescriptor
  */
 class SortDescriptor {
 
@@ -7,7 +8,7 @@ class SortDescriptor {
      * Constructor.
      * 
      * @param {string} key the property to sort on
-     * @param {boolean} [descending] <code>true</code> to sort in descending order, <code>false</code> for ascending
+     * @param {boolean} [descending] `true` to sort in descending order, `false` for ascending
      */
     constructor(key, descending) {
         this._key = key;
@@ -26,7 +27,7 @@ class SortDescriptor {
     /**
      * Get the sorting direction.
      * 
-     * @returns {boolean} <code>true</code> if descending order, <code>false</code> for ascending
+     * @returns {boolean} `true` if descending order, `false` for ascending
      */
     get descending() {
         return this._descending;
@@ -35,13 +36,13 @@ class SortDescriptor {
     /**
      * Get this object as a standard URI encoded (query parameters) string value.
      * 
-     * If <code>index</code> is provided and non-negative, then the query parameters will
-     * be encoded as an array property named <code>sortDescriptors</code>. Otherwise just
-     * bare <code>key</code> and <code>descending</code> properties will be used. The 
-     * <code>descending</code> property is only added if it is <code>true</code>.
+     * If `index` is provided and non-negative, then the query parameters will
+     * be encoded as an array property named `sortDescriptors`. Otherwise just
+     * bare `key` and `descending` properties will be used. The 
+     * `descending` property is only added if it is `true`.
      * 
      * @param {number} [index] an optional array property index
-     * @param {string} [propertyName=sortDescriptors] an optional array property name, only used if <code>index</code> is also provided
+     * @param {string} [propertyName=sortDescriptors] an optional array property name, only used if `index` is also provided
      * @return {string} the URI encoded string
      */
     toUriEncoding(index, propertyName) {

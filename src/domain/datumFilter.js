@@ -12,6 +12,9 @@ const DataPathKey = 'dataPath';
 
 /**
  * A filter criteria object for datum.
+ * 
+ * @extends module:util~PropMap
+ * @alias module:domain~DatumFilter
  */
 class DatumFilter extends PropMap {
 
@@ -182,8 +185,9 @@ class DatumFilter extends PropMap {
 /**
  * Map DatumFilter properties for URI encoding.
  * 
- * @param {string} key 
- * @param {*} value 
+ * @param {string} key the property key
+ * @param {*} value the property value
+ * @private
  */
 function datumFilterUriEncodingPropertyMapper(key, value) {
     if ( key === NodeIdsKey || key === SourceIdsKey || key === UserIdsKey ) {

@@ -1,5 +1,6 @@
 /**
  * A pagination criteria object.
+ * @alias module:domain~Pagination
  */
 class Pagination {
 
