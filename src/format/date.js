@@ -1,5 +1,3 @@
-/** @module format */
-
 import { utcFormat, utcParse, isoParse } from 'd3-time-format';
 
 /**
@@ -7,6 +5,7 @@ import { utcFormat, utcParse, isoParse } from 'd3-time-format';
  * @function
  * @param {Date} date the date to format
  * @returns {string} the formatted date value - `yyyy-MM-dd HH:mm:ss.SSS'Z'`
+ * @alias module:format~timestampFormat
  */
 export const timestampFormat = utcFormat("%Y-%m-%d %H:%M:%S.%LZ");
 
@@ -15,6 +14,7 @@ export const timestampFormat = utcFormat("%Y-%m-%d %H:%M:%S.%LZ");
  * @function
  * @param {Date} date the date to format
  * @returns {string} the formatted date value - `yyyy-MM-dd HH:mm`
+ * @alias module:format~dateTimeFormat
  */
 export const dateTimeFormat = utcFormat("%Y-%m-%d %H:%M");
 
@@ -23,6 +23,7 @@ export const dateTimeFormat = utcFormat("%Y-%m-%d %H:%M");
  * @function
  * @param {Date} date the date to format
  * @returns {string} the formatted date value - `yyyy-MM-dd'T'HH:mm`
+ * @alias module:format~dateTimeUrlFormat
  */
 export const dateTimeUrlFormat = utcFormat("%Y-%m-%dT%H:%M");
 
@@ -31,6 +32,7 @@ export const dateTimeUrlFormat = utcFormat("%Y-%m-%dT%H:%M");
  * @function
  * @param {Date} date the date to format
  * @returns {string} the formatted date value - `yyyy-MM-dd`
+ * @alias module:format~dateFormat
  */
 export const dateFormat = utcFormat("%Y-%m-%d");
 
@@ -39,6 +41,7 @@ export const dateFormat = utcFormat("%Y-%m-%d");
  * @function
  * @param {string} str the string to parse - `yyyy-MM-dd HH:mm:ss.SSS'Z'
  * @returns {Date} the parsed date, or `null`
+ * @alias module:format~timestampParse
  */
 export const timestampParse = utcParse("%Y-%m-%d %H:%M:%S.%LZ");
 
@@ -47,6 +50,7 @@ export const timestampParse = utcParse("%Y-%m-%d %H:%M:%S.%LZ");
  * @function
  * @param {string} str the string to parse - `yyyy-MM-dd HH:mm
  * @returns {Date} the parsed date, or `null`
+ * @alias module:format~dateTimeParse
  */
 export const dateTimeParse = utcParse("%Y-%m-%d %H:%M");
 
@@ -56,6 +60,7 @@ export {
 	 * @function
 	 * @param {string} str the string to parse - `yyyy-MM-dd'T'HH:mm`
 	 * @returns {Date} the parsed date, or `null`
+	 * @alias module:format~dateTimeUrlParse
 	 */
 	isoParse as dateTimeUrlParse, 
 	
@@ -64,6 +69,7 @@ export {
 	 * @function
 	 * @param {string} str the string to parse - `yyyy-MM-dd`
 	 * @returns {Date} the parsed date, or `null`
+	 * @alias module:format~dateParse
 	 */
 	isoParse as dateParse } from 'd3-time-format';
 
@@ -72,6 +78,7 @@ export {
  *
  * @param {String} str the string to parse into a date
  * @returns {Date} the parsed `Date`, or `null` if the date can't be parsed
+ * @alias module:format~dateParser
  */
 export function dateParser(str) {
 	var date = isoParse(str)
@@ -86,6 +93,7 @@ export function dateParser(str) {
  * @param {Date} date the date to format 
  * @param {boolean} [includeTime=false] `true` to format as a timestamp, `false` as just a date
  * @returns {string} the formatted date string
+ * @alias module:format~iso8601Date
  */
 export function iso8601Date(date, includeTime) {
 	return ''+date.getUTCFullYear()
