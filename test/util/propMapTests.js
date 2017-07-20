@@ -1,6 +1,7 @@
 import test from 'ava';
 
 import PropMap from 'util/propMap';
+import Aggregations from 'domain/aggregation';
 
 test('core:util:propMap:create', t => {
 	const m = new PropMap();
@@ -67,4 +68,9 @@ test('core:util:propMap:toUriEncoding:array:callbackFn:single', t => {
             }
             return k;
         }), 'foo=1&&bams=3,4');
+});
+
+test('core:util:propMap:toUriEncoding:enums', t => {
+    const m = new PropMap({foo:Aggregations.Hour, bar:[Aggregations.Week, Aggregations.Month]});
+    t.is(m.toUriEncoding(), 'foo=Hour&bar=Week,Month');
 });

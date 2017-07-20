@@ -1,3 +1,5 @@
+import Enum from './enum';
+
 /**
  * A basic map-like object.
  * @alias module:util~PropMap
@@ -59,7 +61,7 @@ class PropMap {
      * 
      * All enumerable properties of the <code>props</code> property will be added to the
      * result. If any property value is an array, the values of the array will be joined
-     * by a comma.
+     * by a comma. Any {@link module:util~Enum} values will have their `name` property used.
      * 
      * @param {string} [propertyName] an optional object property prefix to add to all properties
      * @param {function} [callbackFn] An optional function that will be called for each property.
@@ -93,9 +95,15 @@ class PropMap {
                     if ( i > 0 ) {
                         result += ',';
                     }
+                    if ( e instanceof Enum ) {
+                        e = e.name;
+                    }
                     result += encodeURIComponent(e);
                 });
             } else {
+                if ( v instanceof Enum ) {
+                    v = v.name;
+                }
                 result += encodeURIComponent(v);
             }
         }
