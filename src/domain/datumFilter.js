@@ -1,6 +1,4 @@
 import { Aggregation } from './aggregation';
-import Pagination from '../domain/pagination';
-import SortDescriptor from '../domain/sortDescriptor';
 import PropMap from '../util/propMap';
 
 import { dateTimeUrlFormat } from '../format/date'
@@ -237,42 +235,6 @@ class DatumFilter extends PropMap {
         return super.toUriEncoding(propertyName, callbackFn || datumFilterUriEncodingPropertyMapper);
     }
 
-    /**
-     * Get this object as a standard URI encoded (query parameters) string value with
-     * sorting and pagination parameters.
-     * 
-     * <p>This calls {@link module:domain~DatumFilter#toUriEncoding} first, then encodes 
-     * the `sorts` and `pagination` parameters, if provided.
-     * 
-	 * @param {module:domain~SortDescriptor[]} [sorts] optional sort settings to use
-	 * @param {module:domain~Pagination} [pagination] optional pagination settings to use
-     * @param {string} [propertyName] an optional object property prefix to add to all properties
-     * @param {function} [callbackFn] An optional function that will be called for each property.
-     *                   The function will be passed property name and value arguments, and must
-     *                   return either `null` to skip the property, a 2-element array with the property
-     *                   name and value to use, or anything else to use the property as- is.
-     * @return {string} the URI encoded string
-     */
-    toUriEncodingWithSorting(sorts, pagination, propertyName, callbackFn) {
-        let params = this.toUriEncoding(propertyName, callbackFn);
-        if ( Array.isArray(sorts) ) {
-            sorts.forEach((sort, i) => {
-                if ( sort instanceof SortDescriptor ) {
-                    if ( params.length > 0 ) {
-                        params += '&';
-                    }
-                    params += sort.toUriEncoding(i);
-                }
-            });
-        }
-        if ( pagination instanceof Pagination ) {
-            if ( params.length > 0 ) {
-                params += '&';
-            }
-            params += pagination.toUriEncoding();
-        }
-        return params;
-    }
 }
 
 /**

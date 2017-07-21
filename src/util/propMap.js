@@ -1,7 +1,14 @@
+import Pagination from '../domain/pagination';
+import SortDescriptor from '../domain/sortDescriptor';
 import Enum from './enum';
 
 /**
  * A basic map-like object.
+ * 
+ * <p>This object includes some utility functions that make it well suited to using
+ * as an API query object. For example, the {@link module:util~PropMap#toUriEncoding}
+ * method provides a way to serialize this object into URL query parameters.</p>
+ * 
  * @alias module:util~PropMap
  */
 class PropMap {
@@ -109,6 +116,45 @@ class PropMap {
         }
         return result;
     }
+
+
+    /**
+     * Get this object as a standard URI encoded (query parameters) string value with
+     * sorting and pagination parameters.
+     * 
+     * <p>This calls {@link module:util~PropMap#toUriEncoding} first, then encodes 
+     * the `sorts` and `pagination` parameters, if provided.
+     * 
+	 * @param {module:domain~SortDescriptor[]} [sorts] optional sort settings to use
+	 * @param {module:domain~Pagination} [pagination] optional pagination settings to use
+     * @param {string} [propertyName] an optional object property prefix to add to all properties
+     * @param {function} [callbackFn] An optional function that will be called for each property.
+     *                   The function will be passed property name and value arguments, and must
+     *                   return either `null` to skip the property, a 2-element array with the property
+     *                   name and value to use, or anything else to use the property as- is.
+     * @return {string} the URI encoded string
+     */
+    toUriEncodingWithSorting(sorts, pagination, propertyName, callbackFn) {
+        let params = this.toUriEncoding(propertyName, callbackFn);
+        if ( Array.isArray(sorts) ) {
+            sorts.forEach((sort, i) => {
+                if ( sort instanceof SortDescriptor ) {
+                    if ( params.length > 0 ) {
+                        params += '&';
+                    }
+                    params += sort.toUriEncoding(i);
+                }
+            });
+        }
+        if ( pagination instanceof Pagination ) {
+            if ( params.length > 0 ) {
+                params += '&';
+            }
+            params += pagination.toUriEncoding();
+        }
+        return params;
+    }
+
 }
 
 export default PropMap;
