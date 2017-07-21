@@ -1,17 +1,20 @@
 import { Aggregation } from './aggregation';
+import Location from './location';
 import PropMap from '../util/propMap';
 
 import { dateTimeUrlFormat } from '../format/date'
 
 const AggregationKey = 'aggregation';
+const DataPathKey = 'dataPath';
+const EndDateKey = 'endDate';
 const LocationIdsKey = 'locationIds';
+const LocationKey = 'location';
+const MostRecentKey = 'mostRecent';
 const NodeIdsKey = 'nodeIds';
 const SourceIdsKey = 'sourceIds';
-const UserIdsKey = 'userIds';
-const MostRecentKey = 'mostRecent';
 const StartDateKey =  'startDate';
-const EndDateKey = 'endDate';
-const DataPathKey = 'dataPath';
+const TagsKey = 'tags';
+const UserIdsKey = 'userIds';
 
 /**
  * A filter criteria object for datum.
@@ -223,6 +226,30 @@ class DatumFilter extends PropMap {
 
     set aggregation(agg) {
         this.prop(AggregationKey, agg instanceof Aggregation ? agg : null);
+    }
+
+    /**
+     * An array of tags.
+     * @type {string[]}
+     */
+    get tags() {
+        return this.prop(TagsKey);
+    }
+
+    set tags(val) {
+        this.prop(TagsKey, Array.isArray(val) ? val : null);
+    }
+
+    /**
+     * A location, used as an example-based search criteria.
+     * @type {module:domain~Location}
+     */
+    get location() {
+        return this.prop(LocationKey);
+    }
+
+    set location(val) {
+        this.prop(LocationKey, val instanceof Location ? val : null);
     }
 
     /**

@@ -2,6 +2,7 @@ import test from 'ava';
 
 import DatumFilter from 'domain/datumFilter';
 import Aggregations from 'domain/aggregation';
+import Location from 'domain/location';
 import { dateTimeUrlFormat } from 'format/date'
 
 test('core:domain:datumFilter:create', t => {
@@ -117,9 +118,10 @@ test('core:domain:datumFilter:toUriEncoding', t => {
 	filter.nodeId = 123;
 	filter.sourceId = 'abc';
 	filter.dataPath = 'i.watts';
+	filter.tags = ['a', 'b'];
 	t.is(filter.toUriEncoding(), 
 		'startDate='+encodeURIComponent(dateTimeUrlFormat(date))
-		+'&nodeId=123&sourceId=abc&dataPath=i.watts');
+		+'&nodeId=123&sourceId=abc&dataPath=i.watts&tags=a,b');
 });
 
 test('core:domain:datumFilter:toUriEncoding:startDate', t => {
@@ -158,4 +160,17 @@ test('core:domain:datumFilter:toUriEncoding:aggregation', t => {
 	const filter = new DatumFilter();
 	filter.aggregation = Aggregations.DayOfWeek;
 	t.is(filter.toUriEncoding(), 'aggregation=DayOfWeek');
+});
+
+test('core:domain:datumFilter:toUriEncoding:tags', t => {
+	const filter = new DatumFilter();
+	filter.tags = ['a','b'];
+	t.is(filter.toUriEncoding(), 'tags=a,b');
+});
+
+test('core:domain:datumFilter:toUriEncoding:location', t => {
+	const filter = new DatumFilter();
+	const loc = new Location({country:'NZ',timeZoneId:'Pacific/Auckland'});
+	filter.location = loc;
+	t.is(filter.toUriEncoding(), 'location.country=NZ&location.timeZoneId=Pacific%2FAuckland');
 });
