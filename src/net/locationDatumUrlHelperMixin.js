@@ -83,30 +83,31 @@ class extends superclass {
 	 */
 	listDatumUrl(datumFilter, sorts, pagination) {
 		let result = this.baseUrl() + '/location/datum/list';
-		let params = (datumFilter ? datumFilter.toUriEncoding() : '');
-		if ( Array.isArray(sorts) ) {
-			sorts.forEach((sort, i) => {
-				if ( sort instanceof SortDescriptor ) {
-					if ( params.length > 0 ) {
-						params += '&';
-					}
-					params += sort.toUriEncoding(i);
-				}
-			});
-		}
-		if ( pagination instanceof Pagination ) {
-			if ( params.length > 0 ) {
-				params += '&';
-			}
-			params += pagination.toUriEncoding();
-		}
+		let params = (datumFilter ? datumFilter.toUriEncodingWithSorting(sorts, pagination) : '');
 		if ( params.length > 0 ) {
 			result += '?' + params;
 		}
 		return result;
 	}
 
-}
+	/**
+	 * Generate a URL for querying for the most recent datum.
+	 * 
+	 * @param {module:domain~DatumFilter} datumFilter the search criteria
+	 * @param {module:domain~SortDescriptor[]} [sorts] optional sort settings to use
+	 * @param {module:domain~Pagination} [pagination] optional pagination settings to use
+	 * @returns {string} the URL
+	 */
+	mostRecentDatumUrl(datumFilter, sorts, pagination) {
+		let result = this.baseUrl() + '/location/datum/mostRecent';
+		let params = (datumFilter ? datumFilter.toUriEncodingWithSorting(sorts, pagination) : '');
+		if ( params.length > 0 ) {
+			result += '?' + params;
+		}
+		return result;
+	}
+
+};
 
 /**
  * A concrete {@link module:net~UrlHelper} with the {@link module:net~LocationDatumUrlHelperMixin}, 
