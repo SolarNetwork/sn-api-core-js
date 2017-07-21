@@ -1,5 +1,3 @@
-import Pagination from '../domain/pagination';
-import SortDescriptor from '../domain/sortDescriptor';
 import { dateTimeUrlFormat } from '../format/date';
 import UrlHelper from './urlHelper';
 import LocationUrlHelperMixin from './locationUrlHelperMixin';

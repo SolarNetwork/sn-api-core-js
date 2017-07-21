@@ -1,5 +1,3 @@
-import Pagination from '../domain/pagination';
-import SortDescriptor from '../domain/sortDescriptor';
 import UrlHelper from './urlHelper';
 import NodeUrlHelperMixin from './nodeUrlHelperMixin';
 import QueryUrlHelperMixin from './queryUrlHelperMixin';
