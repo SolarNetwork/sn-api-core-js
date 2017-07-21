@@ -16,6 +16,7 @@ const TimeZoneIdKey = 'timeZoneId';
 /**
  * A geographic location.
  * 
+ * @extends module:util~PropMap
  * @alias module:domain~Location
  */
 class Location extends PropMap {
