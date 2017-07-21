@@ -69,6 +69,18 @@ class extends superclass {
         this.parameter(SourceIdsKey, sourceIds);
     }
 
+    /**
+     * Generate a URL to find locations based on a search criteria.
+     * 
+     * @param {module:domain~Location} filter the search criteria
+	 * @param {module:domain~SortDescriptor[]} [sorts] optional sort settings to use
+	 * @param {module:domain~Pagination} [pagination] optional pagination settings to use
+     * @returns {string} the generated URL
+     */
+    findLocationsUrl(filter, sorts, pagination) {
+        return this.baseUrl() + '/location?' +filter.toUriEncodingWithSorting(sorts, pagination);
+    }
+
 }
 
 export default LocationUrlHelperMixin;
