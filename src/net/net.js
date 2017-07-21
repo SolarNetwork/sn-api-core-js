@@ -6,6 +6,9 @@ export { default as DatumMetadataUrlHelperMixin,
 export { default as Environment }  from './environment';
 export { default as HttpHeaders,
     HttpMethod } from './httpHeaders';
+export { default as LocationDatumUrlHelperMixin,
+	LocationDatumUrlHelper } from './locationDatumUrlHelperMixin';
+export { default as LocationUrlHelperMixin }  from './locationUrlHelperMixin';
 export { default as NodeDatumUrlHelperMixin,
 	NodeDatumUrlHelper } from './nodeDatumUrlHelperMixin';
 export { default as NodeInstructionUrlHelperMixin, 

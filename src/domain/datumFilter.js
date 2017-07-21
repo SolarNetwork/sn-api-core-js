@@ -4,6 +4,7 @@ import PropMap from '../util/propMap';
 import { dateTimeUrlFormat } from '../format/date'
 
 const AggregationKey = 'aggregation';
+const LocationIdsKey = 'locationIds';
 const NodeIdsKey = 'nodeIds';
 const SourceIdsKey = 'sourceIds';
 const UserIdsKey = 'userIds';
@@ -14,6 +15,10 @@ const DataPathKey = 'dataPath';
 
 /**
  * A filter criteria object for datum.
+ * 
+ * <p>This filter is used to query both node datum and location datum. Not all properties are
+ * applicable to both types. Be sure to consult the SolarNet API documentation on the 
+ * supported properties for each type.</p>
  * 
  * @extends module:util~PropMap
  * @alias module:domain~DatumFilter
@@ -61,6 +66,38 @@ class DatumFilter extends PropMap {
     }
 
     /**
+     * A location ID.
+     * 
+     * This manages the first available location ID from the `locationIds` property.
+     * 
+     * @type {number}
+     */
+    get locationId() {
+        const locationIds = this.locationIds;
+        return (Array.isArray(locationIds) && locationIds.length > 0 ? locationIds[0] : null);
+    }
+
+    set locationId(locationId) {
+        if ( locationId ) {
+            this.locationIds = [locationId];
+        } else {
+            this.locationIds = null;
+        }
+    }
+
+    /**
+     * An array of location IDs.
+     * @type {number[]}
+     */
+    get locationIds() {
+        return this.prop(LocationIdsKey);
+    }
+
+    set locationIds(locationIds) {
+        this.prop(LocationIdsKey, Array.isArray(locationIds) ? locationIds : null);
+    }
+
+    /**
      * A source ID.
      * 
      * This manages the first available source ID from the `sourceIds` property.
@@ -95,7 +132,7 @@ class DatumFilter extends PropMap {
     /**
      * A user ID.
      * 
-     * This manages the first available node ID from the `userIds` property.
+     * This manages the first available location ID from the `userIds` property.
      * 
      * @type {number}
      */
@@ -209,7 +246,7 @@ class DatumFilter extends PropMap {
  * @private
  */
 function datumFilterUriEncodingPropertyMapper(key, value) {
-    if ( key === NodeIdsKey || key === SourceIdsKey || key === UserIdsKey ) {
+    if ( key === NodeIdsKey || key === LocationIdsKey || key === SourceIdsKey || key === UserIdsKey ) {
         // check for singleton array value, and re-map to singular property by chopping of "s"
         if  ( Array.isArray(value) && value.length === 1 ) {
             return [key.substring(0, key.length - 1), value[0]];

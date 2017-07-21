@@ -40,6 +40,22 @@ test('core:domain:datumFilter:nodeIds:resetNodeId', t => {
 	t.deepEqual(filter.nodeIds, [456], 'nodeIds array reset to just nodeId');
 });
 
+test('core:domain:datumFilter:locationIds', t => {
+    const filter = new DatumFilter();
+	filter.locationIds = [123, 234];
+	t.is(filter.locationId, 123);
+    t.deepEqual(filter.locationIds, [123, 234]);
+    t.deepEqual(filter.props, {locationIds:[123, 234]})
+});
+
+test('core:domain:datumFilter:nodeIds:resetLocationId', t => {
+	const filter = new DatumFilter();
+	filter.locationIds = [123, 234];
+	t.deepEqual(filter.locationIds, [123, 234]);
+	filter.locationId = 456;
+	t.deepEqual(filter.locationIds, [456], 'locationIds array reset to just locationId');
+});
+
 test('core:domain:datumFilter:sourceId', t => {
 	const filter = new DatumFilter();
 	filter.sourceId = 'abc';
@@ -129,13 +145,13 @@ test('core:domain:datumFilter:toUriEncoding:mostRecent', t => {
 });
 
 test('core:domain:datumFilter:toUriEncoding:pluralProps:single', t => {
-	const filter = new DatumFilter({nodeIds:[1], sourceIds:['&foo'], userIds:[2]});
-	t.is(filter.toUriEncoding(), 'nodeId=1&sourceId=%26foo&userId=2');
+	const filter = new DatumFilter({nodeIds:[1], locationIds:[2], sourceIds:['&foo'], userIds:[3]});
+	t.is(filter.toUriEncoding(), 'nodeId=1&locationId=2&sourceId=%26foo&userId=3');
 });
 
 test('core:domain:datumFilter:toUriEncoding:pluralProps:multi', t => {
-	const filter = new DatumFilter({nodeIds:[1,2], sourceIds:['&foo','bar'], userIds:[3,4]});
-	t.is(filter.toUriEncoding(), 'nodeIds=1,2&sourceIds=%26foo,bar&userIds=3,4');
+	const filter = new DatumFilter({nodeIds:[1,2], locationIds:[5,6], sourceIds:['&foo','bar'], userIds:[3,4]});
+	t.is(filter.toUriEncoding(), 'nodeIds=1,2&locationIds=5,6&sourceIds=%26foo,bar&userIds=3,4');
 });
 
 test('core:domain:datumFilter:toUriEncoding:aggregation', t => {
