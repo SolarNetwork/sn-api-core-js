@@ -2,6 +2,7 @@ import test from 'ava';
 
 import PropMap from 'util/propMap';
 import Aggregations from 'domain/aggregation';
+import Location from 'domain/location';
 
 test('core:util:propMap:create', t => {
 	const m = new PropMap();
@@ -73,4 +74,9 @@ test('core:util:propMap:toUriEncoding:array:callbackFn:single', t => {
 test('core:util:propMap:toUriEncoding:enums', t => {
     const m = new PropMap({foo:Aggregations.Hour, bar:[Aggregations.Week, Aggregations.Month]});
     t.is(m.toUriEncoding(), 'foo=Hour&bar=Week,Month');
+});
+
+test('core:util:propMap:toUriEncoding:location', t => {
+    const m = new PropMap({foo:'bar',location:new Location({country:'NZ',timeZoneId:'Pacific/Auckland'})});
+    t.is(m.toUriEncoding(), 'foo=bar&location.country=NZ&location.timeZoneId=Pacific%2FAuckland');
 });

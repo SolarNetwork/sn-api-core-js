@@ -69,6 +69,9 @@ class PropMap {
      * All enumerable properties of the <code>props</code> property will be added to the
      * result. If any property value is an array, the values of the array will be joined
      * by a comma. Any {@link module:util~Enum} values will have their `name` property used.
+     * Any value that has a `toUriEncoding()` function property will have that function
+     * invoked, passing the associated property name as the first argument, and the returned
+     * value will be used.
      * 
      * @param {string} [propertyName] an optional object property prefix to add to all properties
      * @param {function} [callbackFn] An optional function that will be called for each property.
@@ -83,9 +86,6 @@ class PropMap {
             if ( result.length > 0 ) {
                 result += '&';
             }
-            if ( propertyName ) {
-                result += encodeURIComponent(propertyName) + '.';
-            }
             let v = this.props[k];
             if ( callbackFn ) {
                 const kv = callbackFn(k, v);
@@ -95,6 +95,15 @@ class PropMap {
                     k = kv[0];
                     v = kv[1];
                 }
+            }
+            
+            if ( typeof v.toUriEncoding === 'function' ) {
+                result += v.toUriEncoding(propertyName ? encodeURIComponent(propertyName) + '.' + k : k);
+                continue;
+            }
+            
+            if ( propertyName ) {
+                result += encodeURIComponent(propertyName) + '.';
             }
             result += encodeURIComponent(k) + '=';
             if ( Array.isArray(v) ) {
