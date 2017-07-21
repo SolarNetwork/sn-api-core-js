@@ -8,6 +8,7 @@ export { default as GeneralMetadata,
     stringMapToObject,
     objectToStringMap } from './generalMetadata';
 export { default as InstructionStates, InstructionState } from './instructionState';
+export { default as Location } from './location';
 export { default as LocationPrecisions, LocationPrecision } from './locationPrecision';
 export { default as Pagination } from './pagination';
 export { default as SecurityPolicy, SecurityPolicyBuilder } from './securityPolicy';
