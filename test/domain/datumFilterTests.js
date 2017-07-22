@@ -174,3 +174,9 @@ test('core:domain:datumFilter:toUriEncoding:location', t => {
 	filter.location = loc;
 	t.is(filter.toUriEncoding(), 'location.country=NZ&location.timeZoneId=Pacific%2FAuckland');
 });
+
+test('core:domain:datumFilter:toUriEncoding:query', t => {
+	const filter = new DatumFilter();
+	filter.query = 'arrrr!';
+	t.is(filter.toUriEncoding(), 'query=arrrr!');
+});

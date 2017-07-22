@@ -11,6 +11,7 @@ const LocationIdsKey = 'locationIds';
 const LocationKey = 'location';
 const MostRecentKey = 'mostRecent';
 const NodeIdsKey = 'nodeIds';
+const QueryKey = 'query';
 const SourceIdsKey = 'sourceIds';
 const StartDateKey =  'startDate';
 const TagsKey = 'tags';
@@ -250,6 +251,18 @@ class DatumFilter extends PropMap {
 
     set location(val) {
         this.prop(LocationKey, val instanceof Location ? val : null);
+    }
+
+    /**
+     * A general full-text style query string.
+     * @type {string}
+     */
+    get query() {
+        return this.prop(QueryKey);
+    }
+
+    set query(val) {
+        this.prop(QueryKey, val);
     }
 
     /**
