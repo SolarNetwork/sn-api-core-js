@@ -43,3 +43,19 @@ test('core:enum:enumsValue', t => {
         D: TestEnumValues[3],
     });
 });
+
+test('core:enum:valueOf', t => {
+    t.is(TestEnum.valueOf('A'), TestEnumValues[0]);
+    t.is(TestEnum.valueOf('D'), TestEnumValues[3]);
+});
+
+test('core:enum:namesFor:array', t => {
+    t.deepEqual(TestEnum.namesFor([TestEnumValues[0], TestEnumValues[2]]), ['A', 'C']);
+});
+
+test('core:enum:namesFor:set', t => {
+    const s = new Set();
+    s.add(TestEnumValues[1]);
+    s.add(TestEnumValues[2]);
+    t.deepEqual(TestEnum.namesFor(s), ['B', 'C']);
+});
