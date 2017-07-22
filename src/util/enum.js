@@ -56,6 +56,26 @@ class Enum {
             return obj;
         }, {}));
     }
+
+    /**
+     * Get an enum instance from its name.
+     * 
+     * This method searches the {@link module:util~Enum#enumVvalues} array for a matching value.
+     * 
+     * @param {string} name the enum name to get an instnace for
+     * @returns {module:util~Enum} the instance, or `undefined` if no instance exists for the given `name`
+     */
+    static valueOf(name) {
+        const enums = this.enumValues();
+        if ( !Array.isArray(enums) ) {
+            return undefined;
+        }
+        for ( let i = 0, len = enums.length; i < len; i += 1 ) {
+            if ( name === enums[i].name ) {
+                return enums[i];
+            }
+        }
+    }
 }
 
 export default Enum;

@@ -43,3 +43,8 @@ test('core:enum:enumsValue', t => {
         D: TestEnumValues[3],
     });
 });
+
+test('core:enum:valueOf', t => {
+    t.is(TestEnum.valueOf('A'), TestEnumValues[0]);
+    t.is(TestEnum.valueOf('D'), TestEnumValues[3]);
+});
