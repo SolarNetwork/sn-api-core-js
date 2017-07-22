@@ -117,3 +117,15 @@ test('core:net:nodeDatumUrlHelperMixin:listDatumUrl', t => {
         +'nodeId=123&aggregation=Hour&startDate=2017-01-01T12%3A12&endDate=2017-01-02T12%3A12'
         +'&sorts%5B0%5D.key=foo&max=1&offset=2');
 });
+
+test('core:net:nodeDatumUrlHelperMixin:mostRecentDatumUrl', t => {
+    const helper = new NodeDatumUrlHelper();
+    const filter = new DatumFilter();
+    filter.nodeId = 123;
+    filter.startDate = new Date('2017-01-01T12:12:12.123Z');
+    filter.endDate = new Date(filter.startDate.getTime() + 24 * 60 * 60 * 1000);
+	t.is(helper.mostRecentDatumUrl(filter, [new SortDescriptor('foo')], new Pagination(1, 2)),
+		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/mostRecent?'
+        +'nodeId=123&startDate=2017-01-01T12%3A12&endDate=2017-01-02T12%3A12'
+        +'&sorts%5B0%5D.key=foo&max=1&offset=2');
+});
