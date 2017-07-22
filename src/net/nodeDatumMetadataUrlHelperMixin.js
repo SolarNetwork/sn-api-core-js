@@ -9,9 +9,9 @@ import QueryUrlHelperMixin from './queryUrlHelperMixin'
  * Create a NodeDatumUrlHelperMixin class.
  *
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
- * @return {module:net~DatumMetadataUrlHelperMixin} the mixin class
+ * @return {module:net~NodeDatumMetadataUrlHelperMixin} the mixin class
  */
-const DatumMetadataUrlHelperMixin = (superclass) => 
+const NodeDatumMetadataUrlHelperMixin = (superclass) => 
 
 /**
  * A mixin class that adds SolarNode datum metadata support to {@link module:net~UrlHelper}.
@@ -20,7 +20,7 @@ const DatumMetadataUrlHelperMixin = (superclass) =>
  * a <code>nodeId</code> and a <code>sourceId</code>.
  * 
  * @mixin
- * @alias module:net~DatumMetadataUrlHelperMixin
+ * @alias module:net~NodeDatumMetadataUrlHelperMixin
  */
 class extends superclass {
 
@@ -31,12 +31,12 @@ class extends superclass {
      * @returns {string} the base URL
      * @private
      */
-    baseDatumMetadataUrl(nodeId) {
+    baseNodeDatumMetadataUrl(nodeId) {
         return this.baseUrl() + '/datum/meta/' +(nodeId || this.nodeId);
     }
 
-    datumMetadataUrlWithSource(nodeId, sourceId) {
-        let result = this.baseDatumMetadataUrl(nodeId);
+    nodeDatumMetadataUrlWithSource(nodeId, sourceId) {
+        let result = this.baseNodeDatumMetadataUrl(nodeId);
         let source = (sourceId || this.sourceId);
         if ( sourceId !== null && source ) {
             result += '?sourceId=' +encodeURIComponent(source);
@@ -55,8 +55,8 @@ class extends superclass {
      *                            if <code>null</code> then ignore any <code>sourceId</code> property of this class
      * @returns {string} the URL
 	 */
-	viewDatumMetadataUrl(nodeId, sourceId) {
-        return this.datumMetadataUrlWithSource(nodeId, sourceId);
+	viewNodeDatumMetadataUrl(nodeId, sourceId) {
+        return this.nodeDatumMetadataUrlWithSource(nodeId, sourceId);
     }
     
 	/**
@@ -66,8 +66,8 @@ class extends superclass {
 	 * @param {string} [sourceId] a specific source ID to use; if not provided the <code>sourceId</code> property of this class will be used
      * @returns {string} the URL
 	 */
-    addDatumMetadataUrl(nodeId, sourceId) {
-        return this.datumMetadataUrlWithSource(nodeId, sourceId);
+    addNodeDatumMetadataUrl(nodeId, sourceId) {
+        return this.nodeDatumMetadataUrlWithSource(nodeId, sourceId);
     }
 
 	/**
@@ -77,8 +77,8 @@ class extends superclass {
 	 * @param {string} [sourceId] a specific source ID to use; if not provided the <code>sourceId</code> property of this class will be used
      * @returns {string} the URL
 	 */
-    replaceDatumMetadataUrl(nodeId, sourceId) {
-        return this.datumMetadataUrlWithSource(nodeId, sourceId);
+    replaceNodeDatumMetadataUrl(nodeId, sourceId) {
+        return this.nodeDatumMetadataUrlWithSource(nodeId, sourceId);
     }
 
 	/**
@@ -88,8 +88,8 @@ class extends superclass {
 	 * @param {string} [sourceId] a specific source ID to use; if not provided the <code>sourceId</code> property of this class will be used
      * @returns {string} the URL
 	 */
-    deleteDatumMetadataUrl(nodeId, sourceId) {
-        return this.datumMetadataUrlWithSource(nodeId, sourceId);
+    deleteNodeDatumMetadataUrl(nodeId, sourceId) {
+        return this.nodeDatumMetadataUrlWithSource(nodeId, sourceId);
     }
 
 	/**
@@ -103,8 +103,8 @@ class extends superclass {
 	 * @param {module:domain~Pagination} [pagination] optional pagination settings to use
 	 * @returns {string} the URL
 	 */
-	findDatumMetadataUrl(nodeId, sourceId, sorts, pagination) {
-        let result = this.baseDatumMetadataUrl(nodeId);
+	findNodeDatumMetadataUrl(nodeId, sourceId, sorts, pagination) {
+        let result = this.baseNodeDatumMetadataUrl(nodeId);
 		let params = '';
         let source = (sourceId || this.sourceId);
         if ( sourceId !== null && source ) {
@@ -135,18 +135,18 @@ class extends superclass {
 };
 
 /**
- * A concrete {@link module:net~UrlHelper} with the {@link module:net~DatumMetadataUrlHelperMixin},  
+ * A concrete {@link module:net~UrlHelper} with the {@link module:net~NodeDatumMetadataUrlHelperMixin},  
  * {@link module:net~QueryUrlHelperMixin}, and {@link module:net~NodeUrlHelperMixin} mixins.
  * 
- * @mixes module:net~DatumMetadataUrlHelperMixin
+ * @mixes module:net~NodeDatumMetadataUrlHelperMixin
  * @mixes module:net~QueryUrlHelperMixin
  * @mixes module:net~NodeUrlHelperMixin
  * @extends module:net~UrlHelper
- * @alias module:net~DatumMetadataUrlHelper
+ * @alias module:net~NodeDatumMetadataUrlHelper
  */
-class DatumMetadataUrlHelper extends DatumMetadataUrlHelperMixin(QueryUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))) {
+class NodeDatumMetadataUrlHelper extends NodeDatumMetadataUrlHelperMixin(QueryUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))) {
 
 }
 
-export default DatumMetadataUrlHelperMixin;
-export { DatumMetadataUrlHelper };
+export default NodeDatumMetadataUrlHelperMixin;
+export { NodeDatumMetadataUrlHelper };
