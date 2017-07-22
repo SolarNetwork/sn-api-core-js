@@ -76,6 +76,16 @@ class Enum {
             }
         }
     }
+
+    static namesFor(set) {
+        const result = [];
+        if ( set ) {
+            for ( const e of set ) {
+                result.push(e.name);
+            }
+        }
+        return result;
+    }
 }
 
 export default Enum;
