@@ -1,10 +1,6 @@
-import DatumFilter from '../domain/datumFilter';
-import Pagination from '../domain/pagination';
-import SortDescriptor from '../domain/sortDescriptor';
 import UrlHelper from './urlHelper';
 import LocationUrlHelperMixin from './locationUrlHelperMixin';
 import QueryUrlHelperMixin from './queryUrlHelperMixin'
-
 
 /**
  * Create a LocationDatumMetadataUrlHelperMixin class.
