@@ -59,3 +59,8 @@ test('core:enum:namesFor:set', t => {
     s.add(TestEnumValues[2]);
     t.deepEqual(TestEnum.namesFor(s), ['B', 'C']);
 });
+
+test('core:enum:equals', t => {
+    t.is(TestEnumValues[0].equals('A'), true);
+    t.is(TestEnumValues[1].equals('a'), false);
+});
