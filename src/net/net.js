@@ -3,6 +3,7 @@
 export { default as AuthorizationV2Builder } from './authV2';
 export { default as Environment }  from './environment';
 export { default as HttpHeaders,
+    HttpContentType,
     HttpMethod } from './httpHeaders';
 export { default as LocationDatumMetadataUrlHelperMixin,
 	LocationDatumMetadataUrlHelper } from './locationDatumMetadataUrlHelperMixin';
