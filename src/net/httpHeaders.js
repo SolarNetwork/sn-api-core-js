@@ -18,6 +18,20 @@ const HttpMethod = Object.freeze(
 	TRACE: 'TRACE',
 });
 
+const HttpContentType = Object.freeze(	
+	/**
+	 * Enumeration of common HTTP `Content-Type` values.
+	 * @enum {string}
+	 * @alias module:net~HttpContentType
+	 * @constant
+	 */
+	{
+		APPLICATION_JSON:		'application/json',
+		APPLICATION_JSON_UTF8:	'application/json; charset=UTF-8',
+		FORM_URLENCODED: 		'application/x-www-form-urlencoded',
+		FORM_URLENCODED_UTF8:	'application/x-www-form-urlencoded; charset=UTF-8',
+});
+
 /**
  * Support for HTTP headers.
  * 
@@ -88,4 +102,4 @@ Object.defineProperties(HttpHeaders, {
 });
 
 export default HttpHeaders;
-export { HttpMethod };
+export { HttpContentType, HttpMethod };

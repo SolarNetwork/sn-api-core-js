@@ -31,6 +31,20 @@ class Enum {
     }
 
     /**
+     * Test if a string is equal to this enum's name.
+     * 
+     * As long as enum values are consistently obtained from the {@link module:util~Enum.enumValues}
+     * array then enum instances can be compared with `===`. If unsure, this method can be used
+     * to compare string values instead.
+     * 
+     * @param {string} value the value to test
+     * @returns {boolean} `true` if `value` is the same as this instance's `name` value 
+     */
+    equals(value) {
+        return (value === this.name);
+    }
+
+    /**
      * Get all enum values.
      * 
      * This method must be overridden by subclasses to return something meaningful.
