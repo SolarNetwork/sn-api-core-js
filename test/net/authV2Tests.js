@@ -47,6 +47,24 @@ test('core:net:authV2:simpleGetWithSavedKey', t => {
     t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=4739139d3d370f147b6585795c309b1c6d7d7f59943081f7dd943f689cfa59a3");
 });
 
+test('core:new:authV2:signingKeyValid:noKey', t => {
+    const builder = new AuthV2(TEST_TOKEN_ID);
+	builder.date(getTestDate());
+	t.is(builder.signingKeyValid, false);
+});
+
+test('core:new:authV2:signingKeyValid:expired', t => {
+    const builder = new AuthV2(TEST_TOKEN_ID);
+	builder.date(getTestDate()).saveSigningKey(TEST_TOKEN_SECRET);
+	t.is(builder.signingKeyValid, false);
+});
+
+test('core:new:authV2:signingKeyValid:valid', t => {
+    const builder = new AuthV2(TEST_TOKEN_ID);
+	builder.date(new Date()).saveSigningKey(TEST_TOKEN_SECRET);
+	t.is(builder.signingKeyValid, true);
+});
+
 test('core:net:authV2:xSnDate:header', t => {
 	const reqDate = getTestDate();
 	const builder = new AuthV2(TEST_TOKEN_ID);
