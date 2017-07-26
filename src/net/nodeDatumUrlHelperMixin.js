@@ -98,7 +98,20 @@ class extends superclass {
 	 * @returns {module:domain~DatumFilter} the filter
 	 */
 	datumFilter() {
-		return new DatumFilter({nodeIds:this.nodeIds, sourceIds:this.sourceIds})
+		const filter = new DatumFilter();
+		let v;
+		
+		v = this.nodeIds;
+		if ( v ) {
+			filter.nodeIds = v;
+		}
+
+		v = this.sourceIds;
+		if ( v ) {
+			filter.sourceIds = v;
+		}
+
+		return filter;
 	}
 
 	/**

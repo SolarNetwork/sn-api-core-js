@@ -105,6 +105,17 @@ test('core:net:nodeDatumUrlHelperMixin:availableSources:metadataFilter', t => {
             +'?nodeIds=123&metadataFilter=(foo%3Dbar)');
 });
 
+test('core:net:nodeDatumUrlHelperMixin:listDatumUrl:defaultFilter', t => {
+    const helper = new NodeDatumUrlHelper();
+    helper.nodeId = 123;
+    let filter = helper.datumFilter();
+	t.deepEqual(filter.props, {nodeIds:[123]});
+
+    helper.sourceId = 'abc';
+    filter = helper.datumFilter();
+	t.deepEqual(filter.props, {nodeIds:[123], sourceIds:['abc']});
+});
+
 test('core:net:nodeDatumUrlHelperMixin:listDatumUrl', t => {
     const helper = new NodeDatumUrlHelper();
     const filter = new DatumFilter();
