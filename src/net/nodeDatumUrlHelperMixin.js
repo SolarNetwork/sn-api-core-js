@@ -1,3 +1,4 @@
+import DatumFilter from '../domain/datumFilter';
 import UrlHelper from './urlHelper';
 import NodeUrlHelperMixin from './nodeUrlHelperMixin';
 import QueryUrlHelperMixin from './queryUrlHelperMixin';
@@ -78,11 +79,26 @@ class extends superclass {
 	 */
 	listDatumUrl(datumFilter, sorts, pagination) {
 		let result = this.baseUrl() + '/datum/list';
-		let params = (datumFilter ? datumFilter.toUriEncodingWithSorting(sorts, pagination) : '');
+		const filter = (datumFilter || this.datumFilter());
+		const params = filter.toUriEncodingWithSorting(sorts, pagination);
 		if ( params.length > 0 ) {
 			result += '?' + params;
 		}
 		return result;
+	}
+
+	/**
+	 * Get a new {@link module:domain~DatumFilter} configured with properties of this instance.
+	 * 
+	 * This will configure the following properties:
+	 * 
+	 *  * `nodeIds`
+	 *  * `sourceIds`
+	 * 
+	 * @returns {module:domain~DatumFilter} the filter
+	 */
+	datumFilter() {
+		return new DatumFilter({nodeIds:this.nodeIds, sourceIds:this.sourceIds})
 	}
 
 	/**
@@ -95,7 +111,8 @@ class extends superclass {
 	 */
 	mostRecentDatumUrl(datumFilter, sorts, pagination) {
 		let result = this.baseUrl() + '/datum/mostRecent';
-		let params = (datumFilter ? datumFilter.toUriEncodingWithSorting(sorts, pagination) : '');
+		const filter = (datumFilter || this.datumFilter());
+		const params = filter.toUriEncodingWithSorting(sorts, pagination);
 		if ( params.length > 0 ) {
 			result += '?' + params;
 		}

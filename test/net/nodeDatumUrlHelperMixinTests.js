@@ -118,6 +118,15 @@ test('core:net:nodeDatumUrlHelperMixin:listDatumUrl', t => {
         +'&sorts%5B0%5D.key=foo&max=1&offset=2');
 });
 
+test('core:net:nodeDatumUrlHelperMixin:listDatumUrl:defaultFilter', t => {
+    const helper = new NodeDatumUrlHelper();
+    helper.nodeId = 123;
+    helper.sourceId = 'abc';
+	t.is(helper.listDatumUrl(),
+		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/list?'
+        +'nodeId=123&sourceId=abc');
+});
+
 test('core:net:nodeDatumUrlHelperMixin:mostRecentDatumUrl', t => {
     const helper = new NodeDatumUrlHelper();
     const filter = new DatumFilter();
@@ -128,4 +137,13 @@ test('core:net:nodeDatumUrlHelperMixin:mostRecentDatumUrl', t => {
 		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/mostRecent?'
         +'nodeId=123&startDate=2017-01-01T12%3A12&endDate=2017-01-02T12%3A12'
         +'&sorts%5B0%5D.key=foo&max=1&offset=2');
+});
+
+test('core:net:nodeDatumUrlHelperMixin:mostRecentDatumUrl:defaultFilter', t => {
+    const helper = new NodeDatumUrlHelper();
+    helper.nodeId = 123;
+    helper.sourceId = 'abc';
+	t.is(helper.mostRecentDatumUrl(),
+		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/mostRecent?'
+        +'nodeId=123&sourceId=abc');
 });
