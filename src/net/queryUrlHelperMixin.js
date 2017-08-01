@@ -48,7 +48,7 @@ class extends superclass {
      * @type {boolean}
      */
     get publicQuery() {
-        return this.env(SolarQueryPublicPathKey);
+        return !!this.env(SolarQueryPublicPathKey);
     }
 
     set publicQuery(value) {
@@ -67,7 +67,7 @@ class extends superclass {
 	 */
 	baseUrl() {
 		const path = this.env(SolarQueryPathKey) || SolarQueryDefaultPath;
-        const isPubPath = !!this.env(SolarQueryPublicPathKey);
+        const isPubPath = this.publicQuery;
 		return this.hostUrl() + path + SolarQueryApiPathV1
             +(isPubPath ? '/pub' : '/sec');
 	}
