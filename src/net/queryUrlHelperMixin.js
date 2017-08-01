@@ -43,6 +43,18 @@ const QueryUrlHelperMixin = (superclass) =>
  */
 class extends superclass {
 
+    /**
+     * Flag to set the `publicQuery` environment parameter.
+     * @type {boolean}
+     */
+    get publicQuery() {
+        return this.env(SolarQueryPublicPathKey);
+    }
+
+    set publicQuery(value) {
+        this.env(SolarQueryPublicPathKey, !!value);
+    }
+
 	/**
 	 * Get the base URL to the SolarQuery v1 REST API.
 	 * 

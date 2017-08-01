@@ -8,17 +8,17 @@ class QueryUrlHelper extends QueryUrlHelperMixin(UrlHelper) {
 
 }
 
-test('query:net:queryUrlHelperMixin:create', t => {
+test('core:net:queryUrlHelperMixin:create', t => {
 	const helper = new QueryUrlHelper();
 	t.truthy(helper);
 });
 
-test('query:net:queryUrlHelperMixin:baseUrl', t => {
+test('core:net:queryUrlHelperMixin:baseUrl', t => {
 	const helper = new QueryUrlHelper();
 	t.is(helper.baseUrl(), 'https://data.solarnetwork.net/solarquery/api/v1/sec');
 });
 
-test('query:net:queryUrlHelperMixin:baseUrl:customEnvironment', t => {
+test('core:net:queryUrlHelperMixin:baseUrl:customEnvironment', t => {
     const env = {};
     env[SolarQueryPathKey] = '/fooquery';
     env[SolarQueryPublicPathKey] = true;
@@ -27,4 +27,10 @@ test('query:net:queryUrlHelperMixin:baseUrl:customEnvironment', t => {
 
     helper.env(SolarQueryPublicPathKey, false);
 	t.is(helper.baseUrl(), 'https://data.solarnetwork.net/fooquery/api/v1/sec');
+});
+
+test('core:net:queryUrlHelperMixin:publicQuery', t => {
+	const helper = new QueryUrlHelper();
+	helper.publicQuery = true;
+	t.is(helper.baseUrl(), 'https://data.solarnetwork.net/solarquery/api/v1/pub');
 });
