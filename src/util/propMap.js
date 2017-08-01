@@ -159,10 +159,13 @@ class PropMap {
             });
         }
         if ( pagination instanceof Pagination ) {
-            if ( params.length > 0 ) {
-                params += '&';
+            const paginationParams = pagination.toUriEncoding();
+            if ( paginationParams ) {
+                if ( params.length > 0 ) {
+                    params += '&';
+                }
+                params += paginationParams;
             }
-            params += pagination.toUriEncoding();
         }
         return params;
     }
