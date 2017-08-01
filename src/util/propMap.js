@@ -14,14 +14,17 @@ import Enum from './enum';
 class PropMap {
     /**
      * Constructor.
-     * @param {object} props the initial properties 
+     * @param {PropMap|object} props the initial properties; if a `PropMap` instance is provided, the properties
+     *                               of that object will be copied into this one; otherwise the object will be
+     *                               used directly to hold property values
      */
     constructor(props) {
         /**
          * The object that all properties are stored on. 
          * @member {object} 
          */
-        this.props = (typeof props === 'object' ? props : {});
+        this.props = (props instanceof PropMap ? props.properties() : 
+            typeof props === 'object' ? props : {});
     }
 
     /**
@@ -156,10 +159,13 @@ class PropMap {
             });
         }
         if ( pagination instanceof Pagination ) {
-            if ( params.length > 0 ) {
-                params += '&';
+            const paginationParams = pagination.toUriEncoding();
+            if ( paginationParams ) {
+                if ( params.length > 0 ) {
+                    params += '&';
+                }
+                params += paginationParams;
             }
-            params += pagination.toUriEncoding();
         }
         return params;
     }

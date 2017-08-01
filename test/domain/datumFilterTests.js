@@ -18,6 +18,13 @@ test('core:domain:datumFilter:create:data', t => {
     t.is(f.props, d);
 });
 
+test('core:domain:datumFilter:create:copy', t => {
+	const f1 = new DatumFilter({nodeId:123, sourceId:'abc'});
+	const f2 = new DatumFilter(f1);
+	t.not(f1.props, f2.props);
+    t.deepEqual(f1.props, f2.props);
+});
+
 test('core:domain:datumFilter:userId', t => {
 	const filter = new DatumFilter();
 	filter.nodeId = 123;

@@ -10,6 +10,13 @@ import { HttpMethod, default as HttpHeaders } from './httpHeaders';
 import { urlQueryParse } from './urlQuery';
 
 /**
+ * The number of milliseconds a signing key is valid for.
+ * @type {number}
+ * @private
+ */
+const SIGNING_KEY_VALIDITY = (7 * 24 * 60 * 60 * 1000);
+
+/**
  * A builder object for the SNWS2 HTTP authorization scheme.
  *
  * This builder can be used to calculate a one-off header value, for example:
@@ -102,7 +109,17 @@ class AuthorizationV2Builder {
      */
     saveSigningKey(tokenSecret) {
         this.signingKey = this.computeSigningKey(tokenSecret);
-        return this;
+        this.signingKeyExpiration = new Date(this.requestDate.getTime() + SIGNING_KEY_VALIDITY)
+    }
+
+    /**
+     * Test if a signing key is present and not expired.
+     * @readonly
+     * @type {boolean}
+     */
+    get signingKeyValid() {
+        return (this.signingKey && this.signingKeyExpiration instanceof Date
+            && Date.now() < this.signingKeyExpiration.getTime() ? true : false);
     }
 
     /**
