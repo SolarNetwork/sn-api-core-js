@@ -22,6 +22,14 @@ class Environment extends Configuration {
 	 * <dt>protocol</dt><dd>`https`</dd>
 	 * <dt>port</dt><dd>`443`</dd>
 	 * </dl>
+	 * 
+	 * These properties correspond to those on the `window.location` object when
+	 * running in a browser. Thus to construct an environment based on the location
+	 * of the current page you can create an instance like this:
+	 * 
+	 * ```
+	 * const env = new Environment(window.location);
+	 * ```
 	 *
 	 * @param {Object} [config] an optional set of properties to start with
 	 */
