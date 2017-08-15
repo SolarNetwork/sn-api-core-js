@@ -118,6 +118,14 @@ test('core:domain:datumFilter:mostRecent', t => {
     t.deepEqual(filter.props, {mostRecent:true});
 });
 
+test('core:domain:datumFilter:metadataFilter', t => {
+	const filter = new DatumFilter();
+	t.is(filter.metadataFilter, undefined);
+	filter.metadataFilter = '(t=foo)';
+	t.is(filter.metadataFilter, '(t=foo)');
+    t.deepEqual(filter.props, {metadataFilter:'(t=foo)'});
+});
+
 test('core:domain:datumFilter:toUriEncoding', t => {
 	const date = new Date();
 	const filter = new DatumFilter();
@@ -186,4 +194,10 @@ test('core:domain:datumFilter:toUriEncoding:query', t => {
 	const filter = new DatumFilter();
 	filter.query = 'arrrr!';
 	t.is(filter.toUriEncoding(), 'query=arrrr!');
+});
+
+test('core:domain:datumFilter:toUriEncoding:metadataFilter', t => {
+	const filter = new DatumFilter();
+	filter.metadataFilter = '(&(t=foo)(t=bar))';
+	t.is(filter.toUriEncoding(), 'metadataFilter=(%26(t%3Dfoo)(t%3Dbar))');
 });

@@ -9,6 +9,7 @@ const DataPathKey = 'dataPath';
 const EndDateKey = 'endDate';
 const LocationIdsKey = 'locationIds';
 const LocationKey = 'location';
+const MetadataFilterKey = 'metadataFilter';
 const MostRecentKey = 'mostRecent';
 const NodeIdsKey = 'nodeIds';
 const QueryKey = 'query';
@@ -263,6 +264,18 @@ class DatumFilter extends PropMap {
 
     set query(val) {
         this.prop(QueryKey, val);
+    }
+
+    /**
+     * A metadata filter (LDAP style search criteria).
+     * @type {string}
+     */
+    get metadataFilter() {
+        return this.prop(MetadataFilterKey);
+    }
+
+    set metadataFilter(val) {
+        this.prop(MetadataFilterKey, val);
     }
 
     /**
