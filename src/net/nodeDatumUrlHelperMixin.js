@@ -25,8 +25,8 @@ class extends superclass {
      * If no source IDs are provided, then the reportable interval query will return an interval for
      * all available sources.
      *
-	 * @param {number} [nodeId] a specific node ID to use; if not provided the <code>nodeId</code> property of this class will be used
-	 * @param {string[]} [sourceIds] an array of source IDs to limit query to; if not provided the <code>sourceIds</code> property of this class will be used
+	 * @param {number} [nodeId] a specific node ID to use; if not provided the `nodeId` property of this class will be used
+	 * @param {string[]} [sourceIds] an array of source IDs to limit query to; if not provided the `sourceIds` property of this class will be used
 	 * @returns {string} the URL
 	 */
 	reportableIntervalUrl(nodeId, sourceIds) {
@@ -41,27 +41,18 @@ class extends superclass {
 	/**
 	 * Generate a URL for finding the available source IDs for a node or metadata filter.
 	 * 
-	 * @param {number|number[]} [nodeId] a specific node ID, or array of node IDs, to use; if not provided the 
-	 *                                   <code>nodeIds</code> property of this class will be used, unless <code>null</code>
-	 *                                   is passed in which case no node IDs will be added to the URL
+	 * @param {module:domain~DatumFilter} datumFilter the search criteria, which can define `nodeId`, `startDate`, `endDate`,
+	 *                                                and `metadataFilter` properties to limit the results to; if `nodeId` not
+	 *                                                provided the `nodeIds` property of this class will be used
 	 * @param {string} [metadataFilter] the LDAP-style metadata filter
 	 * @returns {string} the URL
 	 */
-	availableSourcesUrl(nodeId, metadataFilter) {
-		const nodeIds = (Array.isArray(nodeId) ? nodeId : nodeId ? [nodeId] : nodeId !== null ? this.nodeIds : undefined);
+	availableSourcesUrl(datumFilter) {
+		const filter = (datumFilter || this.datumFilter());
 		let result = this.baseUrl() + '/range/sources';
-		let params = '';
-		if ( Array.isArray(nodeIds) ) {
-			params += 'nodeIds=' +nodeIds.join(',');
-		}
-		if ( metadataFilter ) {
-			if ( params.length > 0 ) {
-				params += '&';
-			}
-			params += 'metadataFilter=' +encodeURIComponent(metadataFilter);
-		}
+		const params = filter.toUriEncoding();
 		if ( params.length > 0 ) {
-			result += '?' +params;
+			result += '?' + params;
 		}
 		return result;
 	}
