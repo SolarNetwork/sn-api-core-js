@@ -1,3 +1,4 @@
+import Base64 from 'crypto-js/enc-base64';
 import Hex from 'crypto-js/enc-hex';
 import HmacSHA256 from 'crypto-js/hmac-sha256';
 import SHA256 from 'crypto-js/sha256';
@@ -328,6 +329,23 @@ class AuthorizationV2Builder {
             contentDigest = digest;
         }
         this.contentDigest = contentDigest;
+        return this;
+    }
+
+    /**
+     * Compute the SHA-256 digest of the request body content and configure the result on this builder.
+     * 
+     * This method will compute the digest and then save the result via the {@link module:net~AuthorizationV2Builder#contentSHA256}
+     * method. In addition, it will set the `Digest` HTTP header value via {@link module:net~AuthorizationV2Builder#header}. 
+     * This means you <i>must</i> also pass the `Digest` HTTP header with the request. After calling this
+     * method, you can retrieve the `Digest` HTTP header value via the `httpHeaders`property.
+     * 
+     * @param {string} content the request body content to compute a SHA-256 digest value from
+     */
+    computeContentDigest(content) {
+        var digest = SHA256(content);
+        this.contentSHA256(digest);
+        this.header('Digest', 'sha-256=' +Base64.stringify(digest));
         return this;
     }
 

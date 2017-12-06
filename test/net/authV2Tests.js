@@ -275,3 +275,27 @@ test('core:net:authV2:simplePost', t => {
 	const result = builder.build(TEST_TOKEN_SECRET);
 	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=content-type;date;digest;host,Signature=ad609dd757c1f7f08a519919ab5e109ec61477cf612c6a0d29cac66d54c3987e");
 });
+
+test('core:net:authV2:simplePostWithComputedDigest', t => {
+	const reqDate = getTestDate();
+	const reqBodySha256Hex = "2d8bd7d9bb5f85ba643f0110d50cb506a1fe439e769a22503193ea6046bb87f7";
+	const reqBodySha256 = Hex.parse(reqBodySha256Hex);
+	const reqBodySha256Base64 = Base64.stringify(reqBodySha256);
+
+	const builder = new AuthV2(TEST_TOKEN_ID);
+	builder.date(reqDate).host("localhost").method(HttpMethod.POST).path("/api/post")
+			.header(HttpHeaders.CONTENT_TYPE, 'text/plain;charset=UTF-8')
+			.computeContentDigest('Hello.');
+
+	const canonicalRequestData = builder.buildCanonicalRequestData();
+	t.is(canonicalRequestData,
+		"POST\n/api/post\n\ncontent-type:text/plain;charset=UTF-8\n"
+		+ "date:Tue, 25 Apr 2017 14:30:00 GMT\n"
+		+ "digest:sha-256=" + reqBodySha256Base64
+		+ "\nhost:localhost\ncontent-type;date;digest;host\n" + reqBodySha256Hex);
+
+	t.is(builder.httpHeaders.firstValue(HttpHeaders.DIGEST), 'sha-256='+reqBodySha256Base64);
+
+	const result = builder.build(TEST_TOKEN_SECRET);
+	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=content-type;date;digest;host,Signature=3da29e2ceb916ad31b4ffe920afcf94c879d0c4abaaed92941875ac4549f3cf6");
+});
