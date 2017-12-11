@@ -14,6 +14,7 @@ export default {
   },
   globals: {
     'd3-time-format': 'd3',
+    'crypto-js/enc-base64':'CryptoJS.Base64',
     'crypto-js/enc-hex': 'CryptoJS.Hex',
     'crypto-js/hmac-sha256': 'CryptoJS.HmacSHA256',
     'crypto-js/sha256': 'CryptoJS.SHA256',
