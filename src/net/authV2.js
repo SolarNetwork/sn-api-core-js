@@ -341,6 +341,7 @@ class AuthorizationV2Builder {
      * method, you can retrieve the `Digest` HTTP header value via the `httpHeaders`property.
      * 
      * @param {string} content the request body content to compute a SHA-256 digest value from
+     * @returns {module:net~AuthorizationV2Builder} this object
      */
     computeContentDigest(content) {
         var digest = SHA256(content);
