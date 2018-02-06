@@ -1,4 +1,4 @@
-import PropMap from '../util/PropMap';
+import PropMap from '../util/propMap';
 
 const CountryKey = 'country';
 const ElevationKey = 'elevation';
