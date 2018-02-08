@@ -172,6 +172,23 @@ test('core:net:authV2:queryParams', t => {
 	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=c597ed8061d9d12e12ead3d8d6fc03b28a877e8639548f31556b4760be09a4b8");
 });
 
+test('core:net:authV2:queryParamsWithEscapedCharacters', t => {
+	const reqDate = getTestDate();
+	const params = {foo: '/path/*'};
+
+	const builder = new AuthV2(TEST_TOKEN_ID);
+	builder.useSnDate = true;
+	builder.date(reqDate).host('localhost').path('/api/query').queryParams(params);
+
+	const canonicalRequestData = builder.buildCanonicalRequestData();
+	t.is(canonicalRequestData,
+		"GET\n/api/query\nfoo=%2Fpath%2F%2A\nhost:localhost\nx-sn-date:Tue, 25 Apr 2017 14:30:00 GMT\nhost;x-sn-date\n"
+		+ AuthV2.EMPTY_STRING_SHA256_HEX);
+
+	const result = builder.build(TEST_TOKEN_SECRET);
+	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=host;x-sn-date,Signature=6e5ae54fe70543a590335a5ab9a29dc089dba4ac75fe15875e716f226c74b6e0");
+});
+
 test('core:net:authV2:url', t => {
 	const reqDate = getTestDate();
 	const url = 'http://example.com/path';
