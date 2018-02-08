@@ -611,7 +611,7 @@ function lowercaseSortedArray(items) {
 }
 
 function _hexEscapeChar(c) {
-    return '%' + c.charCodeAt(0).toString(16);
+    return '%' + c.charCodeAt(0).toString(16).toUpperCase();
 }
 
 function _encodeURIComponent(str) {
