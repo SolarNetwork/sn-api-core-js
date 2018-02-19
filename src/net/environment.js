@@ -1,6 +1,35 @@
 import Configuration from '../util/configuration';
 
 /**
+ * Normailze a protocol value.
+ * 
+ * This method is used to normalize protocol values which might come from a `Location`
+ * object and thus contain a trailing colon.
+ * 
+ * @param {String} [val] the protocol value to normalize
+ */
+function normalizedProtocol(val) {
+	if ( !val ) {
+		return 'https';
+	}
+	return val.replace(/:$/, '');
+}
+
+/**
+ * Normalize the environment configuration.
+ * 
+ * @param {Object} [config] the initial configuration 
+ */
+function normalizedConfig(config) {
+	var result = Object.assign({
+		host: 'data.solarnetwork.net'
+	}, config);
+	result.protocol = normalizedProtocol(result.protocol || 'https');
+	result.port = (result.port || (result.protocol === 'https'  ? 443  : 80));
+	return result;
+}
+
+/**
  * An environment configuration utility object.
  *
  * This extends {@link module:util~Configuration} to add support for standard properties
@@ -34,11 +63,7 @@ class Environment extends Configuration {
 	 * @param {Object} [config] an optional set of properties to start with
 	 */
 	constructor(config) {
-		super(Object.assign({
-			protocol: 'https',
-			host: 'data.solarnetwork.net',
-			port: (config && config.port ? config.port : (config && config.protocol ? (config.protocol === 'https' ? 443 : 80) : 443)),
-		}, config));
+		super(normalizedConfig(config));
 	}
 
     /**
