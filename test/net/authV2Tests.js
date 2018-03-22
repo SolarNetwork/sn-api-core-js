@@ -237,6 +237,22 @@ test('core:net:authV2:url:httpsStandardPort', t => {
 	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=0ba4f4469e9e0d48b7ca046e189032881c08e67a00c007fadb00242c4301fe31");
 });
 
+test('core:net:authV2:url:httpsImpliedPort', t => {
+	const reqDate = getTestDate();
+	const url = 'https://example.com/path';
+
+	const builder = new AuthV2(TEST_TOKEN_ID);
+	builder.date(reqDate).url(url);
+
+	const canonicalRequestData = builder.buildCanonicalRequestData();
+	t.is(canonicalRequestData,
+		"GET\n/path\n\ndate:Tue, 25 Apr 2017 14:30:00 GMT\nhost:example.com\ndate;host\n"
+		+ AuthV2.EMPTY_STRING_SHA256_HEX);
+
+	const result = builder.build(TEST_TOKEN_SECRET);
+	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=0ba4f4469e9e0d48b7ca046e189032881c08e67a00c007fadb00242c4301fe31");
+});
+
 test('core:net:authV2:url:wssStandardPort', t => {
 	const reqDate = getTestDate();
 	const url = 'wss://example.com:443/path';
