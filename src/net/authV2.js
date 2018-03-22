@@ -167,8 +167,9 @@ class AuthorizationV2Builder {
     url(url) {
         const uri = uriParse(url);
         let host = uri.host;
-        if ( !((uri.scheme === 'http' || uri.scheme === 'ws') && (!uri.port || uri.port === 80)) ) {
-            host += ':' + (uri.port || 443);
+        if ( uri.port && (((uri.scheme === 'https' || uri.scheme === 'wss') && uri.port !== 443) 
+                || ((uri.scheme === 'http' || uri.scheme === 'ws') && uri.port !== 80)) ) {
+            host += ':' + uri.port;
         }
         if ( uri.query ) {
             this.queryParams(urlQueryParse(uri.query));
