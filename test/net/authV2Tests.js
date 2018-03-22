@@ -230,11 +230,11 @@ test('core:net:authV2:url:httpsStandardPort', t => {
 
 	const canonicalRequestData = builder.buildCanonicalRequestData();
 	t.is(canonicalRequestData,
-		"GET\n/path\n\ndate:Tue, 25 Apr 2017 14:30:00 GMT\nhost:example.com:443\ndate;host\n"
+		"GET\n/path\n\ndate:Tue, 25 Apr 2017 14:30:00 GMT\nhost:example.com\ndate;host\n"
 		+ AuthV2.EMPTY_STRING_SHA256_HEX);
 
 	const result = builder.build(TEST_TOKEN_SECRET);
-	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=5691e0f9366084fd81d50bba679e6c57fbbc85faca87a154ad3e1b29afb2e818");
+	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=0ba4f4469e9e0d48b7ca046e189032881c08e67a00c007fadb00242c4301fe31");
 });
 
 test('core:net:authV2:url:httpsImpliedPort', t => {
@@ -246,11 +246,46 @@ test('core:net:authV2:url:httpsImpliedPort', t => {
 
 	const canonicalRequestData = builder.buildCanonicalRequestData();
 	t.is(canonicalRequestData,
+		"GET\n/path\n\ndate:Tue, 25 Apr 2017 14:30:00 GMT\nhost:example.com\ndate;host\n"
+		+ AuthV2.EMPTY_STRING_SHA256_HEX);
+
+	const result = builder.build(TEST_TOKEN_SECRET);
+	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=0ba4f4469e9e0d48b7ca046e189032881c08e67a00c007fadb00242c4301fe31");
+});
+
+test('core:net:authV2:url:httpsImpliedPort:forced:https', t => {
+	const reqDate = getTestDate();
+	const url = 'https://example.com/path';
+
+	const builder = new AuthV2(TEST_TOKEN_ID);
+	builder.forceHostPort = true;
+	builder.date(reqDate).url(url);
+
+	const canonicalRequestData = builder.buildCanonicalRequestData();
+	t.is(canonicalRequestData,
 		"GET\n/path\n\ndate:Tue, 25 Apr 2017 14:30:00 GMT\nhost:example.com:443\ndate;host\n"
 		+ AuthV2.EMPTY_STRING_SHA256_HEX);
 
 	const result = builder.build(TEST_TOKEN_SECRET);
 	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=5691e0f9366084fd81d50bba679e6c57fbbc85faca87a154ad3e1b29afb2e818");
+});
+
+test('core:net:authV2:url:httpsImpliedPort:forced:http', t => {
+	const reqDate = getTestDate();
+	const url = 'http://example.com/path';
+
+	const builder = new AuthV2(TEST_TOKEN_ID);
+	builder.environment.port = 80;
+	builder.forceHostPort = true;
+	builder.date(reqDate).url(url);
+
+	const canonicalRequestData = builder.buildCanonicalRequestData();
+	t.is(canonicalRequestData,
+		"GET\n/path\n\ndate:Tue, 25 Apr 2017 14:30:00 GMT\nhost:example.com\ndate;host\n"
+		+ AuthV2.EMPTY_STRING_SHA256_HEX);
+
+	const result = builder.build(TEST_TOKEN_SECRET);
+	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=0ba4f4469e9e0d48b7ca046e189032881c08e67a00c007fadb00242c4301fe31");
 });
 
 test('core:net:authV2:url:wssStandardPort', t => {
@@ -262,11 +297,11 @@ test('core:net:authV2:url:wssStandardPort', t => {
 
 	const canonicalRequestData = builder.buildCanonicalRequestData();
 	t.is(canonicalRequestData,
-		"GET\n/path\n\ndate:Tue, 25 Apr 2017 14:30:00 GMT\nhost:example.com:443\ndate;host\n"
+		"GET\n/path\n\ndate:Tue, 25 Apr 2017 14:30:00 GMT\nhost:example.com\ndate;host\n"
 		+ AuthV2.EMPTY_STRING_SHA256_HEX);
 
 	const result = builder.build(TEST_TOKEN_SECRET);
-	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=5691e0f9366084fd81d50bba679e6c57fbbc85faca87a154ad3e1b29afb2e818");
+	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=0ba4f4469e9e0d48b7ca046e189032881c08e67a00c007fadb00242c4301fe31");
 });
 
 test('core:net:authV2:url:wsNonStandardPort', t => {
