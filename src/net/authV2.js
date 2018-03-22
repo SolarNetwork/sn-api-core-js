@@ -76,6 +76,17 @@ class AuthorizationV2Builder {
          */
         this.environment = (environment || new Environment());
 
+        /**
+         * Force a port number to be added to host values, even if port would be implied.
+         * 
+         * This can be useful when working with a server behind a proxy, where the 
+         * proxy is configured to always forward the port even if the port is implied
+         * (i.e. HTTPS is used on the standard port 443).
+         * 
+         * @member {boolean}
+         */
+        this.forceHostPort = false;
+
         this.reset();
     }
 
@@ -143,6 +154,9 @@ class AuthorizationV2Builder {
      * @returns {module:net~AuthorizationV2Builder} this object
      */
     host(val) {
+        if ( this.forceHostPort && val.indexOf(':') < 0 && this.environment.port != 80 ) {
+            val += ':' +this.environment.port;
+        }
         this.httpHeaders.put(HttpHeaders.HOST, val);
         return this;
     }
