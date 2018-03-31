@@ -44,7 +44,6 @@ class extends superclass {
 	 * @param {module:domain~DatumFilter} datumFilter the search criteria, which can define `nodeId`, `startDate`, `endDate`,
 	 *                                                and `metadataFilter` properties to limit the results to; if `nodeId` not
 	 *                                                provided the `nodeIds` property of this class will be used
-	 * @param {string} [metadataFilter] the LDAP-style metadata filter
 	 * @returns {string} the URL
 	 */
 	availableSourcesUrl(datumFilter) {
