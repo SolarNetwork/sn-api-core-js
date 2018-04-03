@@ -7,6 +7,7 @@ import Configuration from '../util/configuration';
  * object and thus contain a trailing colon.
  * 
  * @param {String} [val] the protocol value to normalize
+ * @returns {String} the normalized protocol value
  */
 function normalizedProtocol(val) {
 	if ( !val ) {
@@ -18,7 +19,8 @@ function normalizedProtocol(val) {
 /**
  * Normalize the environment configuration.
  * 
- * @param {Object} [config] the initial configuration 
+ * @param {Object} [config] the initial configuration
+ * @returns {Object} a new object with normalized configuration values
  */
 function normalizedConfig(config) {
 	var result = Object.assign({
