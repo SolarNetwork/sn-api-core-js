@@ -20,9 +20,6 @@ class extends superclass {
     /**
 	 * Generate a URL for viewing the configured user's metadata via a <code>GET</code> request.
 	 *
-	 * @param {number|number[]|null} [userId] a specific user ID (or set of IDs);
-     *                                        if not provided the <code>userIds</code> property of this class will be used;
-     *                                        if <code>null</code> then get the metadata for the requesting user
 	 * @param {module:domain~UserMetadataFilter} filter the search criteria
 	 * @returns {string} the URL
 	 */
