@@ -23,20 +23,15 @@ class extends superclass {
 	 * @param {number|number[]|null} [userId] a specific user ID (or set of IDs);
      *                                        if not provided the <code>userIds</code> property of this class will be used;
      *                                        if <code>null</code> then get the metadata for the requesting user
+	 * @param {module:domain~UserMetadataFilter} filter the search criteria
 	 * @returns {string} the URL
 	 */
-	viewUserMetadataUrl(userId) {
+	findUserMetadataUrl(filter) {
         let result = this.baseUrl() +'/users/meta';
-        let userIds = (userId || this.userIds);
-        if ( userIds && userId !== null ) {
-            if ( Array.isArray(userIds) ) {
-                if ( userIds.length > 1 ) {
-                    result += '?userIds=' +userIds.join(',');
-                } else {
-                    result += '?userId=' +userIds[0];
-                }
-            } else {
-                result += '?userId=' +userIds;
+        if ( filter ) {
+            const params = filter.toUriEncoding();
+            if ( params.length > 0 ) {
+                result += '?' + params;
             }
         }
         return result;
@@ -45,10 +40,29 @@ class extends superclass {
     userMetadataUrl(userId) {
         let result = this.baseUrl() +'/users/meta';
         let userParam = (userId || this.userId);
+        if ( Array.isArray(userParam) ) {
+            if ( userParam.length > 0 ) {
+                userParam = userParam[0];
+            } else {
+                userParam = null;
+            }
+        }
         if ( userParam && userId !== null ) {
             result += '/' +userParam;
         }
         return result;
+    }
+
+    /**
+	 * Generate a URL for viewing a specific user's metadata via a <code>GET</code> request.
+	 *
+	 * @param {number|null} [userId] a specific user ID;
+     *                               if not provided the <code>userId</code> property of this class will be used;
+     *                               if <code>null</code> then view metadata of the requesting user
+	 * @returns {string} the URL
+	 */
+    viewUserMetadataUrl(userId) {
+        return this.userMetadataUrl(userId);
     }
 
     /**
