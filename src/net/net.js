@@ -31,5 +31,7 @@ export { default as UserUrlHelperMixin,
     SolarUserDefaultPath, 
     SolarUserPathKey, 
     SolarUserApiPathV1 } from './userUrlHelperMixin';
+export { default as UserMetadataUrlHelperMixin,
+    UserMetadataUrlHelper } from './userMetadataUrlHelperMixin';
 export { default as UrlHelper } from './urlHelper';
 export { default as urlQuery } from './urlQuery';
