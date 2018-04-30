@@ -132,6 +132,36 @@ class extends superclass {
 		return result;
 	}
 
+    userMetadataUrl(userId) {
+        let result = this.baseUrl() +'/users/meta';
+        let userParam = (userId || this.userId);
+        if ( Array.isArray(userParam) ) {
+            if ( userParam.length > 0 ) {
+                userParam = userParam[0];
+            } else {
+                userParam = null;
+            }
+        }
+        if ( userParam && userId !== null ) {
+            result += '/' +userParam;
+        }
+        return result;
+    }
+
+    /**
+	 * Generate a URL for viewing a specific user's metadata via a `GET` request.
+	 * 
+	 * Note this URL is similar to {@link module:net~UserMetadataUrlHelperMixin#viewUserMetadataUrl}
+	 * but is for the read-only SolarQuery API, rather than the read-write SolarUser API.
+	 *
+	 * @param {number|null} [userId] a specific user ID;
+     *                               if not provided the `userId` property of this class will be used
+	 * @returns {string} the URL
+	 */
+    viewUserMetadataUrl(userId) {
+        return this.userMetadataUrl(userId);
+	}
+
 };
 
 /**

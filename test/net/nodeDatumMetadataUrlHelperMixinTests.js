@@ -101,3 +101,43 @@ test('core:net:nodeDatumMetadataUrlHelperMixin:findNodeDatumMetadataUrl:sortedAn
 		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/meta/123?'
 		+'sourceId=foo&sorts%5B0%5D.key=bar&max=1&offset=2');
 });
+
+test('user:net:nodeDatumMetadataUrlHelperMixin:viewUserMetadataUrl:noUser', t => {
+	const helper = new NodeDatumMetadataUrlHelper();
+	const result = helper.viewUserMetadataUrl();
+	t.is(result, 'https://data.solarnetwork.net/solarquery/api/v1/sec/users/meta');
+});
+
+test('user:net:nodeDatumMetadataUrlHelperMixin:viewUserMetadataUrl:helperUser', t => {
+	const helper = new NodeDatumMetadataUrlHelper();
+	helper.userId = 123;
+	const result = helper.viewUserMetadataUrl();
+	t.is(result, 'https://data.solarnetwork.net/solarquery/api/v1/sec/users/meta/123');
+});
+
+test('user:net:nodeDatumMetadataUrlHelperMixin:viewUserMetadataUrl:helperUsersNotSupported', t => {
+	const helper = new NodeDatumMetadataUrlHelper();
+	helper.userIds = [123, 234];
+	const result = helper.viewUserMetadataUrl();
+	t.is(result, 'https://data.solarnetwork.net/solarquery/api/v1/sec/users/meta');
+});
+
+test('user:net:nodeDatumMetadataUrlHelperMixin:viewUserMetadataUrl:argOverridesHelperUsers', t => {
+	const helper = new NodeDatumMetadataUrlHelper();
+	helper.userId = 123;
+	const result = helper.viewUserMetadataUrl(234);
+	t.is(result, 'https://data.solarnetwork.net/solarquery/api/v1/sec/users/meta/234');
+});
+
+test('user:net:nodeDatumMetadataUrlHelperMixin:viewUserMetadataUrl:argUsers', t => {
+	const helper = new NodeDatumMetadataUrlHelper();
+	const result = helper.viewUserMetadataUrl([123, 234]);
+	t.is(result, 'https://data.solarnetwork.net/solarquery/api/v1/sec/users/meta/123');
+});
+
+test('user:net:nodeDatumMetadataUrlHelperMixin:viewUserMetadataUrl:argUsers', t => {
+	const helper = new NodeDatumMetadataUrlHelper();
+	helper.userId = 123;
+	const result = helper.viewUserMetadataUrl(null);
+	t.is(result, 'https://data.solarnetwork.net/solarquery/api/v1/sec/users/meta');
+});
