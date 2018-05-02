@@ -126,6 +126,22 @@ test('core:domain:datumFilter:metadataFilter', t => {
     t.deepEqual(filter.props, {metadataFilter:'(t=foo)'});
 });
 
+test('core:domain:datumFilter:withoutTotalResultsCount', t => {
+	const filter = new DatumFilter();
+	t.is(filter.withoutTotalResultsCount, undefined);
+	filter.withoutTotalResultsCount = true;
+	t.is(filter.withoutTotalResultsCount, true);
+    t.deepEqual(filter.props, {withoutTotalResultsCount:true});
+});
+
+test('core:domain:datumFilter:withoutTotalResultsCount:truthy', t => {
+	const filter = new DatumFilter();
+	t.is(filter.withoutTotalResultsCount, undefined);
+	filter.withoutTotalResultsCount = "yep";
+	t.is(filter.withoutTotalResultsCount, true);
+    t.deepEqual(filter.props, {withoutTotalResultsCount:true});
+});
+
 test('core:domain:datumFilter:toUriEncoding', t => {
 	const date = new Date();
 	const filter = new DatumFilter();
