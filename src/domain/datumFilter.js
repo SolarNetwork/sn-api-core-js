@@ -17,6 +17,7 @@ const SourceIdsKey = 'sourceIds';
 const StartDateKey =  'startDate';
 const TagsKey = 'tags';
 const UserIdsKey = 'userIds';
+const WithoutTotalResultsCountKey = 'withoutTotalResultsCount';
 
 /**
  * A filter criteria object for datum.
@@ -276,6 +277,18 @@ class DatumFilter extends PropMap {
 
     set metadataFilter(val) {
         this.prop(MetadataFilterKey, val);
+    }
+
+    /**
+     * Get the _without total results_ flag.
+     * @type {boolean}
+     */
+    get withoutTotalResultsCount() {
+        return this.prop(WithoutTotalResultsCountKey);
+    }
+
+    set withoutTotalResultsCount(val) {
+        this.prop(WithoutTotalResultsCountKey, !!val);
     }
 
     /**
