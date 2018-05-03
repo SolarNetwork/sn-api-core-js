@@ -13,6 +13,7 @@ export default {
     return /(crypto-js|d3-|uri-js)/.test(id);
   },
   globals: {
+    'd3-time': 'd3',
     'd3-time-format': 'd3',
     'crypto-js/enc-base64':'CryptoJS.Base64',
     'crypto-js/enc-hex': 'CryptoJS.Hex',
