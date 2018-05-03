@@ -6,6 +6,7 @@ import {
     utcYear
 } from 'd3-time';
 import Aggregations from '../domain/aggregation';
+import { dateTimeParse, dateTimeUrlParse, timestampParse } from '../format/date';
 
 /**
  * An object that defines levels of date range configuration.
@@ -58,7 +59,7 @@ import Aggregations from '../domain/aggregation';
  * @param {Date} [endDate] the ending date; if not provided the current date will be used
  * @returns {module:util~DateRange} the calculated date range
  */
-function rollingQueryDateRange(aggregate, aggregateTimeCount, endDate) {
+export function rollingQueryDateRange(aggregate, aggregateTimeCount, endDate) {
     endDate = endDate || new Date();
 	
 	function exclusiveEndDate(interval, date) {
@@ -125,8 +126,36 @@ function rollingQueryDateRange(aggregate, aggregateTimeCount, endDate) {
 	};
 }
 
-export { rollingQueryDateRange };
+/**
+ * Get a date associated with a "datum" style object.
+ * 
+ * This function will return a `Date` instance found via a property on `d` according to these rules:
+ * 
+ *  1. `date` - assumed to be a `Date` object already and returned directly
+ *  2. `localDate` - a string in `yyyy-MM-dd` form, optionally with a string
+ *     `localTime` property for an associated time in `HH:mm` form
+ *  3. `created` - a string in `yyyy-MM-dd HH:mm:ss.SSS'Z'` or `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'` form
+ * 
+ * These properties are commonly returned in results from the SolarNetwork API, and thus
+ * this method is a handy way to get the dates for those objects.
+ * 
+ * @param {Object} d the datum object to extract a date from
+ * @returns {Date} the extracted date, or `null` if no date could be extracted 
+ */
+export function datumDate(d) {
+	if ( !d ) {
+        return null;
+    }
+    if ( d.date ) {
+        return d.date;
+    } else if ( d.localDate ) {
+        return dateTimeParse(d.localDate +(d.localTime ? ' ' +d.localTime : ' 00:00'));
+    } else if ( d.created ) {
+        return timestampParse(d.created) || dateTimeUrlParse(d.created);
+    }
+}
 
 export default {
+    datumDate : datumDate,
     rollingQueryDateRange : rollingQueryDateRange,
 }

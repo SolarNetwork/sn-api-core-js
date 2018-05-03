@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import { rollingQueryDateRange } from 'util/date'
+import { datumDate, rollingQueryDateRange } from 'util/date'
 import Aggregations from 'domain/aggregation';
 
 test('util:date:rollingQueryDateRange:minutes:count', t => {
@@ -97,4 +97,28 @@ test('util:date:rollingQueryDateRange:months:config', t => {
         end: new Date('2017-02-01T00:00:00.000Z'),
         aggregate: Aggregations.Month
     });
+});
+
+test('util:date:datumDate:date', t => {
+    const date = new Date('2017-01-01T12:12:12.123Z');
+    const result = datumDate({date:date});
+    t.is(result, date, 'Date returned directly');
+});
+
+test('util:date:datumDate:localDate', t => {
+    const date = new Date('2017-01-02T00:00:00.000Z');
+    const result = datumDate({localDate:'2017-01-02'});
+    t.is(result.toISOString(), date.toISOString(), 'Local date parsed as UTC date');
+});
+
+test('util:date:datumDate:localDateAndTime', t => {
+    const date = new Date('2017-01-02T12:34:00.000Z');
+    const result = datumDate({localDate:'2017-01-02', localTime:'12:34'});
+    t.is(result.toISOString(), date.toISOString(), 'Local date and time parsed as UTC date');
+});
+
+test('util:date:datumDate:created:iso', t => {
+    const date = new Date('2017-01-02T12:34:56.789Z');
+    const result = datumDate({created:'2017-01-02T12:34:56.789Z'});
+    t.is(result.toISOString(), date.toISOString(), 'ISO timestamp parsed as UTC date');
 });
