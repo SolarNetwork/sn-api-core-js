@@ -20,6 +20,9 @@ function normalizedProtocol(val) {
 /**
  * Normalize the environment configuration.
  * 
+ * Passing a browser `Location` object, like `window.location`, is supported. The
+ * `protocol`, `hostname`, and `port` values will be used.
+ * 
  * @param {Object} [config] the initial configuration
  * @returns {Object} a new object with normalized configuration values
  * @alias module:net~normalizedConfig
@@ -30,6 +33,7 @@ function normalizedConfig(config) {
 	}, config);
 	result.protocol = normalizedProtocol(result.protocol || 'https');
 	result.port = (result.port || (result.protocol === 'https'  ? 443  : 80));
+	result.host = (result.port && result.hostname ? result.hostname : result.host);
 	return result;
 }
 
