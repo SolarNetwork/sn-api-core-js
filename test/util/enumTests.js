@@ -64,3 +64,9 @@ test('core:enum:equals', t => {
     t.is(TestEnumValues[0].equals('A'), true);
     t.is(TestEnumValues[1].equals('a'), false);
 });
+
+test('core:enum:equals:anotherEnum', t => {
+    t.is(TestEnumValues[0].equals(new TestEnum('A')), true);
+    t.is(TestEnumValues[0].equals(TestEnumValues[0]), true);
+    t.is(TestEnumValues[1].equals(new Enum('A')), false);
+});
