@@ -8,6 +8,7 @@ import Configuration from '../util/configuration';
  * 
  * @param {String} [val] the protocol value to normalize
  * @returns {String} the normalized protocol value
+ * @alias module:net~normalizedProtocol
  */
 function normalizedProtocol(val) {
 	if ( !val ) {
@@ -21,6 +22,7 @@ function normalizedProtocol(val) {
  * 
  * @param {Object} [config] the initial configuration
  * @returns {Object} a new object with normalized configuration values
+ * @alias module:net~normalizedConfig
  */
 function normalizedConfig(config) {
 	var result = Object.assign({

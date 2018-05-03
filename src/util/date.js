@@ -58,6 +58,7 @@ import { dateTimeParse, dateTimeUrlParse, timestampParse } from '../format/date'
  * @param {number|module:util~DateRangeConfiguration} aggregateTimeCount the number of aggregate time units to use
  * @param {Date} [endDate] the ending date; if not provided the current date will be used
  * @returns {module:util~DateRange} the calculated date range
+ * @alias module:util~rollingQueryDateRange
  */
 export function rollingQueryDateRange(aggregate, aggregateTimeCount, endDate) {
     endDate = endDate || new Date();
@@ -140,7 +141,8 @@ export function rollingQueryDateRange(aggregate, aggregateTimeCount, endDate) {
  * this method is a handy way to get the dates for those objects.
  * 
  * @param {Object} d the datum object to extract a date from
- * @returns {Date} the extracted date, or `null` if no date could be extracted 
+ * @returns {Date} the extracted date, or `null` if no date could be extracted
+ * @alias module:util~datumDate
  */
 export function datumDate(d) {
 	if ( !d ) {
@@ -155,7 +157,8 @@ export function datumDate(d) {
     }
 }
 
-export default {
+export default Object.freeze({
     datumDate : datumDate,
     rollingQueryDateRange : rollingQueryDateRange,
-}
+});
+
