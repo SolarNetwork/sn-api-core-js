@@ -1,4 +1,7 @@
-import { max } from 'd3-array';
+import { ascending, max, sum } from 'd3-array';
+import { nest } from 'd3-collection';
+
+import { datumDate } from '../util/date'
 
 /**
  * A callback function that operates on a nested data layer datum object.
@@ -191,7 +194,120 @@ export function aggregateNestedDataLayers(layerData, resultKey, copyProperties, 
 	return layerData;
 }
 
+/**
+ * Transform raw SolarNetwork timeseries data by combining datum from multiple sources into a single
+ * data per time key.
+ * 
+ * This method produces a single array of objects with metric properties derived by grouping 
+ * that property within a single time slot across one or more source IDs. Conceptually this is
+ * similar to {@link module:data~aggregateNestedDataLayers} except groups of source IDs can be
+ * produced in the final result.
+ * 
+ * The data will be passed through {@link module:data~normalizeNestedStackDataByDate} so that every
+ * result object will contain every configured output group, but missing data will result in a
+ * `null` value.
+ * 
+ * Here's an example where two sources `A` and `B` are combined into a single group `Generation`
+ * and a third source `C` is passed through as another group `Consumption`:
+ * 
+ * ```
+ * const queryData = [
+ *     {localDate: '2018-05-05', localTime: '11:00', sourceId: 'A', watts : 123}, 
+ *     {localDate: '2018-05-05', localTime: '11:00', sourceId: 'B', watts : 234},
+ *     {localDate: '2018-05-05', localTime: '11:00', sourceId: 'C', watts : 345},
+ *     {localDate: '2018-05-05', localTime: '12:00', sourceId: 'A', watts : 456}, 
+ *     {localDate: '2018-05-05', localTime: '12:00', sourceId: 'B', watts : 567},
+ *     {localDate: '2018-05-05', localTime: '12:00', sourceId: 'C', watts : 678},
+ * ];
+ * const sourceMap = new Map([
+ *     ['A', 'Generation'],
+ *     ['B', 'Generation'],
+ *     ['C', 'Consumption'],
+ * ]);
+ * 
+ * const result = groupedBySourceMetricDataArray(queryData, 'watts', sourceMap);
+ * ```
+ * 
+ * Then `result` would look like this:
+ * 
+ * ```
+ * [
+ *     {date : new Date('2018-05-05T11:00Z'), Generation : 357, Consumption: 345},
+ *     {date : new Date('2018-05-05T12:00Z'), Generation : 1023, Consumption: 678}
+ * ]
+ * ```
+ * 
+ * @param {object[]} data the raw data returned from SolarNetwork
+ * @param {string} metricName the datum property name to extract
+ * @param {Map} [sourceIdMap] an optional mapping of input source IDs to output source IDs; this can be used
+ *                            to control the grouping of data, by mapping multiple input source IDs to the same
+ *                            output source ID
+ * @param {function} [aggFn] an optional aggregate function to apply to the metric values;
+ *                           defaults to `d3.sum`; **note** that the function will be passed an array of input
+ *                           data objects, not metric values
+ * @returns {object[]} array of datum objects, each with a date and one metric value per source ID
+ * @private
+ */
+export function groupedBySourceMetricDataArray(data, metricName, sourceIdMap, aggFn) {
+	const metricExtractorFn = function metricExtractor(d) {
+		return d[metricName];
+	};
+	const rollupFn = (typeof aggFn === 'function' ? aggFn : sum);
+	const layerData = nest()
+		// group first by source
+		.key((d) => {
+			return sourceIdMap && sourceIdMap.has(d.sourceId)
+				? sourceIdMap.get(d.sourceId)
+				: d.sourceId;
+		})
+		.sortKeys(ascending)
+		// group second by date
+		.key((d) => {
+			return d.localDate + ' ' +d.localTime;
+		})
+		// sum desired property in date group
+		.rollup((values) => {
+			const r = {
+				date: datumDate(values[0])
+			};
+			let metricKey = values[0].sourceId;
+			if ( sourceIdMap && sourceIdMap.has(metricKey) ) {
+				metricKey = sourceIdMap.get(metricKey);
+			}
+			r[metricKey] = rollupFn(values, metricExtractorFn);
+			return r;
+		})
+		// un-nest to single group by source
+		.entries(data).map(function(layer) {
+			return {
+				key: layer.key, 
+				values: layer.values.map(function(d) {
+					return d.value;
+				})
+			};
+		});
+	
+	// ensure all layers have the same time keys
+	normalizeNestedStackDataByDate(layerData, null, (d, key) => {
+		// make sure filled-in data has the metric property defined
+		d[key] = null;
+	});
+
+	// reduce to single array with multiple metric properties
+	return layerData.reduce(function(combined, layer) {
+		if ( !combined ) {
+			return layer.values;
+		}
+		combined.forEach(function(d, i) {
+			const v = layer.values[i][layer.key];
+			d[layer.key] = v;
+		});
+		return combined;
+	}, null);
+}
+
 export default Object.freeze({
-    aggregateNestedDataLayers : aggregateNestedDataLayers,
+	aggregateNestedDataLayers : aggregateNestedDataLayers,
+	groupedBySourceMetricDataArray : groupedBySourceMetricDataArray,
     normalizeNestedStackDataByDate : normalizeNestedStackDataByDate,
 });

@@ -134,11 +134,14 @@ export function rollingQueryDateRange(aggregate, aggregateTimeCount, endDate) {
  * 
  *  1. `date` - assumed to be a `Date` object already and returned directly
  *  2. `localDate` - a string in `yyyy-MM-dd` form, optionally with a string
- *     `localTime` property for an associated time in `HH:mm` form
+ *     `localTime` property for an associated time in `HH:mm` form, treated as UTC
  *  3. `created` - a string in `yyyy-MM-dd HH:mm:ss.SSS'Z'` or `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'` form
  * 
  * These properties are commonly returned in results from the SolarNetwork API, and thus
  * this method is a handy way to get the dates for those objects.
+ * 
+ * **Note** that the `localDate` and `localTime` values are parsed as UTC. When formatted the
+ * date for display they should be formatted in UTC as well to preserve the expected value.
  * 
  * @param {Object} d the datum object to extract a date from
  * @returns {Date} the extracted date, or `null` if no date could be extracted
