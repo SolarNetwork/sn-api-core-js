@@ -14,6 +14,7 @@ export default {
   },
   globals: {
     'd3-array': 'd3',
+    'd3-collection': 'd3',
     'd3-time': 'd3',
     'd3-time-format': 'd3',
     'crypto-js/enc-base64':'CryptoJS.Base64',
