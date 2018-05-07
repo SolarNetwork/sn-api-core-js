@@ -58,6 +58,7 @@ const AggregationValues = Object.freeze([
 	new Aggregation('Week', 604800),
 	new Aggregation('WeekOfYear', 604800),
 	new Aggregation('Month', 2419200),
+	new Aggregation('Year', 31536000),
 	new Aggregation('RunningTotal', Number.MAX_SAFE_INTEGER),
 ]);
 
@@ -80,6 +81,7 @@ const AggregationValues = Object.freeze([
  * @property {module:domain~Aggregation} Week a week
  * @property {module:domain~Aggregation} WeekOfYear the week within a year, e.g. 1 - 52
  * @property {module:domain~Aggregation} Month a month
+ * @property {module:domain~Aggregation} Year a year
  * @property {module:domain~Aggregation} RunningTotal a complete running total over a time span
  * @alias module:domain~Aggregations
  */
