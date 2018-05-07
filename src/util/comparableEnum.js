@@ -36,12 +36,12 @@ class ComparableEnum extends Enum {
     }
 
     /**
-     * Compare two ComparableEnum objects based on their <code>value</code> values.
+     * Compare two ComparableEnum objects based on their `value` values.
      * 
      * @param {ComparableEnum} other the object to compare to
-     * @returns {number} <code>-1</code> if <code>this.value</code> is less than <code>other.value</code>, 
-     *                   <code>1</code> if <code>this.value</code> is greater than <code>other.value</code>,
-     *                   <code>0</code> otherwise (when the values are equal) 
+     * @returns {number} `-1` if `this.value` is less than `other.value`, 
+     *                   `1` if `this.value` is greater than `other.value`,
+     *                   `0` otherwise (when the values are equal) 
      */
     compareTo(other) {
         return this.value < other.value ? -1 : this.value > other.value ? 1 : 0;
@@ -50,12 +50,12 @@ class ComparableEnum extends Enum {
     /**
      * Compute a complete set of enum values based on a minimum enum and/or set of enums.
      * 
-     * If <code>cache</code> is provided, then results computed via <code>minAggregation</code> 
+     * If `cache` is provided, then results computed via `minAggregation` 
      * will be cached there, and subsequent calls will returned the cached result when appropriate.
      * 
      * @param {ComparableEnum} [minEnum] a minimum enum value
      * @param {Map<string, Set<ComparableEnum>>} [cache] a cache of computed values
-     * @returns {Set<ComparableEnum>|null} the computed set, or <code>null</code> if no values match
+     * @returns {Set<ComparableEnum>|null} the computed set, or `null` if no values match
      */
     static minimumEnumSet(minEnum, cache) {
         if ( !minEnum ) {
