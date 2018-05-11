@@ -121,6 +121,7 @@ export function iso8601Date(date, includeTime) {
  * 
  * @param {Date|number} date either a date to get the season for, or a number representing the UTC month of a date
  * @returns {number} a season constant number, from 0 - 3
+ * @alias module:format~seasonForDate
  */
 export function seasonForDate(date) {
 	const m = (date.getUTCMonth ? date.getUTCMonth() : Number(date));
