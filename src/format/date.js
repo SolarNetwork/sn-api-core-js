@@ -107,3 +107,30 @@ export function iso8601Date(date, includeTime) {
 				+'Z'
 				: '');
 }
+
+/**
+ * Get a UTC season constant for a date. Seasons are groups of 3 months, e.g. 
+ * Spring, Summer, Autumn, Winter.
+ * 
+ * The returned value will be a number between 0 and 3, where:
+ * 
+ *  * (Mar, Apr, May) = `0`
+ *  * (Jun, Jul, Aug) = `1`
+ *  * (Sep, Oct, Nov) = `2`
+ *  * (Dec, Jan, Feb) = `3`
+ * 
+ * @param {Date|number} date either a date to get the season for, or a number representing the UTC month of a date
+ * @returns {number} a season constant number, from 0 - 3
+ */
+export function seasonForDate(date) {
+	const m = (date.getUTCMonth ? date.getUTCMonth() : Number(date));
+	if ( m < 2 || m === 11 ) {
+		return 3;
+	} else if ( m < 5 ) {
+		return 0;
+	} else if ( m < 8 ) {
+		return 1;
+	} else {
+		return 2;
+	}
+}

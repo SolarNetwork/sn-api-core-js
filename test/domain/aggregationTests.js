@@ -42,17 +42,18 @@ test('core:aggregation:aggregations', t => {
 	t.is(Aggregations.Week.name, 'Week');
 	t.is(Aggregations.WeekOfYear.name, 'WeekOfYear');
 	t.is(Aggregations.Month.name, 'Month');
+	t.is(Aggregations.Year.name, 'Year');
 	t.is(Aggregations.RunningTotal.name, 'RunningTotal');
 });
 
 test('core:aggregation:minimumEnumSet', t => {
     const cache = new Map();
     let result = Aggregation.minimumEnumSet(Aggregations.Month, cache);
-    t.deepEqual(result, new Set([Aggregations.Month, Aggregations.RunningTotal]));
+    t.deepEqual(result, new Set([Aggregations.Month, Aggregations.Year, Aggregations.RunningTotal]));
 
     result = Aggregation.minimumEnumSet(Aggregations.Week);
 	t.deepEqual(result, new Set([Aggregations.Week, Aggregations.WeekOfYear, 
-		Aggregations.Month, Aggregations.RunningTotal]));
+		Aggregations.Month, Aggregations.Year, Aggregations.RunningTotal]));
 
     result = Aggregation.minimumEnumSet(new Aggregation('foo', Number.MAX_VALUE));
     t.is(result, null);

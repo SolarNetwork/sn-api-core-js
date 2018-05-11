@@ -37,10 +37,16 @@ class Enum {
      * array then enum instances can be compared with `===`. If unsure, this method can be used
      * to compare string values instead.
      * 
-     * @param {string} value the value to test
+     * If `value` is passed as an actual Enum instance, then if that enum is the same class
+     * as this enum it's `name` is compared to this instance's `name`.
+     * 
+     * @param {string|Enum} value the value to test
      * @returns {boolean} `true` if `value` is the same as this instance's `name` value 
      */
     equals(value) {
+        if ( this.constructor === value.constructor ) {
+            return (value.name === this.name);
+        }
         return (value === this.name);
     }
 

@@ -7,3 +7,4 @@ export { default as Logger,
  logLevels } from './logger';
 export { default as MultiMap } from './multiMap';
 export { default as PropMap } from './propMap';
+export { default as dateUtils } from './date';
