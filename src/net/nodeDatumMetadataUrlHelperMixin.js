@@ -8,6 +8,7 @@ import QueryUrlHelperMixin from './queryUrlHelperMixin'
 /**
  * Create a NodeDatumUrlHelperMixin class.
  *
+ * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~NodeDatumMetadataUrlHelperMixin} the mixin class
  */

@@ -4,6 +4,7 @@ import UserUrlHelperMixin from './userUrlHelperMixin'
 /**
  * Create a UserMetadataUrlHelperMixin class.
  *
+ * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~UserMetadataUrlHelperMixin} the mixin class
  */

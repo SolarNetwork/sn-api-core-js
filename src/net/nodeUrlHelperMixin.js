@@ -4,6 +4,7 @@ const SourceIdsKey = 'sourceIds';
 /**
  * Create a NodeUrlHelperMixin class.
  *
+ * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~NodeUrlHelperMixin} the mixin class
  */

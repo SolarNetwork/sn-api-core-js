@@ -30,6 +30,7 @@ export const SolarQueryPublicPathKey = 'publicQuery';
 /**
  * Create a QueryUrlHelperMixin class.
  *
+ * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~QueryUrlHelperMixin} the mixin class
  */

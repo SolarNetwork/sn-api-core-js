@@ -5,6 +5,7 @@ import QueryUrlHelperMixin from './queryUrlHelperMixin'
 /**
  * Create a LocationDatumMetadataUrlHelperMixin class.
  *
+ * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~LocationDatumMetadataUrlHelperMixin} the mixin class
  */
