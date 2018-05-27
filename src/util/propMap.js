@@ -79,8 +79,10 @@ class PropMap {
      * @param {string} [propertyName] an optional object property prefix to add to all properties
      * @param {function} [callbackFn] An optional function that will be called for each property.
      *                   The function will be passed property name and value arguments, and must
-     *                   return either `null` to skip the property, a 2-element array with the property
-     *                   name and value to use, or anything else to use the property as- is.
+     *                   return either `null` to skip the property, a 2 or 3-element array with the
+     *                   property name and value to use, and an optional boolean to force array
+     *                   values to use mutliple parameter keys. Any other return value causes the
+     *                   property to be used as- is.
      * @return {string} the URI encoded string
      */
     toUriEncoding(propertyName, callbackFn) {
@@ -90,6 +92,7 @@ class PropMap {
                 result += '&';
             }
             let v = this.props[k];
+            let forceMultiKey = false;
             if ( callbackFn ) {
                 const kv = callbackFn(k, v);
                 if ( kv === null ) {
@@ -97,6 +100,9 @@ class PropMap {
                 } else if ( Array.isArray(kv) && kv.length > 1 ) {
                     k = kv[0];
                     v = kv[1];
+                    if ( kv.length > 2 ) {
+                        forceMultiKey = !!kv[2];
+                    }
                 }
             }
             
@@ -110,9 +116,9 @@ class PropMap {
             }
             result += encodeURIComponent(k) + '=';
             if ( Array.isArray(v) ) {
-                v.forEach((e, i) => {
+                v.forEach(function(e, i) {
                     if ( i > 0 ) {
-                        result += ',';
+                        result += (forceMultiKey ? '&' + encodeURIComponent(k) + '=' : ',');
                     }
                     if ( e instanceof Enum ) {
                         e = e.name;
