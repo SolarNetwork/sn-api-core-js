@@ -1,6 +1,6 @@
 {
   "name": "solarnetwork-api-core",
-  "version": "0.10.0",
+  "version": "0.10.1-dev.0",
   "description": "SolarNetwork Core API",
   "keywords": [
     "solarnetwork"
