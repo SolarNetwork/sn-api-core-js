@@ -246,6 +246,7 @@ export function aggregateNestedDataLayers(layerData, resultKey, copyProperties, 
  *                           defaults to `d3.sum`; **note** that the function will be passed an array of input
  *                           data objects, not metric values
  * @returns {object[]} array of datum objects, each with a date and one metric value per source ID
+ * @alias module:data~groupedBySourceMetricDataArray
  */
 export function groupedBySourceMetricDataArray(data, metricName, sourceIdMap, aggFn) {
 	const metricExtractorFn = function metricExtractor(d) {
