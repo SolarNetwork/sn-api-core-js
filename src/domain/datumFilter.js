@@ -1,23 +1,46 @@
 import { Aggregation } from './aggregation';
+import { CombiningType } from './combiningType';
 import Location from './location';
 import PropMap from '../util/propMap';
 
 import { dateTimeUrlFormat } from '../format/date'
 
 const AggregationKey = 'aggregation';
+const CombiningTypeKey = 'combiningType';
 const DataPathKey = 'dataPath';
 const EndDateKey = 'endDate';
 const LocationIdsKey = 'locationIds';
 const LocationKey = 'location';
 const MetadataFilterKey = 'metadataFilter';
 const MostRecentKey = 'mostRecent';
+const NodeIdMapsKey = 'nodeIdMaps';
 const NodeIdsKey = 'nodeIds';
 const QueryKey = 'query';
+const SourceIdMapsKey = 'sourceIdMaps';
 const SourceIdsKey = 'sourceIds';
 const StartDateKey =  'startDate';
 const TagsKey = 'tags';
 const UserIdsKey = 'userIds';
 const WithoutTotalResultsCountKey = 'withoutTotalResultsCount';
+
+/**
+ * Combine an ID map into a query parameter.
+ * @param {Map<*, Set<*>>} map ID mapping
+ * @returns {String[]} the query parameter value, or `null` if no mapping available
+ */
+function idMapQueryParameterValue(map) {
+    if ( !(map instanceof Map && map.size > 0) ) {
+        return null;
+    }
+    var result = [];
+    for ( let e of map ) {
+        if ( !(e[1] instanceof Set) ) {
+            continue;
+        }
+        result.push(`${e[0]}:${Array.from(e[1]).join(',')}`);
+    }
+    return result;
+}
 
 /**
  * A filter criteria object for datum.
@@ -292,6 +315,48 @@ class DatumFilter extends PropMap {
     }
 
     /**
+     * Get the combining type.
+     * 
+     * Use this to combine nodes and/or sources into virtual groups. Requires some combination
+     * of {@link #nodeIdMaps} or {@link #sourceIdMaps} also be specified.
+     * 
+     * @type {module:domain~CombiningType}
+     */
+    get combiningType() {
+        return this.prop(CombiningTypeKey);
+    }
+
+    set combiningType(t) {
+        this.prop(CombiningTypeKey, t instanceof CombiningType ? t : null);
+    }
+
+    /**
+     * A mapping of virtual node IDs to sets of real node IDs to combine.
+     * 
+     * @type {Map<Number, Set<Number>>}
+     */
+    get nodeIdMaps() {
+        return this.prop(NodeIdMapsKey);
+    }
+
+    set nodeIdMaps(map) {
+        this.prop(NodeIdMapsKey, map instanceof Map ? map : null);
+    }
+
+    /**
+     * A mapping of virtual source IDs to sets of real source IDs to combine.
+     * 
+     * @type {Map<String, Set<String>>}
+     */
+    get sourceIdMaps() {
+        return this.prop(SourceIdMapsKey);
+    }
+
+    set sourceIdMaps(map) {
+        this.prop(SourceIdMapsKey, map instanceof Map ? map : null);
+    }
+
+    /**
      * Get this object as a standard URI encoded (query parameters) string value.
      * 
      * @override
@@ -308,7 +373,7 @@ class DatumFilter extends PropMap {
  * 
  * @param {string} key the property key
  * @param {*} value the property value
- * @returns {*} 2-element array for mapped key+value, `null` to skip, or `key` to keep as-is
+ * @returns {*} 2 or 3-element array for mapped key+value+forced-multi-key, `null` to skip, or `key` to keep as-is
  * @private
  */
 function datumFilterUriEncodingPropertyMapper(key, value) {
@@ -321,6 +386,9 @@ function datumFilterUriEncodingPropertyMapper(key, value) {
         return [key, dateTimeUrlFormat(value)];
     } else if ( key === MostRecentKey && !value ) {
         return null;
+    } else if ( key === NodeIdMapsKey || key === SourceIdMapsKey ) {
+        let p = idMapQueryParameterValue(value);
+        return (p ? [key, p, true] : null);
     }
     return key;
 }
