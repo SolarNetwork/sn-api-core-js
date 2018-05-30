@@ -1,5 +1,6 @@
 /** @module net */
 
+export { default as AuthTokenUrlHelperMixin } from './authTokenUrlHelperMixin';
 export { default as AuthorizationV2Builder } from './authV2';
 export { default as Environment }  from './environment';
 export { default as HttpHeaders,
