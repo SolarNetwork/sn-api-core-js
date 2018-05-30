@@ -27,6 +27,7 @@ const WithoutTotalResultsCountKey = 'withoutTotalResultsCount';
  * Combine an ID map into a query parameter.
  * @param {Map<*, Set<*>>} map ID mapping
  * @returns {String[]} the query parameter value, or `null` if no mapping available
+ * @private
  */
 function idMapQueryParameterValue(map) {
     if ( !(map instanceof Map && map.size > 0) ) {

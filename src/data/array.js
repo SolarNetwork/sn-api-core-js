@@ -34,6 +34,7 @@
  * @param {object[]} data the raw data returned from SolarNetwork; this array is modified in-place
  * @param {module:domain~Aggregation} aggregate the expected aggregate level of the data
  * @returns {void}
+ * @alias module:data~timeNormalizeDataArray
  */
 export function timeNormalizeDataArray(data, aggregate) {
     const aggMillseconds = aggregate.level * 1000;
