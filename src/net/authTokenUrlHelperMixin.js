@@ -19,6 +19,8 @@ class extends superclass {
 
 	/**
 	 * Generate a URL to refresh the signing key of an authentication token.
+     * 
+     * **Note** this method only works against the `/sec` version of the API endpoint.
 	 * 
 	 * @param {date} date the signing date to use, or `null` for the current date
 	 * @returns {string} the URL

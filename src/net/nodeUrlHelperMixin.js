@@ -70,6 +70,17 @@ class extends superclass {
         this.parameter(SourceIdsKey, sourceIds);
     }
 
+	/**
+	 * Generate a URL to get a list of all active node IDs available to the requesting user.
+     * 
+     * **Note** this method only works against the `/sec` version of the API endpoint.
+	 *
+	 * @return {string} the URL to access the node IDs the requesting user has access to
+	 */
+	listAllNodeIdsUrl() {
+		return this.baseUrl() + '/nodes';
+	}
+    
 }
 
 export default NodeUrlHelperMixin;
