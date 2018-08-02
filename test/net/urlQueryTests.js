@@ -31,6 +31,10 @@ test('core:net:urlQuery:parse:array', t => {
 	t.deepEqual(urlQueryParse('foo=one&foo=two'), {foo:['one','two']});
 });
 
+test('core:net:urlQuery:parse:array:forced', t => {
+	t.deepEqual(urlQueryParse('foo=one&bar=two', new Set(['foo'])), {foo:['one'], bar:'two'});
+});
+
 test('core:net:urlQuery:parse:multi', t => {
 	t.deepEqual(urlQueryParse('foo=bar&bim=bam&life=42'), {foo:'bar', bim:'bam', life:'42'});
 });
