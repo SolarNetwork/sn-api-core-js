@@ -6,10 +6,12 @@
  *
  * @param {string} search the query portion of the URL, which may optionally include
  *                        the leading `?` character
+ * @param {Set<String>} [multiValueKeys] if provided, a set of keys for which to always treat
+ *                                       as a multi-value array, even if there is only one value
  * @return {object} the parsed query parameters, as a parameter object
  * @alias module:net~urlQueryParse
  */
-function urlQueryParse(search) {
+function urlQueryParse(search, multiValueKeys) {
     var params = {};
     var pairs;
     var pair;
@@ -30,6 +32,8 @@ function urlQueryParse(search) {
                         params[k] = [params[k]]; // turn into array;
                     }
                     params[k].push(v);
+                } else if ( multiValueKeys && multiValueKeys.has(k) ) {
+                    params[k] = [v];
                 } else {
                     params[k] = v;
                 }
