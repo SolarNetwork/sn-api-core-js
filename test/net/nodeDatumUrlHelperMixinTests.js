@@ -3,6 +3,7 @@ import test from 'ava';
 import { NodeDatumUrlHelper } from 'net/nodeDatumUrlHelperMixin';
 import Aggregations from 'domain/aggregation';
 import DatumFilter from 'domain/datumFilter';
+import DatumReadingTypes from 'domain/datumReadingType';
 import Pagination from 'domain/pagination';
 import SortDescriptor from 'domain/sortDescriptor';
 
@@ -183,3 +184,28 @@ test('net:nodeDatumUrlHelperMixin:mostRecentDatumUrl:defaultFilter', t => {
 		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/mostRecent?'
         +'nodeId=123&sourceId=abc');
 });
+
+test('net:nodeDatumUrlHelperMixin:datumReadingUrl', t => {
+    const helper = new NodeDatumUrlHelper();
+    const filter = new DatumFilter();
+    filter.nodeId = 123;
+    filter.startDate = new Date('2017-01-01T12:12:12.123Z');
+    filter.endDate = new Date(filter.startDate.getTime() + 24 * 60 * 60 * 1000);
+	t.is(helper.datumReadingUrl(filter, DatumReadingTypes.NearestDifference, 'P1D'),
+		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/reading?'
+        +'nodeId=123&startDate=2017-01-01T12%3A12&endDate=2017-01-02T12%3A12'
+        +'&readingType=NearestDifference&tolerance=P1D');
+});
+
+test('net:nodeDatumUrlHelperMixin:datumReadingUrl:withoutTolerance', t => {
+    const helper = new NodeDatumUrlHelper();
+    const filter = new DatumFilter();
+    filter.nodeId = 123;
+    filter.sourceId = 'foo'
+    filter.startDate = new Date('2017-01-01T12:12:12.123Z');
+	t.is(helper.datumReadingUrl(filter, DatumReadingTypes.CalculatedAt),
+		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/reading?'
+        +'nodeId=123&sourceId=foo&startDate=2017-01-01T12%3A12'
+        +'&readingType=CalculatedAt');
+});
+

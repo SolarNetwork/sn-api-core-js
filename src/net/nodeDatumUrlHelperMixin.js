@@ -1,4 +1,5 @@
 import DatumFilter from '../domain/datumFilter';
+import { DatumReadingType } from '../domain/datumReadingType';
 import UrlHelper from './urlHelper';
 import NodeUrlHelperMixin from './nodeUrlHelperMixin';
 import QueryUrlHelperMixin from './queryUrlHelperMixin';
@@ -72,6 +73,34 @@ class extends superclass {
 		let result = this.baseUrl() + '/datum/list';
 		const filter = (datumFilter || this.datumFilter());
 		const params = filter.toUriEncodingWithSorting(sorts, pagination);
+		if ( params.length > 0 ) {
+			result += '?' + params;
+		}
+		return result;
+	}
+
+	/**
+	 * Generate a URL for querying for datum _reading_ values.
+	 * 
+	 * The `datumFilter` must provide the required date(s) to use for the
+	 * reading type. If the reading type only requires one date, then the
+	 * {@link module:domain~DatumFilter#startDate} or
+	 * {@link module:domain~DatumFilter#endDate} value should be provided.
+	 * 
+	 * @param {module:domain~DatumFilter} datumFilter the search criteria
+	 * @param {module:domain~DatumReadingType} readingType the type of reading to find
+	 * @param {string} [tolerance] optional query tolerance to use
+	 * @returns {string} the URL
+	 * @see https://github.com/SolarNetwork/solarnetwork/wiki/SolarQuery-API#datum-reading
+	 */
+	datumReadingUrl(datumFilter, readingType, tolerance) {
+		let result = this.baseUrl() + '/datum/reading';
+		const filter = (new DatumFilter(datumFilter) || this.datumFilter());
+		filter.prop('readingType', readingType.name);
+		if ( tolerance ) {
+			filter.prop('tolerance', tolerance);
+		}
+		const params = filter.toUriEncoding();
 		if ( params.length > 0 ) {
 			result += '?' + params;
 		}
