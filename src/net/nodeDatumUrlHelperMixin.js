@@ -1,5 +1,4 @@
 import DatumFilter from '../domain/datumFilter';
-import { DatumReadingType } from '../domain/datumReadingType';
 import UrlHelper from './urlHelper';
 import NodeUrlHelperMixin from './nodeUrlHelperMixin';
 import QueryUrlHelperMixin from './queryUrlHelperMixin';

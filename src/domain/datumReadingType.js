@@ -11,7 +11,8 @@ export class DatumReadingType extends Enum {
 	/**
      * Constructor.
      * 
-     * @param {string} name the unique name for this type 
+     * @param {string} name the unique name for this type
+     * @param {string} key the key value associated with this type
      */
     constructor(name, key) {
         super(name);
