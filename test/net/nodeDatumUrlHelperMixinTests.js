@@ -3,20 +3,21 @@ import test from 'ava';
 import { NodeDatumUrlHelper } from 'net/nodeDatumUrlHelperMixin';
 import Aggregations from 'domain/aggregation';
 import DatumFilter from 'domain/datumFilter';
+import DatumReadingTypes from 'domain/datumReadingType';
 import Pagination from 'domain/pagination';
 import SortDescriptor from 'domain/sortDescriptor';
 
-test('core:net:nodeDatumUrlHelperMixin:create', t => {
+test('net:nodeDatumUrlHelperMixin:create', t => {
 	const helper = new NodeDatumUrlHelper();
 	t.truthy(helper);
 });
 
-test('core:net:nodeDatumUrlHelperMixin:baseUrl', t => {
+test('net:nodeDatumUrlHelperMixin:baseUrl', t => {
 	const helper = new NodeDatumUrlHelper();
 	t.is(helper.baseUrl(), 'https://data.solarnetwork.net/solarquery/api/v1/sec');
 });
 
-test('core:net:nodeDatumUrlHelperMixin:reportableintervalUrl', t => {
+test('net:nodeDatumUrlHelperMixin:reportableintervalUrl', t => {
     const helper = new NodeDatumUrlHelper();
     helper.nodeId = 123;
 
@@ -30,7 +31,7 @@ test('core:net:nodeDatumUrlHelperMixin:reportableintervalUrl', t => {
         'argument node ID used');        
 });
 
-test('core:net:nodeDatumUrlHelperMixin:reportableintervalUrl:sources', t => {
+test('net:nodeDatumUrlHelperMixin:reportableintervalUrl:sources', t => {
     const helper = new NodeDatumUrlHelper();
     helper.nodeId = 123;
     helper.sourceId = 'abc';
@@ -55,13 +56,13 @@ test('core:net:nodeDatumUrlHelperMixin:reportableintervalUrl:sources', t => {
         'source IDs URI escaped');        
 });
 
-test('core:net:nodeDatumUrlHelperMixin:availableSources:empty', t => {
+test('net:nodeDatumUrlHelperMixin:availableSources:empty', t => {
     const helper = new NodeDatumUrlHelper();
     t.is(helper.availableSourcesUrl(),
         'https://data.solarnetwork.net/solarquery/api/v1/sec/range/sources');
 });
 
-test('core:net:nodeDatumUrlHelperMixin:availableSources:emptyAndNullArgNodeId', t => {
+test('net:nodeDatumUrlHelperMixin:availableSources:emptyAndNullArgNodeId', t => {
     const helper = new NodeDatumUrlHelper();
     const filter = new DatumFilter();
     filter.metadataFilter = '(foo=bar)';
@@ -70,7 +71,7 @@ test('core:net:nodeDatumUrlHelperMixin:availableSources:emptyAndNullArgNodeId', 
             +'?metadataFilter=(foo%3Dbar)');
 });
 
-test('core:net:nodeDatumUrlHelperMixin:availableSources:default', t => {
+test('net:nodeDatumUrlHelperMixin:availableSources:default', t => {
     const helper = new NodeDatumUrlHelper();
     helper.nodeId = 123;
     t.is(helper.availableSourcesUrl(),
@@ -83,7 +84,7 @@ test('core:net:nodeDatumUrlHelperMixin:availableSources:default', t => {
             +'?nodeIds=123,234');
 });
 
-test('core:net:nodeDatumUrlHelperMixin:availableSources:argNodeId', t => {
+test('net:nodeDatumUrlHelperMixin:availableSources:argNodeId', t => {
     const helper = new NodeDatumUrlHelper();
     helper.nodeId = 123;
     const filter = new DatumFilter();
@@ -97,7 +98,7 @@ test('core:net:nodeDatumUrlHelperMixin:availableSources:argNodeId', t => {
             +'?nodeIds=234,345');
 });
 
-test('core:net:nodeDatumUrlHelperMixin:availableSources:metadataFilter', t => {
+test('net:nodeDatumUrlHelperMixin:availableSources:metadataFilter', t => {
     const helper = new NodeDatumUrlHelper();
     helper.nodeId = 123;
     const filter = helper.datumFilter();
@@ -107,7 +108,7 @@ test('core:net:nodeDatumUrlHelperMixin:availableSources:metadataFilter', t => {
             +'?nodeId=123&metadataFilter=(foo%3Dbar)');
 });
 
-test('core:net:nodeDatumUrlHelperMixin:availableSources:dates', t => {
+test('net:nodeDatumUrlHelperMixin:availableSources:dates', t => {
     const helper = new NodeDatumUrlHelper();
     helper.nodeId = 123;
     const filter = helper.datumFilter();
@@ -118,7 +119,7 @@ test('core:net:nodeDatumUrlHelperMixin:availableSources:dates', t => {
             +'?nodeId=123&startDate=2017-01-01T12%3A12&endDate=2017-01-02T12%3A12');
 });
 
-test('core:net:nodeDatumUrlHelperMixin:listDatumUrl:defaultFilter', t => {
+test('net:nodeDatumUrlHelperMixin:listDatumUrl:defaultFilter', t => {
     const helper = new NodeDatumUrlHelper();
     helper.nodeId = 123;
     let filter = helper.datumFilter();
@@ -129,7 +130,7 @@ test('core:net:nodeDatumUrlHelperMixin:listDatumUrl:defaultFilter', t => {
 	t.deepEqual(filter.props, {nodeIds:[123], sourceIds:['abc']});
 });
 
-test('core:net:nodeDatumUrlHelperMixin:listDatumUrl', t => {
+test('net:nodeDatumUrlHelperMixin:listDatumUrl', t => {
     const helper = new NodeDatumUrlHelper();
     const filter = new DatumFilter();
     filter.nodeId = 123;
@@ -142,7 +143,7 @@ test('core:net:nodeDatumUrlHelperMixin:listDatumUrl', t => {
         +'&sorts%5B0%5D.key=foo&max=1&offset=2');
 });
 
-test('core:net:nodeDatumUrlHelperMixin:pageZeroNoMax', t => {
+test('net:nodeDatumUrlHelperMixin:pageZeroNoMax', t => {
     const helper = new NodeDatumUrlHelper();
     const filter = new DatumFilter();
     filter.nodeId = 123;
@@ -154,7 +155,7 @@ test('core:net:nodeDatumUrlHelperMixin:pageZeroNoMax', t => {
         +'nodeId=123&aggregation=Hour&startDate=2017-01-01T12%3A12&endDate=2017-01-02T12%3A12');
 });
 
-test('core:net:nodeDatumUrlHelperMixin:listDatumUrl:defaultFilter', t => {
+test('net:nodeDatumUrlHelperMixin:listDatumUrl:defaultFilter', t => {
     const helper = new NodeDatumUrlHelper();
     helper.nodeId = 123;
     helper.sourceId = 'abc';
@@ -163,7 +164,7 @@ test('core:net:nodeDatumUrlHelperMixin:listDatumUrl:defaultFilter', t => {
         +'nodeId=123&sourceId=abc');
 });
 
-test('core:net:nodeDatumUrlHelperMixin:mostRecentDatumUrl', t => {
+test('net:nodeDatumUrlHelperMixin:mostRecentDatumUrl', t => {
     const helper = new NodeDatumUrlHelper();
     const filter = new DatumFilter();
     filter.nodeId = 123;
@@ -175,7 +176,7 @@ test('core:net:nodeDatumUrlHelperMixin:mostRecentDatumUrl', t => {
         +'&sorts%5B0%5D.key=foo&max=1&offset=2');
 });
 
-test('core:net:nodeDatumUrlHelperMixin:mostRecentDatumUrl:defaultFilter', t => {
+test('net:nodeDatumUrlHelperMixin:mostRecentDatumUrl:defaultFilter', t => {
     const helper = new NodeDatumUrlHelper();
     helper.nodeId = 123;
     helper.sourceId = 'abc';
@@ -183,3 +184,28 @@ test('core:net:nodeDatumUrlHelperMixin:mostRecentDatumUrl:defaultFilter', t => {
 		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/mostRecent?'
         +'nodeId=123&sourceId=abc');
 });
+
+test('net:nodeDatumUrlHelperMixin:datumReadingUrl', t => {
+    const helper = new NodeDatumUrlHelper();
+    const filter = new DatumFilter();
+    filter.nodeId = 123;
+    filter.startDate = new Date('2017-01-01T12:12:12.123Z');
+    filter.endDate = new Date(filter.startDate.getTime() + 24 * 60 * 60 * 1000);
+	t.is(helper.datumReadingUrl(filter, DatumReadingTypes.NearestDifference, 'P1D'),
+		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/reading?'
+        +'nodeId=123&startDate=2017-01-01T12%3A12&endDate=2017-01-02T12%3A12'
+        +'&readingType=NearestDifference&tolerance=P1D');
+});
+
+test('net:nodeDatumUrlHelperMixin:datumReadingUrl:withoutTolerance', t => {
+    const helper = new NodeDatumUrlHelper();
+    const filter = new DatumFilter();
+    filter.nodeId = 123;
+    filter.sourceId = 'foo'
+    filter.startDate = new Date('2017-01-01T12:12:12.123Z');
+	t.is(helper.datumReadingUrl(filter, DatumReadingTypes.CalculatedAt),
+		'https://data.solarnetwork.net/solarquery/api/v1/sec/datum/reading?'
+        +'nodeId=123&sourceId=foo&startDate=2017-01-01T12%3A12'
+        +'&readingType=CalculatedAt');
+});
+
