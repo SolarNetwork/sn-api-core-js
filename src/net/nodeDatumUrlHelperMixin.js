@@ -45,10 +45,15 @@ class extends superclass {
 	 * @param {module:domain~DatumFilter} datumFilter the search criteria, which can define `nodeId`, `startDate`, `endDate`,
 	 *                                                and `metadataFilter` properties to limit the results to; if `nodeId` not
 	 *                                                provided the `nodeIds` property of this class will be used
+	 * @param {boolean} withNodeIds if `true` then force the response to include node IDs along with source IDs, instead of 
+	 *                              just source IDs
 	 * @returns {string} the URL
 	 */
-	availableSourcesUrl(datumFilter) {
-		const filter = (datumFilter || this.datumFilter());
+	availableSourcesUrl(datumFilter, withNodeIds) {
+		const filter = (datumFilter ? new DatumFilter(datumFilter) : this.datumFilter());
+		if ( withNodeIds !== undefined ) {
+			filter.prop('withNodeIds', !!withNodeIds);
+		}
 		let result = this.baseUrl() + '/range/sources';
 		const params = filter.toUriEncoding();
 		if ( params.length > 0 ) {
