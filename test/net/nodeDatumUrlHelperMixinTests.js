@@ -71,6 +71,32 @@ test('net:nodeDatumUrlHelperMixin:availableSources:emptyAndNullArgNodeId', t => 
             +'?metadataFilter=(foo%3Dbar)');
 });
 
+test('net:nodeDatumUrlHelperMixin:availableSources:withNodeIdsTrue', t => {
+    const helper = new NodeDatumUrlHelper();
+    const filter = new DatumFilter();
+    filter.nodeId = 123;
+    t.is(helper.availableSourcesUrl(filter, true),
+        'https://data.solarnetwork.net/solarquery/api/v1/sec/range/sources'
+            +'?nodeId=123&withNodeIds=true');
+});
+
+test('net:nodeDatumUrlHelperMixin:availableSources:withNodeIdsFalse', t => {
+    const helper = new NodeDatumUrlHelper();
+    const filter = new DatumFilter();
+    filter.nodeId = 123;
+    t.is(helper.availableSourcesUrl(filter, false),
+        'https://data.solarnetwork.net/solarquery/api/v1/sec/range/sources'
+            +'?nodeId=123&withNodeIds=false');
+});
+
+test('net:nodeDatumUrlHelperMixin:availableSources:withNodeIds:helperFilter', t => {
+    const helper = new NodeDatumUrlHelper();
+    helper.nodeId = 123;
+    t.is(helper.availableSourcesUrl(null, true),
+        'https://data.solarnetwork.net/solarquery/api/v1/sec/range/sources'
+            +'?nodeId=123&withNodeIds=true');
+});
+
 test('net:nodeDatumUrlHelperMixin:availableSources:default', t => {
     const helper = new NodeDatumUrlHelper();
     helper.nodeId = 123;
