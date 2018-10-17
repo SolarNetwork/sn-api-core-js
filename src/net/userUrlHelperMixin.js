@@ -85,6 +85,15 @@ class extends superclass {
 	}
 
 	/**
+	 * Generate a URL to get information about the requesting authenticated user.
+	 *
+	 * @return {string} the URL to view information about the authenticated user
+	 */
+	whoamiUrl() {
+		return this.baseUrl() + '/whoami';
+	}
+
+	/**
 	 * Generate a URL to get a list of all active nodes for the user account.
 	 *
 	 * @return {string} the URL to access the user's active nodes
@@ -126,6 +135,15 @@ class extends superclass {
 			+nodeIds.join(',') +'&archived='
 			+(archived ? 'true' : 'false');
 		return result;
+	}
+
+	/**
+	 * Generate a URL to get a Node Image Maker (NIM) session key.
+	 *
+	 * @return {string} the URL to obtain a NIM session key
+	 */
+	nimAuthorizeUrl() {
+		return this.baseUrl() + '/user/nim/authorize';
 	}
 
 }
