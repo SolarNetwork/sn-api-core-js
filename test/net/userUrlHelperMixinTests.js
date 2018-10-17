@@ -39,6 +39,11 @@ test('net:user:userUrlHelperMixin:baseUrl', t => {
 	t.is(helper.baseUrl(), 'https://data.solarnetwork.net/solaruser/api/v1/sec');
 });
 
+test('net:user:userUrlHelperMixin:whoamiUrl', t => {
+	const helper = new UserUrlHelper();
+	t.is(helper.whoamiUrl(), 'https://data.solarnetwork.net/solaruser/api/v1/sec/whoami');
+});
+
 test('net:user:userUrlHelperMixin:viewNodesUrl', t => {
 	const helper = new UserUrlHelper();
 	t.is(helper.viewNodesUrl(), 'https://data.solarnetwork.net/solaruser/api/v1/sec/nodes');
@@ -52,6 +57,11 @@ test('net:user:userUrlHelperMixin:viewPendingNodesUrl', t => {
 test('net:user:userUrlHelperMixin:viewArchivedNodesUrl', t => {
 	const helper = new UserUrlHelper();
 	t.is(helper.viewArchivedNodesUrl(), 'https://data.solarnetwork.net/solaruser/api/v1/sec/nodes/archived');
+});
+
+test('net:user:userUrlHelperMixin:nimAuthorizeUrl', t => {
+	const helper = new UserUrlHelper();
+	t.is(helper.nimAuthorizeUrl(), 'https://data.solarnetwork.net/solaruser/api/v1/sec/user/nim/authorize');
 });
 
 class UserNodeUrlHelper extends UserUrlHelperMixin(NodeUrlHelperMixin(UrlHelper)) {
