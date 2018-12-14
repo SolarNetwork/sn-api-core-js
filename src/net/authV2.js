@@ -101,9 +101,6 @@ class AuthorizationV2Builder {
         this.parameters = new MultiMap();
         this.signedHeaderNames = [];
         var host = this.environment.host;
-        if ( this.environment.protocol === 'https' || this.environment.port != 80 ) {
-            host += ':' +this.environment.port;
-        }
         return this.method(HttpMethod.GET).host(host).path('/').date(new Date());
     }
 
@@ -122,6 +119,7 @@ class AuthorizationV2Builder {
     saveSigningKey(tokenSecret) {
         this.signingKey = this.computeSigningKey(tokenSecret);
         this.signingKeyExpiration = new Date(this.requestDate.getTime() + SIGNING_KEY_VALIDITY)
+        return this;
     }
 
     /**
