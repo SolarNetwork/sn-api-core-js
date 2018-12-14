@@ -119,6 +119,7 @@ class AuthorizationV2Builder {
     saveSigningKey(tokenSecret) {
         this.signingKey = this.computeSigningKey(tokenSecret);
         this.signingKeyExpiration = new Date(this.requestDate.getTime() + SIGNING_KEY_VALIDITY)
+        return this;
     }
 
     /**
