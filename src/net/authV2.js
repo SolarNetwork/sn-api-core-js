@@ -101,9 +101,6 @@ class AuthorizationV2Builder {
         this.parameters = new MultiMap();
         this.signedHeaderNames = [];
         var host = this.environment.host;
-        if ( this.environment.protocol === 'https' || this.environment.port != 80 ) {
-            host += ':' +this.environment.port;
-        }
         return this.method(HttpMethod.GET).host(host).path('/').date(new Date());
     }
 
