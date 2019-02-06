@@ -34,6 +34,32 @@ test('core:net:authV2:simpleGet', t => {
 	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=4739139d3d370f147b6585795c309b1c6d7d7f59943081f7dd943f689cfa59a3");
 });
 
+test('core:net:authV2:simpleGetWithUndefinedContentType', t => {
+	const builder = new AuthV2(TEST_TOKEN_ID);
+	builder.date(getTestDate()).host('localhost').path('/api/test').contentType(undefined);
+
+	const canonicalRequestData = builder.buildCanonicalRequestData();
+	t.is(canonicalRequestData,
+		"GET\n/api/test\n\ndate:Tue, 25 Apr 2017 14:30:00 GMT\nhost:localhost\ndate;host\n"
+		+ AuthV2.EMPTY_STRING_SHA256_HEX);
+
+	const result = builder.build(TEST_TOKEN_SECRET);
+	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=4739139d3d370f147b6585795c309b1c6d7d7f59943081f7dd943f689cfa59a3");
+});
+
+test('core:net:authV2:simpleGetWithNullContentType', t => {
+	const builder = new AuthV2(TEST_TOKEN_ID);
+	builder.date(getTestDate()).host('localhost').path('/api/test').contentType(null);
+
+	const canonicalRequestData = builder.buildCanonicalRequestData();
+	t.is(canonicalRequestData,
+		"GET\n/api/test\n\ncontent-type:\ndate:Tue, 25 Apr 2017 14:30:00 GMT\nhost:localhost\ncontent-type;date;host\n"
+		+ AuthV2.EMPTY_STRING_SHA256_HEX);
+
+	const result = builder.build(TEST_TOKEN_SECRET);
+	t.is(result, "SNWS2 Credential=test-token-id,SignedHeaders=content-type;date;host,Signature=00f309ee00978dc772cb01aba857d57983a7d3ac3b9ab8916a7702c61d6e07b6");
+});
+
 test('core:net:authV2:simpleGetWithSavedKey', t => {
     const builder = new AuthV2(TEST_TOKEN_ID);
     builder.date(getTestDate()).host('localhost').path('/api/test').saveSigningKey(TEST_TOKEN_SECRET);
