@@ -4,6 +4,7 @@ export { default as Aggregations, Aggregation } from './aggregation';
 export { default as AuthTokenStatuses, AuthTokenStatus } from './authTokenStatus';
 export { default as AuthTokenTypes, AuthTokenType } from './authTokenType';
 export { default as CombiningTypes, CombiningType } from './combiningType';
+export { default as DatumAuxiliaryTypes, DatumAuxiliaryType } from './datumAuxiliaryType';
 export { default as DatumFilter } from './datumFilter';
 export { default as DatumReadingTypes, DatumReadingType } from './datumReadingType';
 export { default as GeneralMetadata,
