@@ -28,7 +28,9 @@ export { default as QueryUrlHelperMixin,
 	SolarQueryPublicPathKey } from './queryUrlHelperMixin';
 export { default as UserAuthTokenUrlHelperMixin, 
     UserAuthTokenUrlHelper } from './userAuthTokenUrlHelperMixin';
-export { default as UserUrlHelperMixin,
+    export { default as UserDatumAuxiliaryUrlHelperMixin, 
+        UserDatumAuxiliaryUrlHelper } from './userDatumAuxiliaryUrlHelperMixin';
+    export { default as UserUrlHelperMixin,
     SolarUserDefaultPath, 
     SolarUserPathKey, 
     SolarUserApiPathV1 } from './userUrlHelperMixin';
