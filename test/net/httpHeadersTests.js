@@ -10,6 +10,7 @@ test('core:net:httpHeaders:create', t => {
 });
 
 test('core:net:httpHeaders:constants', t => {
+	t.is(HttpHeaders.ACCEPT, 'Accept');
 	t.is(HttpHeaders.AUTHORIZATION, 'Authorization');
 	t.is(HttpHeaders.CONTENT_MD5, 'Content-MD5');
 	t.is(HttpHeaders.CONTENT_TYPE, 'Content-Type');

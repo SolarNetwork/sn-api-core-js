@@ -47,6 +47,15 @@ class HttpHeaders extends MultiMap {
 
 Object.defineProperties(HttpHeaders, {
 	/**
+	 * The `Accept` header.
+	 * 
+	 * @memberof module:net~HttpHeaders
+	 * @readonly
+	 * @type {string}
+	 */
+	'ACCEPT':			{ value: 'Accept' },
+
+	/**
 	 * The `Authorization` header.
 	 * 
 	 * @memberof module:net~HttpHeaders
