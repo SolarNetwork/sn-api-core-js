@@ -330,7 +330,7 @@ test('core:net:authV2:simplePost', t => {
 	const builder = new AuthV2(TEST_TOKEN_ID);
 	builder.date(reqDate).host("localhost").method(HttpMethod.POST).path("/api/post")
 			.header(HttpHeaders.DIGEST, "sha-256=" + reqBodySha256Base64)
-			.header(HttpHeaders.CONTENT_TYPE, 'application/json;charset=UTF-8')
+			.contentType('application/json;charset=UTF-8')
 			.contentSHA256(reqBodySha256);
 
 	const canonicalRequestData = builder.buildCanonicalRequestData();
@@ -352,7 +352,7 @@ test('core:net:authV2:simplePostWithComputedDigest', t => {
 
 	const builder = new AuthV2(TEST_TOKEN_ID);
 	builder.date(reqDate).host("localhost").method(HttpMethod.POST).path("/api/post")
-			.header(HttpHeaders.CONTENT_TYPE, 'text/plain;charset=UTF-8')
+			.contentType('text/plain;charset=UTF-8')
 			.computeContentDigest('Hello.');
 
 	const canonicalRequestData = builder.buildCanonicalRequestData();
