@@ -15,4 +15,5 @@ export { default as Location } from './location';
 export { default as LocationPrecisions, LocationPrecision } from './locationPrecision';
 export { default as Pagination } from './pagination';
 export { default as SecurityPolicy, SecurityPolicyBuilder } from './securityPolicy';
+export { default as SkyConditions, SkyCondition } from './skyCondition';
 export { default as SortDescriptor } from './sortDescriptor';
