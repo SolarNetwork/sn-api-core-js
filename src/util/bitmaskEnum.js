@@ -26,7 +26,7 @@ class BitmaskEnum extends Enum {
 	}
 
 	/**
-	 * Get the bit offset value, starting from `1` for the least significant bit. 
+	 * Get the bit offset value, starting from `1` for the least significant bit.
 	 *
 	 * @returns {number} the value
 	 */
@@ -35,7 +35,7 @@ class BitmaskEnum extends Enum {
 	}
 
 	/**
-	 * Get the bit offset value, starting from `0` for the least significant bit. 
+	 * Get the bit offset value, starting from `0` for the least significant bit.
 	 *
 	 * @returns {number} the value
 	 */
