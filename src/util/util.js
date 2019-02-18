@@ -1,5 +1,6 @@
 /** @module util */
 
+export { default as BitmaskEnum } from './bitmaskEnum';
 export { default as ComparableEnum } from './comparableEnum';
 export { default as Configuration } from './configuration';
 export { default as dateUtils } from './date';
