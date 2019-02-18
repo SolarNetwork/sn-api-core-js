@@ -22,7 +22,7 @@ class SkyCondition extends BitmaskEnum {
 
 	/**
 	 * Get the state code value.
-	 * 
+	 *
 	 * @returns {number} the code
 	 */
 	get code() {
@@ -31,9 +31,9 @@ class SkyCondition extends BitmaskEnum {
 
 	/**
 	 * Get an enum for a code value.
-	 * 
+	 *
 	 * @param {number} code the code to look for
-	 * @returns {DeviceOperatingState} the state, or `null` if not found 
+	 * @returns {DeviceOperatingState} the state, or `null` if not found
 	 */
 	static forCode(code) {
 		return BitmaskEnum.enumForBitNumber(code, SkyConditionValues);

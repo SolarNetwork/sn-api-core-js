@@ -8,8 +8,8 @@ test("domain:skyCondition:create", t => {
 	t.is(obj.name, "foo");
 	t.is(obj.bitmaskBitNumber, 2);
 	t.is(obj.bitmaskBitOffset, 1);
-	t.is(obj.code, 2)
-});;
+	t.is(obj.code, 2);
+});
 
 test("domain:skyCondition:enumsValue", t => {
 	t.is(SkyConditions.Clear.name, "Clear");
@@ -45,5 +45,5 @@ test("domain:skyCondition:setForBitmask", t => {
 
 test("bitmaskEnum:bitmaskForSet", t => {
 	const vals = [SkyConditions.ScatteredShowers, SkyConditions.Hail, SkyConditions.Windy];
-	t.is(SkyCondition.bitmaskValue(vals), 16672, '32 + 256 + 16384');
+	t.is(SkyCondition.bitmaskValue(vals), 16672, "32 + 256 + 16384");
 });

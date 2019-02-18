@@ -1,6 +1,9 @@
 import test from "ava";
 
-import { default as DeviceOperatingStates, DeviceOperatingState } from "domain/deviceOperatingState";
+import {
+	default as DeviceOperatingStates,
+	DeviceOperatingState
+} from "domain/deviceOperatingState";
 
 test("domain:deviceOperatingState:create", t => {
 	const obj = new DeviceOperatingState("foo", 2);
@@ -35,5 +38,5 @@ test("domain:deviceOperatingState:setForBitmask", t => {
 
 test("bitmaskEnum:bitmaskForSet", t => {
 	const vals = [DeviceOperatingStates.Normal, DeviceOperatingStates.Recovery];
-	t.is(DeviceOperatingState.bitmaskValue(vals), 65, '1 + 64');
+	t.is(DeviceOperatingState.bitmaskValue(vals), 65, "1 + 64");
 });

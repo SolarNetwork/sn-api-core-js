@@ -22,7 +22,7 @@ class DeviceOperatingState extends BitmaskEnum {
 
 	/**
 	 * Get the state code value.
-	 * 
+	 *
 	 * @returns {number} the code
 	 */
 	get code() {
@@ -31,9 +31,9 @@ class DeviceOperatingState extends BitmaskEnum {
 
 	/**
 	 * Get an enum for a code value.
-	 * 
+	 *
 	 * @param {number} code the code to look for
-	 * @returns {DeviceOperatingState} the state, or `null` if not found 
+	 * @returns {DeviceOperatingState} the state, or `null` if not found
 	 */
 	static forCode(code) {
 		return BitmaskEnum.enumForBitNumber(code, DeviceOperatingStateValues);
@@ -50,15 +50,15 @@ class DeviceOperatingState extends BitmaskEnum {
 }
 
 const DeviceOperatingStateValues = Object.freeze([
-	new DeviceOperatingState('Unknown', 0),
-	new DeviceOperatingState('Normal', 1),
-	new DeviceOperatingState('Starting', 2),
-	new DeviceOperatingState('Standby', 3),
-	new DeviceOperatingState('Shutdown', 4),
-	new DeviceOperatingState('Fault', 5),
-	new DeviceOperatingState('Disabled', 6),
-	new DeviceOperatingState('Recovery', 7),
-	new DeviceOperatingState('Override', 8),
+	new DeviceOperatingState("Unknown", 0),
+	new DeviceOperatingState("Normal", 1),
+	new DeviceOperatingState("Starting", 2),
+	new DeviceOperatingState("Standby", 3),
+	new DeviceOperatingState("Shutdown", 4),
+	new DeviceOperatingState("Fault", 5),
+	new DeviceOperatingState("Disabled", 6),
+	new DeviceOperatingState("Recovery", 7),
+	new DeviceOperatingState("Override", 8)
 ]);
 
 /**
