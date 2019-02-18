@@ -8,7 +8,8 @@ test("domain:skyCondition:create", t => {
 	t.is(obj.name, "foo");
 	t.is(obj.bitmaskBitNumber, 2);
 	t.is(obj.bitmaskBitOffset, 1);
-});
+	t.is(obj.code, 2)
+});;
 
 test("domain:skyCondition:enumsValue", t => {
 	t.is(SkyConditions.Clear.name, "Clear");
@@ -30,6 +31,11 @@ test("domain:skyCondition:enumsValue", t => {
 	t.is(SkyConditions.Hurricane.name, "Hurricane");
 	t.is(SkyConditions.Dusty.name, "Dusty");
 	t.is(SkyConditions.ScatteredShowers.name, "ScatteredShowers");
+});
+
+test("domain:deviceOperatingState:forCode", t => {
+	const e = SkyCondition.forCode(2);
+	t.is(e, SkyConditions.ScatteredClouds);
 });
 
 test("domain:skyCondition:setForBitmask", t => {

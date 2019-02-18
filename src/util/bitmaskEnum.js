@@ -44,6 +44,25 @@ class BitmaskEnum extends Enum {
 	}
 
 	/**
+	 * Get a `BitmaskEnum` objects for a bit number.
+	 *
+	 * @param {number} bitNumber
+	 *        a bit number value of the `BitmaskEnum` object to find
+	 * @param {Iterable<BitmaskEnum>} values
+	 *        the complete set of possible `BitmaskEnum` objects
+	 * @return {BitmaskEnum} the matching `BitmaskEnum`, or `null`
+	 */
+	static enumForBitNumber(bitNumber, values) {
+		for (const c of values) {
+			const n = c.bitmaskBitNumber;
+			if (n == bitNumber) {
+				return c;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Get a bitmask value for a set of {@code Bitmaskable} objects.
 	 *
 	 * @param {Iterable<BitmaskEnum>} maskables
@@ -55,7 +74,9 @@ class BitmaskEnum extends Enum {
 		var mask = 0;
 		if (maskables != null) {
 			for (const c of maskables) {
-				mask |= 1 << c.bitmaskBitOffset;
+				if (c.bitmaskBitOffset >= 0) {
+					mask |= 1 << c.bitmaskBitOffset;
+				}
 			}
 		}
 		return mask;
@@ -90,7 +111,7 @@ class BitmaskEnum extends Enum {
 		var set = new Set();
 		for (const c of values) {
 			const b = c.bitmaskBitOffset;
-			if (((mask >> b) & 1) == 1) {
+			if (b >= 0 && ((mask >> b) & 1) == 1) {
 				set.add(c);
 			}
 		}

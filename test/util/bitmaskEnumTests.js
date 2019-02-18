@@ -52,12 +52,17 @@ test("util:bitmaskEnum:enumsValue", t => {
 	});
 });
 
+test("util:bitmaskEnum:enumForBitNumber", t => {
+	const e = BitmaskEnum.enumForBitNumber(2, TestEnumValues);
+	t.is(e, TestEnums.B);
+});
+
 test("util:bitmaskEnum:setForBitmask", t => {
 	const set = BitmaskEnum.setForBitmask(5, TestEnumValues);
-	t.deepEqual(set, new Set([TestEnumValues[0], TestEnumValues[2]]));
+	t.deepEqual(set, new Set([TestEnums.A, TestEnums.C]));
 });
 
 test("util:bitmaskEnum:bitmaskForSet", t => {
-	const vals = [TestEnumValues[0], TestEnumValues[2], TestEnumValues[3]];
+	const vals = [TestEnums.A, TestEnums.C, TestEnums.D];
 	t.is(BitmaskEnum.bitmaskValue(vals), 13);
 });
