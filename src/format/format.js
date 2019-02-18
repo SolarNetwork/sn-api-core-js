@@ -1,4 +1,4 @@
 /** @module format */
 
-export *  from './date';
-export *  from './scale';
+export * from "./date";
+export * from "./scale";

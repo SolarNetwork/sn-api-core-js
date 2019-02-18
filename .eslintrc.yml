@@ -5,9 +5,9 @@ env:
     es6: true
     browser: true
 
-extends:
-    "eslint:recommended"
+extends: "eslint:recommended"
 
 rules:
     no-cond-assign: 0
+    no-mixed-spaces-and-tabs: 0
     valid-jsdoc: 1
