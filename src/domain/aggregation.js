@@ -1,70 +1,67 @@
-import ComparableEnum from '../util/comparableEnum';
+import ComparableEnum from "../util/comparableEnum";
 
 /**
  * A named aggregation.
- * 
+ *
  * @extends module:util~ComparableEnum
  * @alias module:domain~Aggregation
  */
 class Aggregation extends ComparableEnum {
-
 	/**
-     * Constructor.
-     * 
-     * @param {string} name the unique name for this precision 
-     * @param {number} level a relative aggregation level value 
-     */
-    constructor(name, level) {
+	 * Constructor.
+	 *
+	 * @param {string} name the unique name for this precision
+	 * @param {number} level a relative aggregation level value
+	 */
+	constructor(name, level) {
 		super(name, level);
-		if ( this.constructor === Aggregation ) {
+		if (this.constructor === Aggregation) {
 			Object.freeze(this);
 		}
-    }
-
-    /**
-     * Get the aggregate level value.
-	 * 
-	 * This is an alias for {@link module:util~ComparableEnum#value}.
-     */
-    get level() {
-        return this.value;
 	}
-	
+
+	/**
+	 * Get the aggregate level value.
+	 *
+	 * This is an alias for {@link module:util~ComparableEnum#value}.
+	 */
+	get level() {
+		return this.value;
+	}
+
 	/**
 	 * Get the {@link module:domain~Aggregations} values.
-	 * 
+	 *
 	 * @override
 	 * @inheritdoc
 	 */
 	static enumValues() {
 		return AggregationValues;
 	}
-
 }
 
-
 const AggregationValues = Object.freeze([
-	new Aggregation('Minute', 60),
-	new Aggregation('FiveMinute', 60 * 5),
-	new Aggregation('TenMinute', 60 * 10),
-	new Aggregation('FifteenMinute', 60 * 15),
-	new Aggregation('ThirtyMinute', 60 * 30),
-	new Aggregation('Hour', 3600),
-	new Aggregation('HourOfDay', 3600),
-	new Aggregation('SeasonalHourOfDay', 3600),
-	new Aggregation('Day', 86400),
-	new Aggregation('DayOfWeek', 86400),
-	new Aggregation('SeasonalDayOfWeek', 86400),
-	new Aggregation('Week', 604800),
-	new Aggregation('WeekOfYear', 604800),
-	new Aggregation('Month', 2419200),
-	new Aggregation('Year', 31536000),
-	new Aggregation('RunningTotal', Number.MAX_SAFE_INTEGER),
+	new Aggregation("Minute", 60),
+	new Aggregation("FiveMinute", 60 * 5),
+	new Aggregation("TenMinute", 60 * 10),
+	new Aggregation("FifteenMinute", 60 * 15),
+	new Aggregation("ThirtyMinute", 60 * 30),
+	new Aggregation("Hour", 3600),
+	new Aggregation("HourOfDay", 3600),
+	new Aggregation("SeasonalHourOfDay", 3600),
+	new Aggregation("Day", 86400),
+	new Aggregation("DayOfWeek", 86400),
+	new Aggregation("SeasonalDayOfWeek", 86400),
+	new Aggregation("Week", 604800),
+	new Aggregation("WeekOfYear", 604800),
+	new Aggregation("Month", 2419200),
+	new Aggregation("Year", 31536000),
+	new Aggregation("RunningTotal", Number.MAX_SAFE_INTEGER)
 ]);
 
 /**
  * The enumeration of supported Aggregation values.
- * 
+ *
  * @readonly
  * @enum {module:domain~Aggregation}
  * @property {module:domain~Aggregation} Minute minute

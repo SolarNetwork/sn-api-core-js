@@ -1,48 +1,46 @@
-import Enum from '../util/enum';
+import Enum from "../util/enum";
 
 /**
  * A named instruction state.
- * 
+ *
  * @extends module:util~Enum
  * @alias module:domain~InstructionState
  */
 class InstructionState extends Enum {
+	/**
+	 * Constructor.
+	 *
+	 * @param {string} name the name
+	 */
+	constructor(name) {
+		super(name);
+		if (this.constructor === InstructionState) {
+			Object.freeze(this);
+		}
+	}
 
-    /**
-     * Constructor.
-     * 
-     * @param {string} name the name
-     */
-    constructor(name) {
-        super(name);
-        if ( this.constructor === InstructionState ) {
-            Object.freeze(this);
-        }
-    }
-
-    /**
+	/**
 	 * Get the {@link module:domain~InstructionStates} values.
-	 * 
+	 *
 	 * @inheritdoc
 	 */
 	static enumValues() {
 		return InstructionStateValues;
 	}
-
 }
 
 const InstructionStateValues = Object.freeze([
-	new InstructionState('Unknown'),
-	new InstructionState('Queued'),
-    new InstructionState('Received'),
-    new InstructionState('Executing'),
-    new InstructionState('Declined'),
-    new InstructionState('Completed'),
+	new InstructionState("Unknown"),
+	new InstructionState("Queued"),
+	new InstructionState("Received"),
+	new InstructionState("Executing"),
+	new InstructionState("Declined"),
+	new InstructionState("Completed")
 ]);
 
 /**
  * The enumeration of supported InstructionState values.
- * 
+ *
  * @readonly
  * @enum {module:domain~InstructionState}
  * @property {module:domain~InstructionState} Unknown an unknown state

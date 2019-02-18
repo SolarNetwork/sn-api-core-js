@@ -1,179 +1,177 @@
-import PropMap from '../util/propMap';
+import PropMap from "../util/propMap";
 
-const CountryKey = 'country';
-const ElevationKey = 'elevation';
-const LatitudeKey = 'latitude';
-const IdKey = 'id';
-const LocalityKey = 'locality';
-const LongitudeKey = 'longitude';
-const NameKey = 'name';
-const PostalCodeKey = 'postalCode';
-const RegionKey = 'region';
-const StateOrProvinceKey = 'stateOrProvince';
-const StreetKey = 'street';
-const TimeZoneIdKey = 'timeZoneId';
+const CountryKey = "country";
+const ElevationKey = "elevation";
+const LatitudeKey = "latitude";
+const IdKey = "id";
+const LocalityKey = "locality";
+const LongitudeKey = "longitude";
+const NameKey = "name";
+const PostalCodeKey = "postalCode";
+const RegionKey = "region";
+const StateOrProvinceKey = "stateOrProvince";
+const StreetKey = "street";
+const TimeZoneIdKey = "timeZoneId";
 
 /**
  * A geographic location.
- * 
+ *
  * @extends module:util~PropMap
  * @alias module:domain~Location
  */
 class Location extends PropMap {
-
-    /**
+	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param {module:domain~Location|object} loc the location to copy properties from
 	 */
 	constructor(loc) {
-        super(loc);
-   }
-    
-    /**
-     * A SolarNetwork assigned unique identifier.
-     * @type {number}
-     */
-    get id() {
-        return this.prop(IdKey);
-    }
+		super(loc);
+	}
 
-    set id(val) {
-        this.prop(IdKey, val);
-    }
+	/**
+	 * A SolarNetwork assigned unique identifier.
+	 * @type {number}
+	 */
+	get id() {
+		return this.prop(IdKey);
+	}
 
-    /**
-     * A generalized name, can be used for "virtual" locations.
-     * @type {string}
-     */
-    get name() {
-        return this.prop(NameKey);
-    }
+	set id(val) {
+		this.prop(IdKey, val);
+	}
 
-    set name(val) {
-        this.prop(NameKey, val);
-    }
+	/**
+	 * A generalized name, can be used for "virtual" locations.
+	 * @type {string}
+	 */
+	get name() {
+		return this.prop(NameKey);
+	}
 
-    /**
-     * An ISO 3166-1 alpha-2 character country code.
-     * @type {string}
-     */
-    get country() {
-        return this.prop(CountryKey);
-    }
+	set name(val) {
+		this.prop(NameKey, val);
+	}
 
-    set country(val) {
-        this.prop(CountryKey, val);
-    }
+	/**
+	 * An ISO 3166-1 alpha-2 character country code.
+	 * @type {string}
+	 */
+	get country() {
+		return this.prop(CountryKey);
+	}
 
-    /**
-     * A country-specific regional identifier.
-     * @type {string}
-     */
-    get region() {
-        return this.prop(RegionKey);
-    }
+	set country(val) {
+		this.prop(CountryKey, val);
+	}
 
-    set region(val) {
-        this.prop(RegionKey, val);
-    }
+	/**
+	 * A country-specific regional identifier.
+	 * @type {string}
+	 */
+	get region() {
+		return this.prop(RegionKey);
+	}
 
-    /**
-     * A country-specific state or province identifier.
-     * @type {string}
-     */
-    get stateOrProvince() {
-        return this.prop(StateOrProvinceKey);
-    }
+	set region(val) {
+		this.prop(RegionKey, val);
+	}
 
-    set stateOrProvince(val) {
-        this.prop(StateOrProvinceKey, val);
-    }
+	/**
+	 * A country-specific state or province identifier.
+	 * @type {string}
+	 */
+	get stateOrProvince() {
+		return this.prop(StateOrProvinceKey);
+	}
 
-    /**
-     * Get the locality (city, town).
-     * @type {string}
-     */
-    get locality() {
-        return this.prop(LocalityKey);
-    }
+	set stateOrProvince(val) {
+		this.prop(StateOrProvinceKey, val);
+	}
 
-    set locality(val) {
-        this.prop(LocalityKey, val);
-    }
+	/**
+	 * Get the locality (city, town).
+	 * @type {string}
+	 */
+	get locality() {
+		return this.prop(LocalityKey);
+	}
 
-    /**
-     * A country-specific postal code.
-     * @type {string}
-     */
-    get postalCode() {
-        return this.prop(PostalCodeKey);
-    }
+	set locality(val) {
+		this.prop(LocalityKey, val);
+	}
 
-    set postalCode(val) {
-        this.prop(PostalCodeKey, val);
-    }
+	/**
+	 * A country-specific postal code.
+	 * @type {string}
+	 */
+	get postalCode() {
+		return this.prop(PostalCodeKey);
+	}
 
-    /**
-     * The street address.
-     * @type {string}
-     */
-    get street() {
-        return this.prop(StreetKey);
-    }
+	set postalCode(val) {
+		this.prop(PostalCodeKey, val);
+	}
 
-    set street(val) {
-        this.prop(StreetKey, val);
-    }
+	/**
+	 * The street address.
+	 * @type {string}
+	 */
+	get street() {
+		return this.prop(StreetKey);
+	}
 
-    /**
-     * The decimal world latitude.
-     * @type {number}
-     */
-    get latitude() {
-        return this.prop(LatitudeKey);
-    }
+	set street(val) {
+		this.prop(StreetKey, val);
+	}
 
-    set latitude(val) {
-        this.prop(LatitudeKey, val);
-    }
+	/**
+	 * The decimal world latitude.
+	 * @type {number}
+	 */
+	get latitude() {
+		return this.prop(LatitudeKey);
+	}
 
-    /**
-     * The decimal world longitude.
-     * @type {number}
-     */
-    get longitude() {
-        return this.prop(LongitudeKey);
-    }
+	set latitude(val) {
+		this.prop(LatitudeKey, val);
+	}
 
-    set longitude(val) {
-        this.prop(LongitudeKey, val);
-    }
+	/**
+	 * The decimal world longitude.
+	 * @type {number}
+	 */
+	get longitude() {
+		return this.prop(LongitudeKey);
+	}
 
-    /**
-     * The elevation above sea level, in meters.
-     * @type {number}
-     */
-    get elevation() {
-        return this.prop(ElevationKey);
-    }
+	set longitude(val) {
+		this.prop(LongitudeKey, val);
+	}
 
-    set elevation(val) {
-        this.prop(ElevationKey, val);
-    }
+	/**
+	 * The elevation above sea level, in meters.
+	 * @type {number}
+	 */
+	get elevation() {
+		return this.prop(ElevationKey);
+	}
 
-    /**
-     * A time zone ID, for example `Pacific/Auckland`.
-     * @type {string}
-     */
-    get timeZoneId() {
-        return this.prop(TimeZoneIdKey)
-    }
+	set elevation(val) {
+		this.prop(ElevationKey, val);
+	}
 
-    set timeZoneId(val) {
-        this.prop(TimeZoneIdKey, val);
-    }
+	/**
+	 * A time zone ID, for example `Pacific/Auckland`.
+	 * @type {string}
+	 */
+	get timeZoneId() {
+		return this.prop(TimeZoneIdKey);
+	}
 
+	set timeZoneId(val) {
+		this.prop(TimeZoneIdKey, val);
+	}
 }
 
 export default Location;

@@ -12,35 +12,35 @@
  * @alias module:net~urlQueryParse
  */
 function urlQueryParse(search, multiValueKeys) {
-    var params = {};
-    var pairs;
-    var pair;
-    var i, len, k, v;
-    if ( search !== undefined && search.length > 0 ) {
-        // remove any leading ? character
-        if ( search.match(/^\?/) ) {
-            search = search.substring(1);
-        }
-        pairs = search.split('&');
-        for ( i = 0, len = pairs.length; i < len; i++ ) {
-            pair = pairs[i].split('=', 2);
-            if ( pair.length === 2 ) {
-                k = decodeURIComponent(pair[0]);
-                v = decodeURIComponent(pair[1]);
-                if ( params[k] ) {
-                    if ( !Array.isArray(params[k]) ) {
-                        params[k] = [params[k]]; // turn into array;
-                    }
-                    params[k].push(v);
-                } else if ( multiValueKeys && multiValueKeys.has(k) ) {
-                    params[k] = [v];
-                } else {
-                    params[k] = v;
-                }
-            }
-        }
-    }
-    return params;
+	var params = {};
+	var pairs;
+	var pair;
+	var i, len, k, v;
+	if (search !== undefined && search.length > 0) {
+		// remove any leading ? character
+		if (search.match(/^\?/)) {
+			search = search.substring(1);
+		}
+		pairs = search.split("&");
+		for (i = 0, len = pairs.length; i < len; i++) {
+			pair = pairs[i].split("=", 2);
+			if (pair.length === 2) {
+				k = decodeURIComponent(pair[0]);
+				v = decodeURIComponent(pair[1]);
+				if (params[k]) {
+					if (!Array.isArray(params[k])) {
+						params[k] = [params[k]]; // turn into array;
+					}
+					params[k].push(v);
+				} else if (multiValueKeys && multiValueKeys.has(k)) {
+					params[k] = [v];
+				} else {
+					params[k] = v;
+				}
+			}
+		}
+	}
+	return params;
 }
 
 /**
@@ -59,38 +59,38 @@ function urlQueryParse(search, multiValueKeys) {
  * @alias module:net~urlQueryEncode
  */
 function urlQueryEncode(parameters, encoderFn) {
-    var result = '',
-        prop,
-        val,
-        i,
-        len;
-    const encoder = (encoderFn || encodeURIComponent);
-    function handleValue(k, v) {
-        if ( result.length ) {
-            result += '&';
-        }
-        result += encoder(k) + '=' + encoder(v);
-    }
-    if ( parameters ) {
-        for ( prop in parameters ) {
-            if ( parameters.hasOwnProperty(prop) ) {
-                val = parameters[prop];
-                if ( Array.isArray(val) ) {
-                    for ( i = 0, len = val.length; i < len; i++ ) {
-                        handleValue(prop, val[i]);
-                    }
-                } else {
-                    handleValue(prop, val);
-                }
-            }
-        }
-    }
-    return result;
+	var result = "",
+		prop,
+		val,
+		i,
+		len;
+	const encoder = encoderFn || encodeURIComponent;
+	function handleValue(k, v) {
+		if (result.length) {
+			result += "&";
+		}
+		result += encoder(k) + "=" + encoder(v);
+	}
+	if (parameters) {
+		for (prop in parameters) {
+			if (parameters.hasOwnProperty(prop)) {
+				val = parameters[prop];
+				if (Array.isArray(val)) {
+					for (i = 0, len = val.length; i < len; i++) {
+						handleValue(prop, val[i]);
+					}
+				} else {
+					handleValue(prop, val);
+				}
+			}
+		}
+	}
+	return result;
 }
 
 export { urlQueryParse, urlQueryEncode };
 
 export default {
-    urlQueryParse : urlQueryParse,
-    urlQueryEncode : urlQueryEncode,
-}
+	urlQueryParse: urlQueryParse,
+	urlQueryEncode: urlQueryEncode
+};

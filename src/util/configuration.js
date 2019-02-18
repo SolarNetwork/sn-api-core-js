@@ -1,17 +1,21 @@
 function createGetter(me, prop) {
-	return function() { return me.map[prop]; };
+	return function() {
+		return me.map[prop];
+	};
 }
 
 function createSetter(me, prop) {
-	return function(value) { me.map[prop] = value; };
+	return function(value) {
+		me.map[prop] = value;
+	};
 }
 
 function createProperty(me, prop) {
 	Object.defineProperty(me, prop, {
-		enumerable : true,
-		configurable : true,
-		get : createGetter(me, prop),
-		set : createSetter(me, prop)
+		enumerable: true,
+		configurable: true,
+		get: createGetter(me, prop),
+		set: createSetter(me, prop)
 	});
 }
 
@@ -22,7 +26,6 @@ function createProperty(me, prop) {
  * @alias module:util~Configuration
  */
 class Configuration {
-
 	/**
 	 * Constructor.
 	 *
@@ -33,7 +36,7 @@ class Configuration {
 	 */
 	constructor(initialMap) {
 		this.map = {};
-		if ( initialMap !== undefined ) {
+		if (initialMap !== undefined) {
 			this.values(initialMap);
 		}
 	}
@@ -45,7 +48,7 @@ class Configuration {
 	 * @returns {boolean} `true` if the key is enabled
 	 */
 	enabled(key) {
-		if ( key === undefined ) {
+		if (key === undefined) {
 			return false;
 		}
 		return !!this.map[key];
@@ -63,14 +66,14 @@ class Configuration {
 	 */
 	toggle(key, enabled) {
 		var val = enabled;
-		if ( key === undefined ) {
+		if (key === undefined) {
 			return this;
 		}
-		if ( val === undefined ) {
+		if (val === undefined) {
 			// in 1-argument mode, toggle current value
-			val = (this.map[key] === undefined);
+			val = this.map[key] === undefined;
 		}
-		return this.value(key, (val === true ? true : null));
+		return this.value(key, val === true ? true : null);
 	}
 
 	/**
@@ -83,17 +86,17 @@ class Configuration {
 	 *                   otherwise this object.
 	 */
 	value(key, newValue) {
-		if ( arguments.length === 1 ) {
+		if (arguments.length === 1) {
 			return this.map[key];
 		}
-		if ( newValue === null ) {
+		if (newValue === null) {
 			delete this.map[key];
-			if ( this.hasOwnProperty(key) ) {
+			if (this.hasOwnProperty(key)) {
 				delete this[key];
 			}
 		} else {
 			this.map[key] = newValue;
-			if ( !this.hasOwnProperty(key) ) {
+			if (!this.hasOwnProperty(key)) {
 				createProperty(this, key);
 			}
 		}
@@ -102,15 +105,15 @@ class Configuration {
 
 	/**
 	 * Get or set multiple properties.
-	 * 
+	 *
 	 * @param {object} [newMap] a map of values to set
 	 * @returns {object} if called as a getter, all properties of this object copied into a simple object;
 	 *                   otherwise this object
 	 */
 	values(newMap) {
-		if ( newMap ) {
-			for ( let prop in newMap ) {
-				if ( newMap.hasOwnProperty(prop) ) {
+		if (newMap) {
+			for (let prop in newMap) {
+				if (newMap.hasOwnProperty(prop)) {
 					this.value(prop, newMap[prop]);
 				}
 			}
@@ -118,7 +121,6 @@ class Configuration {
 		}
 		return Object.assign({}, this.map);
 	}
-
 }
 
 export default Configuration;
