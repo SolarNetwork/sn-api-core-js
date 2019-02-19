@@ -92,17 +92,19 @@ const NodeDatumUrlHelperMixin = superclass =>
 		 * @param {module:domain~DatumFilter} datumFilter the search criteria
 		 * @param {module:domain~DatumReadingType} readingType the type of reading to find
 		 * @param {string} [tolerance] optional query tolerance to use
+		 * @param {module:domain~SortDescriptor[]} [sorts] optional sort settings to use
+		 * @param {module:domain~Pagination} [pagination] optional pagination settings to use
 		 * @returns {string} the URL
 		 * @see https://github.com/SolarNetwork/solarnetwork/wiki/SolarQuery-API#datum-reading
 		 */
-		datumReadingUrl(datumFilter, readingType, tolerance) {
+		datumReadingUrl(datumFilter, readingType, tolerance, sorts, pagination) {
 			let result = this.baseUrl() + "/datum/reading";
 			const filter = new DatumFilter(datumFilter) || this.datumFilter();
 			filter.prop("readingType", readingType.name);
 			if (tolerance) {
 				filter.prop("tolerance", tolerance);
 			}
-			const params = filter.toUriEncoding();
+			const params = filter.toUriEncodingWithSorting(sorts, pagination);
 			if (params.length > 0) {
 				result += "?" + params;
 			}
