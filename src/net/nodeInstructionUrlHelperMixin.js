@@ -66,25 +66,21 @@ const NodeInstructionUrlHelperMixin = superclass =>
 		}
 
 		/**
-		 * Generate a URL for posting an instruction request.
+		 * Generate URL encoded query string for posting instruction parameters.
 		 *
-		 * @param {string} topic the instruction topic.
-		 * @param {Object[]} [parameters] an array of parameter objects in the form <code>{name:n1, value:v1}</code>.
-		 * @param {number} [nodeId] a specific node ID to use; if not provided the <code>nodeId</code> property of this class will be used
-		 * @returns {string} the URL
+		 * @param {Object[]} [parameters] an array of parameter objects in the form `{name:n1, value:v1}`
+		 * @returns {string} the URL encoded query string, or an empty string if `parameters` is empty
 		 */
-		queueInstructionUrl(topic, parameters, nodeId) {
-			var url =
-				this.baseUrl() +
-				"/instr/add?nodeId=" +
-				(nodeId || this.nodeId) +
-				"&topic=" +
-				encodeURIComponent(topic);
-			var i, len;
+		urlEncodeInstructionParameters(parameters) {
+			var url = "",
+				i,
+				len;
 			if (Array.isArray(parameters)) {
-				for (i = 0, len = parameters.length; i < len; i++) {
+				for (i = 0, len = parameters.length; i < len; i += 1) {
+					if (url.length > 0) {
+						url += "&";
+					}
 					url +=
-						"&" +
 						encodeURIComponent("parameters[" + i + "].name") +
 						"=" +
 						encodeURIComponent(parameters[i].name) +
@@ -98,11 +94,57 @@ const NodeInstructionUrlHelperMixin = superclass =>
 		}
 
 		/**
+		 * Generate a URL for posting an instruction request.
+		 *
+		 * @param {string} topic the instruction topic
+		 * @param {Object[]} [parameters] an array of parameter objects in the form `{name:n1, value:v1}`
+		 * @param {number} [nodeId] a specific node ID to use; if not provided the `nodeId` property of this class will be used
+		 * @returns {string} the URL
+		 */
+		queueInstructionUrl(topic, parameters, nodeId) {
+			var url =
+				this.baseUrl() +
+				"/instr/add/" +
+				encodeURIComponent(topic) +
+				"?nodeId=" +
+				(nodeId || this.nodeId);
+			if (Array.isArray(parameters) && parameters.length > 0) {
+				url += "&" + this.urlEncodeInstructionParameters(parameters);
+			}
+			return url;
+		}
+
+		/**
+		 * Generate a URL for posting instruction requests for multiple nodes.
+		 *
+		 * @param {string} topic the instruction topic
+		 * @param {Object[]} [parameters] an array of parameter objects in the form `{name:n1, value:v1}`
+		 * @param {number[]} [nodeIds] a list of node IDs to use; if not provided the `nodeIds` property of this class will be used
+		 * @returns {string} the URL
+		 */
+		queueInstructionsUrl(topic, parameters, nodeIds) {
+			var url =
+				this.baseUrl() +
+				"/instr/add/" +
+				encodeURIComponent(topic) +
+				"?nodeIds=" +
+				(Array.isArray(nodeIds) && nodeIds.length > 0
+					? nodeIds.join(",")
+					: Array.isArray(this.nodeIds)
+					? this.nodeIds.join(",")
+					: "");
+			if (Array.isArray(parameters) && parameters.length > 0) {
+				url += "&" + this.urlEncodeInstructionParameters(parameters);
+			}
+			return url;
+		}
+
+		/**
 		 * Create an instruction parameter suitable to passing to {@link NodeInstructionUrlHelperMixin#queueInstructionUrl}.
 		 *
 		 * @param {string} name the parameter name
 		 * @param {*} value the parameter value
-		 * @returns {object} with <code>name</code> and <code>value</code> properties
+		 * @returns {object} with `name` and `value` properties
 		 */
 		static instructionParameter(name, value) {
 			return { name: name, value: value };
