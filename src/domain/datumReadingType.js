@@ -45,7 +45,8 @@ const DatumReadingTypeValues = Object.freeze([
 	new DatumReadingType("CalculatedAt", "at"),
 	new DatumReadingType("CalculatedAtDifference", "atd"),
 	new DatumReadingType("NearestDifference", "diff"),
-	new DatumReadingType("Difference", "delta")
+	new DatumReadingType("Difference", "delta"),
+	new DatumReadingType("DifferenceWithin", "change")
 ]);
 
 /**
@@ -59,9 +60,12 @@ const DatumReadingTypeValues = Object.freeze([
  * between two reading values on two dates, using the `CalcualtedAt` style of deriving the start
  * and end readings.
  * @property {module:domain~DatumReadingType} Difference Find the difference between two datum
- * that occurs between two dates, without any limits on how near to those dates the datum are.
+ * that are nearest in time on or before two dates, without any limits on how near to those dates
+ * the datum are.
+ * @property {module:domain~DatumReadingType} DifferenceWithin Find the difference between two
+ * datum that are nearest in time and within two dates.
  * @property {module:domain~DatumReadingType} NearestDifference Find the difference between two
- * datum that are nearest in time on or before two dates.
+ * datum that are nearest in time on or before two dates, constrained by a maximum time tolerance.
  * @alias module:domain~DatumReadingTypes
  */
 const DatumReadingTypes = DatumReadingType.enumsValue(DatumReadingTypeValues);
