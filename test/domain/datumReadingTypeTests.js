@@ -16,6 +16,8 @@ test("domain:datumReadingType:aggregations", t => {
 	t.is(DatumReadingTypes.CalculatedAtDifference.key, "atd");
 	t.is(DatumReadingTypes.Difference.name, "Difference");
 	t.is(DatumReadingTypes.Difference.key, "delta");
+	t.is(DatumReadingTypes.DifferenceWithin.name, "DifferenceWithin");
+	t.is(DatumReadingTypes.DifferenceWithin.key, "change");
 	t.is(DatumReadingTypes.NearestDifference.name, "NearestDifference");
 	t.is(DatumReadingTypes.NearestDifference.key, "diff");
 });
