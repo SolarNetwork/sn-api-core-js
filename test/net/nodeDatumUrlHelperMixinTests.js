@@ -172,7 +172,7 @@ test("net:nodeDatumUrlHelperMixin:availableSources:dates", t => {
 	);
 });
 
-test("net:nodeDatumUrlHelperMixin:listDatumUrl:defaultFilter", t => {
+test("net:nodeDatumUrlHelperMixin:datumFilter:nodesAndSources", t => {
 	const helper = new NodeDatumUrlHelper();
 	helper.nodeId = 123;
 	let filter = helper.datumFilter();
