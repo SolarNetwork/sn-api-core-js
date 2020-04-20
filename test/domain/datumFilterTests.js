@@ -207,6 +207,12 @@ test("domain:datumFilter:toUriEncoding:aggregation", t => {
 	t.is(filter.toUriEncoding(), "aggregation=DayOfWeek");
 });
 
+test("domain:datumFilter:toUriEncoding:partialAggregation", t => {
+	const filter = new DatumFilter();
+	filter.partialAggregation = Aggregations.Day;
+	t.is(filter.toUriEncoding(), "partialAggregation=Day");
+});
+
 test("domain:datumFilter:toUriEncoding:tags", t => {
 	const filter = new DatumFilter();
 	filter.tags = ["a", "b"];

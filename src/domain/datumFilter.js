@@ -15,6 +15,7 @@ const MetadataFilterKey = "metadataFilter";
 const MostRecentKey = "mostRecent";
 const NodeIdMapsKey = "nodeIdMaps";
 const NodeIdsKey = "nodeIds";
+const PartialAggregationKey = "partialAggregation";
 const QueryKey = "query";
 const SourceIdMapsKey = "sourceIdMaps";
 const SourceIdsKey = "sourceIds";
@@ -252,6 +253,24 @@ class DatumFilter extends PropMap {
 
 	set aggregation(agg) {
 		this.prop(AggregationKey, agg instanceof Aggregation ? agg : null);
+	}
+
+	/**
+	 * A partial aggregation.
+	 *
+	 * Including this in a filter along with `aggregation`  will cause SolarNet to return aggregated results that
+	 * include partial results of this granularity. For example if `aggregation == 'Month'` and
+	 * `partialAggregation == 'Day'` and a date range of 15 Jan - 15 Mar was requested, 3 month results would
+	 * be returned for the date ranges 15 Jan - 31 Jan, 1 Feb - 28 Feb, and 1 Mar - 14 Mar.
+	 *
+	 * @type {module:domain~Aggregation}
+	 */
+	get partialAggregation() {
+		return this.prop(PartialAggregationKey);
+	}
+
+	set partialAggregation(agg) {
+		this.prop(PartialAggregationKey, agg instanceof Aggregation ? agg : null);
 	}
 
 	/**
