@@ -58,10 +58,10 @@ const SIGNING_KEY_VALIDITY = 7 * 24 * 60 * 60 * 1000;
  * For handling `POST` or `PUT` requests, you must make sure to configure the properties of
  * this class to match your actual HTTP request:
  *
- *  1. Use the {@link module:net~AuthorizationV2Builder#method} method to configure the HTTP verb (you can use the {@link module:net~HttpMethod} constants).
- *  2. Use the {@link module:net~AuthorizationV2Builder#contentType} method to configure the same value that will be used for the HTTP `Content-Type` header (you can use the {@link module:net~HttpContentType} constants).
- *  3. **If** the content type is `application/x-www-form-urlencoded` then you should use the {@link module:net~AuthorizationV2Builder#queryParams} method to configure the request parameters.
- *  4. **If** the content type is **not** `application/x-www-form-urlencoded` then you should use the {@link module:net~AuthorizationV2Builder#computeContentDigest} method to configure a HTTP `Digest` header.
+ *  1. Use the {@link module:net~AuthorizationV2Builder#method method()} method to configure the HTTP verb (you can use the {@link module:net~HttpMethod HttpMethod} constants).
+ *  2. Use the {@link module:net~AuthorizationV2Builder#contentType contentType()} method to configure the same value that will be used for the HTTP `Content-Type` header (you can use the {@link module:net~HttpContentType HttpContentType} constants).
+ *  3. **If** the content type is `application/x-www-form-urlencoded` then you should use the {@link module:net~AuthorizationV2Builder#queryParams queryParams()} method to configure the request parameters.
+ *  4. **If** the content type is **not** `application/x-www-form-urlencoded` then you should use the {@link module:net~AuthorizationV2Builder#computeContentDigest computeContentDigest()} method to configure a HTTP `Digest` header.
  *
  * ```
  * // create a builder for a token
