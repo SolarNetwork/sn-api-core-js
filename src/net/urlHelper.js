@@ -70,12 +70,22 @@ class UrlHelper {
 	/**
 	 * Get a URL for just the SolarNet host, without any path.
 	 *
+	 * This method constructs an absolute URL based on the following properties configured
+	 * on this instance's {@link module:net~Environment}:
+	 *
+	 *  1. If {@link module:net~Environment#useTls environment.useTls()} returns `true` then
+	 *     use HTTPS as the protocol, otherwise HTTP.
+	 *  2. Use `host` for the host name or IP address, unless `proxyHost` is available.
+	 *  3. Use `port` for the port, unless `proxyPort` is available. If neither are available, use `443` for
+	 *     HTTPS or `80` for HTTP.
+	 *
 	 * @returns {string} the URL to the SolarNet host
 	 */
 	hostUrl() {
 		const tls = this.environment.useTls();
-		const port = +this.environment.value("port");
-		let url = "http" + (tls ? "s" : "") + "://" + this.environment.value("host");
+		const host = this.environment.value("proxyHost") || this.environment.value("host");
+		const port = +(this.environment.value("proxyPort") || this.environment.value("port"));
+		let url = "http" + (tls ? "s" : "") + "://" + host;
 		if ((tls && port > 0 && port !== 443) || (!tls && port > 0 && port !== 80)) {
 			url += ":" + port;
 		}
@@ -85,12 +95,22 @@ class UrlHelper {
 	/**
 	 * Get a URL for just the SolarNet host using the WebSocket protocol, without any path.
 	 *
+	 * This method constructs an absolute URL based on the following properties configured
+	 * on this instance's {@link module:net~Environment}:
+	 *
+	 *  1. If {@link module:net~Environment#useTls environment.useTls()} returns `true` then
+	 *     use WSS as the protocol, otherwise WS.
+	 *  2. Use `host` for the host name or IP address, unless `proxyHost` is available.
+	 *  3. Use `port` for the port, unless `proxyPort` is available. If neither are available, use `443` for
+	 *     WSS or `80` for WS.
+	 *
 	 * @returns {string} the URL to the SolarNet host WebSocket
 	 */
 	hostWebSocketUrl() {
 		const tls = this.environment.useTls();
-		const port = +this.environment.value("port");
-		let url = "ws" + (tls ? "s" : "") + "://" + this.environment.value("host");
+		const host = this.environment.value("proxyHost") || this.environment.value("host");
+		const port = +(this.environment.value("proxyPort") || this.environment.value("port"));
+		let url = "ws" + (tls ? "s" : "") + "://" + host;
 		if ((tls && port > 0 && port !== 443) || (!tls && port > 0 && port !== 80)) {
 			url += ":" + port;
 		}
