@@ -149,9 +149,9 @@ class AuthorizationV2Builder {
 	 * Compute and cache the signing key.
 	 *
 	 * Signing keys are derived from the token secret and valid for 7 days, so
-	 * this method can be used to compute a signing key so that {@link module:net~AuthorizationV2Builder#build}
+	 * this method can be used to compute a signing key so that {@link module:net~AuthorizationV2Builder#build build()}
 	 * can be called later. The signing date will be set to whatever date is
-	 * currently configured via {@link module:net~AuthorizationV2Builder#date}, which defaults to the
+	 * currently configured via {@link module:net~AuthorizationV2Builder#date date()}, which defaults to the
 	 * current time for newly created builder instances.
 	 *
 	 * @param {string} tokenSecret the secret to sign the digest with
@@ -239,7 +239,8 @@ class AuthorizationV2Builder {
 	/**
 	 * Set the HTTP content type.
 	 *
-	 * This is a shortcut for calling {@link HttpHeaders#put} with the key {@link HttpHeaders#CONTENT_TYPE}.
+	 * This is a shortcut for calling {@link module:net~HttpHeaders#put HttpHeaders.put()} with the
+	 * key {@link module:net~HttpHeaders.CONTENT_TYPE HttpHeaders.CONTENT_TYPE}.
 	 *
 	 * @param {string} val the HTTP content type value to use
 	 * @returns {module:net~AuthorizationV2Builder} this object
@@ -394,8 +395,10 @@ class AuthorizationV2Builder {
 	/**
 	 * Compute the SHA-256 digest of the request body content and configure the result on this builder.
 	 *
-	 * This method will compute the digest and then save the result via the {@link module:net~AuthorizationV2Builder#contentSHA256}
-	 * method. In addition, it will set the `Digest` HTTP header value via {@link module:net~AuthorizationV2Builder#header}.
+	 * This method will compute the digest and then save the result via the
+	 * {@link module:net~AuthorizationV2Builder#contentSHA256 contentSHA256()}
+	 * method. In addition, it will set the `Digest` HTTP header value via
+	 * {@link module:net~AuthorizationV2Builder#header header()}.
 	 * This means you _must_ also pass the `Digest` HTTP header with the request. After calling this
 	 * method, you can retrieve the `Digest` HTTP header value via the `httpHeaders`property.
 	 *
@@ -557,11 +560,20 @@ class AuthorizationV2Builder {
 	}
 
 	/**
-	 * Compute the signing key, from a secret key.
+	 * Compute the signing key, from a secret key and based on the
+	 * configured {@link module:net~AuthorizationV2Builder#date date()}.
+	 *
+	 * This method does not save the signing key for future use in this builder instance
+	 * (see {@link module:net~AuthorizationV2Builder#saveSigningKey saveSigningKey()} for that).
+	 * Use this method if you want to compute a signing key that you can later pass to
+	 * {@link module:net~AuthorizationV2Builder#buildWithKey buildWithKey()} on some other builder instance.
+	 * Signing keys are valid for a maximum of 7 days, granular to whole days only.
+	 * To make a signing key expire in fewer than 7 days, configure  a
+	 * {@link module:net~AuthorizationV2Builder#date date()} value in the past before
+	 * calling this method.
 	 *
 	 * @param {string} secretKey the secret key string
 	 * @returns {CryptoJS#Hash} the computed key
-	 * @private
 	 */
 	computeSigningKey(secretKey) {
 		const datestring = iso8601Date(this.requestDate);
@@ -597,7 +609,6 @@ class AuthorizationV2Builder {
 	 *
 	 * @param {CryptoJS#Hash} signingKey the key to sign the computed signature data with
 	 * @returns {string} the SNWS2 HTTP Authorization header value
-	 * @private
 	 */
 	buildWithKey(signingKey) {
 		const sortedHeaderNames = this.canonicalHeaderNames();
@@ -630,7 +641,7 @@ class AuthorizationV2Builder {
 	/**
 	 * Compute a HTTP `Authorization` header value from the configured
 	 * properties on the builder, using a signing key configured from a previous
-	 * call to {@link module:net~AuthorizationV2Builder#saveSigningKey}.
+	 * call to {@link module:net~AuthorizationV2Builder#saveSigningKey saveSigningKey()}.
 	 *
 	 * @return {string} the SNWS2 HTTP Authorization header value.
 	 */
