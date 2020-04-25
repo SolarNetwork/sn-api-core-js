@@ -274,10 +274,10 @@ class AuthorizationV2Builder {
 	/**
 	 * Control using the `X-SN-Date` HTTP header versus the `Date` header.
 	 *
-	 * <p>Set to `true` to use the `X-SN-Date` header, `false` to use
+	 * Set to `true` to use the `X-SN-Date` header, `false` to use
 	 * the `Date` header. This will return `true` if `X-SN-Date` has been
 	 * added to the `signedHeaderNames` property or has been added to the `httpHeaders`
-	 * property.</p>
+	 * property.
 	 *
 	 * @type {boolean}
 	 */
