@@ -98,8 +98,12 @@ class AuthorizationV2Builder {
 	/**
 	 * Constructor.
 	 *
+	 * The {@link module:net~AuthorizationV2Builder#reset reset()} method is invoked to set up
+	 * default values for this instance.
+	 *
 	 * @param {string} token the auth token to use
-	 * @param {module:net~Environment} [environment] the environment to use; if not provided a default environment will be created
+	 * @param {module:net~Environment} [environment] the environment to use; if not provided a
+	 *        default environment will be created
 	 */
 	constructor(token, environment) {
 		/**
@@ -131,15 +135,27 @@ class AuthorizationV2Builder {
 	/**
 	 * Reset to defalut property values.
 	 *
+	 * Any previously saved signing key via {@link module:net~AuthorizationV2Builder#saveSigningKey saveSigningKey()}
+	 * or {@link module:net~AuthorizationV2Builder#key key()} is preserved. The following items are reset:
+	 *
+	 *  * {@link module:net~AuthorizationV2Builder#contentSHA256 contentSHA256()} is cleared
+	 *  * {@link module:net~AuthorizationV2Builder#method method()} is set to `GET`
+	 *  * {@link module:net~AuthorizationV2Builder#host host()} is set to `this.environment.host`
+	 *  * {@link module:net~AuthorizationV2Builder#path path()} is set to `/`
+	 *  * {@link module:net~AuthorizationV2Builder#date date()} is set to the current date
+	 *  * {@link module:net~AuthorizationV2Builder#headers headers()} is set to a new empty instance
+	 *  * {@link module:net~AuthorizationV2Builder#queryParams queryParams()} is set to a new empty instance
+	 *  * {@link module:net~AuthorizationV2Builder#signedHttpHeaders signedHttpHeaders()} is set to a new empty array
+	 *
 	 * @returns {module:net~AuthorizationV2Builder} this object
 	 */
 	reset() {
 		this.contentDigest = null;
-		this.httpHeaders = new HttpHeaders();
-		this.parameters = new MultiMap();
-		this.signedHeaderNames = [];
 		var host = this.environment.host;
-		return this.method(HttpMethod.GET)
+		return this.headers(new HttpHeaders())
+			.queryParams(new MultiMap())
+			.signedHttpHeaders([])
+			.method(HttpMethod.GET)
 			.host(host)
 			.path("/")
 			.date(new Date());
@@ -154,13 +170,68 @@ class AuthorizationV2Builder {
 	 * currently configured via {@link module:net~AuthorizationV2Builder#date date()}, which defaults to the
 	 * current time for newly created builder instances.
 	 *
+	 * If you have an externally computed signing key, such as one returned from a token refresh API call,
+	 * use the {@link module:net~AuthorizationV2Builder#key key()} method to save it rather than this method.
+	 * If you want to compute the signing key, without caching it on this builder, use the
+	 * {@link module:net~AuthorizationV2Builder#computeSigningKey computeSigningKey()} method rather than
+	 * this method.
+	 *
 	 * @param {string} tokenSecret the secret to sign the digest with
 	 * @returns {module:net~AuthorizationV2Builder} this object
 	 */
 	saveSigningKey(tokenSecret) {
-		this.signingKey = this.computeSigningKey(tokenSecret);
-		this.signingKeyExpiration = new Date(this.requestDate.getTime() + SIGNING_KEY_VALIDITY);
+		this.key(this.computeSigningKey(tokenSecret), this.requestDate);
 		return this;
+	}
+
+	/**
+	 * Get or set the signing key.
+	 *
+	 * Use this method to save an existing signing key, for example one received via a refresh
+	 * request. The `date` parameter is used to track the expirataion date of the key, as
+	 * reported by the {@link module:net~AuthorizationV2Builder#signingKeyValid signingKeyValid}
+	 * property.
+	 *
+	 * If you have an actual token secret value, use the
+	 * {@link module:net~AuthorizationV2Builder#saveSigningKey saveSigningKey()} method to save it
+	 * rather than this method.
+	 *
+	 * @param {CryptoJS#WordArray} key the signing key to save
+	 * @param {Date} [date] an optional date the signing key was generated with; if not provided
+	 *                      the configured {@link module:net~AuthorizationV2Builder#date date()}
+	 *                      value will be used
+	 * @returns {CryptoJS#WordArray|module:net~AuthorizationV2Builder} when used as a getter, the
+	 *          current saved signing key value, otherwise this object
+	 * @see module:net~AuthorizationV2Builder#signingKeyExpirationDate
+	 */
+	key(key, date) {
+		if (key === undefined) {
+			return this.signingKey;
+		}
+		this.signingKey = key;
+		let expire = new Date(
+			(date ? date.getTime() : this.requestDate.getTime()) + SIGNING_KEY_VALIDITY
+		);
+		expire.setUTCHours(0);
+		expire.setUTCMinutes(0);
+		expire.setUTCSeconds(0);
+		expire.setUTCMilliseconds(0);
+		this.signingKeyExpiration = expire;
+		return this;
+	}
+
+	/**
+	 * Get the saved signing key expiration date.
+	 *
+	 * This will return the expiration date the signing key saved via
+	 * {@link module:net~AuthorizationV2Builder#key key()} or
+	 * {@link module:net~AuthorizationV2Builder#saveSigningKey saveSigningKey()}.
+	 *
+	 * @readonly
+	 * @type {Date}
+	 */
+	get signingKeyExpirationDate() {
+		return this.signingKeyExpiration;
 	}
 
 	/**
@@ -573,7 +644,7 @@ class AuthorizationV2Builder {
 	 * calling this method.
 	 *
 	 * @param {string} secretKey the secret key string
-	 * @returns {CryptoJS#Hash} the computed key
+	 * @returns {CryptoJS#WordArray} the computed key
 	 */
 	computeSigningKey(secretKey) {
 		const datestring = iso8601Date(this.requestDate);
@@ -607,7 +678,10 @@ class AuthorizationV2Builder {
 	 * Compute a HTTP `Authorization` header value from the configured properties
 	 * on the builder, using the provided signing key.
 	 *
-	 * @param {CryptoJS#Hash} signingKey the key to sign the computed signature data with
+	 * This method does not save the signing key for future use in this builder instance
+	 * (see {@link module:net~AuthorizationV2Builder#key key()} for that).
+	 *
+	 * @param {CryptoJS#WordArray} signingKey the key to sign the computed signature data with
 	 * @returns {string} the SNWS2 HTTP Authorization header value
 	 */
 	buildWithKey(signingKey) {
@@ -641,7 +715,8 @@ class AuthorizationV2Builder {
 	/**
 	 * Compute a HTTP `Authorization` header value from the configured
 	 * properties on the builder, using a signing key configured from a previous
-	 * call to {@link module:net~AuthorizationV2Builder#saveSigningKey saveSigningKey()}.
+	 * call to {@link module:net~AuthorizationV2Builder#saveSigningKey saveSigningKey()}
+	 * or {@link module:net~AuthorizationV2Builder#key key()}.
 	 *
 	 * @return {string} the SNWS2 HTTP Authorization header value.
 	 */

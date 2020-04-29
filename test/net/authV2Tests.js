@@ -8,9 +8,18 @@ import AuthV2 from "net/authV2";
 
 const TEST_TOKEN_ID = "test-token-id";
 const TEST_TOKEN_SECRET = "test-token-secret";
+const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
 
 function getTestDate() {
 	return new Date("Tue, 25 Apr 2017 14:30:00 GMT");
+}
+
+function floorToUtcDay(date) {
+	date.setUTCHours(0);
+	date.setUTCMinutes(0);
+	date.setUTCSeconds(0);
+	date.setUTCMilliseconds(0);
+	return date;
 }
 
 test("core:net:authV2:requestDateHeaderValue", t => {
@@ -122,22 +131,57 @@ test("core:net:authV2:simpleGetWithProvidedKey", t => {
 	);
 });
 
-test("core:new:authV2:signingKeyValid:noKey", t => {
+test("core:net:authV2:signingKeyValid:noKey", t => {
 	const builder = new AuthV2(TEST_TOKEN_ID);
 	builder.date(getTestDate());
 	t.is(builder.signingKeyValid, false);
 });
 
-test("core:new:authV2:signingKeyValid:expired", t => {
+test("core:net:authV2:signingKeyValid:expired", t => {
 	const builder = new AuthV2(TEST_TOKEN_ID);
 	builder.date(getTestDate()).saveSigningKey(TEST_TOKEN_SECRET);
 	t.is(builder.signingKeyValid, false);
 });
 
-test("core:new:authV2:signingKeyValid:valid", t => {
+test("core:net:authV2:signingKeyValid:valid", t => {
 	const builder = new AuthV2(TEST_TOKEN_ID);
 	builder.date(new Date()).saveSigningKey(TEST_TOKEN_SECRET);
 	t.is(builder.signingKeyValid, true);
+});
+
+test("core:net:authV2:key:get", t => {
+	const builder = new AuthV2(TEST_TOKEN_ID);
+	const signDate = getTestDate();
+	builder.date(signDate).saveSigningKey(TEST_TOKEN_SECRET);
+
+	t.deepEqual(
+		builder.key(),
+		Hex.parse("bf7885e8bd107a79f5c6e13001a4fa15fbd43221ad39ca47fde96191d302dbf4"),
+		"Signing key returned."
+	);
+});
+
+test("core:net:authV2:key:set", t => {
+	const builder = new AuthV2(TEST_TOKEN_ID);
+	const signDate = getTestDate();
+	const signKey = Hex.parse("bf7885e8bd107a79f5c6e13001a4fa15fbd43221ad39ca47fde96191d302dbf4");
+	builder
+		.key(signKey, signDate)
+		.date(signDate)
+		.path("/test/path")
+		.snDate(true);
+
+	t.is(builder.signingKeyValid, false, "Signing key is expired.");
+	t.deepEqual(
+		builder.signingKeyExpirationDate,
+		floorToUtcDay(new Date(signDate.getTime() + SEVEN_DAYS)),
+		"Signing key expiration date 7 days from sign date."
+	);
+	t.is(
+		builder.buildWithSavedKey(),
+		"SNWS2 Credential=test-token-id,SignedHeaders=host;x-sn-date,Signature=79cb002ee35b5cfe2d54421de6550cdcfc39c9defae874cc93ee74e426e81c23",
+		"Authorization value builds with externally provided signing key."
+	);
 });
 
 test("core:net:authV2:xSnDate:header", t => {
