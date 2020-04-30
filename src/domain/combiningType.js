@@ -30,7 +30,11 @@ export class CombiningType extends Enum {
 	}
 }
 
-const CombiningTypeValues = Object.freeze([new CombiningType("Average"), new CombiningType("Sum")]);
+const CombiningTypeValues = Object.freeze([
+	new CombiningType("Average"),
+	new CombiningType("Sum"),
+	new CombiningType("Difference")
+]);
 
 /**
  * The enumeration of supported CombiningType values.
@@ -38,6 +42,7 @@ const CombiningTypeValues = Object.freeze([new CombiningType("Average"), new Com
  * @readonly
  * @enum {module:domain~CombiningType}
  * @property {module:domain~CombiningType} Average average
+ * @property {module:domain~CombiningType} Difference difference; note the order of mapped IDs is significant
  * @property {module:domain~CombiningType} Sum sum
  * @alias module:domain~CombiningTypes
  */
