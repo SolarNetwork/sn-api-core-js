@@ -415,6 +415,27 @@ test("core:net:authV2:url", t => {
 	);
 });
 
+test("core:net:authV2:url:withoutHost", t => {
+	const reqDate = getTestDate();
+	const url = "http://example.com/path";
+
+	const builder = new AuthV2(TEST_TOKEN_ID);
+	builder.date(reqDate).url(url, true);
+
+	const canonicalRequestData = builder.buildCanonicalRequestData();
+	t.is(
+		canonicalRequestData,
+		"GET\n/path\n\ndate:Tue, 25 Apr 2017 14:30:00 GMT\nhost:data.solarnetwork.net\ndate;host\n" +
+			AuthV2.EMPTY_STRING_SHA256_HEX
+	);
+
+	const result = builder.build(TEST_TOKEN_SECRET);
+	t.is(
+		result,
+		"SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=1fdfdc7954cb386b97991736cf70c0c8e86c9d6ea28c74e9333678f03c075730"
+	);
+});
+
 test("core:net:authV2:url:queryParams", t => {
 	const reqDate = getTestDate();
 	const url = "https://example.com:8443/path?foo=bar&bim=bam";

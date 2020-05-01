@@ -289,9 +289,12 @@ class AuthorizationV2Builder {
 	 * Set the host, path, and query parameters via a URL string.
 	 *
 	 * @param {string} url the URL value to use
+	 * @param {boolean} [ignoreHost] if `true` then do not set the {@link module:net~AuthorizationV2Builder#host host()}
+	 *                               from the given URL; this can be useful when you do not want to override the configured
+	 *                               environment host
 	 * @returns {module:net~AuthorizationV2Builder} this object
 	 */
-	url(url) {
+	url(url, ignoreHost) {
 		const uri = uriParse(url);
 		let host = uri.host;
 		if (
@@ -304,7 +307,10 @@ class AuthorizationV2Builder {
 		if (uri.query) {
 			this.queryParams(urlQueryParse(uri.query));
 		}
-		return this.host(host).path(uri.path);
+		if (!ignoreHost) {
+			this.host(host);
+		}
+		return this.path(uri.path);
 	}
 
 	/**
