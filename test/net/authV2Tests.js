@@ -2,6 +2,7 @@ import test from "ava";
 
 import Base64 from "crypto-js/enc-base64";
 import Hex from "crypto-js/enc-hex";
+import Environment from "net/environment";
 import { HttpMethod, default as HttpHeaders } from "net/httpHeaders";
 
 import AuthV2 from "net/authV2";
@@ -48,6 +49,33 @@ test("core:net:authV2:simpleGet", t => {
 	t.is(
 		result,
 		"SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=4739139d3d370f147b6585795c309b1c6d7d7f59943081f7dd943f689cfa59a3"
+	);
+});
+
+test("core:net:authV2:simpleGet:proxy", t => {
+	const env = new Environment({
+		host: "data.solarnetwork.net",
+		protocol: "https",
+		port: 443,
+		proxyHost: "proxy.example.com",
+		proxyPort: 8443
+	});
+	const builder = new AuthV2(TEST_TOKEN_ID, env)
+		.date(getTestDate())
+		.path("/api/test")
+		.snDate(true);
+
+	const canonicalRequestData = builder.buildCanonicalRequestData();
+	t.is(
+		canonicalRequestData,
+		"GET\n/api/test\n\nhost:data.solarnetwork.net\nx-sn-date:Tue, 25 Apr 2017 14:30:00 GMT\nhost;x-sn-date\n" +
+			AuthV2.EMPTY_STRING_SHA256_HEX
+	);
+
+	const result = builder.build(TEST_TOKEN_SECRET);
+	t.is(
+		result,
+		"SNWS2 Credential=test-token-id,SignedHeaders=host;x-sn-date,Signature=e70f99fd237e74912ac594b70bda27a84c1d41c4a3c7050d80c729496c7bff1f"
 	);
 });
 
@@ -384,6 +412,27 @@ test("core:net:authV2:url", t => {
 	t.is(
 		result,
 		"SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=0ba4f4469e9e0d48b7ca046e189032881c08e67a00c007fadb00242c4301fe31"
+	);
+});
+
+test("core:net:authV2:url:withoutHost", t => {
+	const reqDate = getTestDate();
+	const url = "http://example.com/path";
+
+	const builder = new AuthV2(TEST_TOKEN_ID);
+	builder.date(reqDate).url(url, true);
+
+	const canonicalRequestData = builder.buildCanonicalRequestData();
+	t.is(
+		canonicalRequestData,
+		"GET\n/path\n\ndate:Tue, 25 Apr 2017 14:30:00 GMT\nhost:data.solarnetwork.net\ndate;host\n" +
+			AuthV2.EMPTY_STRING_SHA256_HEX
+	);
+
+	const result = builder.build(TEST_TOKEN_SECRET);
+	t.is(
+		result,
+		"SNWS2 Credential=test-token-id,SignedHeaders=date;host,Signature=1fdfdc7954cb386b97991736cf70c0c8e86c9d6ea28c74e9333678f03c075730"
 	);
 });
 
