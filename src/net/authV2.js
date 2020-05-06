@@ -119,6 +119,20 @@ class AuthorizationV2Builder {
 		this.environment = environment || new Environment();
 
 		/**
+		 * The signed HTTP headers.
+		 *
+		 * @member {module:net~HttpHeaders}
+		 */
+		this.httpHeaders = new HttpHeaders();
+
+		/**
+		 * The HTTP query parameters.
+		 *
+		 * @member {module:util~MultiMap}
+		 */
+		this.parameters = new MultiMap();
+
+		/**
 		 * Force a port number to be added to host values, even if port would be implied.
 		 *
 		 * This can be useful when working with a server behind a proxy, where the
@@ -138,13 +152,13 @@ class AuthorizationV2Builder {
 	 * Any previously saved signing key via {@link module:net~AuthorizationV2Builder#saveSigningKey saveSigningKey()}
 	 * or {@link module:net~AuthorizationV2Builder#key key()} is preserved. The following items are reset:
 	 *
-	 *  * {@link module:net~AuthorizationV2Builder#contentSHA256 contentSHA256()} is cleared
 	 *  * {@link module:net~AuthorizationV2Builder#method method()} is set to `GET`
 	 *  * {@link module:net~AuthorizationV2Builder#host host()} is set to `this.environment.host`
 	 *  * {@link module:net~AuthorizationV2Builder#path path()} is set to `/`
 	 *  * {@link module:net~AuthorizationV2Builder#date date()} is set to the current date
-	 *  * {@link module:net~AuthorizationV2Builder#headers headers()} is set to a new empty instance
-	 *  * {@link module:net~AuthorizationV2Builder#queryParams queryParams()} is set to a new empty instance
+	 *  * {@link module:net~AuthorizationV2Builder#contentSHA256 contentSHA256()} is cleared
+	 *  * {@link module:net~AuthorizationV2Builder#headers headers()} is cleared
+	 *  * {@link module:net~AuthorizationV2Builder#queryParams queryParams()} is cleared
 	 *  * {@link module:net~AuthorizationV2Builder#signedHttpHeaders signedHttpHeaders()} is set to a new empty array
 	 *
 	 * @returns {module:net~AuthorizationV2Builder} this object
@@ -152,9 +166,9 @@ class AuthorizationV2Builder {
 	reset() {
 		this.contentDigest = null;
 		var host = this.environment.host;
-		return this.headers(new HttpHeaders())
-			.queryParams(new MultiMap())
-			.signedHttpHeaders([])
+		this.httpHeaders.clear();
+		this.parameters.clear();
+		return this.signedHttpHeaders([])
 			.method(HttpMethod.GET)
 			.host(host)
 			.path("/")
