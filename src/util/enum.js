@@ -96,8 +96,14 @@ class Enum {
 				return enums[i];
 			}
 		}
+		return undefined;
 	}
 
+	/**
+	 * Get the names of a set of `Enum` instances.
+	 * @param {Enum[]} set the set of `Enum` instances to get the names of
+	 * @returns {string[]} array of `Enum` name values
+	 */
 	static namesFor(set) {
 		const result = [];
 		if (set) {
