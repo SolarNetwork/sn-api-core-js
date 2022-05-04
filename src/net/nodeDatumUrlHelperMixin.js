@@ -112,6 +112,58 @@ const NodeDatumUrlHelperMixin = superclass =>
 		}
 
 		/**
+		 * Generate a URL for querying for stream datum, in either raw or aggregate form.
+		 *
+		 * If the `datumFilter` has an `aggregate` value set, then aggregate results will be
+		 * returned by SolarNet.
+		 *
+		 * @param {module:domain~DatumFilter} datumFilter the search criteria
+		 * @param {module:domain~SortDescriptor[]} [sorts] optional sort settings to use
+		 * @param {module:domain~Pagination} [pagination] optional pagination settings to use
+		 * @returns {string} the URL
+		 * @see https://github.com/SolarNetwork/solarnetwork/wiki/SolarQuery-Stream-API#datum-stream-datum-list
+		 */
+		streamDatumUrl(datumFilter, sorts, pagination) {
+			let result = this.baseUrl() + "/datum/stream/datum";
+			const filter = datumFilter || this.datumFilter();
+			const params = filter.toUriEncodingWithSorting(sorts, pagination);
+			if (params.length > 0) {
+				result += "?" + params;
+			}
+			return result;
+		}
+
+		/**
+		 * Generate a URL for querying for stream _reading_ values.
+		 *
+		 * The `datumFilter` must provide the required date(s) to use for the
+		 * reading type. If the reading type only requires one date, then the
+		 * {@link module:domain~DatumFilter#startDate} or
+		 * {@link module:domain~DatumFilter#endDate} value should be provided.
+		 *
+		 * @param {module:domain~DatumFilter} datumFilter the search criteria
+		 * @param {module:domain~DatumReadingType} readingType the type of reading to find
+		 * @param {string} [tolerance] optional query tolerance to use
+		 * @param {module:domain~SortDescriptor[]} [sorts] optional sort settings to use
+		 * @param {module:domain~Pagination} [pagination] optional pagination settings to use
+		 * @returns {string} the URL
+		 * @see https://github.com/SolarNetwork/solarnetwork/wiki/SolarQuery-Stream-API#datum-stream-reading-list
+		 */
+		streamReadingUrl(datumFilter, readingType, tolerance, sorts, pagination) {
+			let result = this.baseUrl() + "/datum/stream/reading";
+			const filter = new DatumFilter(datumFilter) || this.datumFilter();
+			filter.prop("readingType", readingType.name);
+			if (tolerance) {
+				filter.prop("tolerance", tolerance);
+			}
+			const params = filter.toUriEncodingWithSorting(sorts, pagination);
+			if (params.length > 0) {
+				result += "?" + params;
+			}
+			return result;
+		}
+
+		/**
 		 * Get a new {@link module:domain~DatumFilter} configured with properties of this instance.
 		 *
 		 * This will configure the following properties:
