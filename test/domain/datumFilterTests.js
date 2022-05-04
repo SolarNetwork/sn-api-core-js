@@ -88,6 +88,29 @@ test("domain:datumFilter:sourceIds:resetSourceId", t => {
 	t.deepEqual(filter.sourceIds, ["def"], "sourceIds array reset to just sourceId");
 });
 
+test("domain:datumFilter:streamId", t => {
+	const filter = new DatumFilter();
+	filter.streamId = "abd";
+	t.is(filter.streamId, "abd");
+	t.deepEqual(filter.props, { streamIds: ["abd"] });
+});
+
+test("domain:datumFilter:streamIds", t => {
+	const filter = new DatumFilter();
+	filter.streamIds = ["abd", "def"];
+	t.is(filter.streamId, "abd");
+	t.deepEqual(filter.streamIds, ["abd", "def"]);
+	t.deepEqual(filter.props, { streamIds: ["abd", "def"] });
+});
+
+test("domain:datumFilter:streamIds:resetNodeId", t => {
+	const filter = new DatumFilter();
+	filter.streamIds = ["abd", "def"];
+	t.deepEqual(filter.streamIds, ["abd", "def"]);
+	filter.streamId = "ghi";
+	t.deepEqual(filter.streamIds, ["ghi"], "streamIds array reset to just streamId");
+});
+
 test("domain:datumFilter:userId", t => {
 	const filter = new DatumFilter();
 	filter.userId = 123;
@@ -256,7 +279,10 @@ test("domain:datumFilter:combiningType:toUriEncoding", t => {
 test("domain:datumFilter:nodeIdMaps", t => {
 	const filter = new DatumFilter();
 	t.is(filter.nodeIdMaps, undefined);
-	const m = new Map([[-1, new Set([1, 2, 3])], [-2, new Set([4, 5])]]);
+	const m = new Map([
+		[-1, new Set([1, 2, 3])],
+		[-2, new Set([4, 5])]
+	]);
 	filter.nodeIdMaps = m;
 	t.is(filter.nodeIdMaps, m);
 });
@@ -264,7 +290,10 @@ test("domain:datumFilter:nodeIdMaps", t => {
 test("domain:datumFilter:nodeIdMaps:toUriEncoding", t => {
 	const filter = new DatumFilter();
 	t.is(filter.nodeIdMaps, undefined);
-	const m = new Map([[-1, new Set([1, 2, 3])], [-2, new Set([4, 5])]]);
+	const m = new Map([
+		[-1, new Set([1, 2, 3])],
+		[-2, new Set([4, 5])]
+	]);
 	filter.combiningType = CombiningTypes.Sum;
 	filter.nodeIdMaps = m;
 	t.is(
@@ -276,7 +305,10 @@ test("domain:datumFilter:nodeIdMaps:toUriEncoding", t => {
 test("domain:datumFilter:sourceIdMaps", t => {
 	const filter = new DatumFilter();
 	t.is(filter.sourceIdMaps, undefined);
-	const m = new Map([["FOO", new Set(["A", "B", "C"])], ["BAR", new Set(["D", "E"])]]);
+	const m = new Map([
+		["FOO", new Set(["A", "B", "C"])],
+		["BAR", new Set(["D", "E"])]
+	]);
 	filter.sourceIdMaps = m;
 	t.is(filter.sourceIdMaps, m);
 });
@@ -284,7 +316,10 @@ test("domain:datumFilter:sourceIdMaps", t => {
 test("domain:datumFilter:sourceIdMaps:toUriEncoding", t => {
 	const filter = new DatumFilter();
 	t.is(filter.nodeIdMaps, undefined);
-	const m = new Map([["FOO", new Set(["A", "B", "C"])], ["BAR", new Set(["D", "E"])]]);
+	const m = new Map([
+		["FOO", new Set(["A", "B", "C"])],
+		["BAR", new Set(["D", "E"])]
+	]);
 	filter.combiningType = CombiningTypes.Sum;
 	filter.sourceIdMaps = m;
 	t.is(
