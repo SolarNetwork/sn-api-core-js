@@ -21,3 +21,8 @@ test("domain:datumReadingType:aggregations", t => {
 	t.is(DatumReadingTypes.NearestDifference.name, "NearestDifference");
 	t.is(DatumReadingTypes.NearestDifference.key, "diff");
 });
+
+test("domain:datumReadingType:valueOf", t => {
+	t.is(DatumReadingType.valueOf("Difference"), DatumReadingTypes.Difference);
+	t.is(DatumReadingType.valueOf("delta"), DatumReadingTypes.Difference);
+});
