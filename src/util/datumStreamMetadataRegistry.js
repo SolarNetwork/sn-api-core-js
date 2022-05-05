@@ -103,8 +103,31 @@ class DatumStreamMetadataRegistry {
 	/**
 	 * Get this object as a standard JSON encoded string value.
 	 *
-	 * The returned JSON is an array of the {@link module:domain~DatumStreamMetadata#toJsonEncoding} result
-	 * of all metadata in the registry.
+	 * The returned JSON is an array of the {@link module:domain~DatumStreamMetadata#toJsonEncoding DatumStreamMetadata#toJsonEncoding()} result
+	 * of all metadata in the registry. An example result looks like this:
+	 *
+	 * ```
+	 * [
+	 *     {
+	 *       "streamId": "7714f762-2361-4ec2-98ab-7e96807b32a6",
+	 *       "zone": "Pacific/Auckland",
+	 *       "kind": "n",
+	 *       "objectId": 123,
+	 *       "sourceId": "/power/1",
+	 *       "i": ["watts", "current",  "voltage", "frequency"],
+	 *       "a": ["wattHours"]
+	 *     },
+	 *     {
+	 *       "streamId": "5514f762-2361-4ec2-98ab-7e96807b3255",
+	 *       "zone": "America/New_York",
+	 *       "kind": "n",
+	 *       "objectId": 456,
+	 *       "sourceId": "/irradiance/2",
+	 *       "i": ["irradiance", "temperature"],
+	 *       "a": ["irradianceHours"]
+	 *     }
+	 * ]
+	 * ```
 	 *
 	 * @return {string} the JSON encoded string
 	 */
@@ -121,28 +144,40 @@ class DatumStreamMetadataRegistry {
 	}
 
 	/**
-	 * Parse a JSON string into a {@link module:domain~DatumStreamMetadataRegistry} instance.
+	 * Parse a JSON string into a {@link module:util~DatumStreamMetadataRegistry DatumStreamMetadataRegistry} instance.
 	 *
-	 * The JSON must be encoded the same way {@link module:domain~DatumStreamMetadataRegistry#toJsonEncoding} does.
+	 * The JSON must be encoded the same way {@link module:util~DatumStreamMetadataRegistry#toJsonEncoding DatumStreamMetadataRegistry#toJsonEncoding()} does.
 	 *
 	 * @param {string} json the JSON to parse
-	 * @returns {module:domain~DatumStreamMetadataRegistry} the stream metadata registry instance
+	 * @returns {module:util~DatumStreamMetadataRegistry} the stream metadata registry instance
 	 */
 	static fromJsonEncoding(json) {
 		if (json) {
-			const obj = JSON.parse(json);
-			if (Array.isArray(obj)) {
-				const reg = new DatumStreamMetadataRegistry();
-				for (let e of obj) {
-					let meta = DatumStreamMetadata.fromJsonObject(e);
-					if (meta) {
-						reg.addMetadata(meta);
-					}
-				}
-				return reg;
-			}
+			return this.fromJsonObject(JSON.parse(json));
 		}
-		return null;
+		return undefined;
+	}
+
+	/**
+	 * Create a registry instance from an array parsed from a JSON string of datum stream metadata objects.
+	 *
+	 * The array must be structured in the same way {@link module:util~DatumStreamMetadataRegistry#toJsonEncoding DatumStreamMetadataRegistry#toJsonEncoding()} does.
+	 *
+	 * @param {array} data the array data to parse
+	 * @returns {module:util~DatumStreamMetadataRegistry} the stream metadata registry instance
+	 */
+	static fromJsonObject(data) {
+		if (Array.isArray(data)) {
+			const reg = new DatumStreamMetadataRegistry();
+			for (let e of data) {
+				let meta = DatumStreamMetadata.fromJsonObject(e);
+				if (meta) {
+					reg.addMetadata(meta);
+				}
+			}
+			return reg;
+		}
+		return undefined;
 	}
 }
 

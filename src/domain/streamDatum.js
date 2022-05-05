@@ -12,6 +12,12 @@ function pushProperties(result, values) {
 
 /**
  * A stream datum entity.
+ *
+ * A stream datum is a datum without any metadata describing the datum property names.
+ * The instantantaneous, accumulating, and status property values are stored as the array
+ * fields `iProps`, `aProps`, and `sProps`. A {@link module:domain~DatumStreamMetadata DatumStreamMetadata}
+ * object is required to associate names with these arrays.
+ *
  * @alias module:domain~StreamDatum
  */
 class StreamDatum {
@@ -39,9 +45,9 @@ class StreamDatum {
 	/**
 	 * Get this object as a standard JSON encoded string value.
 	 *
-	 * This method returns the JSON form of the result of {@link module:domain~StreamDatum#toJsonObject}.
+	 * This method returns the JSON form of the result of {@link module:domain~StreamDatum#toJsonObject StreamDatum#toJsonObject()}.
 	 *
-	 * @param {DatumStreamMetadataRegistry} [registry] a stream metadata registry to encode as a registry-indexed stream datum
+	 * @param {module:util~DatumStreamMetadataRegistry} [registry] a stream metadata registry to encode as a registry-indexed stream datum
 	 * @return {string} the JSON encoded string
 	 */
 	toJsonEncoding(registry) {
@@ -53,10 +59,22 @@ class StreamDatum {
 	 *
 	 * This method can encode the datum into an array using one of two ways, depending on whether the `registry` argument is provided.
 	 * When provided, the first array element will be the stream metadata index based on calling
-	 * {@link module:util~DatumStreamMetadataRegistry.indexOfMetadataStreamId(streamId)}. Otherwise the first array element will be the
-	 * stream ID itself.
+	 * {@link module:util~DatumStreamMetadataRegistry#indexOfMetadataStreamId DatumStreamMetadataRegistry#indexOfMetadataStreamId()}.
+	 * Otherwise the first array element will be the stream ID itself.
 	 *
-	 * @param {DatumStreamMetadataRegistry} [registry] a stream metadata registry to encode as a registry-indexed stream datum
+	 * For example if a registry is used, the resulting array might look like this:
+	 *
+	 * ```
+	 * [0, 1650667326308, 12326, null, 230.19719, 50.19501, 6472722]
+	 * ```
+	 *
+	 * while without a registry the array might look like this:
+	 *
+	 * ```
+	 * ["7714f762-2361-4ec2-98ab-7e96807b32a6", 1650667326308, 12326, null, 230.19719, 50.19501, 6472722]
+	 * ```
+	 *
+	 * @param {module:util~DatumStreamMetadataRegistry} [registry] a stream metadata registry to encode as a registry-indexed stream datum
 	 * @return {Array} the datum stream array object
 	 */
 	toJsonObject(registry) {
@@ -74,12 +92,12 @@ class StreamDatum {
 	}
 
 	/**
-	 * Parse a JSON string into a {@link module:domain~StreamDatum} instance.
+	 * Parse a JSON string into a {@link module:domain~StreamDatum StreamDatum} instance.
 	 *
-	 * The JSON must be encoded the same way {@link module:domain~StreamDatum#toJsonEncoding} does.
+	 * The JSON must be encoded the same way {@link module:domain~StreamDatum#toJsonEncoding StreamDatum#toJsonEncoding()} does.
 	 *
 	 * @param {string} json the JSON to parse
-	 * @param {DatumStreamMetadataMetadata|DatumStreamMetadataMetadataRegistry} meta a metadata instance or metadata registry to decode with
+	 * @param {module:domain~DatumStreamMetadata|module:util~DatumStreamMetadataRegistry} meta a metadata instance or metadata registry to decode with
 	 * @returns {module:domain~StreamDatum} the stream datum instance
 	 */
 	static fromJsonEncoding(json, meta) {
@@ -87,12 +105,12 @@ class StreamDatum {
 	}
 
 	/**
-	 * Parse an object parsed from a JSON string into a {@link module:domain~StreamDatum} instance.
+	 * Create a new {@link module:domain~StreamDatum StreamDatum} instance from an array parsed from a stream datum JSON string.
 	 *
-	 * The object must have been parsed from JSON that was encoded the same way {@link module:domain~StreamDatum#toJsonEncoding} does.
+	 * The array must have been parsed from JSON that was encoded the same way {@link module:domain~StreamDatum#toJsonEncoding StreamDatum#toJsonEncoding()} does.
 	 *
 	 * @param {Array} data the array parsed from JSON
-	 * @param {DatumStreamMetadataMetadata|DatumStreamMetadataMetadataRegistry} meta a metadata instance or metadata registry to decode with
+	 * @param {module:domain~DatumStreamMetadata|module:util~DatumStreamMetadataRegistry} meta a metadata instance or metadata registry to decode with
 	 * @returns {module:domain~StreamDatum} the stream datum instance
 	 */
 	static fromJsonObject(data, meta) {

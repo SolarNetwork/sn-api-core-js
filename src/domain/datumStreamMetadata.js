@@ -113,7 +113,7 @@ class DatumStreamMetadata {
 	}
 
 	/**
-	 * Get the stream object ID (if the `kind` is `Node`), otherwise `null`.
+	 * The stream object ID (if the `kind` is `Node`), otherwise `null`.
 	 * @type {number}
 	 */
 	get nodeId() {
@@ -121,7 +121,7 @@ class DatumStreamMetadata {
 	}
 
 	/**
-	 * Get the stream object ID (if the `kind` is `Location`), otherewise `null`.
+	 * The stream object ID (if the `kind` is `Location`), otherewise `null`.
 	 * @type {number}
 	 */
 	get locationId() {
@@ -129,7 +129,7 @@ class DatumStreamMetadata {
 	}
 
 	/**
-	 * Get the stream source ID.
+	 * The stream source ID.
 	 * @type {string}
 	 */
 	get sourceId() {
@@ -137,37 +137,32 @@ class DatumStreamMetadata {
 	}
 
 	/**
-	 * Get the instantaneous property names array length.
-	 *
-	 * @returns {number} the number of instantaneous property names
+	 * The instantaneous property names array length.
+	 * @type {number}
 	 */
 	get instantaneousLength() {
 		return Array.isArray(this._iNames) ? this._iNames.length : 0;
 	}
 
 	/**
-	 * Get the accumulating property names array length.
-	 *
-	 * @returns {number} the number of accumulating property names
+	 * The accumulating property names array length.
+	 * @type {number}
 	 */
 	get accumulatingLength() {
 		return Array.isArray(this._aNames) ? this._aNames.length : 0;
 	}
 
 	/**
-	 * Get the status property names array length.
-	 *
-	 * @returns {number} the number of status property names
+	 * The status property names array length.
+	 * @type {number}
 	 */
 	get statusLength() {
 		return Array.isArray(this._sNames) ? this._sNames.length : 0;
 	}
 
 	/**
-	 * Get the total number of instantaneous, accumulating, and status property
-	 * names.
-	 *
-	 * @returns {number} the total number of properties
+	 * The total number of instantaneous, accumulating, and status property names.
+	 * @type {number}
 	 */
 	get propertyNamesLength() {
 		return this.instantaneousLength + this.accumulatingLength + this.statusLength;
@@ -214,6 +209,20 @@ class DatumStreamMetadata {
 	/**
 	 * Get this object as a standard JSON encoded string value.
 	 *
+	 * An example result looks like this:
+	 *
+	 * ```
+	 * {
+	 *       "streamId": "7714f762-2361-4ec2-98ab-7e96807b32a6",
+	 *       "zone": "Pacific/Auckland",
+	 *       "kind": "n",
+	 *       "objectId": 123,
+	 *       "sourceId": "/power/1",
+	 *       "i": ["watts", "current",  "voltage", "frequency"],
+	 *       "a": ["wattHours"]
+	 * }
+	 * ```
+	 *
 	 * @return {string} the JSON encoded string
 	 */
 	toJsonEncoding() {
@@ -249,7 +258,7 @@ class DatumStreamMetadata {
 	}
 
 	/**
-	 * Parse an object parsed from a JSON string into a {@link module:domain~DatumStreamMetadata} instance.
+	 * Create a metadata instance from an object parsed from a JSON string.
 	 *
 	 * The object must have been parsed from JSON that was encoded the same way {@link module:domain~DatumStreamMetadata#toJsonEncoding} does.
 	 *
