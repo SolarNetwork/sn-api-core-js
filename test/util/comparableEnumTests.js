@@ -37,7 +37,7 @@ test("util:comparableEnum:frozen", t => {
 		() => {
 			obj.foo = "bar";
 		},
-		TypeError,
+		{ instanceOf: TypeError },
 		"object is frozen"
 	);
 });
