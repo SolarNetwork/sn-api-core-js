@@ -55,7 +55,7 @@ class MultiMap {
 	 */
 	putAll(values) {
 		for (let key in values) {
-			if (values.hasOwnProperty(key)) {
+			if (Object.prototype.hasOwnProperty.call(values, key)) {
 				addValue(this, key, values[key], true);
 			}
 		}

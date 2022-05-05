@@ -91,12 +91,12 @@ class Configuration {
 		}
 		if (newValue === null) {
 			delete this.map[key];
-			if (this.hasOwnProperty(key)) {
+			if (Object.prototype.hasOwnProperty.call(this, key)) {
 				delete this[key];
 			}
 		} else {
 			this.map[key] = newValue;
-			if (!this.hasOwnProperty(key)) {
+			if (!Object.prototype.hasOwnProperty.call(this, key)) {
 				createProperty(this, key);
 			}
 		}
@@ -113,7 +113,7 @@ class Configuration {
 	values(newMap) {
 		if (newMap) {
 			for (let prop in newMap) {
-				if (newMap.hasOwnProperty(prop)) {
+				if (Object.prototype.hasOwnProperty.call(newMap, prop)) {
 					this.value(prop, newMap[prop]);
 				}
 			}

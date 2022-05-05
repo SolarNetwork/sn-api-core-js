@@ -96,7 +96,7 @@ export function normalizeNestedStackDataByDate(layerData, fillTemplate, fillFn) 
 					dummy = { date: layerData[j].values[i].date, sourceId: layerData[k].key };
 					if (fillTemplate) {
 						for (prop in fillTemplate) {
-							if (fillTemplate.hasOwnProperty(prop)) {
+							if (Object.prototype.hasOwnProperty.call(fillTemplate, prop)) {
 								dummy[prop] = fillTemplate[prop];
 							}
 						}
@@ -187,7 +187,7 @@ export function aggregateNestedDataLayers(
 			clone = {};
 			if (staticProperties !== undefined) {
 				for (val in staticProperties) {
-					if (staticProperties.hasOwnProperty(val)) {
+					if (Object.prototype.hasOwnProperty.call(staticProperties, val)) {
 						clone[val] = staticProperties[val];
 					}
 				}

@@ -73,7 +73,7 @@ function urlQueryEncode(parameters, encoderFn) {
 	}
 	if (parameters) {
 		for (prop in parameters) {
-			if (parameters.hasOwnProperty(prop)) {
+			if (Object.prototype.hasOwnProperty.call(parameters, prop)) {
 				val = parameters[prop];
 				if (Array.isArray(val)) {
 					for (i = 0, len = val.length; i < len; i++) {
