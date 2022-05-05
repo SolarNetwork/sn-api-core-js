@@ -44,6 +44,31 @@ class DatumStreamMetadataRegistry {
 	}
 
 	/**
+	 * Get the metadata at a specific index, based on insertion order.
+	 * @param {number} index the index of the metadata to get
+	 * @returns {DatumStreamMetadata} the metadata at the given index, or `undefined`
+	 */
+	metadataAt(index) {
+		return index < this._metaList.length ? this._metaList[index] : undefined;
+	}
+
+	/**
+	 * Get the index of the metadata with a specific stream ID.
+	 * @param {string} streamId the stream ID to get the index of
+	 * @returns {number} the found index, or `-1` if not found
+	 */
+	indexOfMetadataStreamId(streamId) {
+		let i = 0;
+		for (const meta of this._metaList) {
+			if (meta.streamId === streamId) {
+				return i;
+			}
+			i += 1;
+		}
+		return -1;
+	}
+
+	/**
 	 * Get a list of all available stream IDs in insertion order.
 	 * @returns {string[]} all available metadata stream ID values in the same order as added to this registry
 	 */

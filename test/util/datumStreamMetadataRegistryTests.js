@@ -59,6 +59,8 @@ test("util:datumStreamMetadataRegistry:populated", t => {
 		let expected = metaMap.get(streamId);
 		t.is(obj.metadataForStreamId(streamId), expected);
 		t.is(obj.metadataForObjectSource(i, `source/${i}`), expected);
+		t.is(obj.metadataAt(i - 1), expected);
+		t.is(obj.indexOfMetadataStreamId(streamId), i - 1);
 	}
 });
 

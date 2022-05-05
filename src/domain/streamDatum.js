@@ -1,0 +1,117 @@
+import DatumStreamMetadata from "./datumStreamMetadata";
+import DatumStreamMetadataRegistry from "../util/datumStreamMetadataRegistry";
+
+function pushProperties(result, values) {
+	if (!values) {
+		return;
+	}
+	for (let e of values) {
+		result.push(e);
+	}
+}
+
+/**
+ * A stream datum entity.
+ * @alias module:domain~StreamDatum
+ */
+class StreamDatum {
+	/**
+	 * Constructor.
+	 * @param {string} streamId the datum stream ID
+	 * @param {Date|number|string} ts the datum timestamp, either as a `Date` instance or a form suitable for constructing as `new Date(ts)`
+	 * @param {Number[]} [iProps] the instantaneous property values
+	 * @param {Number[]} [aProps] the accumulating property values
+	 * @param {String[]} [sProps] the status property values
+	 * @param {Set<String>} [tags] the tag values
+	 */
+	constructor(streamId, ts, iProps, aProps, sProps, tags) {
+		this.streamId = streamId;
+		this.ts = ts instanceof Date ? ts : new Date(ts);
+		this.iProps = iProps;
+		this.aProps = aProps;
+		this.sProps = sProps;
+		this.tags = tags;
+		if (this.constructor === StreamDatum) {
+			Object.freeze(this);
+		}
+	}
+
+	/**
+	 * Get this object as a standard JSON encoded string value.
+	 *
+	 * @param {DatumStreamMetadataRegistry} [registry] a stream metadata registry to encode as a registry-indexed stream datum
+	 * @return {string} the JSON encoded string
+	 */
+	toJsonEncoding(registry) {
+		const result = [
+			registry instanceof DatumStreamMetadataRegistry
+				? registry.indexOfMetadataStreamId(this.streamId)
+				: this.streamId,
+			this.ts.getTime()
+		];
+		pushProperties(result, this.iProps);
+		pushProperties(result, this.aProps);
+		pushProperties(result, this.sProps);
+		pushProperties(result, this.tags);
+		return JSON.stringify(result);
+	}
+
+	/**
+	 * Parse a JSON string into a {@link module:domain~StreamDatum} instance.
+	 *
+	 * The JSON must be encoded the same way {@link module:domain~StreamDatum#toJsonEncoding} does.
+	 *
+	 * @param {string} json the JSON to parse
+	 * @param {DatumStreamMetadataMetadata|DatumStreamMetadataMetadataRegistry} meta a metadata instance or metadata registry to decode with
+	 * @returns {module:domain~StreamDatum} the stream datum instance
+	 */
+	static fromJsonEncoding(json, meta) {
+		return this.fromJsonObject(JSON.parse(json), meta);
+	}
+
+	/**
+	 * Parse an object parsed from a JSON string into a {@link module:domain~StreamDatum} instance.
+	 *
+	 * The object must have been parsed from JSON that was encoded the same way {@link module:domain~StreamDatum#toJsonEncoding} does.
+	 *
+	 * @param {string} data the array parsed from JSON
+	 * @param {DatumStreamMetadataMetadata|DatumStreamMetadataMetadataRegistry} meta a metadata instance or metadata registry to decode with
+	 * @returns {module:domain~StreamDatum} the stream datum instance
+	 */
+	static fromJsonObject(data, meta) {
+		let i, len, m, ts, iProps, aProps, sProps, tags;
+		if (Array.isArray(data) && data.length > 1) {
+			if (typeof data[0] === "string") {
+				// treat as an embedded stream ID stream datum
+				m = meta instanceof DatumStreamMetadata ? meta : meta.metadataForStreamId(data[0]);
+			} else {
+				// treat as a registry-indexed stream datum
+				m = meta instanceof DatumStreamMetadata ? meta : meta.metadataAt(data[0]);
+			}
+			ts = new Date(data[1]);
+			i = 2;
+			len = m.instantaneousLength;
+			if (len > 0) {
+				iProps = data.slice(i, i + len);
+				i += len;
+			}
+			len = m.accumulatingLength;
+			if (len > 0) {
+				aProps = data.slice(i, i + len);
+				i += len;
+			}
+			len = m.statusLength;
+			if (len > 0) {
+				sProps = data.slice(i, i + len);
+				i += len;
+			}
+			if (i < data.length) {
+				tags = new Set(data.slice(i));
+			}
+			return new StreamDatum(m.streamId, ts, iProps, aProps, sProps, tags);
+		}
+		return null;
+	}
+}
+
+export default StreamDatum;
