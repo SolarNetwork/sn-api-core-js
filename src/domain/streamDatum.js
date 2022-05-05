@@ -28,7 +28,7 @@ class StreamDatum {
 	 * @param {Number[]} [iProps] the instantaneous property values
 	 * @param {Number[]} [aProps] the accumulating property values
 	 * @param {String[]} [sProps] the status property values
-	 * @param {Set<String>} [tags] the tag values
+	 * @param {Set<String>|Array<String>} [tags] the tag values
 	 */
 	constructor(streamId, ts, iProps, aProps, sProps, tags) {
 		this.streamId = streamId;
@@ -36,7 +36,7 @@ class StreamDatum {
 		this.iProps = iProps;
 		this.aProps = aProps;
 		this.sProps = sProps;
-		this.tags = tags;
+		this.tags = tags ? (tags instanceof Set ? tags : new Set(tags)) : undefined;
 		if (this.constructor === StreamDatum) {
 			Object.freeze(this);
 		}
@@ -82,7 +82,7 @@ class StreamDatum {
 			registry instanceof DatumStreamMetadataRegistry
 				? registry.indexOfMetadataStreamId(this.streamId)
 				: this.streamId,
-			this.ts.getTime()
+			this.ts.getTime(),
 		];
 		pushProperties(result, this.iProps);
 		pushProperties(result, this.aProps);
