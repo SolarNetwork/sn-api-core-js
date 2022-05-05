@@ -1,5 +1,5 @@
 import { DatumStreamType, default as DatumStreamTypes } from "./datumStreamType";
-import { DatumSamplesType, default as DatumSamplesTypes } from "./datumSamplesType";
+import DatumSamplesTypes from "./datumSamplesType";
 
 /**
  * Metadata about a datum stream.
@@ -245,9 +245,20 @@ class DatumStreamMetadata {
 	 * @returns {module:domain~DatumStreamMetadata} the stream metadata instance
 	 */
 	static fromJsonEncoding(json) {
+		return this.fromJsonObject(JSON.parse(json));
+	}
+
+	/**
+	 * Parse an object parsed from a JSON string into a {@link module:domain~DatumStreamMetadata} instance.
+	 *
+	 * The object must have been parsed from JSON that was encoded the same way {@link module:domain~DatumStreamMetadata#toJsonEncoding} does.
+	 *
+	 * @param {string} obj the object parsed from JSON
+	 * @returns {module:domain~DatumStreamMetadata} the stream metadata instance
+	 */
+	static fromJsonObject(obj) {
 		let kind, i, a, s;
-		if (json) {
-			const obj = JSON.parse(json);
+		if (obj) {
 			kind = DatumStreamType.valueOf(obj.kind);
 			i = Array.isArray(obj.i) ? obj.i : undefined;
 			a = Array.isArray(obj.a) ? obj.a : undefined;
