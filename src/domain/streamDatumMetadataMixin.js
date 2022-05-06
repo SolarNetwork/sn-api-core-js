@@ -59,7 +59,7 @@ const StreamDatumMetadataMixin = (superclass) =>
 	};
 
 /**
- * A concrete {@link module:domain~StreamDatumMetadataMixin} of {@link module:domain~StreamAggregateDatum}.
+ * A concrete {@link module:domain~StreamDatumMetadataMixin StreamDatumMetadataMixin} of {@link module:domain~StreamAggregateDatum StreamAggregateDatum}.
  *
  * @mixes module:domain~StreamDatumMetadataMixin
  * @extends module:domain~StreamAggregateDatum
@@ -68,7 +68,7 @@ const StreamDatumMetadataMixin = (superclass) =>
 class AggregateDatum extends StreamDatumMetadataMixin(StreamAggregateDatum) {}
 
 /**
- * A concrete {@link module:domain~StreamDatumMetadataMixin} of {@link module:domain~StreamDatum}.
+ * A concrete {@link module:domain~StreamDatumMetadataMixin StreamDatumMetadataMixin} of {@link module:domain~StreamDatum StreamDatum}.
  *
  * @mixes module:domain~StreamDatumMetadataMixin
  * @extends module:domain~StreamDatum
