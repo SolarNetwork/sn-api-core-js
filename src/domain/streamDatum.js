@@ -1,3 +1,4 @@
+import DatumSamplesTypes from "./datumSamplesType";
 import DatumStreamMetadata from "./datumStreamMetadata";
 import DatumStreamMetadataRegistry from "../util/datumStreamMetadataRegistry";
 
@@ -7,6 +8,22 @@ function pushProperties(result, values) {
 	}
 	for (let e of values) {
 		result.push(e);
+	}
+}
+
+function populateProperties(obj, names, values) {
+	if (!Array.isArray(names) || !Array.isArray(values)) {
+		return;
+	}
+	var val, name;
+	for (let i = 0, len = Math.min(names.length, values.length); i < len; i += 1) {
+		val = values[i];
+		if (val !== undefined && val !== null) {
+			name = names[i];
+			if (!Object.prototype.hasOwnProperty.call(obj, name)) {
+				obj[name] = val;
+			}
+		}
 	}
 }
 
@@ -40,6 +57,62 @@ class StreamDatum {
 		if (this.constructor === StreamDatum) {
 			Object.freeze(this);
 		}
+	}
+
+	/**
+	 * Get the property values for a given samples type.
+	 * @param {module:domain~DatumSamplesType} samplesType the type of property values to return
+	 * @returns {Array} the property values for the given type, or undefined if none available
+	 */
+	propertyValuesForType(samplesType) {
+		if (DatumSamplesTypes.Instantaneous.equals(samplesType)) {
+			return this.iProps;
+		} else if (DatumSamplesTypes.Accumulating.equals(samplesType)) {
+			return this.aProps;
+		} else if (DatumSamplesTypes.Status.equals(samplesType)) {
+			return this.sProps;
+		} else if (DatumSamplesTypes.Tags.equals(samplesType)) {
+			return this.tags;
+		}
+		return undefined;
+	}
+
+	/**
+	 * Get this instance as a simple object.
+	 *
+	 * The following basic properties will be set on the returned object:
+	 *
+	 *  * `streamId` - the stream ID
+	 *  * `date` - the timestamp
+	 *  * `sourceId` - the metadata source ID
+	 *  * `nodeId` or `locationId` - either the node ID or location ID from the metadata
+	 *  * `tags` - any tags (as an Array)
+	 *
+	 * Beyond that, all instantaneous, accumulating, and status properties will be included.
+	 * If duplicate property names exist between the different classifications, the first-available
+	 * value will be used.
+	 *
+	 * @param {module:domain~DatumStreamMetadata} meta a metadata instance to encode the property names with
+	 * @returns {Object} an object populated with all available properties
+	 */
+	toObject(meta) {
+		var obj = {
+			streamId: this.streamId,
+			date: this.ts,
+			sourceId: meta.sourceId,
+		};
+		if (meta.nodeId !== undefined) {
+			obj.nodeId = meta.nodeId;
+		} else if (meta.locationId !== undefined) {
+			obj.locationId = meta.locationId;
+		}
+		if (this.tags) {
+			obj.tags = Array.from(this.tags);
+		}
+		populateProperties(obj, meta.instantaneousNames, this.iProps);
+		populateProperties(obj, meta.accumulatingNames, this.aProps);
+		populateProperties(obj, meta.statusNames, this.sProps);
+		return obj;
 	}
 
 	/**

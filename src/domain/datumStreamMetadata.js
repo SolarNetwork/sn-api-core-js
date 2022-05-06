@@ -113,19 +113,19 @@ class DatumStreamMetadata {
 	}
 
 	/**
-	 * The stream object ID (if the `kind` is `Node`), otherwise `null`.
+	 * The stream object ID (if the `kind` is `Node`), otherwise `undefined`.
 	 * @type {number}
 	 */
 	get nodeId() {
-		return DatumStreamTypes.Node.equals(this._kind) ? this._objectId : null;
+		return DatumStreamTypes.Node.equals(this._kind) ? this._objectId : undefined;
 	}
 
 	/**
-	 * The stream object ID (if the `kind` is `Location`), otherewise `null`.
+	 * The stream object ID (if the `kind` is `Location`), otherewise `undefined`.
 	 * @type {number}
 	 */
 	get locationId() {
-		return DatumStreamTypes.Location.equals(this._kind) ? this._objectId : null;
+		return DatumStreamTypes.Location.equals(this._kind) ? this._objectId : undefined;
 	}
 
 	/**
@@ -145,6 +145,14 @@ class DatumStreamMetadata {
 	}
 
 	/**
+	 * The instantaneous property names array.
+	 * @type {Array<String>}
+	 */
+	get instantaneousNames() {
+		return this._iNames;
+	}
+
+	/**
 	 * The accumulating property names array length.
 	 * @type {number}
 	 */
@@ -153,11 +161,27 @@ class DatumStreamMetadata {
 	}
 
 	/**
+	 * The accumulating property names array.
+	 * @type {Array<String>}
+	 */
+	get accumulatingNames() {
+		return this._aNames;
+	}
+
+	/**
 	 * The status property names array length.
 	 * @type {number}
 	 */
 	get statusLength() {
 		return Array.isArray(this._sNames) ? this._sNames.length : 0;
+	}
+
+	/**
+	 * The status property names array.
+	 * @type {Array<String>}
+	 */
+	get statusNames() {
+		return this._sNames;
 	}
 
 	/**
@@ -231,7 +255,7 @@ class DatumStreamMetadata {
 			zone: this._zone,
 			kind: this._kind ? this._kind.key : DatumSamplesTypes.Node.key,
 			objectId: this._objectId,
-			sourceId: this._sourceId
+			sourceId: this._sourceId,
 		};
 		if (this.instantaneousLength > 0) {
 			result.i = this._iNames;

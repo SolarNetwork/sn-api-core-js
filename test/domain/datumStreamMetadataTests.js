@@ -4,7 +4,7 @@ import DatumStreamMetadata from "domain/datumStreamMetadata";
 import DatumStreamTypes from "domain/datumStreamType";
 import DatumSamplesTypes from "domain/datumSamplesType";
 
-test("domain:datumStreamMetadata:create:node", t => {
+test("domain:datumStreamMetadata:create:node", (t) => {
 	// GIVEN
 	const streamId = "7714f762-2361-4ec2-98ab-7e96807b32a6";
 	const timeZoneId = "Pacific/Auckland";
@@ -34,14 +34,14 @@ test("domain:datumStreamMetadata:create:node", t => {
 	t.is(obj.kind, streamKind);
 	t.is(obj.objectId, nodeId);
 	t.is(obj.nodeId, nodeId);
-	t.is(obj.locationId, null);
+	t.is(obj.locationId, undefined);
 	t.is(obj.sourceId, sourceId);
 	t.deepEqual(obj.propertyNamesForType(DatumSamplesTypes.Instantaneous), iNames);
 	t.deepEqual(obj.propertyNamesForType(DatumSamplesTypes.Accumulating), aNames);
 	t.deepEqual(obj.propertyNamesForType(DatumSamplesTypes.Status), sNames);
 });
 
-test("domain:datumStreamMetadata:create:location", t => {
+test("domain:datumStreamMetadata:create:location", (t) => {
 	// GIVEN
 	const streamId = "7714f762-2361-4ec2-98ab-7e96807b32a6";
 	const timeZoneId = "Pacific/Auckland";
@@ -70,7 +70,7 @@ test("domain:datumStreamMetadata:create:location", t => {
 	t.is(obj.timeZoneId, timeZoneId);
 	t.is(obj.kind, streamKind);
 	t.is(obj.objectId, locId);
-	t.is(obj.nodeId, null);
+	t.is(obj.nodeId, undefined);
 	t.is(obj.locationId, locId);
 	t.is(obj.sourceId, sourceId);
 	t.deepEqual(obj.propertyNamesForType(DatumSamplesTypes.Instantaneous), iNames);
@@ -98,7 +98,7 @@ function testNodeMetadata(streamId, nodeId, sourceId) {
 	);
 }
 
-test("domain:datumStreamMetadata:propertyNames", t => {
+test("domain:datumStreamMetadata:propertyNames", (t) => {
 	// GIVEN
 	const streamId = "7714f762-2361-4ec2-98ab-7e96807b32a6";
 	const nodeId = 123;
@@ -118,7 +118,7 @@ test("domain:datumStreamMetadata:propertyNames", t => {
 	t.deepEqual(meta.propertyNamesForType(DatumSamplesTypes.Status), ["f"]);
 });
 
-test("domain:datumStreamMetadata:fromJsonEncoding", t => {
+test("domain:datumStreamMetadata:fromJsonEncoding", (t) => {
 	// GIVEN
 	const streamId = "7714f762-2361-4ec2-98ab-7e96807b32a6";
 	const nodeId = 123;
@@ -150,7 +150,7 @@ test("domain:datumStreamMetadata:fromJsonEncoding", t => {
 	t.deepEqual(meta.propertyNamesForType(DatumSamplesTypes.Status), ["f"]);
 });
 
-test("domain:datumStreamMetadata:toJsonEncoding", t => {
+test("domain:datumStreamMetadata:toJsonEncoding", (t) => {
 	// GIVEN
 	const streamId = "7714f762-2361-4ec2-98ab-7e96807b32a6";
 	const nodeId = 123;
