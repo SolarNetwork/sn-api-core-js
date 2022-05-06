@@ -28,10 +28,10 @@ export default {
 	plugins: [
 		includePaths(includePathOptions),
 		babel({
-			babelHelpers: "bundled",
+			babelHelpers: "runtime",
 			exclude: "node_modules/**",
 			babelrc: false,
-			plugins: [],
+			plugins: ["@babel/plugin-transform-runtime"],
 			presets: [
 				[
 					"@babel/env",

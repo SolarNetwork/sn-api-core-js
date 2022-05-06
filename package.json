@@ -46,7 +46,7 @@
   "scripts": {
     "apidoc": "jsdoc --configure jsdoc.config.json --template ./node_modules/ink-docstrap/template --package package.json --recurse --destination docs/api src",
     "prebuild": "eslint lib.js src",
-    "build": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -c -f umd -n sn -m -o lib/solarnetwork-api-core.js -- lib.js && rollup --banner \"$(preamble)\" -c -f es -m -o lib/solarnetwork-api-core.es.js -- lib.js",
+    "build": "rm -rf build && mkdir build && rollup --config rollup.config.js --banner \"$(preamble)\" -f umd -n sn -m -o lib/solarnetwork-api-core.js -- lib.js && rollup --config rollup.config.es.js --banner \"$(preamble)\" -f es -m -o lib/solarnetwork-api-core.es.js -- lib.js",
     "postbuild": "./node_modules/uglify-js/bin/uglifyjs --beautify \"preamble='$(preamble)'\" --source-map content=lib/solarnetwork-api-core.js.map,filename=lib/solarnetwork-api-core.min.js.map -c -m -o lib/solarnetwork-api-core.min.js -- lib/solarnetwork-api-core.js && ./node_modules/uglify-js/bin/uglifyjs --beautify \"preamble='$(preamble)'\" --source-map content=lib/solarnetwork-api-core.es.js.map,filename=lib/solarnetwork-api-core.es.min.js.map -c -m -o lib/solarnetwork-api-core.es.min.js -- lib/solarnetwork-api-core.es.js",
     "prettier": "prettier \"src/**/*.js\" --check",
     "prettier:write": "prettier \"src/**/*.js\" --write",
@@ -79,6 +79,7 @@
     "@ava/babel-preset-stage-4": "^4.0.0",
     "@babel/core": "^7.17.5",
     "@babel/plugin-external-helpers": "^7.16.7",
+    "@babel/plugin-transform-runtime": "^7.17.10",
     "@babel/preset-env": "^7.16.11",
     "@babel/register": "^7.17.7",
     "@rollup/plugin-babel": "^5.3.1",
@@ -100,6 +101,7 @@
     "uglify-js": "^3.15.4"
   },
   "dependencies": {
+    "@babel/runtime": "^7.17.9",
     "crypto-js": "^3.1.9-1",
     "d3-array": "^1.2.1",
     "d3-collection": "^1.0.4",
