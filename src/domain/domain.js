@@ -7,7 +7,7 @@ export { default as CombiningTypes, CombiningType } from "./combiningType";
 export { default as DatumAuxiliaryTypes, DatumAuxiliaryType } from "./datumAuxiliaryType";
 export { default as DatumFilter } from "./datumFilter";
 export { default as DatumReadingTypes, DatumReadingType } from "./datumReadingType";
-export { default as DatumSamplesTypes, DatumSampleType } from "./datumSampleType";
+export { default as DatumSamplesTypes, DatumSamplesType } from "./datumSamplesType";
 export { default as DatumStreamMetadata } from "./datumStreamMetadata";
 export { default as DatumStreamTypes, DatumStreamType } from "./datumStreamType";
 export { default as DeviceOperatingStates, DeviceOperatingState } from "./deviceOperatingState";
