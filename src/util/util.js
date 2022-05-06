@@ -10,3 +10,8 @@ export { default as KeyedEnum } from "./keyedEnum";
 export { default as Logger, logLevels } from "./logger";
 export { default as MultiMap } from "./multiMap";
 export { default as PropMap } from "./propMap";
+export {
+	default as streamDatumUtils,
+	datumForStreamData,
+	streamDatumForData,
+} from "./streamDatumUtils";

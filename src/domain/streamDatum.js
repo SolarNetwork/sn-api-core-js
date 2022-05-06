@@ -143,7 +143,8 @@ class StreamDatum {
 			if (i < data.length) {
 				tags = new Set(data.slice(i));
 			}
-			return new StreamDatum(m.streamId, ts, iProps, aProps, sProps, tags);
+			// to support StreamDatumMetadataMixin we pass meta as additional argument
+			return new this(m.streamId, ts, iProps, aProps, sProps, tags, meta);
 		}
 		return null;
 	}

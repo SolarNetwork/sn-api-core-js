@@ -25,4 +25,10 @@ export { default as SkyConditions, SkyCondition } from "./skyCondition";
 export { default as SortDescriptor } from "./sortDescriptor";
 export { default as StreamAggregateDatum } from "./streamAggregateDatum";
 export { default as StreamDatum } from "./streamDatum";
+export {
+	default as StreamDatumMetadataMixin,
+	AggregateDatum,
+	Datum,
+} from "./streamDatumMetadataMixin";
+
 export { default as UserMetadataFilter } from "./userMetadataFilter";
