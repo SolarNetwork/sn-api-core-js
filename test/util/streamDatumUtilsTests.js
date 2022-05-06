@@ -44,6 +44,7 @@ function testNodeMetadata2(streamId, nodeId, sourceId) {
 		sNames
 	);
 }
+
 test("util:streamDatumUtils:datumForStreamData:datum", (t) => {
 	// GIVEN
 	const streamId = "7714f762-2361-4ec2-98ab-7e96807b32a6";

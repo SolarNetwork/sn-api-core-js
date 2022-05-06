@@ -43,6 +43,19 @@ const StreamDatumMetadataMixin = (superclass) =>
 		get metadata() {
 			return this._meta;
 		}
+
+		/**
+		 * Get this instance as a simple object.
+		 *
+		 * This method uses the metadata passed to the constructor to generate the object.
+		 *
+		 * @returns {Object} an object populated with all available properties
+		 * @see module:domain~StreamDatum#toObject
+		 * @see module:domain~StreamAggregateDatum#toObject
+		 */
+		toObject() {
+			return super.toObject(this._meta);
+		}
 	};
 
 /**

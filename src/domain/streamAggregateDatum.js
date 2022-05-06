@@ -1,3 +1,4 @@
+import DatumSamplesTypes from "./datumSamplesType";
 import DatumStreamMetadata from "./datumStreamMetadata";
 import DatumStreamMetadataRegistry from "../util/datumStreamMetadataRegistry";
 
@@ -7,6 +8,63 @@ function pushProperties(result, values) {
 	}
 	for (let e of values) {
 		result.push(e);
+	}
+}
+
+function populateProperties(obj, names, values, type) {
+	if (!Array.isArray(names) || !Array.isArray(values)) {
+		return;
+	}
+	var val, name, valLen;
+	for (let i = 0, iMax = Math.min(names.length, values.length); i < iMax; i += 1) {
+		val = values[i];
+		if (DatumSamplesTypes.Instantaneous === type) {
+			if (Array.isArray(val)) {
+				name = names[i];
+				valLen = val.length;
+				if (
+					valLen > 0 &&
+					val[0] !== null &&
+					!Object.prototype.hasOwnProperty.call(obj, name)
+				) {
+					obj[name] = val[0];
+					if (valLen > 1 && val[1] !== null) {
+						obj[name + "_count"] = val[1];
+					}
+					if (valLen > 2 && val[2] !== null) {
+						obj[name + "_min"] = val[2];
+					}
+					if (valLen > 3 && val[3] !== null) {
+						obj[name + "_max"] = val[3];
+					}
+				}
+			}
+		} else if (DatumSamplesTypes.Accumulating === type) {
+			if (Array.isArray(val)) {
+				name = names[i];
+				valLen = val.length;
+				if (
+					valLen > 0 &&
+					val[0] !== null &&
+					!Object.prototype.hasOwnProperty.call(obj, name)
+				) {
+					obj[name] = val[0];
+					if (valLen > 1 && val[1] !== null) {
+						obj[name + "_start"] = val[1];
+					}
+					if (valLen > 2 && val[2] !== null) {
+						obj[name + "_end"] = val[2];
+					}
+				}
+			}
+		} else {
+			if (val !== undefined && val !== null) {
+				name = names[i];
+				if (!Object.prototype.hasOwnProperty.call(obj, name)) {
+					obj[name] = val;
+				}
+			}
+		}
 	}
 }
 
@@ -54,6 +112,67 @@ class StreamAggregateDatum {
 		if (this.constructor === StreamAggregateDatum) {
 			Object.freeze(this);
 		}
+	}
+
+	/**
+	 * Get this instance as a simple object.
+	 *
+	 * The following basic properties will be set on the returned object:
+	 *
+	 *  * `streamId` - the stream ID
+	 *  * `date` - the timestamp
+	 *  * `date_end` - the ending timestamp, if available
+	 *  * `sourceId` - the metadata source ID
+	 *  * `nodeId` or `locationId` - either the node ID or location ID from the metadata
+	 *  * `tags` - any tags (as an Array)
+	 *
+	 * Beyond that, all instantaneous, accumulating, and status properties will be included.
+	 * If duplicate property names exist between the different classifications, the first-available
+	 * value will be used. Any available statistics for each property are included as well, using
+	 * property names with the following suffixes:
+	 *
+	 *  * `_count` - count of datum
+	 *  * `_min` - minimum value
+	 *  * `_max` - maximum value
+	 *  * `_start` - starting value
+	 *  * `_end` - ending value
+	 *
+	 * @param {module:domain~DatumStreamMetadata} meta a metadata instance to encode the property names with
+	 * @returns {Object} an object populated with all available properties
+	 */
+	toObject(meta) {
+		var obj = {
+			streamId: this.streamId,
+			sourceId: meta.sourceId,
+		};
+		if (this.ts.length > 0) {
+			obj.date = this.ts[0];
+			if (this.ts.length > 1) {
+				obj.date_end = this.ts[1];
+			}
+		}
+		if (meta.nodeId !== undefined) {
+			obj.nodeId = meta.nodeId;
+		} else if (meta.locationId !== undefined) {
+			obj.locationId = meta.locationId;
+		}
+		if (this.tags) {
+			obj.tags = Array.from(this.tags);
+		}
+		populateProperties(
+			obj,
+			meta.instantaneousNames,
+			this.iProps,
+			DatumSamplesTypes.Instantaneous
+		);
+		populateProperties(
+			obj,
+			meta.accumulatingNames,
+			this.aProps,
+			DatumSamplesTypes.Accumulating
+		);
+		populateProperties(obj, meta.statusNames, this.sProps, DatumSamplesTypes.Status);
+		return obj;
 	}
 
 	/**

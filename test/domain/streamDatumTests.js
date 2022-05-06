@@ -46,11 +46,11 @@ test("domain:streamDatum:construct", (t) => {
 test("domain:streamDatum:toObject", (t) => {
 	// GIVEN
 	const streamId = "7714f762-2361-4ec2-98ab-7e96807b32a6";
+	const ts = new Date();
+	const d = new StreamDatum(streamId, ts, [1, 2, 3], [4, 5], ["six"], new Set(["foo"]));
 	const nodeId = 123;
 	const sourceId = "test/source";
 	const meta = testNodeMetadata(streamId, nodeId, sourceId);
-	const ts = new Date();
-	const d = new StreamDatum(streamId, ts, [1, 2, 3], [4, 5], ["six"], new Set(["foo"]));
 
 	// WHEN
 	const obj = d.toObject(meta);

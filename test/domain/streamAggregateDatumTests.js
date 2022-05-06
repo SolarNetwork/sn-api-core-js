@@ -50,6 +50,49 @@ test("domain:streamAggregateDatum:construct", (t) => {
 	t.deepEqual(obj.tags, new Set(tags));
 });
 
+test("domain:streamAggregateDatum:toObject", (t) => {
+	// GIVEN
+	const streamId = "7714f762-2361-4ec2-98ab-7e96807b32a6";
+	const ts = [new Date(2022, 4, 1), new Date(2022, 5, 1)];
+	const iProps = [
+		[1, 2, 3, 4],
+		[2, 3, 4, 5],
+	];
+	const aProps = [[4, 5, 6]];
+	const sProps = ["six"];
+	const tags = ["foo"];
+	const d = new StreamAggregateDatum(streamId, ts, iProps, aProps, sProps, tags);
+	const nodeId = 123;
+	const sourceId = "test/source";
+	const meta = testNodeMetadata(streamId, nodeId, sourceId);
+
+	// WHEN
+	const obj = d.toObject(meta);
+
+	// THEN
+	t.truthy(obj);
+	t.deepEqual(obj, {
+		streamId: streamId,
+		date: ts[0],
+		date_end: ts[1],
+		nodeId: nodeId,
+		sourceId: sourceId,
+		a: 1,
+		a_count: 2,
+		a_min: 3,
+		a_max: 4,
+		b: 2,
+		b_count: 3,
+		b_min: 4,
+		b_max: 5,
+		c: 4,
+		c_start: 5,
+		c_end: 6,
+		d: "six",
+		tags: ["foo"],
+	});
+});
+
 test("domain:streamAggregateDatum:fromJsonEncoding:embedded", (t) => {
 	// GIVEN
 	const streamId = "7714f762-2361-4ec2-98ab-7e96807b32a6";
