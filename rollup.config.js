@@ -10,7 +10,7 @@ const includePathOptions = {
 
 export default {
 	external: (id) => {
-		return /(crypto-js|d3-|uri-js|@babel\/runtime)/.test(id);
+		return /(crypto-js|d3-|uri-js)/.test(id);
 	},
 	output: {
 		globals: {
