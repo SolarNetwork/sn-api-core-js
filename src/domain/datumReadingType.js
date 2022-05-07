@@ -36,7 +36,7 @@ const DatumReadingTypeValues = Object.freeze([
 	new DatumReadingType("CalculatedAtDifference", "atd"),
 	new DatumReadingType("NearestDifference", "diff"),
 	new DatumReadingType("Difference", "delta"),
-	new DatumReadingType("DifferenceWithin", "change")
+	new DatumReadingType("DifferenceWithin", "change"),
 ]);
 
 /**

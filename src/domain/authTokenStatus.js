@@ -31,7 +31,7 @@ export class AuthTokenStatus extends Enum {
 
 const AuthTokenStatusValues = Object.freeze([
 	new AuthTokenStatus("Active"),
-	new AuthTokenStatus("Disabled")
+	new AuthTokenStatus("Disabled"),
 ]);
 
 /**

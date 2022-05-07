@@ -9,7 +9,7 @@ import QueryUrlHelperMixin from "./queryUrlHelperMixin";
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~LocationDatumMetadataUrlHelperMixin} the mixin class
  */
-const LocationDatumMetadataUrlHelperMixin = superclass =>
+const LocationDatumMetadataUrlHelperMixin = (superclass) =>
 	/**
 	 * A mixin class that adds SolarNode datum metadata support to {@link module:net~UrlHelper}.
 	 *

@@ -35,7 +35,7 @@ const DatumSamplesTypeValues = Object.freeze([
 	new DatumSamplesType("Instantaneous", "i"),
 	new DatumSamplesType("Accumulating", "a"),
 	new DatumSamplesType("Status", "s"),
-	new DatumSamplesType("Tag", "t")
+	new DatumSamplesType("Tag", "t"),
 ]);
 
 /**

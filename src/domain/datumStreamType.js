@@ -30,7 +30,7 @@ export class DatumStreamType extends KeydEnum {
 
 const DatumStreamTypeValues = Object.freeze([
 	new DatumStreamType("Node", "n"),
-	new DatumStreamType("Location", "l")
+	new DatumStreamType("Location", "l"),
 ]);
 
 /**

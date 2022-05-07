@@ -73,7 +73,7 @@ class DatumStreamMetadataRegistry {
 	 * @returns {string[]} all available metadata stream ID values in the same order as added to this registry
 	 */
 	metadataStreamIdsList() {
-		return this._metaList.map(e => e.streamId);
+		return this._metaList.map((e) => e.streamId);
 	}
 
 	/**

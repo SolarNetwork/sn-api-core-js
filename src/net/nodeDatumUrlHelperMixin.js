@@ -10,7 +10,7 @@ import QueryUrlHelperMixin from "./queryUrlHelperMixin";
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~NodeDatumUrlHelperMixin} the mixin class
  */
-const NodeDatumUrlHelperMixin = superclass =>
+const NodeDatumUrlHelperMixin = (superclass) =>
 	/**
 	 * A mixin class that adds SolarNode datum query support to {@link module:net~UrlHelper}.
 	 *
@@ -32,7 +32,7 @@ const NodeDatumUrlHelperMixin = superclass =>
 			let url = this.baseUrl() + "/range/interval?nodeId=" + (nodeId || this.nodeId);
 			let sources = sourceIds || this.sourceIds;
 			if (Array.isArray(sources) && sources.length > 0) {
-				url += "&sourceIds=" + sources.map(e => encodeURIComponent(e)).join(",");
+				url += "&sourceIds=" + sources.map((e) => encodeURIComponent(e)).join(",");
 			}
 			return url;
 		}

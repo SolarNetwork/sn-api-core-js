@@ -8,7 +8,7 @@ import UserUrlHelperMixin from "./userUrlHelperMixin";
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~UserMetadataUrlHelperMixin} the mixin class
  */
-const UserMetadataUrlHelperMixin = superclass =>
+const UserMetadataUrlHelperMixin = (superclass) =>
 	/**
 	 * A mixin class that adds user metadata support to {@link module:net~UrlHelper}.
 	 *

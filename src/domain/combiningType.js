@@ -33,7 +33,7 @@ export class CombiningType extends Enum {
 const CombiningTypeValues = Object.freeze([
 	new CombiningType("Average"),
 	new CombiningType("Sum"),
-	new CombiningType("Difference")
+	new CombiningType("Difference"),
 ]);
 
 /**

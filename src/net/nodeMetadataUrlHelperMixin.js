@@ -11,7 +11,7 @@ import UserUrlHelperMixin from "./userUrlHelperMixin";
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~NodeMetadataUrlHelperMixin} the mixin class
  */
-const NodeMetadataUrlHelperMixin = superclass =>
+const NodeMetadataUrlHelperMixin = (superclass) =>
 	/**
 	 * A mixin class that adds SolarNode metadata support to {@link module:net~UrlHelper}.
 	 *

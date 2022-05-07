@@ -31,7 +31,7 @@ export class AuthTokenType extends Enum {
 
 const AuthTokenTypeValues = Object.freeze([
 	new AuthTokenType("ReadNodeData"),
-	new AuthTokenType("User")
+	new AuthTokenType("User"),
 ]);
 
 /**

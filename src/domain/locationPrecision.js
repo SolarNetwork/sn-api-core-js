@@ -51,7 +51,7 @@ const LocationPrecisionValues = Object.freeze([
 	new LocationPrecision("StateOrProvince", 40),
 	new LocationPrecision("Region", 50),
 	new LocationPrecision("TimeZone", 60),
-	new LocationPrecision("Country", 70)
+	new LocationPrecision("Country", 70),
 ]);
 
 /**

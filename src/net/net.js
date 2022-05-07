@@ -6,26 +6,26 @@ export { default as Environment } from "./environment";
 export { default as HttpHeaders, HttpContentType, HttpMethod } from "./httpHeaders";
 export {
 	default as LocationDatumMetadataUrlHelperMixin,
-	LocationDatumMetadataUrlHelper
+	LocationDatumMetadataUrlHelper,
 } from "./locationDatumMetadataUrlHelperMixin";
 export {
 	default as LocationDatumUrlHelperMixin,
-	LocationDatumUrlHelper
+	LocationDatumUrlHelper,
 } from "./locationDatumUrlHelperMixin";
 export { default as LocationUrlHelperMixin } from "./locationUrlHelperMixin";
 export {
 	default as NodeDatumMetadataUrlHelperMixin,
-	NodeDatumMetadataUrlHelper
+	NodeDatumMetadataUrlHelper,
 } from "./nodeDatumMetadataUrlHelperMixin";
 export { default as NodeDatumUrlHelperMixin, NodeDatumUrlHelper } from "./nodeDatumUrlHelperMixin";
 export {
 	default as NodeInstructionUrlHelperMixin,
 	NodeInstructionUrlHelper,
-	instructionParameter
+	instructionParameter,
 } from "./nodeInstructionUrlHelperMixin";
 export {
 	default as NodeMetadataUrlHelperMixin,
-	NodeMetadataUrlHelper
+	NodeMetadataUrlHelper,
 } from "./nodeMetadataUrlHelperMixin";
 export { default as NodeUrlHelperMixin } from "./nodeUrlHelperMixin";
 export {
@@ -33,25 +33,25 @@ export {
 	SolarQueryDefaultPath,
 	SolarQueryPathKey,
 	SolarQueryApiPathV1,
-	SolarQueryPublicPathKey
+	SolarQueryPublicPathKey,
 } from "./queryUrlHelperMixin";
 export {
 	default as UserAuthTokenUrlHelperMixin,
-	UserAuthTokenUrlHelper
+	UserAuthTokenUrlHelper,
 } from "./userAuthTokenUrlHelperMixin";
 export {
 	default as UserDatumAuxiliaryUrlHelperMixin,
-	UserDatumAuxiliaryUrlHelper
+	UserDatumAuxiliaryUrlHelper,
 } from "./userDatumAuxiliaryUrlHelperMixin";
 export {
 	default as UserUrlHelperMixin,
 	SolarUserDefaultPath,
 	SolarUserPathKey,
-	SolarUserApiPathV1
+	SolarUserApiPathV1,
 } from "./userUrlHelperMixin";
 export {
 	default as UserMetadataUrlHelperMixin,
-	UserMetadataUrlHelper
+	UserMetadataUrlHelper,
 } from "./userMetadataUrlHelperMixin";
 export { default as UrlHelper } from "./urlHelper";
 export { default as urlQuery } from "./urlQuery";

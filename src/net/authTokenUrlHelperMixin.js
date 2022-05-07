@@ -7,7 +7,7 @@ import { dateFormat } from "../format/date";
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~AuthTokenUrlHelperMixin} the mixin class
  */
-const AuthTokenUrlHelperMixin = superclass =>
+const AuthTokenUrlHelperMixin = (superclass) =>
 	/**
 	 * A mixin class that adds authentication token support to {@link module:net~UrlHelper}.
 	 *

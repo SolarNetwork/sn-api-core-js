@@ -8,7 +8,7 @@ const SourceIdsKey = "sourceIds";
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~LocationUrlHelperMixin} the mixin class
  */
-const LocationUrlHelperMixin = superclass =>
+const LocationUrlHelperMixin = (superclass) =>
 	/**
 	 * A mixin class that adds support for SolarLocation properties to a {@link module:net~UrlHelper}.
 	 *

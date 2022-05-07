@@ -92,5 +92,5 @@ export { urlQueryParse, urlQueryEncode };
 
 export default {
 	urlQueryParse: urlQueryParse,
-	urlQueryEncode: urlQueryEncode
+	urlQueryEncode: urlQueryEncode,
 };

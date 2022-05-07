@@ -180,12 +180,12 @@ class SecurityPolicy {
 
 		val = this.aggregations;
 		if (val) {
-			result.aggregations = Array.from(val).map(e => e.name);
+			result.aggregations = Array.from(val).map((e) => e.name);
 		}
 
 		val = this.locationPrecisions;
 		if (val) {
-			result.locationPrecisions = Array.from(val).map(e => e.name);
+			result.locationPrecisions = Array.from(val).map((e) => e.name);
 		}
 
 		val = this.minAggregation;

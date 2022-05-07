@@ -30,7 +30,7 @@ function normalizedProtocol(val) {
 function normalizedConfig(config) {
 	var result = Object.assign(
 		{
-			host: "data.solarnetwork.net"
+			host: "data.solarnetwork.net",
 		},
 		config
 	);

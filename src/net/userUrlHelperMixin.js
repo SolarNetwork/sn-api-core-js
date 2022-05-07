@@ -28,7 +28,7 @@ const UserIdsKey = "userIds";
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~UserUrlHelperMixin} the mixin class
  */
-const UserUrlHelperMixin = superclass =>
+const UserUrlHelperMixin = (superclass) =>
 	/**
 	 * A mixin class that adds SolarUser specific support to {@link module:net~UrlHelper}.
 	 *

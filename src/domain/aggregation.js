@@ -56,7 +56,7 @@ const AggregationValues = Object.freeze([
 	new Aggregation("WeekOfYear", 604800),
 	new Aggregation("Month", 2419200),
 	new Aggregation("Year", 31536000),
-	new Aggregation("RunningTotal", Number.MAX_SAFE_INTEGER)
+	new Aggregation("RunningTotal", Number.MAX_SAFE_INTEGER),
 ]);
 
 /**

@@ -72,5 +72,5 @@ export function timeNormalizeDataArray(data, aggregate) {
 }
 
 export default Object.freeze({
-	timeNormalizeDataArray: timeNormalizeDataArray
+	timeNormalizeDataArray: timeNormalizeDataArray,
 });

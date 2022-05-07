@@ -35,7 +35,7 @@ const InstructionStateValues = Object.freeze([
 	new InstructionState("Received"),
 	new InstructionState("Executing"),
 	new InstructionState("Declined"),
-	new InstructionState("Completed")
+	new InstructionState("Completed"),
 ]);
 
 /**

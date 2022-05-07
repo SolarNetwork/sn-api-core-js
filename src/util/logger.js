@@ -36,7 +36,7 @@ const logLevels = Object.freeze({
 	INFO: 3,
 	WARN: 2,
 	ERROR: 1,
-	OFF: 0
+	OFF: 0,
 });
 
 /**
@@ -72,13 +72,13 @@ Object.defineProperties(Logger, {
 	 * @type {number}
 	 */
 	level: {
-		get: function() {
+		get: function () {
 			return logLevel;
 		},
-		set: function(v) {
+		set: function (v) {
 			logLevel = typeof v === "number" ? v : 0;
-		}
-	}
+		},
+	},
 });
 
 export default Logger;

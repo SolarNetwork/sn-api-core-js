@@ -1,11 +1,11 @@
 function createGetter(me, prop) {
-	return function() {
+	return function () {
 		return me.map[prop];
 	};
 }
 
 function createSetter(me, prop) {
-	return function(value) {
+	return function (value) {
 		me.map[prop] = value;
 	};
 }
@@ -15,7 +15,7 @@ function createProperty(me, prop) {
 		enumerable: true,
 		configurable: true,
 		get: createGetter(me, prop),
-		set: createSetter(me, prop)
+		set: createSetter(me, prop),
 	});
 }
 

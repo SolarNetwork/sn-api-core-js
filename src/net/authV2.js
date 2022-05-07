@@ -606,7 +606,7 @@ class AuthorizationV2Builder {
 			map.put(HttpHeaders.DIGEST, true);
 		}
 		if (signedHeaderNames && signedHeaderNames.length > 0) {
-			signedHeaderNames.forEach(e => map.put(e, true));
+			signedHeaderNames.forEach((e) => map.put(e, true));
 		}
 		return lowercaseSortedArray(map.keySet());
 	}
@@ -761,7 +761,7 @@ class AuthorizationV2Builder {
  */
 function caseInsensitiveEqualsFn(value) {
 	const valueLc = value.toLowerCase();
-	return e => valueLc === e.toString().toLowerCase();
+	return (e) => valueLc === e.toString().toLowerCase();
 }
 
 /**
@@ -782,13 +782,7 @@ function lowercaseSortedArray(items) {
 }
 
 function _hexEscapeChar(c) {
-	return (
-		"%" +
-		c
-			.charCodeAt(0)
-			.toString(16)
-			.toUpperCase()
-	);
+	return "%" + c.charCodeAt(0).toString(16).toUpperCase();
 }
 
 function _encodeURIComponent(str) {
@@ -804,7 +798,7 @@ Object.defineProperties(AuthorizationV2Builder, {
 	 * @type {string}
 	 */
 	EMPTY_STRING_SHA256_HEX: {
-		value: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+		value: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
 	},
 
 	/**
@@ -814,7 +808,7 @@ Object.defineProperties(AuthorizationV2Builder, {
 	 * @readonly
 	 * @type {string}
 	 */
-	SNWS2_AUTH_SCHEME: { value: "SNWS2" }
+	SNWS2_AUTH_SCHEME: { value: "SNWS2" },
 });
 
 export default AuthorizationV2Builder;

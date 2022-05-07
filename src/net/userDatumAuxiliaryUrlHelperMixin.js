@@ -10,7 +10,7 @@ import PropMap from "../util/propMap";
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~UserDatumAuxiliaryUrlHelperMixin} the mixin class
  */
-const UserDatumAuxiliaryUrlHelperMixin = superclass =>
+const UserDatumAuxiliaryUrlHelperMixin = (superclass) =>
 	/**
 	 * A mixin class that adds user datum auxiliary support to {@link module:net~UrlHelper}.
 	 *
@@ -85,7 +85,7 @@ const UserDatumAuxiliaryUrlHelperMixin = superclass =>
 				type: type,
 				nodeId: nodeId,
 				date: timestampFormat(date),
-				sourceId: sourceId
+				sourceId: sourceId,
 			});
 			let query = props.toUriEncoding();
 			if (query.length > 0) {

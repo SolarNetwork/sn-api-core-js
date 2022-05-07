@@ -58,7 +58,7 @@ const DeviceOperatingStateValues = Object.freeze([
 	new DeviceOperatingState("Fault", 5),
 	new DeviceOperatingState("Disabled", 6),
 	new DeviceOperatingState("Recovery", 7),
-	new DeviceOperatingState("Override", 8)
+	new DeviceOperatingState("Override", 8),
 ]);
 
 /**
