@@ -15,7 +15,7 @@ const HttpMethod = Object.freeze(
 		PATCH: "PATCH",
 		DELETE: "DELETE",
 		OPTIONS: "OPTIONS",
-		TRACE: "TRACE"
+		TRACE: "TRACE",
 	}
 );
 
@@ -30,7 +30,7 @@ const HttpContentType = Object.freeze(
 		APPLICATION_JSON: "application/json",
 		APPLICATION_JSON_UTF8: "application/json; charset=UTF-8",
 		FORM_URLENCODED: "application/x-www-form-urlencoded",
-		FORM_URLENCODED_UTF8: "application/x-www-form-urlencoded; charset=UTF-8"
+		FORM_URLENCODED_UTF8: "application/x-www-form-urlencoded; charset=UTF-8",
 	}
 );
 
@@ -117,7 +117,7 @@ Object.defineProperties(HttpHeaders, {
 	 * @readonly
 	 * @type {string}
 	 */
-	X_SN_DATE: { value: "X-SN-Date" }
+	X_SN_DATE: { value: "X-SN-Date" },
 });
 
 export default HttpHeaders;

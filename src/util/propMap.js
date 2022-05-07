@@ -118,7 +118,7 @@ class PropMap {
 			}
 			result += encodeURIComponent(k) + "=";
 			if (Array.isArray(v)) {
-				v.forEach(function(e, i) {
+				v.forEach(function (e, i) {
 					if (i > 0) {
 						result += forceMultiKey ? "&" + encodeURIComponent(k) + "=" : ",";
 					}

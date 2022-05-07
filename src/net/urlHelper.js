@@ -172,7 +172,7 @@ class UrlHelper {
 	 * @returns {string} the URL
 	 */
 	static resolveTemplateUrl(template, params) {
-		return template.replace(/\{([^}]+)\}/g, function(match, variableName) {
+		return template.replace(/\{([^}]+)\}/g, function (match, variableName) {
 			let variableValue = params[variableName];
 			return variableValue !== undefined ? encodeURIComponent(variableValue) : "";
 		});

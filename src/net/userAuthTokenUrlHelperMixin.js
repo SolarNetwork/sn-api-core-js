@@ -8,7 +8,7 @@ import UserUrlHelperMixin from "./userUrlHelperMixin";
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~UserAuthTokenUrlHelperMixin} the mixin class
  */
-const UserAuthTokenUrlHelperMixin = superclass =>
+const UserAuthTokenUrlHelperMixin = (superclass) =>
 	/**
 	 * A mixin class that adds security token support to a SolarUser {@link module:net~UrlHelper}.
 	 *

@@ -38,7 +38,7 @@ test("util:bitmaskEnum:frozen", t => {
 		() => {
 			obj.foo = "bar";
 		},
-		TypeError,
+		{ instanceOf: TypeError },
 		"object is frozen"
 	);
 });

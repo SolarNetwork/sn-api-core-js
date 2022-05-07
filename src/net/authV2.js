@@ -119,6 +119,20 @@ class AuthorizationV2Builder {
 		this.environment = environment || new Environment();
 
 		/**
+		 * The signed HTTP headers.
+		 *
+		 * @member {module:net~HttpHeaders}
+		 */
+		this.httpHeaders = new HttpHeaders();
+
+		/**
+		 * The HTTP query parameters.
+		 *
+		 * @member {module:util~MultiMap}
+		 */
+		this.parameters = new MultiMap();
+
+		/**
 		 * Force a port number to be added to host values, even if port would be implied.
 		 *
 		 * This can be useful when working with a server behind a proxy, where the
@@ -138,13 +152,13 @@ class AuthorizationV2Builder {
 	 * Any previously saved signing key via {@link module:net~AuthorizationV2Builder#saveSigningKey saveSigningKey()}
 	 * or {@link module:net~AuthorizationV2Builder#key key()} is preserved. The following items are reset:
 	 *
-	 *  * {@link module:net~AuthorizationV2Builder#contentSHA256 contentSHA256()} is cleared
 	 *  * {@link module:net~AuthorizationV2Builder#method method()} is set to `GET`
 	 *  * {@link module:net~AuthorizationV2Builder#host host()} is set to `this.environment.host`
 	 *  * {@link module:net~AuthorizationV2Builder#path path()} is set to `/`
 	 *  * {@link module:net~AuthorizationV2Builder#date date()} is set to the current date
-	 *  * {@link module:net~AuthorizationV2Builder#headers headers()} is set to a new empty instance
-	 *  * {@link module:net~AuthorizationV2Builder#queryParams queryParams()} is set to a new empty instance
+	 *  * {@link module:net~AuthorizationV2Builder#contentSHA256 contentSHA256()} is cleared
+	 *  * {@link module:net~AuthorizationV2Builder#headers headers()} is cleared
+	 *  * {@link module:net~AuthorizationV2Builder#queryParams queryParams()} is cleared
 	 *  * {@link module:net~AuthorizationV2Builder#signedHttpHeaders signedHttpHeaders()} is set to a new empty array
 	 *
 	 * @returns {module:net~AuthorizationV2Builder} this object
@@ -152,9 +166,9 @@ class AuthorizationV2Builder {
 	reset() {
 		this.contentDigest = null;
 		var host = this.environment.host;
-		return this.headers(new HttpHeaders())
-			.queryParams(new MultiMap())
-			.signedHttpHeaders([])
+		this.httpHeaders.clear();
+		this.parameters.clear();
+		return this.signedHttpHeaders([])
 			.method(HttpMethod.GET)
 			.host(host)
 			.path("/")
@@ -592,7 +606,7 @@ class AuthorizationV2Builder {
 			map.put(HttpHeaders.DIGEST, true);
 		}
 		if (signedHeaderNames && signedHeaderNames.length > 0) {
-			signedHeaderNames.forEach(e => map.put(e, true));
+			signedHeaderNames.forEach((e) => map.put(e, true));
 		}
 		return lowercaseSortedArray(map.keySet());
 	}
@@ -747,7 +761,7 @@ class AuthorizationV2Builder {
  */
 function caseInsensitiveEqualsFn(value) {
 	const valueLc = value.toLowerCase();
-	return e => valueLc === e.toString().toLowerCase();
+	return (e) => valueLc === e.toString().toLowerCase();
 }
 
 /**
@@ -768,13 +782,7 @@ function lowercaseSortedArray(items) {
 }
 
 function _hexEscapeChar(c) {
-	return (
-		"%" +
-		c
-			.charCodeAt(0)
-			.toString(16)
-			.toUpperCase()
-	);
+	return "%" + c.charCodeAt(0).toString(16).toUpperCase();
 }
 
 function _encodeURIComponent(str) {
@@ -790,7 +798,7 @@ Object.defineProperties(AuthorizationV2Builder, {
 	 * @type {string}
 	 */
 	EMPTY_STRING_SHA256_HEX: {
-		value: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+		value: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
 	},
 
 	/**
@@ -800,7 +808,7 @@ Object.defineProperties(AuthorizationV2Builder, {
 	 * @readonly
 	 * @type {string}
 	 */
-	SNWS2_AUTH_SCHEME: { value: "SNWS2" }
+	SNWS2_AUTH_SCHEME: { value: "SNWS2" },
 });
 
 export default AuthorizationV2Builder;

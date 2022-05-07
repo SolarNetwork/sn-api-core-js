@@ -1,12 +1,12 @@
-import Enum from "../util/enum";
+import KeyedEnum from "../util/keyedEnum";
 
 /**
  * An enumeration of datum reading types.
  *
- * @extends module:util~Enum
+ * @extends module:util~KeyedEnum
  * @alias module:domain~DatumReadingType
  */
-export class DatumReadingType extends Enum {
+export class DatumReadingType extends KeyedEnum {
 	/**
 	 * Constructor.
 	 *
@@ -14,20 +14,10 @@ export class DatumReadingType extends Enum {
 	 * @param {string} key the key value associated with this type
 	 */
 	constructor(name, key) {
-		super(name);
-		this._key = key;
+		super(name, key);
 		if (this.constructor === DatumReadingType) {
 			Object.freeze(this);
 		}
-	}
-
-	/**
-	 * Get the key value.
-	 *
-	 * @returns {string} the key value
-	 */
-	get key() {
-		return this._key;
 	}
 
 	/**
@@ -46,7 +36,7 @@ const DatumReadingTypeValues = Object.freeze([
 	new DatumReadingType("CalculatedAtDifference", "atd"),
 	new DatumReadingType("NearestDifference", "diff"),
 	new DatumReadingType("Difference", "delta"),
-	new DatumReadingType("DifferenceWithin", "change")
+	new DatumReadingType("DifferenceWithin", "change"),
 ]);
 
 /**

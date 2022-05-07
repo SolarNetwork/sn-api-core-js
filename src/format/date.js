@@ -70,7 +70,7 @@ export {
 	 * @returns {Date} the parsed date, or `null`
 	 * @alias module:format~dateParse
 	 */
-	isoParse as dateParse
+	isoParse as dateParse,
 } from "d3-time-format";
 
 /**

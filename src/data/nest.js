@@ -74,7 +74,7 @@ export function normalizeNestedStackDataByDate(layerData, fillTemplate, fillFn) 
 		while (
 			i <
 			max(
-				layerData.map(function(e) {
+				layerData.map(function (e) {
 					return e.values.length;
 				})
 			)
@@ -96,7 +96,7 @@ export function normalizeNestedStackDataByDate(layerData, fillTemplate, fillFn) 
 					dummy = { date: layerData[j].values[i].date, sourceId: layerData[k].key };
 					if (fillTemplate) {
 						for (prop in fillTemplate) {
-							if (fillTemplate.hasOwnProperty(prop)) {
+							if (Object.prototype.hasOwnProperty.call(fillTemplate, prop)) {
 								dummy[prop] = fillTemplate[prop];
 							}
 						}
@@ -187,7 +187,7 @@ export function aggregateNestedDataLayers(
 			clone = {};
 			if (staticProperties !== undefined) {
 				for (val in staticProperties) {
-					if (staticProperties.hasOwnProperty(val)) {
+					if (Object.prototype.hasOwnProperty.call(staticProperties, val)) {
 						clone[val] = staticProperties[val];
 					}
 				}
@@ -275,20 +275,20 @@ export function groupedBySourceMetricDataArray(data, metricName, sourceIdMap, ag
 	const rollupFn = typeof aggFn === "function" ? aggFn : sum;
 	const layerData = nest()
 		// group first by source
-		.key(d => {
+		.key((d) => {
 			return sourceIdMap && sourceIdMap.has(d.sourceId)
 				? sourceIdMap.get(d.sourceId)
 				: d.sourceId;
 		})
 		.sortKeys(ascending)
 		// group second by date
-		.key(d => {
+		.key((d) => {
 			return d.localDate + " " + d.localTime;
 		})
 		// sum desired property in date group
-		.rollup(values => {
+		.rollup((values) => {
 			const r = {
-				date: datumDate(values[0])
+				date: datumDate(values[0]),
 			};
 			let metricKey = values[0].sourceId;
 			if (sourceIdMap && sourceIdMap.has(metricKey)) {
@@ -299,12 +299,12 @@ export function groupedBySourceMetricDataArray(data, metricName, sourceIdMap, ag
 		})
 		// un-nest to single group by source
 		.entries(data)
-		.map(function(layer) {
+		.map(function (layer) {
 			return {
 				key: layer.key,
-				values: layer.values.map(function(d) {
+				values: layer.values.map(function (d) {
 					return d.value;
-				})
+				}),
 			};
 		});
 
@@ -315,11 +315,11 @@ export function groupedBySourceMetricDataArray(data, metricName, sourceIdMap, ag
 	});
 
 	// reduce to single array with multiple metric properties
-	return layerData.reduce(function(combined, layer) {
+	return layerData.reduce(function (combined, layer) {
 		if (!combined) {
 			return layer.values;
 		}
-		combined.forEach(function(d, i) {
+		combined.forEach(function (d, i) {
 			const v = layer.values[i][layer.key];
 			d[layer.key] = v;
 		});
@@ -330,5 +330,5 @@ export function groupedBySourceMetricDataArray(data, metricName, sourceIdMap, ag
 export default Object.freeze({
 	aggregateNestedDataLayers: aggregateNestedDataLayers,
 	groupedBySourceMetricDataArray: groupedBySourceMetricDataArray,
-	normalizeNestedStackDataByDate: normalizeNestedStackDataByDate
+	normalizeNestedStackDataByDate: normalizeNestedStackDataByDate,
 });

@@ -1,15 +1,15 @@
-import babel from "rollup-plugin-babel";
+import { babel } from "@rollup/plugin-babel";
 import includePaths from "rollup-plugin-includepaths";
 
 const includePathOptions = {
 	include: {},
 	paths: ["src"],
 	external: [],
-	extensions: [".js"]
+	extensions: [".js"],
 };
 
 export default {
-	external: id => {
+	external: (id) => {
 		return /(crypto-js|d3-|uri-js)/.test(id);
 	},
 	output: {
@@ -22,12 +22,13 @@ export default {
 			"crypto-js/enc-hex": "CryptoJS.Hex",
 			"crypto-js/hmac-sha256": "CryptoJS.HmacSHA256",
 			"crypto-js/sha256": "CryptoJS.SHA256",
-			"uri-js": "URI"
-		}
+			"uri-js": "URI",
+		},
 	},
 	plugins: [
 		includePaths(includePathOptions),
 		babel({
+			babelHelpers: "bundled",
 			exclude: "node_modules/**",
 			babelrc: false,
 			plugins: [],
@@ -37,12 +38,12 @@ export default {
 					{
 						targets: {
 							browsers: ["last 2 versions"],
-							node: "current"
+							node: "current",
 						},
-						modules: false
-					}
-				]
-			]
-		})
-	]
+						modules: false,
+					},
+				],
+			],
+		}),
+	],
 };

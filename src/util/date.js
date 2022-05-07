@@ -118,7 +118,7 @@ export function rollingQueryDateRange(aggregate, aggregateTimeCount, endDate) {
 		end: end,
 		timeUnit: timeUnit,
 		timeCount: timeCount,
-		aggregate: aggregate
+		aggregate: aggregate,
 	};
 }
 
@@ -157,5 +157,5 @@ export function datumDate(d) {
 
 export default Object.freeze({
 	datumDate: datumDate,
-	rollingQueryDateRange: rollingQueryDateRange
+	rollingQueryDateRange: rollingQueryDateRange,
 });

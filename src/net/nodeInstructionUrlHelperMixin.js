@@ -9,7 +9,7 @@ import UserUrlHelperMixin from "./userUrlHelperMixin";
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~NodeInstructionUrlHelperMixin} the mixin class
  */
-const NodeInstructionUrlHelperMixin = superclass =>
+const NodeInstructionUrlHelperMixin = (superclass) =>
 	/**
 	 * A mixin class that adds SolarNode instruction support to {@link module:net~UrlHelper}.
 	 *

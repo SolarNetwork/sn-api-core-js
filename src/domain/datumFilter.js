@@ -20,6 +20,7 @@ const QueryKey = "query";
 const SourceIdMapsKey = "sourceIdMaps";
 const SourceIdsKey = "sourceIds";
 const StartDateKey = "startDate";
+const StreamIdsKey = "streamIds";
 const TagsKey = "tags";
 const UserIdsKey = "userIds";
 const WithoutTotalResultsCountKey = "withoutTotalResultsCount";
@@ -157,6 +158,38 @@ class DatumFilter extends PropMap {
 
 	set sourceIds(sourceIds) {
 		this.prop(SourceIdsKey, Array.isArray(sourceIds) ? sourceIds : null);
+	}
+
+	/**
+	 * A stream ID.
+	 *
+	 * This manages the first available stream ID from the `streamIds` property.
+	 *
+	 * @type {string}
+	 */
+	get streamId() {
+		const streamIds = this.streamIds;
+		return Array.isArray(streamIds) && streamIds.length > 0 ? streamIds[0] : null;
+	}
+
+	set streamId(streamId) {
+		if (streamId) {
+			this.streamIds = [streamId];
+		} else {
+			this.streamIds = null;
+		}
+	}
+
+	/**
+	 * An array of stream IDs.
+	 * @type {string[]}
+	 */
+	get streamIds() {
+		return this.prop(StreamIdsKey);
+	}
+
+	set streamIds(streamIds) {
+		this.prop(StreamIdsKey, Array.isArray(streamIds) ? streamIds : null);
 	}
 
 	/**

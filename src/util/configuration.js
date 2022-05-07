@@ -1,11 +1,11 @@
 function createGetter(me, prop) {
-	return function() {
+	return function () {
 		return me.map[prop];
 	};
 }
 
 function createSetter(me, prop) {
-	return function(value) {
+	return function (value) {
 		me.map[prop] = value;
 	};
 }
@@ -15,7 +15,7 @@ function createProperty(me, prop) {
 		enumerable: true,
 		configurable: true,
 		get: createGetter(me, prop),
-		set: createSetter(me, prop)
+		set: createSetter(me, prop),
 	});
 }
 
@@ -91,12 +91,12 @@ class Configuration {
 		}
 		if (newValue === null) {
 			delete this.map[key];
-			if (this.hasOwnProperty(key)) {
+			if (Object.prototype.hasOwnProperty.call(this, key)) {
 				delete this[key];
 			}
 		} else {
 			this.map[key] = newValue;
-			if (!this.hasOwnProperty(key)) {
+			if (!Object.prototype.hasOwnProperty.call(this, key)) {
 				createProperty(this, key);
 			}
 		}
@@ -113,7 +113,7 @@ class Configuration {
 	values(newMap) {
 		if (newMap) {
 			for (let prop in newMap) {
-				if (newMap.hasOwnProperty(prop)) {
+				if (Object.prototype.hasOwnProperty.call(newMap, prop)) {
 					this.value(prop, newMap[prop]);
 				}
 			}

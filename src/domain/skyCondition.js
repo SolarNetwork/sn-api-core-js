@@ -68,7 +68,7 @@ const SkyConditionValues = Object.freeze([
 	new SkyCondition("Hazy", 16),
 	new SkyCondition("Tornado", 17),
 	new SkyCondition("Hurricane", 18),
-	new SkyCondition("Dusty", 19)
+	new SkyCondition("Dusty", 19),
 ]);
 
 /**
