@@ -11,7 +11,7 @@ function pushProperties(result, values) {
 	}
 }
 
-function populateProperties(obj, names, values, type) {
+function populateProperties(obj, names, values, type, withoutStatistics) {
 	if (!Array.isArray(names) || !Array.isArray(values)) {
 		return;
 	}
@@ -28,14 +28,16 @@ function populateProperties(obj, names, values, type) {
 					!Object.prototype.hasOwnProperty.call(obj, name)
 				) {
 					obj[name] = val[0];
-					if (valLen > 1 && val[1] !== null) {
-						obj[name + "_count"] = val[1];
-					}
-					if (valLen > 2 && val[2] !== null) {
-						obj[name + "_min"] = val[2];
-					}
-					if (valLen > 3 && val[3] !== null) {
-						obj[name + "_max"] = val[3];
+					if (!withoutStatistics) {
+						if (valLen > 1 && val[1] !== null) {
+							obj[name + "_count"] = val[1];
+						}
+						if (valLen > 2 && val[2] !== null) {
+							obj[name + "_min"] = val[2];
+						}
+						if (valLen > 3 && val[3] !== null) {
+							obj[name + "_max"] = val[3];
+						}
 					}
 				}
 			}
@@ -49,11 +51,13 @@ function populateProperties(obj, names, values, type) {
 					!Object.prototype.hasOwnProperty.call(obj, name)
 				) {
 					obj[name] = val[0];
-					if (valLen > 1 && val[1] !== null) {
-						obj[name + "_start"] = val[1];
-					}
-					if (valLen > 2 && val[2] !== null) {
-						obj[name + "_end"] = val[2];
+					if (!withoutStatistics) {
+						if (valLen > 1 && val[1] !== null) {
+							obj[name + "_start"] = val[1];
+						}
+						if (valLen > 2 && val[2] !== null) {
+							obj[name + "_end"] = val[2];
+						}
 					}
 				}
 			}
@@ -138,9 +142,10 @@ class StreamAggregateDatum {
 	 *  * `_end` - ending value
 	 *
 	 * @param {module:domain~DatumStreamMetadata} meta a metadata instance to encode the property names with
+	 * @param {boolean} [withoutStatistics] {@literal true} to omit statistic properties
 	 * @returns {Object} an object populated with all available properties
 	 */
-	toObject(meta) {
+	toObject(meta, withoutStatistics) {
 		var obj = {
 			streamId: this.streamId,
 			sourceId: meta.sourceId,
@@ -163,13 +168,15 @@ class StreamAggregateDatum {
 			obj,
 			meta.instantaneousNames,
 			this.iProps,
-			DatumSamplesTypes.Instantaneous
+			DatumSamplesTypes.Instantaneous,
+			withoutStatistics
 		);
 		populateProperties(
 			obj,
 			meta.accumulatingNames,
 			this.aProps,
-			DatumSamplesTypes.Accumulating
+			DatumSamplesTypes.Accumulating,
+			withoutStatistics
 		);
 		populateProperties(obj, meta.statusNames, this.sProps, DatumSamplesTypes.Status);
 		return obj;
