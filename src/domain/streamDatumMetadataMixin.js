@@ -49,7 +49,7 @@ const StreamDatumMetadataMixin = (superclass) =>
 		 *
 		 * This method uses the metadata passed to the constructor to generate the object.
 		 *
-		 * @param {boolean} [withoutStatistics] {@literal true} to omit statistic properties
+		 * @param {boolean} [withoutStatistics] `true` to omit statistic properties
 		 * @returns {Object} an object populated with all available properties
 		 * @see module:domain~StreamDatum#toObject
 		 * @see module:domain~StreamAggregateDatum#toObject

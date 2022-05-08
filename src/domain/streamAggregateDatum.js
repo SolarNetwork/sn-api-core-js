@@ -142,7 +142,7 @@ class StreamAggregateDatum {
 	 *  * `_end` - ending value
 	 *
 	 * @param {module:domain~DatumStreamMetadata} meta a metadata instance to encode the property names with
-	 * @param {boolean} [withoutStatistics] {@literal true} to omit statistic properties
+	 * @param {boolean} [withoutStatistics] `true` to omit statistic properties
 	 * @returns {Object} an object populated with all available properties
 	 */
 	toObject(meta, withoutStatistics) {
