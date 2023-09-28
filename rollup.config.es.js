@@ -38,7 +38,7 @@ export default {
 					{
 						targets: {
 							browsers: ["last 2 versions"],
-							node: "current",
+							node: "16",
 						},
 						modules: false,
 					},
