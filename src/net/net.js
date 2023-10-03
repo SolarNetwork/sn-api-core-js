@@ -1,57 +1,60 @@
 /** @module net */
 
-export { default as AuthTokenUrlHelperMixin } from "./authTokenUrlHelperMixin";
-export { default as AuthorizationV2Builder } from "./authV2";
-export { default as Environment } from "./environment";
-export { default as HttpHeaders, HttpContentType, HttpMethod } from "./httpHeaders";
+export { default as AuthTokenUrlHelperMixin } from "./authTokenUrlHelperMixin.js";
+export { default as AuthorizationV2Builder } from "./authV2.js";
+export { default as Environment } from "./environment.js";
+export { default as HttpHeaders, HttpContentType, HttpMethod } from "./httpHeaders.js";
 export {
 	default as LocationDatumMetadataUrlHelperMixin,
 	LocationDatumMetadataUrlHelper,
-} from "./locationDatumMetadataUrlHelperMixin";
+} from "./locationDatumMetadataUrlHelperMixin.js";
 export {
 	default as LocationDatumUrlHelperMixin,
 	LocationDatumUrlHelper,
-} from "./locationDatumUrlHelperMixin";
-export { default as LocationUrlHelperMixin } from "./locationUrlHelperMixin";
+} from "./locationDatumUrlHelperMixin.js";
+export { default as LocationUrlHelperMixin } from "./locationUrlHelperMixin.js";
 export {
 	default as NodeDatumMetadataUrlHelperMixin,
 	NodeDatumMetadataUrlHelper,
-} from "./nodeDatumMetadataUrlHelperMixin";
-export { default as NodeDatumUrlHelperMixin, NodeDatumUrlHelper } from "./nodeDatumUrlHelperMixin";
+} from "./nodeDatumMetadataUrlHelperMixin.js";
+export {
+	default as NodeDatumUrlHelperMixin,
+	NodeDatumUrlHelper,
+} from "./nodeDatumUrlHelperMixin.js";
 export {
 	default as NodeInstructionUrlHelperMixin,
 	NodeInstructionUrlHelper,
 	instructionParameter,
-} from "./nodeInstructionUrlHelperMixin";
+} from "./nodeInstructionUrlHelperMixin.js";
 export {
 	default as NodeMetadataUrlHelperMixin,
 	NodeMetadataUrlHelper,
-} from "./nodeMetadataUrlHelperMixin";
-export { default as NodeUrlHelperMixin } from "./nodeUrlHelperMixin";
+} from "./nodeMetadataUrlHelperMixin.js";
+export { default as NodeUrlHelperMixin } from "./nodeUrlHelperMixin.js";
 export {
 	default as QueryUrlHelperMixin,
 	SolarQueryDefaultPath,
 	SolarQueryPathKey,
 	SolarQueryApiPathV1,
 	SolarQueryPublicPathKey,
-} from "./queryUrlHelperMixin";
+} from "./queryUrlHelperMixin.js";
 export {
 	default as UserAuthTokenUrlHelperMixin,
 	UserAuthTokenUrlHelper,
-} from "./userAuthTokenUrlHelperMixin";
+} from "./userAuthTokenUrlHelperMixin.js";
 export {
 	default as UserDatumAuxiliaryUrlHelperMixin,
 	UserDatumAuxiliaryUrlHelper,
-} from "./userDatumAuxiliaryUrlHelperMixin";
+} from "./userDatumAuxiliaryUrlHelperMixin.js";
 export {
 	default as UserUrlHelperMixin,
 	SolarUserDefaultPath,
 	SolarUserPathKey,
 	SolarUserApiPathV1,
-} from "./userUrlHelperMixin";
+} from "./userUrlHelperMixin.js";
 export {
 	default as UserMetadataUrlHelperMixin,
 	UserMetadataUrlHelper,
-} from "./userMetadataUrlHelperMixin";
-export { default as UrlHelper } from "./urlHelper";
-export { default as urlQuery } from "./urlQuery";
+} from "./userMetadataUrlHelperMixin.js";
+export { default as UrlHelper } from "./urlHelper.js";
+export { default as urlQuery } from "./urlQuery.js";

@@ -1,4 +1,4 @@
-import Enum from "../util/enum";
+import Enum from "../util/enum.js";
 
 /**
  * An auth token status.

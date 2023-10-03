@@ -1,6 +1,6 @@
-import DatumStreamMetadata from "./datumStreamMetadata";
-import StreamDatum from "./streamDatum";
-import StreamAggregateDatum from "./streamAggregateDatum";
+import DatumStreamMetadata from "./datumStreamMetadata.js";
+import StreamDatum from "./streamDatum.js";
+import StreamAggregateDatum from "./streamAggregateDatum.js";
 
 /**
  * Create a StreamDatumMetadataMixin class.

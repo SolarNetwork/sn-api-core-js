@@ -1,4 +1,4 @@
-import Configuration from "../util/configuration";
+import Configuration from "../util/configuration.js";
 
 /**
  * Normailze a protocol value.
@@ -32,7 +32,7 @@ function normalizedConfig(config) {
 		{
 			host: "data.solarnetwork.net",
 		},
-		config
+		config,
 	);
 	result.protocol = normalizedProtocol(result.protocol || "https");
 	result.port = result.port || (result.protocol === "https" ? 443 : 80);

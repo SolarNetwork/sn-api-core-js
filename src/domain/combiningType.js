@@ -1,4 +1,4 @@
-import Enum from "../util/enum";
+import Enum from "../util/enum.js";
 
 /**
  * A named query combining action type.

@@ -1,3 +1,5 @@
+import DatumFilter from "../domain/datumFilter.js";
+
 const NodeIdsKey = "nodeIds";
 const SourceIdsKey = "sourceIds";
 
@@ -77,6 +79,25 @@ const NodeUrlHelperMixin = (superclass) =>
 		 */
 		listAllNodeIdsUrl() {
 			return this.baseUrl() + "/nodes";
+		}
+
+		/**
+		 * Generate a URL for finding the available source IDs.
+		 *
+		 * @param {module:domain~DatumFilter} datumFilter the search criteria, which can define `nodeId`, `startDate`, `endDate`,
+		 *                                                `localStartDate`, `localEndDdate`, `metadataFilter`, `propertyNames`,
+		 *                                                `instantaneousPropertyNames`, `accumulatingPropertyNames`, and
+		 *                                                `statusPropertyNames`, properties to limit the results to
+		 * @returns {string} the URL
+		 */
+		findSourcesUrl(datumFilter) {
+			const filter = datumFilter ? new DatumFilter(datumFilter) : this.datumFilter();
+			let result = this.baseUrl() + "/nodes/sources";
+			const params = filter.toUriEncoding();
+			if (params.length > 0) {
+				result += "?" + params;
+			}
+			return result;
 		}
 	};
 

@@ -1,8 +1,8 @@
 import test from "ava";
 
-import DatumStreamMetadata from "domain/datumStreamMetadata";
-import DatumStreamTypes from "domain/datumStreamType";
-import DatumSamplesTypes from "domain/datumSamplesType";
+import DatumStreamMetadata from "../../src/domain/datumStreamMetadata.js";
+import DatumStreamTypes from "../../src/domain/datumStreamType.js";
+import DatumSamplesTypes from "../../src/domain/datumSamplesType.js";
 
 test("domain:datumStreamMetadata:create:node", (t) => {
 	// GIVEN
@@ -24,7 +24,7 @@ test("domain:datumStreamMetadata:create:node", (t) => {
 		sourceId,
 		iNames,
 		aNames,
-		sNames
+		sNames,
 	);
 
 	// THEN
@@ -61,7 +61,7 @@ test("domain:datumStreamMetadata:create:location", (t) => {
 		sourceId,
 		iNames,
 		aNames,
-		sNames
+		sNames,
 	);
 
 	// THEN
@@ -94,7 +94,7 @@ function testNodeMetadata(streamId, nodeId, sourceId) {
 		sourceId,
 		iNames,
 		aNames,
-		sNames
+		sNames,
 	);
 }
 
@@ -132,7 +132,7 @@ test("domain:datumStreamMetadata:fromJsonEncoding", (t) => {
 			nodeId +
 			',"sourceId":"' +
 			sourceId +
-			'","i":["a","b","c"],"a":["d","e"],"s":["f"]}'
+			'","i":["a","b","c"],"a":["d","e"],"s":["f"]}',
 	);
 
 	// THEN
@@ -167,6 +167,6 @@ test("domain:datumStreamMetadata:toJsonEncoding", (t) => {
 			nodeId +
 			',"sourceId":"' +
 			sourceId +
-			'","i":["a","b","c"],"a":["d","e"],"s":["f"]}'
+			'","i":["a","b","c"],"a":["d","e"],"s":["f"]}',
 	);
 });

@@ -1,15 +1,18 @@
 import test from "ava";
 
-import { default as DatumReadingTypes, DatumReadingType } from "domain/datumReadingType";
+import {
+	default as DatumReadingTypes,
+	DatumReadingType,
+} from "../../src/domain/datumReadingType.js";
 
-test("domain:datumReadingType:create", t => {
+test("domain:datumReadingType:create", (t) => {
 	const obj = new DatumReadingType("foo", "bar");
 	t.truthy(obj);
 	t.is(obj.name, "foo");
 	t.is(obj.key, "bar");
 });
 
-test("domain:datumReadingType:aggregations", t => {
+test("domain:datumReadingType:aggregations", (t) => {
 	t.is(DatumReadingTypes.CalculatedAt.name, "CalculatedAt");
 	t.is(DatumReadingTypes.CalculatedAt.key, "at");
 	t.is(DatumReadingTypes.CalculatedAtDifference.name, "CalculatedAtDifference");
@@ -22,7 +25,7 @@ test("domain:datumReadingType:aggregations", t => {
 	t.is(DatumReadingTypes.NearestDifference.key, "diff");
 });
 
-test("domain:datumReadingType:valueOf", t => {
+test("domain:datumReadingType:valueOf", (t) => {
 	t.is(DatumReadingType.valueOf("Difference"), DatumReadingTypes.Difference);
 	t.is(DatumReadingType.valueOf("delta"), DatumReadingTypes.Difference);
 });

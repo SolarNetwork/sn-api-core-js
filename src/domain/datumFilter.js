@@ -1,29 +1,35 @@
-import { Aggregation } from "./aggregation";
-import { CombiningType } from "./combiningType";
-import Location from "./location";
-import PropMap from "../util/propMap";
+import { Aggregation } from "./aggregation.js";
+import { CombiningType } from "./combiningType.js";
+import Location from "./location.js";
+import PropMap from "../util/propMap.js";
 
-import { dateTimeUrlFormat } from "../format/date";
+import { dateTimeUrlFormat, localDateTimeUrlFormat } from "../format/date.js";
 
-const AggregationKey = "aggregation";
-const CombiningTypeKey = "combiningType";
-const DataPathKey = "dataPath";
-const EndDateKey = "endDate";
-const LocationIdsKey = "locationIds";
-const LocationKey = "location";
-const MetadataFilterKey = "metadataFilter";
-const MostRecentKey = "mostRecent";
-const NodeIdMapsKey = "nodeIdMaps";
-const NodeIdsKey = "nodeIds";
-const PartialAggregationKey = "partialAggregation";
-const QueryKey = "query";
-const SourceIdMapsKey = "sourceIdMaps";
-const SourceIdsKey = "sourceIds";
-const StartDateKey = "startDate";
-const StreamIdsKey = "streamIds";
-const TagsKey = "tags";
-const UserIdsKey = "userIds";
-const WithoutTotalResultsCountKey = "withoutTotalResultsCount";
+export const AccumulatingPropertyNamesKey = "accumulatingPropertyNames";
+export const AggregationKey = "aggregation";
+export const CombiningTypeKey = "combiningType";
+export const DataPathKey = "dataPath";
+export const EndDateKey = "endDate";
+export const InstantaneousPropertyNamesKey = "instantaneousPropertyNames";
+export const LocalEndDateKey = "localEndDate";
+export const LocalStartDateKey = "localStartDate";
+export const LocationIdsKey = "locationIds";
+export const LocationKey = "location";
+export const MetadataFilterKey = "metadataFilter";
+export const MostRecentKey = "mostRecent";
+export const NodeIdMapsKey = "nodeIdMaps";
+export const NodeIdsKey = "nodeIds";
+export const PartialAggregationKey = "partialAggregation";
+export const PropertyNamesKey = "propertyNames";
+export const QueryKey = "query";
+export const SourceIdMapsKey = "sourceIdMaps";
+export const SourceIdsKey = "sourceIds";
+export const StartDateKey = "startDate";
+export const StatusPropertyNamesKey = "statusPropertyNames";
+export const StreamIdsKey = "streamIds";
+export const TagsKey = "tags";
+export const UserIdsKey = "userIds";
+export const WithoutTotalResultsCountKey = "withoutTotalResultsCount";
 
 /**
  * Combine an ID map into a query parameter.
@@ -261,6 +267,30 @@ class DatumFilter extends PropMap {
 	}
 
 	/**
+	 * Alocal minimumin date.
+	 * @type {Date}
+	 */
+	get localStartDate() {
+		return this.prop(LocalStartDateKey);
+	}
+
+	set localStartDate(date) {
+		this.prop(LocalStartDateKey, date);
+	}
+
+	/**
+	 * A local maximum date.
+	 * @type {Date}
+	 */
+	get localEndDate() {
+		return this.prop(LocalEndDateKey);
+	}
+
+	set localEndDate(date) {
+		this.prop(LocalEndDateKey, date);
+	}
+
+	/**
 	 * A data path, in dot-delimited notation like `i.watts`.
 	 * @type {string}
 	 */
@@ -409,6 +439,134 @@ class DatumFilter extends PropMap {
 	}
 
 	/**
+	 * A property name.
+	 *
+	 * This manages the first available value from the `propertyNames` property.
+	 *
+	 * @type {string}
+	 */
+	get propertyName() {
+		const names = this.propertyNames;
+		return Array.isArray(names) && names.length > 0 ? names[0] : null;
+	}
+
+	set propertyName(name) {
+		if (name) {
+			this.propertyNames = [name];
+		} else {
+			this.propertyNames = null;
+		}
+	}
+
+	/**
+	 * An array of property names.
+	 * @type {string[]}
+	 */
+	get propertyNames() {
+		return this.prop(PropertyNamesKey);
+	}
+
+	set propertyNames(names) {
+		this.prop(PropertyNamesKey, Array.isArray(names) ? names : null);
+	}
+
+	/**
+	 * An instantaneous property name.
+	 *
+	 * This manages the first available value from the `instantaneousPropertyNames` property.
+	 *
+	 * @type {string}
+	 */
+	get instantaneousPropertyName() {
+		const names = this.instantaneousPropertyNames;
+		return Array.isArray(names) && names.length > 0 ? names[0] : null;
+	}
+
+	set instantaneousPropertyName(name) {
+		if (name) {
+			this.instantaneousPropertyNames = [name];
+		} else {
+			this.instantaneousPropertyNames = null;
+		}
+	}
+
+	/**
+	 * An array of instantaneous property names.
+	 * @type {string[]}
+	 */
+	get instantaneousPropertyNames() {
+		return this.prop(InstantaneousPropertyNamesKey);
+	}
+
+	set instantaneousPropertyNames(names) {
+		this.prop(InstantaneousPropertyNamesKey, Array.isArray(names) ? names : null);
+	}
+
+	/**
+	 * An accumulating property name.
+	 *
+	 * This manages the first available value from the `accumulatingPropertyNames` property.
+	 *
+	 * @type {string}
+	 */
+	get accumulatingPropertyName() {
+		const names = this.accumulatingPropertyNames;
+		return Array.isArray(names) && names.length > 0 ? names[0] : null;
+	}
+
+	set accumulatingPropertyName(name) {
+		if (name) {
+			this.accumulatingPropertyNames = [name];
+		} else {
+			this.accumulatingPropertyNames = null;
+		}
+	}
+
+	/**
+	 * An array of accumulating property names.
+	 * @type {string[]}
+	 */
+	get accumulatingPropertyNames() {
+		return this.prop(AccumulatingPropertyNamesKey);
+	}
+
+	set accumulatingPropertyNames(names) {
+		this.prop(AccumulatingPropertyNamesKey, Array.isArray(names) ? names : null);
+	}
+
+	/**
+	 * A property name.
+	 *
+	 * This manages the first available value from the `statusPropertyNames` property.
+	 *
+	 * @type {string}
+	 */
+	get statusPropertyName() {
+		const names = this.statusPropertyNames;
+		return Array.isArray(names) && names.length > 0 ? names[0] : null;
+	}
+
+	set statusPropertyName(name) {
+		if (name) {
+			this.statusPropertyNames = [name];
+		} else {
+			this.statusPropertyNames = null;
+		}
+	}
+
+	/**
+	 * An array of property names.
+	 * @type {string[]}
+	 */
+	get statusPropertyNames() {
+		return this.prop(StatusPropertyNamesKey);
+	}
+
+	set statusPropertyNames(names) {
+		this.prop(StatusPropertyNamesKey, Array.isArray(names) ? names : null);
+	}
+
+	/**
 	 * Get this object as a standard URI encoded (query parameters) string value.
 	 *
 	 * @override
@@ -417,7 +575,7 @@ class DatumFilter extends PropMap {
 	toUriEncoding(propertyName, callbackFn) {
 		return super.toUriEncoding(
 			propertyName,
-			callbackFn || datumFilterUriEncodingPropertyMapper
+			callbackFn || datumFilterUriEncodingPropertyMapper,
 		);
 	}
 }
@@ -435,7 +593,11 @@ function datumFilterUriEncodingPropertyMapper(key, value) {
 		key === NodeIdsKey ||
 		key === LocationIdsKey ||
 		key === SourceIdsKey ||
-		key === UserIdsKey
+		key === UserIdsKey ||
+		key === PropertyNamesKey ||
+		key === InstantaneousPropertyNamesKey ||
+		key === AccumulatingPropertyNamesKey ||
+		key === StatusPropertyNamesKey
 	) {
 		// check for singleton array value, and re-map to singular property by chopping of "s"
 		if (Array.isArray(value) && value.length === 1) {
@@ -443,6 +605,8 @@ function datumFilterUriEncodingPropertyMapper(key, value) {
 		}
 	} else if (key === StartDateKey || key === EndDateKey) {
 		return [key, dateTimeUrlFormat(value)];
+	} else if (key === LocalStartDateKey || key === LocalEndDateKey) {
+		return [key, localDateTimeUrlFormat(value)];
 	} else if (key === MostRecentKey && !value) {
 		return null;
 	} else if (key === NodeIdMapsKey || key === SourceIdMapsKey) {

@@ -1,4 +1,4 @@
-import KeyedEnum from "../util/keyedEnum";
+import KeyedEnum from "../util/keyedEnum.js";
 
 /**
  * An enumeration of datum reading types.

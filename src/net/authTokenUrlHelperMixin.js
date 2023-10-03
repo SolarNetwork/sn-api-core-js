@@ -1,4 +1,4 @@
-import { dateFormat } from "../format/date";
+import { dateFormat } from "../format/date.js";
 
 /**
  * Create a AuthTokenUrlHelperMixin class.

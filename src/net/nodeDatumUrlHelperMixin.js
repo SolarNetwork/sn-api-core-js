@@ -1,7 +1,7 @@
-import DatumFilter from "../domain/datumFilter";
-import UrlHelper from "./urlHelper";
-import NodeUrlHelperMixin from "./nodeUrlHelperMixin";
-import QueryUrlHelperMixin from "./queryUrlHelperMixin";
+import DatumFilter from "../domain/datumFilter.js";
+import UrlHelper from "./urlHelper.js";
+import NodeUrlHelperMixin from "./nodeUrlHelperMixin.js";
+import QueryUrlHelperMixin from "./queryUrlHelperMixin.js";
 
 /**
  * Create a NodeDatumUrlHelperMixin class.
@@ -220,7 +220,7 @@ const NodeDatumUrlHelperMixin = (superclass) =>
  * @alias module:net~NodeDatumUrlHelper
  */
 class NodeDatumUrlHelper extends NodeDatumUrlHelperMixin(
-	QueryUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))
+	QueryUrlHelperMixin(NodeUrlHelperMixin(UrlHelper)),
 ) {}
 
 export default NodeDatumUrlHelperMixin;

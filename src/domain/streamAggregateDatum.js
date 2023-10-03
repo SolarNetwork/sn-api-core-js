@@ -1,6 +1,6 @@
-import DatumSamplesTypes from "./datumSamplesType";
-import DatumStreamMetadata from "./datumStreamMetadata";
-import DatumStreamMetadataRegistry from "../util/datumStreamMetadataRegistry";
+import DatumSamplesTypes from "./datumSamplesType.js";
+import DatumStreamMetadata from "./datumStreamMetadata.js";
+import DatumStreamMetadataRegistry from "../util/datumStreamMetadataRegistry.js";
 
 function pushProperties(result, values) {
 	if (!values) {

@@ -1,7 +1,7 @@
-import UrlHelper from "./urlHelper";
-import UserUrlHelperMixin from "./userUrlHelperMixin";
-import { timestampFormat } from "../format/date";
-import PropMap from "../util/propMap";
+import UrlHelper from "./urlHelper.js";
+import UserUrlHelperMixin from "./userUrlHelperMixin.js";
+import { timestampFormat } from "../format/date.js";
+import PropMap from "../util/propMap.js";
 
 /**
  * Create a UserDatumAuxiliaryUrlHelperMixin class.
@@ -153,7 +153,7 @@ const UserDatumAuxiliaryUrlHelperMixin = (superclass) =>
  * @alias module:net~UserDatumAuxiliaryUrlHelper
  */
 class UserDatumAuxiliaryUrlHelper extends UserDatumAuxiliaryUrlHelperMixin(
-	UserUrlHelperMixin(UrlHelper)
+	UserUrlHelperMixin(UrlHelper),
 ) {}
 
 export default UserDatumAuxiliaryUrlHelperMixin;

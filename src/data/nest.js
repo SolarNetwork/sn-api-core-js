@@ -1,7 +1,7 @@
 import { ascending, max, sum } from "d3-array";
 import { nest } from "d3-collection";
 
-import { datumDate } from "../util/date";
+import { datumDate } from "../util/date.js";
 
 /**
  * A callback function that operates on a nested data layer datum object.
@@ -76,7 +76,7 @@ export function normalizeNestedStackDataByDate(layerData, fillTemplate, fillFn) 
 			max(
 				layerData.map(function (e) {
 					return e.values.length;
-				})
+				}),
 			)
 		) {
 			dummy = undefined;
@@ -106,7 +106,7 @@ export function normalizeNestedStackDataByDate(layerData, fillTemplate, fillFn) 
 						fillFn(
 							dummy,
 							layerData[k].key,
-							copyIndex !== null ? layerData[k].values[copyIndex] : undefined
+							copyIndex !== null ? layerData[k].values[copyIndex] : undefined,
 						);
 					}
 					layerData[k].values.splice(i, 0, dummy);
@@ -164,7 +164,7 @@ export function aggregateNestedDataLayers(
 	resultKey,
 	copyProperties,
 	sumProperties,
-	staticProperties
+	staticProperties,
 ) {
 	// combine all layers into a single source
 	var layerCount = layerData.length,

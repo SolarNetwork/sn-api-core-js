@@ -1,8 +1,8 @@
-import Pagination from "../domain/pagination";
-import SortDescriptor from "../domain/sortDescriptor";
-import UrlHelper from "./urlHelper";
-import NodeUrlHelperMixin from "./nodeUrlHelperMixin";
-import UserUrlHelperMixin from "./userUrlHelperMixin";
+import Pagination from "../domain/pagination.js";
+import SortDescriptor from "../domain/sortDescriptor.js";
+import UrlHelper from "./urlHelper.js";
+import NodeUrlHelperMixin from "./nodeUrlHelperMixin.js";
+import UserUrlHelperMixin from "./userUrlHelperMixin.js";
 
 /**
  * Create a NodeMetadataUrlHelperMixin class.
@@ -117,7 +117,7 @@ const NodeMetadataUrlHelperMixin = (superclass) =>
  * @alias module:net~NodeMetadataUrlHelper
  */
 class NodeMetadataUrlHelper extends NodeMetadataUrlHelperMixin(
-	UserUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))
+	UserUrlHelperMixin(NodeUrlHelperMixin(UrlHelper)),
 ) {}
 
 export default NodeMetadataUrlHelperMixin;

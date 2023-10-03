@@ -1,5 +1,5 @@
-import UrlHelper from "./urlHelper";
-import UserUrlHelperMixin from "./userUrlHelperMixin";
+import UrlHelper from "./urlHelper.js";
+import UserUrlHelperMixin from "./userUrlHelperMixin.js";
 
 /**
  * Create a UserAuthTokenUrlHelperMixin class.

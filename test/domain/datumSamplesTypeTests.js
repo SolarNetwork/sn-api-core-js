@@ -1,15 +1,18 @@
 import test from "ava";
 
-import { default as DatumSamplesTypes, DatumSamplesType } from "domain/datumSamplesType";
+import {
+	default as DatumSamplesTypes,
+	DatumSamplesType,
+} from "../../src/domain/datumSamplesType.js";
 
-test("domain:datumSamplesType:create", t => {
+test("domain:datumSamplesType:create", (t) => {
 	const obj = new DatumSamplesType("foo", "bar");
 	t.truthy(obj);
 	t.is(obj.name, "foo");
 	t.is(obj.key, "bar");
 });
 
-test("domain:datumSamplesType:aggregations", t => {
+test("domain:datumSamplesType:aggregations", (t) => {
 	t.is(DatumSamplesTypes.Instantaneous.name, "Instantaneous");
 	t.is(DatumSamplesTypes.Instantaneous.key, "i");
 	t.is(DatumSamplesTypes.Accumulating.name, "Accumulating");
@@ -18,7 +21,7 @@ test("domain:datumSamplesType:aggregations", t => {
 	t.is(DatumSamplesTypes.Status.key, "s");
 });
 
-test("domain:datumSamplesType:valueOf", t => {
+test("domain:datumSamplesType:valueOf", (t) => {
 	t.is(DatumSamplesType.valueOf("Instantaneous"), DatumSamplesTypes.Instantaneous);
 	t.is(DatumSamplesType.valueOf("i"), DatumSamplesTypes.Instantaneous);
 	t.is(DatumSamplesType.valueOf("Accumulating"), DatumSamplesTypes.Accumulating);

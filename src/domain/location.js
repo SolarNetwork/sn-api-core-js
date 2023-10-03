@@ -1,17 +1,17 @@
-import PropMap from "../util/propMap";
+import PropMap from "../util/propMap.js";
 
-const CountryKey = "country";
-const ElevationKey = "elevation";
-const LatitudeKey = "latitude";
-const IdKey = "id";
-const LocalityKey = "locality";
-const LongitudeKey = "longitude";
-const NameKey = "name";
-const PostalCodeKey = "postalCode";
-const RegionKey = "region";
-const StateOrProvinceKey = "stateOrProvince";
-const StreetKey = "street";
-const TimeZoneIdKey = "timeZoneId";
+export const CountryKey = "country";
+export const ElevationKey = "elevation";
+export const LatitudeKey = "latitude";
+export const IdKey = "id";
+export const LocalityKey = "locality";
+export const LongitudeKey = "longitude";
+export const NameKey = "name";
+export const PostalCodeKey = "postalCode";
+export const RegionKey = "region";
+export const StateOrProvinceKey = "stateOrProvince";
+export const StreetKey = "street";
+export const TimeZoneIdKey = "timeZoneId";
 
 /**
  * A geographic location.

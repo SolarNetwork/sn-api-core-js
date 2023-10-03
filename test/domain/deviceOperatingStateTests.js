@@ -2,10 +2,10 @@ import test from "ava";
 
 import {
 	default as DeviceOperatingStates,
-	DeviceOperatingState
-} from "domain/deviceOperatingState";
+	DeviceOperatingState,
+} from "../../src/domain/deviceOperatingState.js";
 
-test("domain:deviceOperatingState:create", t => {
+test("domain:deviceOperatingState:create", (t) => {
 	const obj = new DeviceOperatingState("foo", 2);
 	t.truthy(obj);
 	t.is(obj.name, "foo");
@@ -14,7 +14,7 @@ test("domain:deviceOperatingState:create", t => {
 	t.is(obj.code, 2);
 });
 
-test("domain:deviceOperatingState:enumsValue", t => {
+test("domain:deviceOperatingState:enumsValue", (t) => {
 	t.is(DeviceOperatingStates.Unknown.name, "Unknown");
 	t.is(DeviceOperatingStates.Normal.name, "Normal");
 	t.is(DeviceOperatingStates.Starting.name, "Starting");
@@ -26,17 +26,17 @@ test("domain:deviceOperatingState:enumsValue", t => {
 	t.is(DeviceOperatingStates.Override.name, "Override");
 });
 
-test("domain:deviceOperatingState:forCode", t => {
+test("domain:deviceOperatingState:forCode", (t) => {
 	const e = DeviceOperatingState.forCode(2);
 	t.is(e, DeviceOperatingStates.Starting);
 });
 
-test("domain:deviceOperatingState:setForBitmask", t => {
+test("domain:deviceOperatingState:setForBitmask", (t) => {
 	const set = DeviceOperatingState.setForBitmask(65, DeviceOperatingState.enumValues());
 	t.deepEqual(set, new Set([DeviceOperatingStates.Normal, DeviceOperatingStates.Recovery]));
 });
 
-test("bitmaskEnum:bitmaskForSet", t => {
+test("bitmaskEnum:bitmaskForSet", (t) => {
 	const vals = [DeviceOperatingStates.Normal, DeviceOperatingStates.Recovery];
 	t.is(DeviceOperatingState.bitmaskValue(vals), 65, "1 + 64");
 });
