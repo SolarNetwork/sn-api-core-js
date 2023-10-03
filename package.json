@@ -38,7 +38,7 @@
 		]
 	},
 	"scripts": {
-		"apidoc": "jsdoc --configure jsdoc.config.json --template ./node_modules/ink-docstrap/template --package package.json --recurse --destination docs/api src",
+		"apidoc": "jsdoc --configure jsdoc.config.json --template ./node_modules/clean-jsdoc-theme --package package.json --recurse --destination docs/api src",
 		"prebuild": "eslint lib.js src",
 		"build": "rm -rf build && mkdir build && rollup --config rollup.config.mjs --banner \"$(preamble)\" -f umd -n sn -m -o lib/solarnetwork-api-core.js -- lib.js && rollup --config rollup.config.es.mjs --banner \"$(preamble)\" -f es -m -o lib/solarnetwork-api-core.es.js -- lib.js",
 		"postbuild": "./node_modules/uglify-js/bin/uglifyjs --beautify \"preamble='$(preamble)'\" --source-map content=lib/solarnetwork-api-core.js.map,filename=lib/solarnetwork-api-core.min.js.map -c -m -o lib/solarnetwork-api-core.min.js -- lib/solarnetwork-api-core.js && ./node_modules/uglify-js/bin/uglifyjs --beautify \"preamble='$(preamble)'\" --source-map content=lib/solarnetwork-api-core.es.js.map,filename=lib/solarnetwork-api-core.es.min.js.map -c -m -o lib/solarnetwork-api-core.es.min.js -- lib/solarnetwork-api-core.es.js",
@@ -79,10 +79,10 @@
 		"@rollup/plugin-babel": "^6.0.3",
 		"ava": "^5.3.1",
 		"c8": "^8.0.1",
+		"clean-jsdoc-theme": "^4.2.13",
 		"eslint": "^8.49.0",
 		"generate-release": "^1.1.1",
 		"global-object": "^1.0.0",
-		"ink-docstrap": "^1.3.2",
 		"jsdoc": "4.0.2",
 		"moment": "^2.29.4",
 		"npmversion": "^1.7.0",
