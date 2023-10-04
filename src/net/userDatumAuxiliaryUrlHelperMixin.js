@@ -6,7 +6,6 @@ import PropMap from "../util/propMap.js";
 /**
  * Create a UserDatumAuxiliaryUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~UserDatumAuxiliaryUrlHelperMixin} the mixin class
  */

@@ -7,7 +7,6 @@ import UserUrlHelperMixin from "./userUrlHelperMixin.js";
 /**
  * Create a NodeMetadataUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~NodeMetadataUrlHelperMixin} the mixin class
  */

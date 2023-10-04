@@ -3,7 +3,6 @@ import { dateFormat } from "../format/date.js";
 /**
  * Create a AuthTokenUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~AuthTokenUrlHelperMixin} the mixin class
  */

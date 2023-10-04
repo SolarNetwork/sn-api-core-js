@@ -4,7 +4,6 @@ import UserUrlHelperMixin from "./userUrlHelperMixin.js";
 /**
  * Create a UserAuthTokenUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~UserAuthTokenUrlHelperMixin} the mixin class
  */

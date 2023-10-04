@@ -5,7 +5,6 @@ import StreamAggregateDatum from "./streamAggregateDatum.js";
 /**
  * Create a StreamDatumMetadataMixin class.
  *
- * @exports domain
  * @param {module:domain~StreamAggregateDatum|module:domain~StreamDatum} superclass the stream datum class to mix onto
  * @return {module:domain~StreamDatumMetadataMixin} the mixin class
  */
