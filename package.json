@@ -46,7 +46,7 @@
 		"prettier:write": "prettier \"src/**/*.js\" --write",
 		"test": "c8 ava",
 		"coverage": "c8 --reporter=html ava",
-		"release": "generate-release --current-version \"$(bin/remove-preid)\""
+		"release": "generate-release --current-version \"$(bin/remove-preid.cjs)\""
 	},
 	"config": {
 		"generateRelease": {
