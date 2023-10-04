@@ -1,109 +1,109 @@
 {
-	"name": "solarnetwork-api-core",
-	"version": "1.1.1-dev.0",
-	"description": "SolarNetwork Core API",
-	"keywords": [
-		"solarnetwork"
-	],
-	"homepage": "https://github.com/SolarNetwork/sn-api-core-js",
-	"license": "Apache-2.0",
-	"author": {
-		"name": "SolarNetwork Foundation",
-		"email": "code@solarnetwork.net"
-	},
-	"engines": {
-		"node": ">=16"
-	},
-	"type": "module",
-	"main": "lib/solarnetwork-api-core.js",
-	"module": "lib/solarnetwork-api-core.es.js",
-	"jsnext:main": "lib/solarnetwork-api-core.es.js",
-	"files": [
-		"lib.js",
-		"lib",
-		"src"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/SolarNetwork/sn-api-core-js.git"
-	},
-	"ava": {
-		"require": [
-			"@babel/register"
-		]
-	},
-	"babel": {
-		"presets": [
-			"@ava/stage-4"
-		]
-	},
-	"scripts": {
-		"apidoc": "jsdoc --configure jsdoc.config.json --template ./node_modules/clean-jsdoc-theme --package package.json --recurse --destination docs/api src",
-		"prebuild": "eslint lib.js src",
-		"build": "rm -rf build && mkdir build && rollup --config rollup.config.mjs --banner \"$(preamble)\" -f umd -n sn -m -o lib/solarnetwork-api-core.js -- lib.js && rollup --config rollup.config.es.mjs --banner \"$(preamble)\" -f es -m -o lib/solarnetwork-api-core.es.js -- lib.js",
-		"postbuild": "./node_modules/uglify-js/bin/uglifyjs --beautify \"preamble='$(preamble)'\" --source-map content=lib/solarnetwork-api-core.js.map,filename=lib/solarnetwork-api-core.min.js.map -c -m -o lib/solarnetwork-api-core.min.js -- lib/solarnetwork-api-core.js && ./node_modules/uglify-js/bin/uglifyjs --beautify \"preamble='$(preamble)'\" --source-map content=lib/solarnetwork-api-core.es.js.map,filename=lib/solarnetwork-api-core.es.min.js.map -c -m -o lib/solarnetwork-api-core.es.min.js -- lib/solarnetwork-api-core.es.js",
-		"prettier": "prettier \"src/**/*.js\" --check",
-		"prettier:write": "prettier \"src/**/*.js\" --write",
-		"test": "c8 ava",
-		"coverage": "c8 --reporter=html ava",
-		"release": "generate-release --current-version \"$(bin/remove-preid.cjs)\""
-	},
-	"config": {
-		"generateRelease": {
-			"no_confirm": false,
-			"remote": "origin",
-			"pre_commit_commands": [
-				"npm run prettier:write",
-				"npm run build"
-			],
-			"post_commit_commands": [
-				"npm test",
-				"npm run apidoc"
-			],
-			"post_complete_commands": [
-				"npm publish",
-				"npmversion --increment prepatch --preid dev --nogit-tag"
-			],
-			"files_to_commit": [
-				"./lib/*"
-			]
-		}
-	},
-	"dependencies": {
-		"@babel/runtime": "^7.22.15",
-		"crypto-js": "^4.1.1",
-		"d3-array": "^3.2.4",
-		"d3-collection": "^1.0.7",
-		"d3-time-format": "^4.1.0",
-		"uri-js": "^4.4.1"
-	},
-	"devDependencies": {
-		"@ava/babel-preset-stage-4": "^4.0.0",
-		"@babel/core": "^7.22.20",
-		"@babel/plugin-external-helpers": "^7.22.5",
-		"@babel/plugin-transform-runtime": "^7.22.15",
-		"@babel/preset-env": "^7.22.20",
-		"@babel/register": "^7.22.15",
-		"@rollup/plugin-babel": "^6.0.3",
-		"ava": "^5.3.1",
-		"c8": "^8.0.1",
-		"clean-jsdoc-theme": "^4.2.13",
-		"eslint": "^8.49.0",
-		"generate-release": "^1.1.1",
-		"global-object": "^1.0.0",
-		"jsdoc": "4.0.2",
-		"moment": "^2.29.4",
-		"npmversion": "^1.7.0",
-		"package-preamble": "0.1",
-		"prettier": "^3.0.3",
-		"rollup": "^3.29.2",
-		"rollup-plugin-includepaths": "^0.2.4",
-		"semver": "^7.5.4",
-		"uglify-js": "^3.17.4"
-	},
-	"resolutions": {
-		"json5": "2.2.3",
-		"lodash": "4.17.21",
-		"minimist": "1.2.8"
-	}
+  "name": "solarnetwork-api-core",
+  "version": "1.1.1",
+  "description": "SolarNetwork Core API",
+  "keywords": [
+    "solarnetwork"
+  ],
+  "homepage": "https://github.com/SolarNetwork/sn-api-core-js",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "SolarNetwork Foundation",
+    "email": "code@solarnetwork.net"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "type": "module",
+  "main": "lib/solarnetwork-api-core.js",
+  "module": "lib/solarnetwork-api-core.es.js",
+  "jsnext:main": "lib/solarnetwork-api-core.es.js",
+  "files": [
+    "lib.js",
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SolarNetwork/sn-api-core-js.git"
+  },
+  "ava": {
+    "require": [
+      "@babel/register"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "@ava/stage-4"
+    ]
+  },
+  "scripts": {
+    "apidoc": "jsdoc --configure jsdoc.config.json --template ./node_modules/clean-jsdoc-theme --package package.json --recurse --destination docs/api src",
+    "prebuild": "eslint lib.js src",
+    "build": "rm -rf build && mkdir build && rollup --config rollup.config.mjs --banner \"$(preamble)\" -f umd -n sn -m -o lib/solarnetwork-api-core.js -- lib.js && rollup --config rollup.config.es.mjs --banner \"$(preamble)\" -f es -m -o lib/solarnetwork-api-core.es.js -- lib.js",
+    "postbuild": "./node_modules/uglify-js/bin/uglifyjs --beautify \"preamble='$(preamble)'\" --source-map content=lib/solarnetwork-api-core.js.map,filename=lib/solarnetwork-api-core.min.js.map -c -m -o lib/solarnetwork-api-core.min.js -- lib/solarnetwork-api-core.js && ./node_modules/uglify-js/bin/uglifyjs --beautify \"preamble='$(preamble)'\" --source-map content=lib/solarnetwork-api-core.es.js.map,filename=lib/solarnetwork-api-core.es.min.js.map -c -m -o lib/solarnetwork-api-core.es.min.js -- lib/solarnetwork-api-core.es.js",
+    "prettier": "prettier \"src/**/*.js\" --check",
+    "prettier:write": "prettier \"src/**/*.js\" --write",
+    "test": "c8 ava",
+    "coverage": "c8 --reporter=html ava",
+    "release": "generate-release --current-version \"$(bin/remove-preid.cjs)\""
+  },
+  "config": {
+    "generateRelease": {
+      "no_confirm": false,
+      "remote": "origin",
+      "pre_commit_commands": [
+        "npm run prettier:write",
+        "npm run build"
+      ],
+      "post_commit_commands": [
+        "npm test",
+        "npm run apidoc"
+      ],
+      "post_complete_commands": [
+        "npm publish",
+        "npmversion --increment prepatch --preid dev --nogit-tag"
+      ],
+      "files_to_commit": [
+        "./lib/*"
+      ]
+    }
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.22.15",
+    "crypto-js": "^4.1.1",
+    "d3-array": "^3.2.4",
+    "d3-collection": "^1.0.7",
+    "d3-time-format": "^4.1.0",
+    "uri-js": "^4.4.1"
+  },
+  "devDependencies": {
+    "@ava/babel-preset-stage-4": "^4.0.0",
+    "@babel/core": "^7.22.20",
+    "@babel/plugin-external-helpers": "^7.22.5",
+    "@babel/plugin-transform-runtime": "^7.22.15",
+    "@babel/preset-env": "^7.22.20",
+    "@babel/register": "^7.22.15",
+    "@rollup/plugin-babel": "^6.0.3",
+    "ava": "^5.3.1",
+    "c8": "^8.0.1",
+    "clean-jsdoc-theme": "^4.2.13",
+    "eslint": "^8.49.0",
+    "generate-release": "^1.1.1",
+    "global-object": "^1.0.0",
+    "jsdoc": "4.0.2",
+    "moment": "^2.29.4",
+    "npmversion": "^1.7.0",
+    "package-preamble": "0.1",
+    "prettier": "^3.0.3",
+    "rollup": "^3.29.2",
+    "rollup-plugin-includepaths": "^0.2.4",
+    "semver": "^7.5.4",
+    "uglify-js": "^3.17.4"
+  },
+  "resolutions": {
+    "json5": "2.2.3",
+    "lodash": "4.17.21",
+    "minimist": "1.2.8"
+  }
 }
