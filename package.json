@@ -1,6 +1,6 @@
 {
   "name": "solarnetwork-api-core",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "SolarNetwork Core API",
   "keywords": [
     "solarnetwork"
@@ -69,6 +69,14 @@
       ]
     }
   },
+  "dependencies": {
+    "@babel/runtime": "^7.22.15",
+    "crypto-js": "^4.1.1",
+    "d3-array": "^3.2.4",
+    "d3-collection": "^1.0.7",
+    "d3-time-format": "^4.1.0",
+    "uri-js": "^4.4.1"
+  },
   "devDependencies": {
     "@ava/babel-preset-stage-4": "^4.0.0",
     "@babel/core": "^7.22.20",
@@ -93,12 +101,9 @@
     "semver": "^7.5.4",
     "uglify-js": "^3.17.4"
   },
-  "dependencies": {
-    "@babel/runtime": "^7.22.15",
-    "crypto-js": "^4.1.1",
-    "d3-array": "^3.2.4",
-    "d3-collection": "^1.0.7",
-    "d3-time-format": "^4.1.0",
-    "uri-js": "^4.4.1"
+  "resolutions": {
+    "json5": "2.2.3",
+    "lodash": "4.17.21",
+    "minimist": "1.2.8"
   }
 }
