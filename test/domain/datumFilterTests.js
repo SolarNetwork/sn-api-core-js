@@ -4,7 +4,7 @@ import DatumFilter from "../../src/domain/datumFilter.js";
 import Aggregations from "../../src/domain/aggregation.js";
 import CombiningTypes from "../../src/domain/combiningType.js";
 import Location from "../../src/domain/location.js";
-import { dateTimeUrlFormat, localDateTimeUrlFormat } from "../../src/format/date.js";
+import { dateTimeUrlFormat } from "../../src/format/date.js";
 
 test("domain:datumFilter:create", (t) => {
 	const f = new DatumFilter();
@@ -197,23 +197,17 @@ test("domain:datumFilter:toUriEncoding:endDate", (t) => {
 });
 
 test("domain:datumFilter:toUriEncoding:localStartDate", (t) => {
-	const date = new Date();
+	const date = new Date("2024-01-01T00:00");
 	const filter = new DatumFilter();
 	filter.localStartDate = date;
-	t.is(
-		filter.toUriEncoding(),
-		"localStartDate=" + encodeURIComponent(localDateTimeUrlFormat(date)),
-	);
+	t.is(filter.toUriEncoding(), "localStartDate=" + encodeURIComponent("2024-01-01T00:00"));
 });
 
 test("domain:datumFilter:toUriEncoding:localEndDate", (t) => {
-	const date = new Date();
+	const date = new Date("2024-01-01T00:00");
 	const filter = new DatumFilter();
 	filter.localEndDate = date;
-	t.is(
-		filter.toUriEncoding(),
-		"localEndDate=" + encodeURIComponent(localDateTimeUrlFormat(date)),
-	);
+	t.is(filter.toUriEncoding(), "localEndDate=" + encodeURIComponent("2024-01-01T00:00"));
 });
 
 test("domain:datumFilter:toUriEncoding:mostRecent", (t) => {
