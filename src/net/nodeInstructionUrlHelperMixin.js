@@ -1,11 +1,10 @@
-import UrlHelper from "./urlHelper";
-import NodeUrlHelperMixin from "./nodeUrlHelperMixin";
-import UserUrlHelperMixin from "./userUrlHelperMixin";
+import UrlHelper from "./urlHelper.js";
+import NodeUrlHelperMixin from "./nodeUrlHelperMixin.js";
+import UserUrlHelperMixin from "./userUrlHelperMixin.js";
 
 /**
  * Create a NodeInstructionUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~NodeInstructionUrlHelperMixin} the mixin class
  */
@@ -162,7 +161,7 @@ const NodeInstructionUrlHelperMixin = (superclass) =>
  * @alias module:net~NodeInstructionUrlHelper
  */
 class NodeInstructionUrlHelper extends NodeInstructionUrlHelperMixin(
-	UserUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))
+	UserUrlHelperMixin(NodeUrlHelperMixin(UrlHelper)),
 ) {}
 
 /**

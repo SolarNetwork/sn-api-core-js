@@ -1,6 +1,6 @@
-import DatumSamplesTypes from "./datumSamplesType";
-import DatumStreamMetadata from "./datumStreamMetadata";
-import DatumStreamMetadataRegistry from "../util/datumStreamMetadataRegistry";
+import DatumSamplesTypes from "./datumSamplesType.js";
+import DatumStreamMetadata from "./datumStreamMetadata.js";
+import DatumStreamMetadataRegistry from "../util/datumStreamMetadataRegistry.js";
 
 function pushProperties(result, values) {
 	if (!values) {
@@ -142,7 +142,7 @@ class StreamAggregateDatum {
 	 *  * `_end` - ending value
 	 *
 	 * @param {module:domain~DatumStreamMetadata} meta a metadata instance to encode the property names with
-	 * @param {boolean} [withoutStatistics] {@literal true} to omit statistic properties
+	 * @param {boolean} [withoutStatistics] `true` to omit statistic properties
 	 * @returns {Object} an object populated with all available properties
 	 */
 	toObject(meta, withoutStatistics) {
@@ -169,14 +169,14 @@ class StreamAggregateDatum {
 			meta.instantaneousNames,
 			this.iProps,
 			DatumSamplesTypes.Instantaneous,
-			withoutStatistics
+			withoutStatistics,
 		);
 		populateProperties(
 			obj,
 			meta.accumulatingNames,
 			this.aProps,
 			DatumSamplesTypes.Accumulating,
-			withoutStatistics
+			withoutStatistics,
 		);
 		populateProperties(obj, meta.statusNames, this.sProps, DatumSamplesTypes.Status);
 		return obj;

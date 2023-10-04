@@ -1,12 +1,11 @@
-import { dateTimeUrlFormat } from "../format/date";
-import UrlHelper from "./urlHelper";
-import LocationUrlHelperMixin from "./locationUrlHelperMixin";
-import QueryUrlHelperMixin from "./queryUrlHelperMixin";
+import { dateTimeUrlFormat } from "../format/date.js";
+import UrlHelper from "./urlHelper.js";
+import LocationUrlHelperMixin from "./locationUrlHelperMixin.js";
+import QueryUrlHelperMixin from "./queryUrlHelperMixin.js";
 
 /**
  * Create a LocationDatumUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~LocationDatumUrlHelperMixin} the mixin class
  */
@@ -120,7 +119,7 @@ const LocationDatumUrlHelperMixin = (superclass) =>
  * @alias module:net~LocationDatumUrlHelper
  */
 class LocationDatumUrlHelper extends LocationDatumUrlHelperMixin(
-	QueryUrlHelperMixin(LocationUrlHelperMixin(UrlHelper))
+	QueryUrlHelperMixin(LocationUrlHelperMixin(UrlHelper)),
 ) {}
 
 export default LocationDatumUrlHelperMixin;

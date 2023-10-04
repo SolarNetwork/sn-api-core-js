@@ -28,7 +28,7 @@ That will produce `lib/solarnetwork-api-core.js` and `lib/solarnetwork-api-core.
 of all sources, transpiled into an ES5 compatible UMD module, suitable for use in both browsers
 and Node.
 
-Additionally the build produces `lib/solarnetwork-api-core.es.js` and 
+Additionally the build produces `lib/solarnetwork-api-core.es.js` and
 `lib/solarnetwork-api-core.es.min.js` bundels of all sources, transpiled into an ES6 compatible
 module, suitable for use in other projects with build tools that know how to use ES6 modules
 (like Rollup or Webpack).
@@ -40,7 +40,8 @@ transpile the source for a different target, for example ES2015.
 
 # API docs
 
-You can build the API documentation by running the `apidoc` script:
+The API documentation is published [here](https://solarnetwork.github.io/), or
+you can build the API documentation by running the `apidoc` script:
 
 ```shell
 # NPM
@@ -81,18 +82,17 @@ That will produce a HTML code coverage report at `coverage/index.html`.
 
 # Releases
 
-Releases are done using the gitflow branching model. Gitflow must 
+Releases are done using the gitflow branching model. Gitflow must
 be installed on your host system. Then you can run
 
 ```shell
 npm run release
 ```
 
-to version, build, commit, and publish the release. See the 
+to version, build, commit, and publish the release. See the
 [generate-release][generate-release] site for more information.
 
-
-  [npm]: https://www.npmjs.com/
-  [yarn]: https://yarnpkg.com/
-  [solarnet-api]: https://github.com/SolarNetwork/solarnetwork/wiki/API-Developer-Guide
-  [generate-release]: https://github.com/mrkmg/node-generate-release
+[npm]: https://www.npmjs.com/
+[yarn]: https://yarnpkg.com/
+[solarnet-api]: https://github.com/SolarNetwork/solarnetwork/wiki/API-Developer-Guide
+[generate-release]: https://github.com/mrkmg/node-generate-release

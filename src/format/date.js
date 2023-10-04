@@ -1,4 +1,4 @@
-import { utcFormat, utcParse, isoParse } from "d3-time-format";
+import { timeFormat as format, utcFormat, utcParse, isoParse } from "d3-time-format";
 
 /**
  * Format a date into a SolarNet UTC timestamp format.
@@ -26,6 +26,15 @@ export const dateTimeFormat = utcFormat("%Y-%m-%d %H:%M");
  * @alias module:format~dateTimeUrlFormat
  */
 export const dateTimeUrlFormat = utcFormat("%Y-%m-%dT%H:%M");
+
+/**
+ * Format a date into a SolarNet URL local date/time format.
+ * @function
+ * @param {Date} date the date to format
+ * @returns {string} the formatted date value - `yyyy-MM-dd'T'HH:mm`
+ * @alias module:format~localDateTimeUrlFormat
+ */
+export const localDateTimeUrlFormat = format("%Y-%m-%dT%H:%M");
 
 /**
  * Format a date into a SolarNet UTC date format.

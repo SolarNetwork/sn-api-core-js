@@ -56,7 +56,7 @@ export function timeNormalizeDataArray(data, aggregate) {
 			) {
 				let f = Object.create(
 					Object.getPrototypeOf(d),
-					Object.getOwnPropertyDescriptors(d)
+					Object.getOwnPropertyDescriptors(d),
 				);
 				for (let p in f) {
 					f[p] = null;

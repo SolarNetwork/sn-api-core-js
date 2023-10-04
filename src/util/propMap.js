@@ -1,6 +1,6 @@
-import Pagination from "../domain/pagination";
-import SortDescriptor from "../domain/sortDescriptor";
-import Enum from "./enum";
+import Pagination from "../domain/pagination.js";
+import SortDescriptor from "../domain/sortDescriptor.js";
+import Enum from "./enum.js";
 
 /**
  * A basic map-like object.
@@ -108,7 +108,7 @@ class PropMap {
 
 			if (typeof v.toUriEncoding === "function") {
 				result += v.toUriEncoding(
-					propertyName ? encodeURIComponent(propertyName) + "." + k : k
+					propertyName ? encodeURIComponent(propertyName) + "." + k : k,
 				);
 				continue;
 			}

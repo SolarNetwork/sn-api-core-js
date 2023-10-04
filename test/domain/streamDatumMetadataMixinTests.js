@@ -1,8 +1,8 @@
 import test from "ava";
 
-import DatumStreamMetadata from "domain/datumStreamMetadata";
-import DatumStreamTypes from "domain/datumStreamType";
-import { AggregateDatum, Datum } from "domain/streamDatumMetadataMixin";
+import DatumStreamMetadata from "../../src/domain/datumStreamMetadata.js";
+import DatumStreamTypes from "../../src/domain/datumStreamType.js";
+import { AggregateDatum, Datum } from "../../src/domain/streamDatumMetadataMixin.js";
 
 function testNodeMetadata(streamId, nodeId, sourceId) {
 	const timeZoneId = "Pacific/Auckland";
@@ -20,7 +20,7 @@ function testNodeMetadata(streamId, nodeId, sourceId) {
 		sourceId,
 		iNames,
 		aNames,
-		sNames
+		sNames,
 	);
 }
 
@@ -40,7 +40,7 @@ function testNodeMetadata2(streamId, nodeId, sourceId) {
 		sourceId,
 		iNames,
 		aNames,
-		sNames
+		sNames,
 	);
 }
 

@@ -1,4 +1,4 @@
-import KeydEnum from "../util/keyedEnum";
+import KeydEnum from "../util/keyedEnum.js";
 
 /**
  * An enumeration of datum stream types.

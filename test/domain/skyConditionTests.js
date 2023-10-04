@@ -1,8 +1,8 @@
 import test from "ava";
 
-import { default as SkyConditions, SkyCondition } from "domain/skyCondition";
+import { default as SkyConditions, SkyCondition } from "../../src/domain/skyCondition.js";
 
-test("domain:skyCondition:create", t => {
+test("domain:skyCondition:create", (t) => {
 	const obj = new SkyCondition("foo", 2);
 	t.truthy(obj);
 	t.is(obj.name, "foo");
@@ -11,7 +11,7 @@ test("domain:skyCondition:create", t => {
 	t.is(obj.code, 2);
 });
 
-test("domain:skyCondition:enumsValue", t => {
+test("domain:skyCondition:enumsValue", (t) => {
 	t.is(SkyConditions.Clear.name, "Clear");
 	t.is(SkyConditions.ScatteredClouds.name, "ScatteredClouds");
 	t.is(SkyConditions.Cloudy.name, "Cloudy");
@@ -33,17 +33,17 @@ test("domain:skyCondition:enumsValue", t => {
 	t.is(SkyConditions.ScatteredShowers.name, "ScatteredShowers");
 });
 
-test("domain:deviceOperatingState:forCode", t => {
+test("domain:deviceOperatingState:forCode", (t) => {
 	const e = SkyCondition.forCode(2);
 	t.is(e, SkyConditions.ScatteredClouds);
 });
 
-test("domain:skyCondition:setForBitmask", t => {
+test("domain:skyCondition:setForBitmask", (t) => {
 	const set = SkyCondition.setForBitmask(16385, SkyCondition.enumValues());
 	t.deepEqual(set, new Set([SkyConditions.Clear, SkyConditions.Windy]));
 });
 
-test("bitmaskEnum:bitmaskForSet", t => {
+test("bitmaskEnum:bitmaskForSet", (t) => {
 	const vals = [SkyConditions.ScatteredShowers, SkyConditions.Hail, SkyConditions.Windy];
 	t.is(SkyCondition.bitmaskValue(vals), 16672, "32 + 256 + 16384");
 });

@@ -1,6 +1,6 @@
 import { utcMinute, utcHour, utcDay, utcMonth, utcYear } from "d3-time";
-import Aggregations from "../domain/aggregation";
-import { dateTimeParse, dateTimeUrlParse, timestampParse } from "../format/date";
+import Aggregations from "../domain/aggregation.js";
+import { dateTimeParse, dateTimeUrlParse, timestampParse } from "../format/date.js";
 
 /**
  * An object that defines levels of date range configuration.
@@ -93,7 +93,7 @@ export function rollingQueryDateRange(aggregate, aggregateTimeCount, endDate) {
 		end.setUTCMinutes(
 			end.getUTCMinutes() + precision - (end.getUTCMinutes() % precision),
 			0,
-			0
+			0,
 		);
 		start = utcHour.offset(end, -timeCount);
 	} else if (Aggregations.Month.equals(aggregate)) {

@@ -1,11 +1,10 @@
-import DatumStreamMetadata from "./datumStreamMetadata";
-import StreamDatum from "./streamDatum";
-import StreamAggregateDatum from "./streamAggregateDatum";
+import DatumStreamMetadata from "./datumStreamMetadata.js";
+import StreamDatum from "./streamDatum.js";
+import StreamAggregateDatum from "./streamAggregateDatum.js";
 
 /**
  * Create a StreamDatumMetadataMixin class.
  *
- * @exports domain
  * @param {module:domain~StreamAggregateDatum|module:domain~StreamDatum} superclass the stream datum class to mix onto
  * @return {module:domain~StreamDatumMetadataMixin} the mixin class
  */
@@ -49,7 +48,7 @@ const StreamDatumMetadataMixin = (superclass) =>
 		 *
 		 * This method uses the metadata passed to the constructor to generate the object.
 		 *
-		 * @param {boolean} [withoutStatistics] {@literal true} to omit statistic properties
+		 * @param {boolean} [withoutStatistics] `true` to omit statistic properties
 		 * @returns {Object} an object populated with all available properties
 		 * @see module:domain~StreamDatum#toObject
 		 * @see module:domain~StreamAggregateDatum#toObject

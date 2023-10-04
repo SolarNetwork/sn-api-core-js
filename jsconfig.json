@@ -1,11 +1,8 @@
 {
 	"compilerOptions": {
-        "target": "esnext",
-        "module": "es6",
-        "baseUrl": "src/"
-    },
-    "exclude": [
-        "build",
-        "node_modules"
-    ]
+		"target": "ES2017",
+		"module": "ES2015",
+		"baseUrl": "src/"
+	},
+	"exclude": ["build", "lib", "node_modules"]
 }

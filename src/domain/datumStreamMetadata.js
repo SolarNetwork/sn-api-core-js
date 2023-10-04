@@ -1,5 +1,5 @@
-import { DatumStreamType, default as DatumStreamTypes } from "./datumStreamType";
-import DatumSamplesTypes from "./datumSamplesType";
+import { DatumStreamType, default as DatumStreamTypes } from "./datumStreamType.js";
+import DatumSamplesTypes from "./datumSamplesType.js";
 
 /**
  * Metadata about a datum stream.
@@ -52,7 +52,7 @@ class DatumStreamMetadata {
 			sourceId,
 			iNames,
 			aNames,
-			sNames
+			sNames,
 		);
 	}
 
@@ -76,7 +76,7 @@ class DatumStreamMetadata {
 			sourceId,
 			iNames,
 			aNames,
-			sNames
+			sNames,
 		);
 	}
 
@@ -304,7 +304,7 @@ class DatumStreamMetadata {
 				obj.sourceId,
 				i,
 				a,
-				s
+				s,
 			);
 		}
 		return null;

@@ -1,4 +1,4 @@
-import BitmaskEnum from "../util/bitmaskEnum";
+import BitmaskEnum from "../util/bitmaskEnum.js";
 
 /**
  * A named sky condition/observation.

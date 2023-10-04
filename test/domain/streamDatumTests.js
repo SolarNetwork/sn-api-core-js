@@ -1,9 +1,9 @@
 import test from "ava";
 
-import DatumStreamMetadata from "domain/datumStreamMetadata";
-import DatumStreamMetadataRegistry from "util/datumStreamMetadataRegistry";
-import DatumStreamTypes from "domain/datumStreamType";
-import StreamDatum from "domain/streamDatum";
+import DatumStreamMetadata from "../../src/domain/datumStreamMetadata.js";
+import DatumStreamMetadataRegistry from "../../src/util/datumStreamMetadataRegistry.js";
+import DatumStreamTypes from "../../src/domain/datumStreamType.js";
+import StreamDatum from "../../src/domain/streamDatum.js";
 
 function testNodeMetadata(streamId, nodeId, sourceId) {
 	const timeZoneId = "Pacific/Auckland";
@@ -21,7 +21,7 @@ function testNodeMetadata(streamId, nodeId, sourceId) {
 		sourceId,
 		iNames,
 		aNames,
-		sNames
+		sNames,
 	);
 }
 
@@ -83,7 +83,7 @@ test("domain:streamDatum:fromJsonEncoding:embedded", (t) => {
 	// WHEN
 	const d = StreamDatum.fromJsonEncoding(
 		`["${streamId}",${ts.getTime()},1,2,3,4,5,"six","foo"]`,
-		meta
+		meta,
 	);
 
 	// THEN

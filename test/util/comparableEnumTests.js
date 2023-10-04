@@ -1,6 +1,6 @@
 import test from "ava";
 
-import ComparableEnum from "util/comparableEnum";
+import ComparableEnum from "../../src/util/comparableEnum.js";
 
 class TestEnum extends ComparableEnum {
 	constructor(name, value) {
@@ -19,57 +19,57 @@ const TestEnumValues = Object.freeze([
 	new TestEnum("A", 1),
 	new TestEnum("B", 5),
 	new TestEnum("C", 10),
-	new TestEnum("D", 10)
+	new TestEnum("D", 10),
 ]);
 
 const TestEnums = TestEnum.enumsValue(TestEnumValues);
 
-test("util:comparableEnum:create", t => {
+test("util:comparableEnum:create", (t) => {
 	const obj = new ComparableEnum("foo", 1);
 	t.truthy(obj);
 	t.is(obj.name, "foo");
 	t.is(obj.value, 1);
 });
 
-test("util:comparableEnum:frozen", t => {
+test("util:comparableEnum:frozen", (t) => {
 	const obj = new ComparableEnum("foo", 1);
 	t.throws(
 		() => {
 			obj.foo = "bar";
 		},
 		{ instanceOf: TypeError },
-		"object is frozen"
+		"object is frozen",
 	);
 });
 
-test("util:comparableEnum:compare:lt", t => {
+test("util:comparableEnum:compare:lt", (t) => {
 	const left = new ComparableEnum("foo", 1);
 	const right = new ComparableEnum("bar", 2);
 	t.is(left.compareTo(right), -1);
 });
 
-test("util:comparableEnum:compare:gt", t => {
+test("util:comparableEnum:compare:gt", (t) => {
 	const left = new ComparableEnum("foo", 2);
 	const right = new ComparableEnum("bar", 1);
 	t.is(left.compareTo(right), 1);
 });
 
-test("util:comparableEnum:compare:eq", t => {
+test("util:comparableEnum:compare:eq", (t) => {
 	const left = new ComparableEnum("foo", 1);
 	const right = new ComparableEnum("bar", 1);
 	t.is(left.compareTo(right), 0);
 });
 
-test("util:comparableEnum:enumsValue", t => {
+test("util:comparableEnum:enumsValue", (t) => {
 	t.deepEqual(TestEnums, {
 		A: TestEnumValues[0],
 		B: TestEnumValues[1],
 		C: TestEnumValues[2],
-		D: TestEnumValues[3]
+		D: TestEnumValues[3],
 	});
 });
 
-test("util:comparableEnum:minimumEnumSet", t => {
+test("util:comparableEnum:minimumEnumSet", (t) => {
 	const cache = new Map();
 	let result = TestEnum.minimumEnumSet(TestEnums.D, cache);
 	t.deepEqual(result, new Set([TestEnums.C, TestEnums.D]));

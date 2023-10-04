@@ -1,5 +1,5 @@
-import { Aggregation } from "./aggregation";
-import { LocationPrecision } from "./locationPrecision";
+import { Aggregation } from "./aggregation.js";
+import { LocationPrecision } from "./locationPrecision.js";
 
 /**
  * Get a Set from a Set or array or object, returning `null` if the set would be empty.
@@ -73,7 +73,7 @@ class SecurityPolicy {
 		locationPrecisions,
 		minLocationPrecision,
 		nodeMetadataPaths,
-		userMetadataPaths
+		userMetadataPaths,
 	) {
 		this._nodeIds = setOrNull(nodeIds);
 		this._sourceIds = setOrNull(sourceIds);
@@ -481,7 +481,7 @@ class SecurityPolicyBuilder {
 			this.buildLocationPrecisions(),
 			this.minLocationPrecision,
 			this.nodeMetadataPaths,
-			this.userMetadataPaths
+			this.userMetadataPaths,
 		);
 	}
 }

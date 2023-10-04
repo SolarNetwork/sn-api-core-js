@@ -1,7 +1,7 @@
-import PropMap from "../util/propMap";
+import PropMap from "../util/propMap.js";
 
-const TagsKey = "tags";
-const UserIdsKey = "userIds";
+export const TagsKey = "tags";
+export const UserIdsKey = "userIds";
 
 /**
  * A filter criteria object for user metadata.
@@ -73,7 +73,7 @@ class UserMetadataFilter extends PropMap {
 	toUriEncoding(propertyName, callbackFn) {
 		return super.toUriEncoding(
 			propertyName,
-			callbackFn || userMetadataFilterUriEncodingPropertyMapper
+			callbackFn || userMetadataFilterUriEncodingPropertyMapper,
 		);
 	}
 }
