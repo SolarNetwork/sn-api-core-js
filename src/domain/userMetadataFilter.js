@@ -73,7 +73,7 @@ class UserMetadataFilter extends PropMap {
 	toUriEncoding(propertyName, callbackFn) {
 		return super.toUriEncoding(
 			propertyName,
-			callbackFn || userMetadataFilterUriEncodingPropertyMapper
+			callbackFn || userMetadataFilterUriEncodingPropertyMapper,
 		);
 	}
 }

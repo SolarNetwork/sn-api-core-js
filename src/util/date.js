@@ -93,7 +93,7 @@ export function rollingQueryDateRange(aggregate, aggregateTimeCount, endDate) {
 		end.setUTCMinutes(
 			end.getUTCMinutes() + precision - (end.getUTCMinutes() % precision),
 			0,
-			0
+			0,
 		);
 		start = utcHour.offset(end, -timeCount);
 	} else if (Aggregations.Month.equals(aggregate)) {

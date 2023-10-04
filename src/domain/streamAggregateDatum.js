@@ -169,14 +169,14 @@ class StreamAggregateDatum {
 			meta.instantaneousNames,
 			this.iProps,
 			DatumSamplesTypes.Instantaneous,
-			withoutStatistics
+			withoutStatistics,
 		);
 		populateProperties(
 			obj,
 			meta.accumulatingNames,
 			this.aProps,
 			DatumSamplesTypes.Accumulating,
-			withoutStatistics
+			withoutStatistics,
 		);
 		populateProperties(obj, meta.statusNames, this.sProps, DatumSamplesTypes.Status);
 		return obj;

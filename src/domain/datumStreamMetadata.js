@@ -52,7 +52,7 @@ class DatumStreamMetadata {
 			sourceId,
 			iNames,
 			aNames,
-			sNames
+			sNames,
 		);
 	}
 
@@ -76,7 +76,7 @@ class DatumStreamMetadata {
 			sourceId,
 			iNames,
 			aNames,
-			sNames
+			sNames,
 		);
 	}
 
@@ -304,7 +304,7 @@ class DatumStreamMetadata {
 				obj.sourceId,
 				i,
 				a,
-				s
+				s,
 			);
 		}
 		return null;

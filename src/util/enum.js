@@ -74,7 +74,7 @@ class Enum {
 			enums.reduce((obj, e) => {
 				obj[e.name] = e;
 				return obj;
-			}, {})
+			}, {}),
 		);
 	}
 

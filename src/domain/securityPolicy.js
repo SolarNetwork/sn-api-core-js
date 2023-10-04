@@ -73,7 +73,7 @@ class SecurityPolicy {
 		locationPrecisions,
 		minLocationPrecision,
 		nodeMetadataPaths,
-		userMetadataPaths
+		userMetadataPaths,
 	) {
 		this._nodeIds = setOrNull(nodeIds);
 		this._sourceIds = setOrNull(sourceIds);
@@ -481,7 +481,7 @@ class SecurityPolicyBuilder {
 			this.buildLocationPrecisions(),
 			this.minLocationPrecision,
 			this.nodeMetadataPaths,
-			this.userMetadataPaths
+			this.userMetadataPaths,
 		);
 	}
 }

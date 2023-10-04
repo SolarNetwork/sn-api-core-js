@@ -108,7 +108,7 @@ class PropMap {
 
 			if (typeof v.toUriEncoding === "function") {
 				result += v.toUriEncoding(
-					propertyName ? encodeURIComponent(propertyName) + "." + k : k
+					propertyName ? encodeURIComponent(propertyName) + "." + k : k,
 				);
 				continue;
 			}
