@@ -1,4 +1,4 @@
-import ComparableEnum from "../util/comparableEnum";
+import ComparableEnum from "../util/comparableEnum.js";
 
 /**
  * A named aggregation.

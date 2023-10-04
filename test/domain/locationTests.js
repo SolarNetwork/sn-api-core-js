@@ -1,8 +1,8 @@
 import test from "ava";
 
-import Location from "domain/location";
+import Location from "../../src/domain/location.js";
 
-test("domain:location:create", t => {
+test("domain:location:create", (t) => {
 	const loc = new Location();
 	t.truthy(loc);
 	t.deepEqual(loc.properties(), {});
@@ -23,7 +23,7 @@ const StreetKey = 'street';
 const TimeZoneIdKey = 'timeZoneId';
 */
 
-test("domain:location:create:object", t => {
+test("domain:location:create:object", (t) => {
 	const data = {
 		country: "NZ",
 		elevation: 1,
@@ -36,7 +36,7 @@ test("domain:location:create:object", t => {
 		region: "Region",
 		stateOrProvince: "State",
 		street: "123 Main Street",
-		timeZoneId: "Pacific/Auckland"
+		timeZoneId: "Pacific/Auckland",
 	};
 	const loc = new Location(data);
 	t.truthy(loc);
@@ -54,7 +54,7 @@ test("domain:location:create:object", t => {
 	t.deepEqual(loc.properties(), data);
 });
 
-test("domain:location:create:location", t => {
+test("domain:location:create:location", (t) => {
 	const loc = new Location();
 	loc.id = 123;
 	loc.country = "NZ";
@@ -64,6 +64,6 @@ test("domain:location:create:location", t => {
 	loc.timeZoneId = "Pacific/Auckland";
 	t.is(
 		loc.toUriEncoding(),
-		"id=123&country=NZ&region=Wellington&locality=Wellington&postalCode=6011&timeZoneId=Pacific%2FAuckland"
+		"id=123&country=NZ&region=Wellington&locality=Wellington&postalCode=6011&timeZoneId=Pacific%2FAuckland",
 	);
 });

@@ -1,14 +1,14 @@
-import Base64 from "crypto-js/enc-base64";
-import Hex from "crypto-js/enc-hex";
-import HmacSHA256 from "crypto-js/hmac-sha256";
-import SHA256 from "crypto-js/sha256";
+import Base64 from "crypto-js/enc-base64.js";
+import Hex from "crypto-js/enc-hex.js";
+import HmacSHA256 from "crypto-js/hmac-sha256.js";
+import SHA256 from "crypto-js/sha256.js";
 import { parse as uriParse } from "uri-js";
 
-import { iso8601Date } from "../format/date";
-import MultiMap from "../util/multiMap";
-import Environment from "./environment";
-import { HttpMethod, default as HttpHeaders } from "./httpHeaders";
-import { urlQueryParse } from "./urlQuery";
+import { iso8601Date } from "../format/date.js";
+import MultiMap from "../util/multiMap.js";
+import Environment from "./environment.js";
+import { HttpMethod, default as HttpHeaders } from "./httpHeaders.js";
+import { urlQueryParse } from "./urlQuery.js";
 
 /**
  * The number of milliseconds a signing key is valid for.
@@ -224,7 +224,7 @@ class AuthorizationV2Builder {
 		}
 		this.signingKey = key;
 		let expire = new Date(
-			(date ? date.getTime() : this.requestDate.getTime()) + SIGNING_KEY_VALIDITY
+			(date ? date.getTime() : this.requestDate.getTime()) + SIGNING_KEY_VALIDITY,
 		);
 		expire.setUTCHours(0);
 		expire.setUTCMinutes(0);
@@ -324,7 +324,7 @@ class AuthorizationV2Builder {
 		if (!ignoreHost) {
 			this.host(host);
 		}
-		return this.path(uri.path);
+		return this.path(uri.scheme === "wss" || uri.scheme === "ws" ? uri.resourceName : uri.path);
 	}
 
 	/**

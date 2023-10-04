@@ -1,11 +1,10 @@
-import DatumStreamMetadata from "./datumStreamMetadata";
-import StreamDatum from "./streamDatum";
-import StreamAggregateDatum from "./streamAggregateDatum";
+import DatumStreamMetadata from "./datumStreamMetadata.js";
+import StreamDatum from "./streamDatum.js";
+import StreamAggregateDatum from "./streamAggregateDatum.js";
 
 /**
  * Create a StreamDatumMetadataMixin class.
  *
- * @exports domain
  * @param {module:domain~StreamAggregateDatum|module:domain~StreamDatum} superclass the stream datum class to mix onto
  * @return {module:domain~StreamDatumMetadataMixin} the mixin class
  */

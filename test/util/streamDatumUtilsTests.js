@@ -1,9 +1,9 @@
 import test from "ava";
 
-import DatumStreamMetadata from "domain/datumStreamMetadata";
-import DatumStreamTypes from "domain/datumStreamType";
-import { AggregateDatum, Datum } from "domain/streamDatumMetadataMixin";
-import { datumForStreamData } from "util/streamDatumUtils";
+import DatumStreamMetadata from "../../src/domain/datumStreamMetadata.js";
+import DatumStreamTypes from "../../src/domain/datumStreamType.js";
+import { AggregateDatum, Datum } from "../../src/domain/streamDatumMetadataMixin.js";
+import { datumForStreamData } from "../../src/util/streamDatumUtils.js";
 
 function testNodeMetadata(streamId, nodeId, sourceId) {
 	const timeZoneId = "Pacific/Auckland";
@@ -21,7 +21,7 @@ function testNodeMetadata(streamId, nodeId, sourceId) {
 		sourceId,
 		iNames,
 		aNames,
-		sNames
+		sNames,
 	);
 }
 
@@ -41,7 +41,7 @@ function testNodeMetadata2(streamId, nodeId, sourceId) {
 		sourceId,
 		iNames,
 		aNames,
-		sNames
+		sNames,
 	);
 }
 
@@ -110,7 +110,7 @@ test("util:streamDatumUtils:datumForStreamData:aggregateDatum", (t) => {
 			"six",
 			"foo",
 		],
-		meta
+		meta,
 	);
 
 	// THEN
@@ -140,7 +140,7 @@ test("util:streamDatumUtils:datumForStreamData:aggregateDatum:json", (t) => {
 	// WHEN
 	const d = datumForStreamData(
 		`["${streamId}",[${ts[0].getTime()},${ts[1].getTime()}],[1,2,3,4],[2,3,4,5],[4,5,6],"six","foo"]`,
-		meta
+		meta,
 	);
 
 	// THEN

@@ -1,4 +1,4 @@
-import Enum from "./enum";
+import Enum from "./enum.js";
 
 /**
  * An immutable enum-like object with an associated key value.

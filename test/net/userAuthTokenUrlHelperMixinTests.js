@@ -1,46 +1,58 @@
-import test from 'ava';
+import test from "ava";
 
-import AuthTokenStatuses from 'domain/authTokenStatus';
-import AuthTokenTypes from 'domain/authTokenType';
-import { UserAuthTokenUrlHelper } from 'net/userAuthTokenUrlHelperMixin';
+import AuthTokenStatuses from "../../src/domain/authTokenStatus.js";
+import AuthTokenTypes from "../../src/domain/authTokenType.js";
+import { UserAuthTokenUrlHelper } from "../../src/net/userAuthTokenUrlHelperMixin.js";
 
-test('user:userAuthTokenUrlHelperMixin:create', t => {
+test("user:userAuthTokenUrlHelperMixin:create", (t) => {
 	const helper = new UserAuthTokenUrlHelper();
 	t.truthy(helper);
 });
 
-test('user:userAuthTokenUrlHelperMixin:listAllTokensUrl', t => {
+test("user:userAuthTokenUrlHelperMixin:listAllTokensUrl", (t) => {
 	const helper = new UserAuthTokenUrlHelper();
-	t.is(helper.listAllAuthTokensUrl(), 
-		'https://data.solarnetwork.net/solaruser/api/v1/sec/user/auth-tokens');
+	t.is(
+		helper.listAllAuthTokensUrl(),
+		"https://data.solarnetwork.net/solaruser/api/v1/sec/user/auth-tokens",
+	);
 });
 
-test('user:userAuthTokenUrlHelperMixin:generateAuthTokenUrl', t => {
+test("user:userAuthTokenUrlHelperMixin:generateAuthTokenUrl", (t) => {
 	const helper = new UserAuthTokenUrlHelper();
-	t.is(helper.generateAuthTokenUrl(AuthTokenTypes.User), 
-		'https://data.solarnetwork.net/solaruser/api/v1/sec/user/auth-tokens/generate/User');
+	t.is(
+		helper.generateAuthTokenUrl(AuthTokenTypes.User),
+		"https://data.solarnetwork.net/solaruser/api/v1/sec/user/auth-tokens/generate/User",
+	);
 });
 
-test('user:userAuthTokenUrlHelperMixin:deleteAuthTokenUrl', t => {
+test("user:userAuthTokenUrlHelperMixin:deleteAuthTokenUrl", (t) => {
 	const helper = new UserAuthTokenUrlHelper();
-	t.is(helper.deleteAuthTokenUrl('foo^!bar'), 
-		'https://data.solarnetwork.net/solaruser/api/v1/sec/user/auth-tokens/foo%5E!bar');
+	t.is(
+		helper.deleteAuthTokenUrl("foo^!bar"),
+		"https://data.solarnetwork.net/solaruser/api/v1/sec/user/auth-tokens/foo%5E!bar",
+	);
 });
 
-test('user:userAuthTokenUrlHelperMixin:updateAuthTokenSecurityPolicyUrl', t => {
+test("user:userAuthTokenUrlHelperMixin:updateAuthTokenSecurityPolicyUrl", (t) => {
 	const helper = new UserAuthTokenUrlHelper();
-	t.is(helper.updateAuthTokenSecurityPolicyUrl('foo^!bar'), 
-		'https://data.solarnetwork.net/solaruser/api/v1/sec/user/auth-tokens/foo%5E!bar');
+	t.is(
+		helper.updateAuthTokenSecurityPolicyUrl("foo^!bar"),
+		"https://data.solarnetwork.net/solaruser/api/v1/sec/user/auth-tokens/foo%5E!bar",
+	);
 });
 
-test('user:userAuthTokenUrlHelperMixin:replaceAuthTokenSecurityPolicyUrl', t => {
+test("user:userAuthTokenUrlHelperMixin:replaceAuthTokenSecurityPolicyUrl", (t) => {
 	const helper = new UserAuthTokenUrlHelper();
-	t.is(helper.replaceAuthTokenSecurityPolicyUrl('foo^!bar'), 
-		'https://data.solarnetwork.net/solaruser/api/v1/sec/user/auth-tokens/foo%5E!bar');
+	t.is(
+		helper.replaceAuthTokenSecurityPolicyUrl("foo^!bar"),
+		"https://data.solarnetwork.net/solaruser/api/v1/sec/user/auth-tokens/foo%5E!bar",
+	);
 });
 
-test('user:userAuthTokenUrlHelperMixin:updateAuthTokenStatusUrl', t => {
+test("user:userAuthTokenUrlHelperMixin:updateAuthTokenStatusUrl", (t) => {
 	const helper = new UserAuthTokenUrlHelper();
-	t.is(helper.updateAuthTokenStatusUrl('foo^!bar', AuthTokenStatuses.Disabled), 
-		'https://data.solarnetwork.net/solaruser/api/v1/sec/user/auth-tokens/foo%5E!bar?status=Disabled');
+	t.is(
+		helper.updateAuthTokenStatusUrl("foo^!bar", AuthTokenStatuses.Disabled),
+		"https://data.solarnetwork.net/solaruser/api/v1/sec/user/auth-tokens/foo%5E!bar?status=Disabled",
+	);
 });

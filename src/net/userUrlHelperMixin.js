@@ -24,7 +24,6 @@ const UserIdsKey = "userIds";
 /**
  * Create a UserUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~UserUrlHelperMixin} the mixin class
  */

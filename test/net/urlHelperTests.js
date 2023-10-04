@@ -1,138 +1,138 @@
 import test from "ava";
 
-import Environment from "net/environment";
-import UrlHelper from "net/urlHelper";
+import Environment from "../../src/net/environment.js";
+import UrlHelper from "../../src/net/urlHelper.js";
 
-test("core:net:urlHelper:static:resolveTemplateUrl", t => {
+test("core:net:urlHelper:static:resolveTemplateUrl", (t) => {
 	const result = UrlHelper.resolveTemplateUrl("/some/{mode}/path?foo={foo}", {
 		mode: "crazy",
-		foo: "bar"
+		foo: "bar",
 	});
 	t.is(result, "/some/crazy/path?foo=bar");
 });
 
-test("core:net:urlHelper:static:resolveTemplateUrl:uirEncoded", t => {
+test("core:net:urlHelper:static:resolveTemplateUrl:uirEncoded", (t) => {
 	const result = UrlHelper.resolveTemplateUrl("/some/{mode}/path?foo={foo}", {
 		mode: "crazy/cool",
-		foo: "bar&grille"
+		foo: "bar&grille",
 	});
 	t.is(result, "/some/crazy%2Fcool/path?foo=bar%26grille");
 });
 
-test("core:net:urlHelper:create", t => {
+test("core:net:urlHelper:create", (t) => {
 	const helper = new UrlHelper();
 	t.truthy(helper);
 	t.truthy(helper.parameters);
 });
 
-test("core:net:urlHelper:create:environment", t => {
+test("core:net:urlHelper:create:environment", (t) => {
 	const env = new Environment();
 	const helper = new UrlHelper(env);
 	t.is(helper.environment, env);
 });
 
-test("core:net:urlHelper:create:environmentObject", t => {
+test("core:net:urlHelper:create:environmentObject", (t) => {
 	const helper = new UrlHelper({ foo: "bar" });
 	const env = helper.environment;
 	t.is(env.value("foo"), "bar");
 });
 
-test("core:net:urlHelper:hostUrl", t => {
+test("core:net:urlHelper:hostUrl", (t) => {
 	const helper = new UrlHelper();
 	t.is(helper.hostUrl(), "https://data.solarnetwork.net");
 });
 
-test("core:net:urlHelper:hostUrl:http", t => {
+test("core:net:urlHelper:hostUrl:http", (t) => {
 	const env = new Environment({
-		protocol: "http"
+		protocol: "http",
 	});
 	const helper = new UrlHelper(env);
 	t.is(helper.hostUrl(), "http://data.solarnetwork.net");
 });
 
-test("core:net:urlHelper:hostUrl:customHost", t => {
+test("core:net:urlHelper:hostUrl:customHost", (t) => {
 	const env = new Environment({
-		host: "foo.example.com:8443"
+		host: "foo.example.com:8443",
 	});
 	const helper = new UrlHelper(env);
 	t.is(helper.hostUrl(), "https://foo.example.com:8443");
 });
 
-test("core:net:urlHelper:hostUrl:customPort", t => {
+test("core:net:urlHelper:hostUrl:customPort", (t) => {
 	const env = new Environment({
-		port: 8443
+		port: 8443,
 	});
 	const helper = new UrlHelper(env);
 	t.is(helper.hostUrl(), "https://data.solarnetwork.net:8443");
 });
 
-test("core:net:urlHelper:hostUrl:proxy", t => {
+test("core:net:urlHelper:hostUrl:proxy", (t) => {
 	const env = new Environment({
 		proxyHost: "proxy.example.com",
-		proxyPort: 8443
+		proxyPort: 8443,
 	});
 	const helper = new UrlHelper(env);
 	t.is(helper.hostUrl(), "https://proxy.example.com:8443");
 });
 
-test("core:net:urlHelper:hostWebSocketUrl", t => {
+test("core:net:urlHelper:hostWebSocketUrl", (t) => {
 	const helper = new UrlHelper();
 	t.is(helper.hostWebSocketUrl(), "wss://data.solarnetwork.net");
 });
 
-test("core:net:urlHelper:hostWebSocketUrl:ws", t => {
+test("core:net:urlHelper:hostWebSocketUrl:ws", (t) => {
 	const env = new Environment({
-		protocol: "http"
+		protocol: "http",
 	});
 	const helper = new UrlHelper(env);
 	t.is(helper.hostWebSocketUrl(), "ws://data.solarnetwork.net");
 });
 
-test("core:net:urlHelper:hostWebSocketUrl:customHost", t => {
+test("core:net:urlHelper:hostWebSocketUrl:customHost", (t) => {
 	const env = new Environment({
-		host: "foo.example.com:8443"
+		host: "foo.example.com:8443",
 	});
 	const helper = new UrlHelper(env);
 	t.is(helper.hostWebSocketUrl(), "wss://foo.example.com:8443");
 });
 
-test("core:net:urlHelper:hostWebSocketUrl:customPort", t => {
+test("core:net:urlHelper:hostWebSocketUrl:customPort", (t) => {
 	const env = new Environment({
-		port: 8443
+		port: 8443,
 	});
 	const helper = new UrlHelper(env);
 	t.is(helper.hostWebSocketUrl(), "wss://data.solarnetwork.net:8443");
 });
 
-test("core:net:urlHelper:hostWebSocketUrl:proxy", t => {
+test("core:net:urlHelper:hostWebSocketUrl:proxy", (t) => {
 	const env = new Environment({
 		proxyHost: "proxy.example.com",
-		proxyPort: 8443
+		proxyPort: 8443,
 	});
 	const helper = new UrlHelper(env);
 	t.is(helper.hostWebSocketUrl(), "wss://proxy.example.com:8443");
 });
 
-test("core:net:urlHelper:baseUrl", t => {
+test("core:net:urlHelper:baseUrl", (t) => {
 	const helper = new UrlHelper();
 	t.is(helper.baseUrl(), "https://data.solarnetwork.net");
 });
 
-test("core:net:urlHelper:resolveTemplateUrl", t => {
+test("core:net:urlHelper:resolveTemplateUrl", (t) => {
 	const helper = new UrlHelper();
 	helper.parameters.values({ mode: "crazy", foo: "bar" });
 	const result = helper.resolveTemplateUrl("/some/{mode}/path?foo={foo}");
 	t.is(result, "/some/crazy/path?foo=bar");
 });
 
-test("core:net:urlHelper:resolveTemplatePath", t => {
+test("core:net:urlHelper:resolveTemplatePath", (t) => {
 	const helper = new UrlHelper();
 	helper.parameters.values({ mode: "crazy", foo: "bar" });
 	const result = helper.resolveTemplatePath("/some/{mode}/path?foo={foo}");
 	t.is(result, "https://data.solarnetwork.net/some/crazy/path?foo=bar");
 });
 
-test("core:net:urlHelper:env", t => {
+test("core:net:urlHelper:env", (t) => {
 	const helper = new UrlHelper();
 	t.is(helper.env("host"), "data.solarnetwork.net");
 	t.is(helper.env("fooPath", "/foo"), helper.environment);
@@ -140,7 +140,7 @@ test("core:net:urlHelper:env", t => {
 	t.is(helper.environment.value("fooPath"), "/foo");
 });
 
-test("core:net:urlHelper:parameter", t => {
+test("core:net:urlHelper:parameter", (t) => {
 	const helper = new UrlHelper();
 	t.is(helper.parameter("foo", "bar"), helper.parameters);
 	t.is(helper.parameter("foo"), "bar");

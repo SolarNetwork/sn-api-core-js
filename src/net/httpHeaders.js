@@ -1,4 +1,4 @@
-import MultiMap from "../util/multiMap";
+import MultiMap from "../util/multiMap.js";
 
 const HttpMethod = Object.freeze(
 	/**
@@ -16,7 +16,7 @@ const HttpMethod = Object.freeze(
 		DELETE: "DELETE",
 		OPTIONS: "OPTIONS",
 		TRACE: "TRACE",
-	}
+	},
 );
 
 const HttpContentType = Object.freeze(
@@ -31,7 +31,7 @@ const HttpContentType = Object.freeze(
 		APPLICATION_JSON_UTF8: "application/json; charset=UTF-8",
 		FORM_URLENCODED: "application/x-www-form-urlencoded",
 		FORM_URLENCODED_UTF8: "application/x-www-form-urlencoded; charset=UTF-8",
-	}
+	},
 );
 
 /**

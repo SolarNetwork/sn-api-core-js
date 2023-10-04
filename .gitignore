@@ -1,5 +1,6 @@
 .DS_Store
 .nyc_output
+*.log
 build
 coverage
 docs/api

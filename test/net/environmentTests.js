@@ -1,8 +1,8 @@
 import test from "ava";
 
-import Environment from "net/environment";
+import Environment from "../../src/net/environment.js";
 
-test("net:environment:create", t => {
+test("net:environment:create", (t) => {
 	const env = new Environment();
 	t.truthy(env);
 	t.is(env.protocol, "https");
@@ -10,7 +10,7 @@ test("net:environment:create", t => {
 	t.is(env.port, 443);
 });
 
-test("net:environment:createWithConfig", t => {
+test("net:environment:createWithConfig", (t) => {
 	const env = new Environment({ host: "example.com", protocol: "http" });
 	t.truthy(env);
 	t.is(env.protocol, "http");
@@ -18,12 +18,12 @@ test("net:environment:createWithConfig", t => {
 	t.is(env.port, 80);
 });
 
-test("net:environment:createWithConfig:locationWithPort", t => {
+test("net:environment:createWithConfig:locationWithPort", (t) => {
 	const env = new Environment({
 		host: "example.com:9000",
 		hostname: "example.com",
 		port: 9000,
-		protocol: "http:"
+		protocol: "http:",
 	});
 	t.truthy(env);
 	t.is(env.protocol, "http");
@@ -31,7 +31,7 @@ test("net:environment:createWithConfig:locationWithPort", t => {
 	t.is(env.port, 9000);
 });
 
-test("net:environment:createWithConfig:location:tls", t => {
+test("net:environment:createWithConfig:location:tls", (t) => {
 	const env = new Environment({ host: "example.com", protocol: "https:" });
 	t.truthy(env);
 	t.is(env.protocol, "https");
@@ -39,7 +39,7 @@ test("net:environment:createWithConfig:location:tls", t => {
 	t.is(env.port, 443);
 });
 
-test("net:environment:useTls", t => {
+test("net:environment:useTls", (t) => {
 	const env = new Environment();
 	t.true(env.useTls());
 	env.protocol = "http";

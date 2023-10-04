@@ -1,6 +1,6 @@
-import StreamAggregateDatum from "../domain/streamAggregateDatum";
-import StreamDatum from "../domain/streamDatum";
-import { AggregateDatum, Datum } from "../domain/streamDatumMetadataMixin";
+import StreamAggregateDatum from "../domain/streamAggregateDatum.js";
+import StreamDatum from "../domain/streamDatum.js";
+import { AggregateDatum, Datum } from "../domain/streamDatumMetadataMixin.js";
 
 /**
  * Get a datum instance from a stream data array.

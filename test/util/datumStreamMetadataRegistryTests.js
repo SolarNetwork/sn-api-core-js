@@ -1,9 +1,9 @@
 import test from "ava";
 
-import DatumSamplesTypes from "domain/datumSamplesType";
-import DatumStreamMetadata from "domain/datumStreamMetadata";
-import DatumStreamMetadataRegistry from "util/datumStreamMetadataRegistry";
-import DatumStreamTypes from "domain/datumStreamType";
+import DatumSamplesTypes from "../../src/domain/datumSamplesType.js";
+import DatumStreamMetadata from "../../src/domain/datumStreamMetadata.js";
+import DatumStreamMetadataRegistry from "../../src/util/datumStreamMetadataRegistry.js";
+import DatumStreamTypes from "../../src/domain/datumStreamType.js";
 
 function testNodeMetadata(streamId, nodeId, sourceId) {
 	const timeZoneId = "Pacific/Auckland";
@@ -21,11 +21,11 @@ function testNodeMetadata(streamId, nodeId, sourceId) {
 		sourceId,
 		iNames,
 		aNames,
-		sNames
+		sNames,
 	);
 }
 
-test("util:datumStreamMetadataRegistry:empty", t => {
+test("util:datumStreamMetadataRegistry:empty", (t) => {
 	// WHEN
 	const obj = new DatumStreamMetadataRegistry();
 
@@ -35,7 +35,7 @@ test("util:datumStreamMetadataRegistry:empty", t => {
 	t.deepEqual(obj.metadataStreamIdsList(), []);
 });
 
-test("util:datumStreamMetadataRegistry:populated", t => {
+test("util:datumStreamMetadataRegistry:populated", (t) => {
 	// GIVEN
 	let metas = [];
 	let metaMap = new Map();
@@ -64,7 +64,7 @@ test("util:datumStreamMetadataRegistry:populated", t => {
 	}
 });
 
-test("util:datumStreamMetadataRegistry:addMetadata", t => {
+test("util:datumStreamMetadataRegistry:addMetadata", (t) => {
 	// GIVEN
 	let metas = [];
 	let metaMap = new Map();
@@ -94,7 +94,7 @@ test("util:datumStreamMetadataRegistry:addMetadata", t => {
 	t.is(obj.metadataForStreamId(addedMeta.streamId), addedMeta);
 });
 
-test("util:datumStreamMetadataRegistry:fromJsonEncoding", t => {
+test("util:datumStreamMetadataRegistry:fromJsonEncoding", (t) => {
 	// GIVEN
 	const streamId = "7714f762-2361-4ec2-98ab-7e96807b32a6";
 	const nodeId = 123;
@@ -108,7 +108,7 @@ test("util:datumStreamMetadataRegistry:fromJsonEncoding", t => {
 			nodeId +
 			',"sourceId":"' +
 			sourceId +
-			'","i":["a","b","c"],"a":["d","e"],"s":["f"]}]'
+			'","i":["a","b","c"],"a":["d","e"],"s":["f"]}]',
 	);
 
 	// THEN
@@ -128,7 +128,7 @@ test("util:datumStreamMetadataRegistry:fromJsonEncoding", t => {
 	t.deepEqual(meta.propertyNamesForType(DatumSamplesTypes.Status), ["f"]);
 });
 
-test("util:datumStreamMetadataRegistry:toJsonEncoding", t => {
+test("util:datumStreamMetadataRegistry:toJsonEncoding", (t) => {
 	// GIVEN
 	const streamId = "7714f762-2361-4ec2-98ab-7e96807b32a6";
 	const nodeId = 123;
@@ -146,6 +146,6 @@ test("util:datumStreamMetadataRegistry:toJsonEncoding", t => {
 			nodeId +
 			',"sourceId":"' +
 			sourceId +
-			'","i":["a","b","c"],"a":["d","e"],"s":["f"]}]'
+			'","i":["a","b","c"],"a":["d","e"],"s":["f"]}]',
 	);
 });

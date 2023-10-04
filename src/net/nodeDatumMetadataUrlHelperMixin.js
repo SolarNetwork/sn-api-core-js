@@ -1,13 +1,12 @@
-import Pagination from "../domain/pagination";
-import SortDescriptor from "../domain/sortDescriptor";
-import UrlHelper from "./urlHelper";
-import NodeUrlHelperMixin from "./nodeUrlHelperMixin";
-import QueryUrlHelperMixin from "./queryUrlHelperMixin";
+import Pagination from "../domain/pagination.js";
+import SortDescriptor from "../domain/sortDescriptor.js";
+import UrlHelper from "./urlHelper.js";
+import NodeUrlHelperMixin from "./nodeUrlHelperMixin.js";
+import QueryUrlHelperMixin from "./queryUrlHelperMixin.js";
 
 /**
  * Create a NodeDatumUrlHelperMixin class.
  *
- * @exports net
  * @param {module:net~UrlHelper} superclass the UrlHelper class to mix onto
  * @return {module:net~NodeDatumMetadataUrlHelperMixin} the mixin class
  */
@@ -172,7 +171,7 @@ const NodeDatumMetadataUrlHelperMixin = (superclass) =>
  * @alias module:net~NodeDatumMetadataUrlHelper
  */
 class NodeDatumMetadataUrlHelper extends NodeDatumMetadataUrlHelperMixin(
-	QueryUrlHelperMixin(NodeUrlHelperMixin(UrlHelper))
+	QueryUrlHelperMixin(NodeUrlHelperMixin(UrlHelper)),
 ) {}
 
 export default NodeDatumMetadataUrlHelperMixin;

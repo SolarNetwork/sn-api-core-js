@@ -1,9 +1,9 @@
 import test from "ava";
 
-import DatumStreamMetadata from "domain/datumStreamMetadata";
-import DatumStreamMetadataRegistry from "util/datumStreamMetadataRegistry";
-import DatumStreamTypes from "domain/datumStreamType";
-import StreamAggregateDatum from "domain/streamAggregateDatum";
+import DatumStreamMetadata from "../../src/domain/datumStreamMetadata.js";
+import DatumStreamMetadataRegistry from "../../src/util/datumStreamMetadataRegistry.js";
+import DatumStreamTypes from "../../src/domain/datumStreamType.js";
+import StreamAggregateDatum from "../../src/domain/streamAggregateDatum.js";
 
 function testNodeMetadata(streamId, nodeId, sourceId) {
 	const timeZoneId = "Pacific/Auckland";
@@ -21,7 +21,7 @@ function testNodeMetadata(streamId, nodeId, sourceId) {
 		sourceId,
 		iNames,
 		aNames,
-		sNames
+		sNames,
 	);
 }
 
@@ -139,7 +139,7 @@ test("domain:streamAggregateDatum:fromJsonEncoding:embedded", (t) => {
 	// WHEN
 	const d = StreamAggregateDatum.fromJsonEncoding(
 		`["${streamId}",[${ts[0].getTime()},${ts[1].getTime()}],[1,2,3,4],[2,3,4,5],[4,5,6],"six","foo"]`,
-		meta
+		meta,
 	);
 
 	// THEN
@@ -168,7 +168,7 @@ test("domain:streamAggregateDatum:fromJsonEncoding:registry", (t) => {
 	// WHEN
 	const d = StreamAggregateDatum.fromJsonEncoding(
 		`[0,[${ts[0].getTime()},${ts[1].getTime()}],[1,2,3,4],[2,3,4,5],[4,5,6],"six","foo"]`,
-		reg
+		reg,
 	);
 
 	// THEN
@@ -198,14 +198,14 @@ test("domain:streamAggregateDatum:toJsonEncoding:embedded", (t) => {
 		],
 		[[4, 5, 6]],
 		["six"],
-		["foo"]
+		["foo"],
 	);
 
 	// WHEN
 	const json = d.toJsonEncoding();
 	t.is(
 		json,
-		`["${streamId}",[${ts[0].getTime()},${ts[1].getTime()}],[1,2,3,4],[2,3,4,5],[4,5,6],"six","foo"]`
+		`["${streamId}",[${ts[0].getTime()},${ts[1].getTime()}],[1,2,3,4],[2,3,4,5],[4,5,6],"six","foo"]`,
 	);
 });
 
@@ -222,7 +222,7 @@ test("domain:streamAggregateDatum:toJsonEncoding:registry", (t) => {
 		],
 		[[4, 5, 6]],
 		["six"],
-		["foo"]
+		["foo"],
 	);
 	const nodeId = 123;
 	const sourceId = "test/source";
@@ -233,6 +233,6 @@ test("domain:streamAggregateDatum:toJsonEncoding:registry", (t) => {
 	const json = d.toJsonEncoding(reg);
 	t.is(
 		json,
-		`[0,[${ts[0].getTime()},${ts[1].getTime()}],[1,2,3,4],[2,3,4,5],[4,5,6],"six","foo"]`
+		`[0,[${ts[0].getTime()},${ts[1].getTime()}],[1,2,3,4],[2,3,4,5],[4,5,6],"six","foo"]`,
 	);
 });

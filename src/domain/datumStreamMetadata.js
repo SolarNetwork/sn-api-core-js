@@ -1,5 +1,5 @@
-import { DatumStreamType, default as DatumStreamTypes } from "./datumStreamType";
-import DatumSamplesTypes from "./datumSamplesType";
+import { DatumStreamType, default as DatumStreamTypes } from "./datumStreamType.js";
+import DatumSamplesTypes from "./datumSamplesType.js";
 
 /**
  * Metadata about a datum stream.
