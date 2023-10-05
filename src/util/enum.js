@@ -81,7 +81,7 @@ class Enum {
 	/**
 	 * Get an enum instance from its name.
 	 *
-	 * This method searches the {@link module:util~Enum#enumVvalues} array for a matching value.
+	 * This method searches the {@link module:util~Enum#enumValues} array for a matching value.
 	 *
 	 * @param {string} name the enum name to get an instnace for
 	 * @returns {module:util~Enum} the instance, or `undefined` if no instance exists for the given `name`
