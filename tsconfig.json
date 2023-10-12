@@ -1,0 +1,11 @@
+{
+	"extends": "@tsconfig/node17/tsconfig.json",
+	"compilerOptions": {
+		"rootDir": "src",
+		"outDir": "lib",
+		"declaration": true,
+		"sourceMap": true,
+		"declarationMap": true,
+		"isolatedModules": true
+	}
+}
