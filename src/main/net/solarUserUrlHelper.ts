@@ -3,7 +3,7 @@ import AuthUrlHelperMixin from "./authUrlHelperMixin.js";
 import AuthTokenUrlHelperMixin from "./authTokenUrlHelperMixin.js";
 import UserDatumAuxiliaryUrlHelperMixin from "./userDatumAuxiliaryUrlHelperMixin.js";
 import UserMetadataUrlHelperMixin from "./userMetadataUrlHelperMixin.js";
-import { UserNodesUrlHelperMixin } from "./index.js";
+import UserNodesUrlHelperMixin from "./userNodesUrlHelperMixin.js";
 
 /**
  * The SolarUser default path.
