@@ -1,0 +1,1 @@
+{"version":3,"file":"instructionParameter.d.ts","sourceRoot":"","sources":["../../src/main/domain/instructionParameter.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,MAAM,CAAC,OAAO,WAAW,oBAAoB;IAC5C,0BAA0B;IAC1B,IAAI,EAAE,MAAM,CAAC;IAEb,2BAA2B;IAC3B,KAAK,EAAE,MAAM,CAAC;CACd;AAED;;GAEG;AACH,oBAAY,8BAA8B;IACzC,iEAAiE;IACjE,aAAa,kBAAkB;CAC/B"}
