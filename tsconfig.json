@@ -1,0 +1,13 @@
+{
+	"extends": "@tsconfig/node17/tsconfig.json",
+	"include": ["src/**/*", "tests/**/*"],
+	"compilerOptions": {
+		"outDir": "build",
+		"declaration": true,
+		"sourceMap": true,
+		"declarationMap": true,
+		"isolatedModules": true,
+		"module": "Node16",
+		"moduleResolution": "Node16"
+	}
+}

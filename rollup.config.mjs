@@ -1,17 +1,10 @@
-import { babel } from "@rollup/plugin-babel";
-import includePaths from "rollup-plugin-includepaths";
-
-const includePathOptions = {
-	include: {},
-	paths: ["src"],
-	external: [],
-	extensions: [".js"],
-};
+import typescript from "@rollup/plugin-typescript";
 
 export default {
 	external: (id) => {
 		return /(crypto-js|d3-|uri-js)/.test(id);
 	},
+	input: "src/main/index.ts",
 	output: {
 		globals: {
 			"d3-array": "d3",
@@ -25,25 +18,5 @@ export default {
 			"uri-js": "URI",
 		},
 	},
-	plugins: [
-		includePaths(includePathOptions),
-		babel({
-			babelHelpers: "bundled",
-			exclude: "node_modules/**",
-			babelrc: false,
-			plugins: [],
-			presets: [
-				[
-					"@babel/env",
-					{
-						targets: {
-							browsers: ["last 2 versions"],
-							node: "16",
-						},
-						modules: false,
-					},
-				],
-			],
-		}),
-	],
+	plugins: [typescript({ tsconfig: "tsconfig.dist.json" })],
 };
