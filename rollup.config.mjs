@@ -18,5 +18,5 @@ export default {
 			"uri-js": "URI",
 		},
 	},
-	plugins: [typescript()],
+	plugins: [typescript({ tsconfig: "tsconfig.dist.json" })],
 };
