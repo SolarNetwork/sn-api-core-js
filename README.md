@@ -4,51 +4,30 @@ This project contains JavaScript code to help access the [SolarNetwork API][sola
 
 # Building
 
-The build uses [NPM][npm] or [yarn][yarn]. First, initialize the dependencies:
+The build uses [NPM][npm] and requires Node 17+. First, initialize the dependencies:
 
-```shell
-# NPM
-npm install
-
-# or, yarn
-yarn install
+```sh
+npm ci
 ```
 
 Then you can run the `build` script:
 
-```shell
-# NPM
+```sh
 npm run build
-
-# or, yarn
-yarn run build
 ```
 
-That will produce `lib/solarnetwork-api-core.js` and `lib/solarnetwork-api-core.min.js` bundles
-of all sources, transpiled into an ES5 compatible UMD module, suitable for use in both browsers
-and Node.
+That will produce ES2022 modules with an entry point in `lib/main/index.js`.
 
-Additionally the build produces `lib/solarnetwork-api-core.es.js` and
-`lib/solarnetwork-api-core.es.min.js` bundels of all sources, transpiled into an ES6 compatible
-module, suitable for use in other projects with build tools that know how to use ES6 modules
-(like Rollup or Webpack).
-
-Finally, the non-transpiled source is available via the `lib.js` file which exports ES6
-modules for all the modules in the project. This is suitable for use by other projects with
-build tools that know how to use ES6 modules (like Rollup or Webpack) where you'd like to
-transpile the source for a different target, for example ES2015.
+You can also produce an ES2022 bundle by running `npm run build:bundle`. That will produce
+a single bundled file at `lib/solarnetwork-api-core.es.js`.
 
 # API docs
 
 The API documentation is published [here](https://solarnetwork.github.io/), or
 you can build the API documentation by running the `apidoc` script:
 
-```shell
-# NPM
+```sh
 npm run apidoc
-
-# or, yarn
-yarn run apidoc
 ```
 
 That will produce HTML documentation in `docs/api`.
@@ -57,28 +36,12 @@ That will produce HTML documentation in `docs/api`.
 
 The unit tests can be run by running the `test` script:
 
-```shell
-# NPM
+```sh
 npm test
-
-# or, yarn
-yarn test
-
-# for more verbose output, add --verbose
-yarn test -- --verbose
 ```
 
-To generate a unit test code coverage report, run the `coverage` script:
-
-```shell
-# NPM
-npm run coverage
-
-# or, yarn
-yarn run coverage
-```
-
-That will produce a HTML code coverage report at `coverage/index.html`.
+That will output the test results and produce a HTML code coverage report
+at `coverage/index.html`.
 
 # Releases
 
@@ -93,6 +56,5 @@ to version, build, commit, and publish the release. See the
 [generate-release][generate-release] site for more information.
 
 [npm]: https://www.npmjs.com/
-[yarn]: https://yarnpkg.com/
 [solarnet-api]: https://github.com/SolarNetwork/solarnetwork/wiki/API-Developer-Guide
 [generate-release]: https://github.com/mrkmg/node-generate-release
