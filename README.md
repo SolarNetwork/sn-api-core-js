@@ -7,6 +7,19 @@ To include the library in your NPM-based project, run the following:
 npm i solarnetwork-api-core
 ```
 
+# API docs
+
+The latest API documentation is published [here](https://solarnetwork.github.io/sn-api-core-js/), or
+you can build the API documentation by running the `apidoc` script:
+
+```sh
+npm run apidoc
+```
+
+That will produce HTML documentation in `docs/html`.
+
+# Example
+
 Here's an example use of the library, targeted for use in a browser using the [Fetch API][fetch] to
 access the [/datum/stream/reading][stream-reading] SolarNetwork API:
 
@@ -103,6 +116,51 @@ async function fetchReadingDatumStream(
 }
 ```
 
+# Upgrading from 1.x
+
+The 2.x version of this library has changed somewhat as the 1.x library was ported
+to TypeScript and updated to ES2022. Most of the same classes and methods have
+been preserved, but some things have moved namespaces. Thankfully the move to
+TypeScript makes refactoring an application using the 1.x API pretty straightforward,
+as your IDE can usually offer the correct `import` path to use for a given class.
+
+For example, in the 1.x API you might have:
+
+```js
+import {
+	Aggregations,
+	AuthorizationV2Builder,
+	DatumFilter,
+	DatumReadingTypes,
+	DatumStreamMetadataRegistry,
+	NodeDatumUrlHelper,
+	streamDatumUtils,
+} from "solarnetwork-api-core";
+```
+
+Most of those exist in the 2.x API, just under different import paths:
+
+```ts
+import {
+	Aggregations,
+	DatumFilter,
+	DatumReadingTypes,
+} from "solarnetwork-api-core/lib/domain";
+import {
+	AuthorizationV2Builder,
+	SolarQueryApi, // <-- this replaces the NodeDatumUrlHelper!
+} from "solarnetwork-api-core/lib/net";
+import { DatumStreamMetadataRegistry } from "solarnetwork-api-core/lib/util";
+import { datumForStreamData } from "solarnetwork-api-core/lib/util/datum";
+```
+
+One area that has changed somewhat significantly is the `net` namespace. The
+various `*UrlHelper` classes have been reworked into `Solar*Api` classes, such
+as `SolarQueryApi` and `SolarUserApi`. The methods offered on those classes
+remain mostly the same as in the 1.x library, but be sure to confirm with
+the API docs. Here again your IDE will generally be able to point out broken
+API usage, thanks to the TypeScript definitions included in the library.
+
 # Building
 
 The build uses [NPM][npm] and requires Node 17+. First, initialize the dependencies:
@@ -121,17 +179,6 @@ That will produce ES2022 modules with an entry point in `lib/index.js`.
 
 You can also produce an ES2022 bundle by running `npm run build:bundle`. That will produce a single
 bundled file at `lib/solarnetwork-api-core.es.js`.
-
-# API docs
-
-The API documentation is published [here](https://solarnetwork.github.io/), or you can build the API
-documentation by running the `apidoc` script:
-
-```sh
-npm run apidoc
-```
-
-That will produce HTML documentation in `docs/api`.
 
 # Releases
 
