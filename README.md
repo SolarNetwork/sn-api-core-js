@@ -13,10 +13,10 @@ npm ci
 Then you can run the `build` script:
 
 ```sh
-npm run build
+npm run build:dist
 ```
 
-That will produce ES2022 modules with an entry point in `lib/main/index.js`.
+That will produce ES2022 modules with an entry point in `lib/index.js`.
 
 You can also produce an ES2022 bundle by running `npm run build:bundle`. That will produce
 a single bundled file at `lib/solarnetwork-api-core.es.js`.
