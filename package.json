@@ -73,6 +73,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "build:bundle": "rollup --config rollup.config.mjs --banner \"$(preamble)\" -m -o lib/solarnetwork-api-core.es.js",
     "pretest": "npm run build",
     "test": "c8 ava",
     "coverage": "c8 --reporter=lcov ava",
@@ -92,6 +93,7 @@
   },
   "devDependencies": {
     "@ava/typescript": "^4.1.0",
+    "@rollup/plugin-typescript": "^11.1.5",
     "@tsconfig/node17": "^17.1.1",
     "@types/crypto-js": "^4.1.2",
     "@types/d3-array": "^3.0.8",
@@ -109,7 +111,10 @@
     "generate-release": "^1.1.1",
     "moment": "^2.29.4",
     "npmversion": "^1.7.0",
+    "package-preamble": "^0.1.0",
+    "rollup": "^4.0.2",
     "semver": "^7.5.4",
+    "tslib": "^2.6.2",
     "typedoc": "^0.25.1",
     "typescript": "^5.2.2"
   },

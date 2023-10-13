@@ -6,6 +6,8 @@
 		"declaration": true,
 		"sourceMap": true,
 		"declarationMap": true,
-		"isolatedModules": true
+		"isolatedModules": true,
+		"module": "Node16",
+		"moduleResolution": "Node16"
 	}
 }
