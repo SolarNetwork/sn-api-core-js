@@ -69,11 +69,7 @@ async function fetchReadingDatumStream(
 
 	// create URL and auth headers for API request
 	const auth = new AuthorizationV2Builder(token);
-	const authHeader = auth
-		.reset()
-		.snDate(true)
-		.url(streamDataUrl)
-		.build(tokenSecret);
+	const authHeader = auth.snDate(true).url(streamDataUrl).build(tokenSecret);
 	const headers = new Headers({
 		Authorization: authHeader,
 		Accept: HttpContentType.APPLICATION_JSON,
@@ -106,8 +102,6 @@ async function fetchReadingDatumStream(
 	return Promise.resolve(result);
 }
 ```
-
-
 
 # Building
 
@@ -168,7 +162,6 @@ automatically after every push into the `develop` branch of this repository and 
 coverage is uploaded to [Codecov](https://codecov.io/github/SolarNetwork/sn-api-core-js/).
 
 [![codecov](https://codecov.io/gh/SolarNetwork/sn-api-core-js/graphs/sunburst.svg?token=2YA6X8LUX7)](https://codecov.io/github/SolarNetwork/sn-api-core-js)
-
 
 [fetch]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 [generate-release]: https://github.com/mrkmg/node-generate-release
