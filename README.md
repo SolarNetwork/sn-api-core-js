@@ -55,7 +55,7 @@ async function fetchReadingDatumStream(
 ): Promise<GeneralDatum[]> {
 	const filter = new DatumFilter();
 	filter.aggregation = Aggregations.Hour;
-	filter.nodeId = Number(nodeId);
+	filter.nodeId = nodeId;
 	filter.sourceId = sourceId;
 	filter.startDate = startDate;
 	filter.endDate = endDate;
