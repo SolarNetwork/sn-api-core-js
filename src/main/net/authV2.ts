@@ -102,7 +102,7 @@ class AuthorizationV2Builder {
 	static readonly SNWS2_AUTH_SCHEME = "SNWS2";
 
 	/** The SolarNet auth token value. */
-	tokenId: string;
+	tokenId?: string;
 
 	/** The SolarNet environment. */
 	environment: HostConfig;
@@ -140,7 +140,7 @@ class AuthorizationV2Builder {
 	 * @param environment - the environment to use; if not provided a
 	 *        default environment will be created
 	 */
-	constructor(token: string, environment?: HostConfig) {
+	constructor(token?: string, environment?: HostConfig) {
 		this.tokenId = token;
 		this.environment = environment || new Environment();
 		this.httpHeaders = new HttpHeaders();

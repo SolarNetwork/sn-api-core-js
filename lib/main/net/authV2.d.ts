@@ -85,7 +85,7 @@ declare class AuthorizationV2Builder {
     /** The SolarNetwork V2 authorization scheme. */
     static readonly SNWS2_AUTH_SCHEME = "SNWS2";
     /** The SolarNet auth token value. */
-    tokenId: string;
+    tokenId?: string;
     /** The SolarNet environment. */
     environment: HostConfig;
     /** The signed HTTP headers. */
@@ -110,7 +110,7 @@ declare class AuthorizationV2Builder {
      * @param environment - the environment to use; if not provided a
      *        default environment will be created
      */
-    constructor(token: string, environment?: HostConfig);
+    constructor(token?: string, environment?: HostConfig);
     /**
      * Reset to defalut property values.
      *
