@@ -304,7 +304,7 @@ export function iso8601Date(date: Date, includeTime?: boolean): string {
  * @param local - if `true` then use local date components, otherwise UTC
  * @returns a season constant number, from 0 - 3
  */
-export function seasonForDate(date: Date | number, local?:boolean): number {
+export function seasonForDate(date: Date | number, local?:boolean): 0 | 1 | 2 | 3 {
 	const m = date instanceof Date ? (local ? date.getMonth() : date.getUTCMonth()) : Number(date);
 	if (m < 2 || m === 11) {
 		return 3;
