@@ -258,6 +258,21 @@ test("seasonForDate:date:UTC", (t) => {
 	t.is(seasonForDate(new Date(Date.UTC(2024, 1, 1))), 3);
 });
 
+test("seasonForDate:date:local", (t) => {
+	t.is(seasonForDate(new Date(2023, 2, 1), true), 0);
+	t.is(seasonForDate(new Date(2023, 3, 1), true), 0);
+	t.is(seasonForDate(new Date(2023, 4, 1), true), 0);
+	t.is(seasonForDate(new Date(2023, 5, 1), true), 1);
+	t.is(seasonForDate(new Date(2023, 6, 1), true), 1);
+	t.is(seasonForDate(new Date(2023, 7, 1), true), 1);
+	t.is(seasonForDate(new Date(2023, 8, 1), true), 2);
+	t.is(seasonForDate(new Date(2023, 9, 1), true), 2);
+	t.is(seasonForDate(new Date(2023, 10, 1), true), 2);
+	t.is(seasonForDate(new Date(2023, 11, 1), true), 3);
+	t.is(seasonForDate(new Date(2024, 0, 1), true), 3);
+	t.is(seasonForDate(new Date(2024, 1, 1), true), 3);
+});
+
 test("seasonForDate:num", (t) => {
 	t.is(seasonForDate(2), 0);
 	t.is(seasonForDate(3), 0);

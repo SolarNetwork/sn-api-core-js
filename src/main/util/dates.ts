@@ -301,10 +301,19 @@ export function iso8601Date(date: Date, includeTime?: boolean): string {
  *
  * @param date - either a date to get the season for, or a number representing the UTC month of a date
  *     (0 is January, 11 is December)
+ * @param local - if `true` then use local date components, otherwise UTC
  * @returns a season constant number, from 0 - 3
  */
-export function seasonForDate(date: Date | number): number {
-	const m = date instanceof Date ? date.getUTCMonth() : Number(date);
+export function seasonForDate(
+	date: Date | number,
+	local?: boolean
+): 0 | 1 | 2 | 3 {
+	const m =
+		date instanceof Date
+			? local
+				? date.getMonth()
+				: date.getUTCMonth()
+			: Number(date);
 	if (m < 2 || m === 11) {
 		return 3;
 	} else if (m < 5) {
