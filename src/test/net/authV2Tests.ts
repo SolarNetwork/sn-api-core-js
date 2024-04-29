@@ -830,9 +830,11 @@ test("simplePostWithComputedDigest", (t) => {
 	);
 
 	const sigData = builder.computeSignatureData(canonicalRequestData);
-	t.is(sigData, "SNWS2-HMAC-SHA256\n" +
-		"20170425T143000Z\n" +
-		Hex.stringify(SHA256(canonicalRequestData))
+	t.is(
+		sigData,
+		"SNWS2-HMAC-SHA256\n" +
+			"20170425T143000Z\n" +
+			Hex.stringify(SHA256(canonicalRequestData))
 	);
 
 	t.is(

@@ -727,8 +727,8 @@ class AuthorizationV2Builder {
 	 *
 	 * ```
 	 * SNWS2-HMAC-SHA256
-     * 20170301T120000Z
-     * Hex(SHA256(canonicalRequestData))
+	 * 20170301T120000Z
+	 * Hex(SHA256(canonicalRequestData))
 	 * ```
 	 *
 	 * @param canonicalRequestData - the request data, returned from {@link Net.AuthorizationV2Builder#buildCanonicalRequestData}
