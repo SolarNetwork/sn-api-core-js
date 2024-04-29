@@ -153,7 +153,8 @@ export declare function iso8601Date(date: Date, includeTime?: boolean): string;
  *
  * @param date - either a date to get the season for, or a number representing the UTC month of a date
  *     (0 is January, 11 is December)
+ * @param local - if `true` then use local date components, otherwise UTC
  * @returns a season constant number, from 0 - 3
  */
-export declare function seasonForDate(date: Date | number): number;
+export declare function seasonForDate(date: Date | number, local?: boolean): 0 | 1 | 2 | 3;
 //# sourceMappingURL=dates.d.ts.map
