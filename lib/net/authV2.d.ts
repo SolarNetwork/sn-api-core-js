@@ -361,6 +361,21 @@ declare class AuthorizationV2Builder {
      */
     computeSigningKey(secretKey: string): CryptoJS.lib.WordArray;
     /**
+     * Compute the data to be signed by the signing key.
+     *
+     * The signature data takes this form:
+     *
+     * ```
+     * SNWS2-HMAC-SHA256
+     * 20170301T120000Z
+     * Hex(SHA256(canonicalRequestData))
+     * ```
+     *
+     * @param canonicalRequestData - the request data, returned from {@link Net.AuthorizationV2Builder#buildCanonicalRequestData}
+     * @returns the data to sign
+     */
+    computeSignatureData(canonicalRequestData: string): string;
+    /**
      * Compute a HTTP `Authorization` header value from the configured properties
      * on the builder, using the provided signing key.
      *
