@@ -723,16 +723,18 @@ class AuthorizationV2Builder {
 	/**
 	 * Compute the data to be signed by the signing key.
 	 *
+	 * The signature data takes this form:
+	 *
+	 * ```
+	 * SNWS2-HMAC-SHA256
+     * 20170301T120000Z
+     * Hex(SHA256(canonicalRequestData))
+	 * ```
+	 *
 	 * @param canonicalRequestData - the request data, returned from {@link Net.AuthorizationV2Builder#buildCanonicalRequestData}
 	 * @returns the data to sign
 	 */
-	#computeSignatureData(canonicalRequestData: string): string {
-		/*- signature data is like:
-
-            SNWS2-HMAC-SHA256\n
-            20170301T120000Z\n
-            Hex(SHA256(canonicalRequestData))
-        */
+	computeSignatureData(canonicalRequestData: string): string {
 		return (
 			"SNWS2-HMAC-SHA256\n" +
 			iso8601Date(this.#requestDate, true) +
@@ -755,7 +757,7 @@ class AuthorizationV2Builder {
 		const sortedHeaderNames = this.canonicalHeaderNames();
 		const canonicalReq =
 			this.#computeCanonicalRequestData(sortedHeaderNames);
-		const signatureData = this.#computeSignatureData(canonicalReq);
+		const signatureData = this.computeSignatureData(canonicalReq);
 		const signature = Hex.stringify(HmacSHA256(signatureData, signingKey));
 		const result =
 			"SNWS2 Credential=" +

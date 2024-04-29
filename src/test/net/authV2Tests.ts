@@ -2,6 +2,7 @@ import test from "ava";
 
 import Base64 from "crypto-js/enc-base64.js";
 import Hex from "crypto-js/enc-hex.js";
+import SHA256 from "crypto-js/sha256.js";
 import Environment from "../../main/net/environment.js";
 import {
 	HttpMethod,
@@ -826,6 +827,12 @@ test("simplePostWithComputedDigest", (t) => {
 			reqBodySha256Base64 +
 			"\nhost:localhost\ncontent-type;date;digest;host\n" +
 			reqBodySha256Hex
+	);
+
+	const sigData = builder.computeSignatureData(canonicalRequestData);
+	t.is(sigData, "SNWS2-HMAC-SHA256\n" +
+		"20170425T143000Z\n" +
+		Hex.stringify(SHA256(canonicalRequestData))
 	);
 
 	t.is(
