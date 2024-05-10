@@ -45,3 +45,15 @@ test("useTls", (t) => {
 	env.protocol = "http";
 	t.false(env.useTls());
 });
+
+test("createWithConfig:proxyUrlPrefix", (t) => {
+	const prefix = "https://query.solarnetwork.net/1";
+	const env = new Environment({
+		proxyUrlPrefix: prefix,
+	});
+	t.truthy(env);
+	t.is(env.protocol, "https");
+	t.is(env.host, "data.solarnetwork.net");
+	t.is(env.port, 443);
+	t.is(env.proxyUrlPrefix, prefix);
+});
