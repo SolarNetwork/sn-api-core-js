@@ -37,6 +37,8 @@ declare const NodesUrlHelperMixin: <T extends UrlHelperConstructor>(superclass: 
         parameter(key: string, newValue: any): import("../util/configuration.js").default;
         param<T_1>(key: string): T_1 | undefined;
         hostUrl(): string;
+        hostRequestUrl(): string;
+        toRequestUrl(url: string): string;
         hostWebSocketUrl(): string;
         baseUrl(): string;
         resolveTemplatePath(template: string): string;

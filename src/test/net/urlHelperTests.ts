@@ -67,13 +67,24 @@ test("hostUrl:customPort", (t) => {
 	t.is(helper.hostUrl(), "https://data.solarnetwork.net:8443");
 });
 
-test("hostUrl:proxy", (t) => {
+test("hostUrl:removedPort", (t) => {
+	const env = new Environment();
+	env.port = undefined;
+	const helper = new UrlHelper(env);
+	t.is(helper.hostUrl(), "https://data.solarnetwork.net");
+});
+
+test("hostUrl:proxy:ignored", (t) => {
 	const env = new Environment({
 		proxyHost: "proxy.example.com",
 		proxyPort: 8443,
 	});
 	const helper = new UrlHelper(env);
-	t.is(helper.hostUrl(), "https://proxy.example.com:8443");
+	t.is(
+		helper.hostUrl(),
+		"https://data.solarnetwork.net",
+		"The old proxyHost/proxyPort undocumented properties are ignored."
+	);
 });
 
 test("hostWebSocketUrl", (t) => {
@@ -105,13 +116,24 @@ test("hostWebSocketUrl:customPort", (t) => {
 	t.is(helper.hostWebSocketUrl(), "wss://data.solarnetwork.net:8443");
 });
 
-test("hostWebSocketUrl:proxy", (t) => {
+test("hostWebSocketUrl:removedPort", (t) => {
+	const env = new Environment();
+	env.port = undefined;
+	const helper = new UrlHelper(env);
+	t.is(helper.hostWebSocketUrl(), "wss://data.solarnetwork.net");
+});
+
+test("hostWebSocketUrl:proxy:ignored", (t) => {
 	const env = new Environment({
 		proxyHost: "proxy.example.com",
 		proxyPort: 8443,
 	});
 	const helper = new UrlHelper(env);
-	t.is(helper.hostWebSocketUrl(), "wss://proxy.example.com:8443");
+	t.is(
+		helper.hostWebSocketUrl(),
+		"wss://data.solarnetwork.net",
+		"The old proxyHost/proxyPort undocumented properties are ignored."
+	);
 });
 
 test("baseUrl", (t) => {
@@ -220,4 +242,72 @@ test("datumFilter:singulars", (t) => {
 		nodeIds: [1],
 		sourceIds: ["a"],
 	});
+});
+
+test("proxyUrlPrefix:basic", (t) => {
+	const prefix = "https://query.solarnetwork.net";
+	const env = new Environment({
+		proxyUrlPrefix: prefix,
+	});
+	const helper = new UrlHelper(env);
+	t.is(helper.hostUrl(), "https://data.solarnetwork.net");
+	t.is(helper.hostRequestUrl(), prefix);
+});
+
+test("proxyUrlPrefix:nonStandardPort", (t) => {
+	const prefix = "https://query.solarnetwork.net:8765";
+	const env = new Environment({
+		proxyUrlPrefix: prefix,
+	});
+	const helper = new UrlHelper(env);
+	t.is(helper.hostUrl(), "https://data.solarnetwork.net");
+	t.is(helper.hostRequestUrl(), prefix);
+});
+
+test("proxyUrlPrefix:withContextPath", (t) => {
+	const prefix = "https://query.solarnetwork.net/1m";
+	const env = new Environment({
+		proxyUrlPrefix: prefix,
+	});
+	const helper = new UrlHelper(env);
+	t.is(helper.hostUrl(), "https://data.solarnetwork.net");
+	t.is(helper.hostRequestUrl(), prefix);
+});
+
+test("toRequestUrl:normal", (t) => {
+	const url = "https://some.host/some/path";
+	const helper = new UrlHelper();
+	t.is(
+		helper.toRequestUrl(url),
+		url,
+		"URL unchanged without proxy configured."
+	);
+});
+
+test("toRequestUrl:proxy", (t) => {
+	const prefix = "https://foo.example.com:9876";
+	const env = new Environment({
+		proxyUrlPrefix: prefix,
+	});
+	const url = "https://some.host/some/path";
+	const helper = new UrlHelper(env);
+	t.is(
+		helper.toRequestUrl(url),
+		prefix + "/some/path",
+		"Proxy prefix replaces host."
+	);
+});
+
+test("toRequestUrl:proxy:withContextPath", (t) => {
+	const prefix = "https://query.solarnetwork.net/1m";
+	const env = new Environment({
+		proxyUrlPrefix: prefix,
+	});
+	const url = "https://some.host/some/path";
+	const helper = new UrlHelper(env);
+	t.is(
+		helper.toRequestUrl(url),
+		prefix + "/some/path",
+		"Proxy prefix replaces host."
+	);
 });
