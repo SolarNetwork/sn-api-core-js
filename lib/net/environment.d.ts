@@ -9,6 +9,8 @@ interface HostConfig {
     protocol: string;
     /** The port number. */
     port?: number;
+    /** An optional proxy URL prefix, for example `https://query.solarnetwork.net/1m`. */
+    proxyUrlPrefix?: string;
     /** Arbitrary additional properties. */
     [k: string]: any;
 }
