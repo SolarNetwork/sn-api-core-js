@@ -183,12 +183,10 @@ class UrlHelper {
 	/**
 	 * Get a URL for just the SolarNet host, without any path to be used for actual requests.
 	 *
-	 * This will return the same as {@link Net.UrlHelper#hostUrl hostUrl()} unless an
-	 * {@link Net.HostConfig#proxyUrlPrefix environment.proxyUrlPrefix} value is configured,
-	 * in which case the proxy version of the host URL will be returned.
+	 * Calls the {@link Net.UrlHelper.toRequestUrl toRequestUrl()} with
+	 * {@link Net.UrlHelper.hostUrl hostUrl()} as the argument.
 	 *
 	 * @returns the URL to make reqeusts to the SolarNet host
-	 * @see {@link Net.UrlHelper#toReqeustUrl}
 	 */
 	hostRequestUrl(): string {
 		return this.toRequestUrl(this.hostUrl());
