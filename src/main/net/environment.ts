@@ -13,6 +13,12 @@ interface HostConfig {
 	/** The port number. */
 	port?: number;
 
+	/** An optional proxy hostname. */
+	proxyHost?: string;
+
+	/** An optional proxy port number. */
+	proxyPort?: number;
+
 	/** Arbitrary additional properties. */
 	[k: string]: any;
 }
