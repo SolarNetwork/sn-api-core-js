@@ -100,13 +100,34 @@ declare class UrlHelper {
      *
      *  1. If {@link Net.EnvironmentConfig#useTls environment.useTls()} returns `true` then
      *     use HTTPS as the protocol, otherwise HTTP.
-     *  2. Use `host` for the host name or IP address, unless `proxyHost` is available.
-     *  3. Use `port` for the port, unless `proxyPort` is available. If neither are available, use `443` for
+     *  2. Use `host` for the host name or IP address.
+     *  3. Use `port` for the port if available and not the standard `443` for
      *     HTTPS or `80` for HTTP.
      *
      * @returns the URL to the SolarNet host
      */
     hostUrl(): string;
+    /**
+     * Get a URL for just the SolarNet host, without any path to be used for actual requests.
+     *
+     * This will return the same as {@link Net.UrlHelper#hostUrl hostUrl()} unless an
+     * {@link Net.HostConfig#proxyUrlPrefix environment.proxyUrlPrefix} value is configured,
+     * in which case the proxy version of the host URL will be returned.
+     *
+     * @returns the URL to make reqeusts to the SolarNet host
+     * @see {@link Net.UrlHelper#toReqeustUrl}
+     */
+    hostRequestUrl(): string;
+    /**
+     * Get the URL to actually request, incorporating the environment's `proxyUrlPrefix` if available.
+     *
+     * If a {@link Net.HostConfig#proxyUrlPrefix environment.proxyUrlPrefix} value is configured,
+     * this will re-write the URL to use that host prefix, otherwise `url` will be returned
+     * unchanged.
+     *
+     * @returns the URL to make reqeusts to the SolarNet host
+     */
+    toRequestUrl(url: string): string;
     /**
      * Get a URL for just the SolarNet host using the WebSocket protocol, without any path.
      *
@@ -115,8 +136,8 @@ declare class UrlHelper {
      *
      *  1. If {@link Net.EnvironmentConfig#useTls environment.useTls()} returns `true` then
      *     use WSS as the protocol, otherwise WS.
-     *  2. Use `host` for the host name or IP address, unless `proxyHost` is available.
-     *  3. Use `port` for the port, unless `proxyPort` is available. If neither are available, use `443` for
+     *  2. Use `host` for the host name or IP address.
+     *  3. Use `port` for the port if available and not the standard `443` for
      *     WSS or `80` for WS.
      *
      * @returns the URL to the SolarNet host WebSocket

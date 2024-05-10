@@ -40,6 +40,8 @@ declare const SolarUserApi_base: {
         parameter(key: string, newValue: any): import("../util/configuration.js").default;
         param<T>(key: string): T | undefined;
         hostUrl(): string;
+        hostRequestUrl(): string;
+        toRequestUrl(url: string): string;
         hostWebSocketUrl(): string;
         baseUrl(): string;
         resolveTemplatePath(template: string): string;
@@ -59,6 +61,8 @@ declare const SolarUserApi_base: {
         parameter(key: string, newValue: any): import("../util/configuration.js").default;
         param<T>(key: string): T | undefined;
         hostUrl(): string;
+        hostRequestUrl(): string;
+        toRequestUrl(url: string): string;
         hostWebSocketUrl(): string;
         baseUrl(): string;
         resolveTemplatePath(template: string): string;
@@ -84,6 +88,8 @@ declare const SolarUserApi_base: {
         parameter(key: string, newValue: any): import("../util/configuration.js").default;
         param<T>(key: string): T | undefined;
         hostUrl(): string;
+        hostRequestUrl(): string;
+        toRequestUrl(url: string): string;
         hostWebSocketUrl(): string;
         baseUrl(): string;
         resolveTemplatePath(template: string): string;
@@ -108,6 +114,8 @@ declare const SolarUserApi_base: {
         parameter(key: string, newValue: any): import("../util/configuration.js").default;
         param<T>(key: string): T | undefined;
         hostUrl(): string;
+        hostRequestUrl(): string;
+        toRequestUrl(url: string): string;
         hostWebSocketUrl(): string;
         baseUrl(): string;
         resolveTemplatePath(template: string): string;
@@ -130,6 +138,8 @@ declare const SolarUserApi_base: {
         parameter(key: string, newValue: any): import("../util/configuration.js").default;
         param<T>(key: string): T | undefined;
         hostUrl(): string;
+        hostRequestUrl(): string;
+        toRequestUrl(url: string): string;
         hostWebSocketUrl(): string;
         baseUrl(): string;
         resolveTemplatePath(template: string): string;
