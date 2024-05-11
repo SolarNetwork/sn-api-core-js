@@ -85,6 +85,7 @@ export {
 	LocationPrecisionNames,
 } from "./locationPrecision.js";
 export { default as Pagination } from "./pagination.js";
+export { type ErrorDetail, type FilterResults, type Result } from "./result.js";
 export {
 	default as SecurityPolicy,
 	SecurityPolicyBuilder,
