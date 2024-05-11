@@ -18,6 +18,11 @@ export declare const SolarQueryApiPathV1 = "/api/v1";
 export declare const SolarQueryPublicPathKey = "publicQuery";
 /**
  * Extension of `UrlHelper` for SolarQuery APIs.
+ *
+ * The base URL uses the configured environment to resolve
+ * the `hostUrl`, the `solarQueryPath` context path,
+ * and the `publicQuery` boolean flag. If the context path is not
+ * available, it will default to `/solarquery`.
  */
 export declare class SolarQueryUrlHelper extends UrlHelper {
     /**
@@ -25,17 +30,6 @@ export declare class SolarQueryUrlHelper extends UrlHelper {
      */
     get publicQuery(): boolean;
     set publicQuery(value: boolean);
-    /**
-     * Get the base URL to the SolarQuery v1 REST API.
-     *
-     * The returned URL uses the configured environment to resolve
-     * the `hostUrl`, the `solarQueryPath` context path,
-     * and the `publicQuery` boolean flag. If the context path is not
-     * available, it will default to `/solarquery`.
-     *
-     * @returns the base URL to SolarQuery
-     * @override
-     */
     baseUrl(): string;
 }
 declare const SolarQueryApi_base: {

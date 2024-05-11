@@ -13,18 +13,12 @@ export declare const SolarUserPathKey = "solarUserPath";
 export declare const SolarUserApiPathV1 = "/api/v1/sec";
 /**
  * Extension of `UrlHelper` for SolarUser APIs.
+ *
+ * The base URL uses the configured environment to resolve the
+ * `hostUrl` and a `solarUserPath` context path. If the context path
+ * is not available, it will default to `/solaruser`.
  */
 export declare class SolarUserUrlHelper extends UrlHelper {
-    /**
-     * Get the base URL to the SolarUser v1 REST API.
-     *
-     * The returned URL uses the configured environment to resolve the
-     * `hostUrl` and a `solarUserPath` context path. If the context path
-     * is not available, it will default to `/solaruser`.
-     *
-     * @returns the base URL to SolarUser
-     * @override
-     */
     baseUrl(): string;
 }
 declare const SolarUserApi_base: {
