@@ -62,6 +62,11 @@ export {
 } from "./deviceOperatingState.js";
 export { default as GeneralMetadata } from "./generalMetadata.js";
 export type {
+	CommonInstructionTopicName,
+	default as Instruction,
+	InstructionInfo,
+} from "./instruction.js";
+export type {
 	default as InstructionParameter,
 	CommonInstructionParameterName,
 } from "./instructionParameter.js";
