@@ -515,6 +515,14 @@ test("startDate", (t) => {
 	t.is(filter.startDate, undefined);
 });
 
+test("startDate:invalidDate", (t) => {
+	const filter = new DatumFilter();
+	const date = new Date("this is no date");
+	t.is(date.getTime(), Number.NaN);
+	filter.startDate = date;
+	t.is(filter.startDate as any, undefined);
+});
+
 test("endDate", (t) => {
 	const filter = new DatumFilter();
 	t.is(filter.endDate, undefined);
@@ -525,6 +533,14 @@ test("endDate", (t) => {
 
 	filter.endDate = null;
 	t.is(filter.endDate, undefined);
+});
+
+test("endDate:invalidDate", (t) => {
+	const filter = new DatumFilter();
+	const date = new Date("this is no date");
+	t.is(date.getTime(), Number.NaN);
+	filter.endDate = date;
+	t.is(filter.endDate as any, undefined);
 });
 
 test("localStartDate", (t) => {
@@ -539,6 +555,14 @@ test("localStartDate", (t) => {
 	t.is(filter.localStartDate, undefined);
 });
 
+test("localStartDate:invalidDate", (t) => {
+	const filter = new DatumFilter();
+	const date = new Date("this is no date");
+	t.is(date.getTime(), Number.NaN);
+	filter.localStartDate = date;
+	t.is(filter.localStartDate as any, undefined);
+});
+
 test("localEndDate", (t) => {
 	const filter = new DatumFilter();
 	t.is(filter.localEndDate, undefined);
@@ -549,6 +573,14 @@ test("localEndDate", (t) => {
 
 	filter.localEndDate = null;
 	t.is(filter.localEndDate, undefined);
+});
+
+test("localEndDate:invalidDate", (t) => {
+	const filter = new DatumFilter();
+	const date = new Date("this is no date");
+	t.is(date.getTime(), Number.NaN);
+	filter.localEndDate = date;
+	t.is(filter.localEndDate as any, undefined);
 });
 
 test("dataPath", (t) => {
