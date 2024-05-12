@@ -6,6 +6,8 @@ import { timestampFormat } from "../../main/util/dates.js";
 test("create", (t) => {
 	const info: DatumInfo = {
 		created: "2024-01-01 12:34:56.789Z",
+		localDate: "2024-01-01",
+		localTime: "12:34",
 		nodeId: 2,
 		sourceId: "Foo",
 		foo: 1,
@@ -24,6 +26,8 @@ test("create", (t) => {
 test("create:noDate", (t) => {
 	const now = new Date();
 	const info: DatumInfo = {
+		localDate: "2024-01-01",
+		localTime: "12:34",
 		nodeId: 2,
 		sourceId: "Foo",
 		val: 1,
