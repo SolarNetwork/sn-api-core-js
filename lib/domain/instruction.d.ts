@@ -26,21 +26,27 @@ export interface InstructionInfo {
 /**
  * An instruction object.
  */
-export default class Instruction {
+export default class Instruction implements InstructionInfo {
     /** A unique identifier. */
     id: number;
-    /** The instruction creation date. */
-    created: Date;
     /** The ID of the node the instruction targets. */
     nodeId: number;
     /** The instruction topic. */
     topic: string;
+    /** The instruction creation date. */
+    created: string;
     /** The instruction action date. */
-    instructionDate: Date;
+    date: Date;
+    /** The instruction action date. */
+    instructionDate: string;
     /** The instruction state. */
-    state: InstructionState;
+    state: keyof typeof InstructionStateNames;
+    /** The instruction state. */
+    instructionState: InstructionState;
     /** The last instruction status change date. */
-    statusDate: Date;
+    statusDate: string;
+    /** The last instruction status date. */
+    updateDate: Date;
     /** Parameters for the instruction. */
     parameters?: InstructionParameter[];
     /** Result parameters returned with the instruction status update. */
