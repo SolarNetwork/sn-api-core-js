@@ -29,7 +29,7 @@ export interface DatumInfo {
 /**
  * A basic Datum class.
  */
-export default class Datum implements Record<string, any> {
+export default class Datum implements DatumInfo, Record<string, any> {
 	/** The datum creation/capture date. */
 	readonly created: string;
 
