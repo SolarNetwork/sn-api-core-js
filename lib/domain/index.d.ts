@@ -10,7 +10,7 @@ export { default as DatumStreamMetadata } from "./datumStreamMetadata.js";
 export { default as DatumStreamTypes, DatumStreamType, type DatumStreamTypeEnumsType, DatumStreamTypeNames, } from "./datumStreamType.js";
 export { default as DeviceOperatingStates, DeviceOperatingState, type DeviceOperatingStateEnumsType, DeviceOperatingStateNames, } from "./deviceOperatingState.js";
 export { default as GeneralMetadata } from "./generalMetadata.js";
-export type { CommonInstructionTopicName, default as Instruction, InstructionInfo, } from "./instruction.js";
+export { CommonInstructionTopicName, default as Instruction, type InstructionInfo, } from "./instruction.js";
 export type { default as InstructionParameter, CommonInstructionParameterName, } from "./instructionParameter.js";
 export { default as InstructionStates, InstructionState, type InstructionStateEnumsType, InstructionStateNames, } from "./instructionState.js";
 export { default as Location, LocationKeys, type LocationProperties, LocationPropertyNames, LocationPropertyNamesSet, } from "./location.js";
