@@ -52,3 +52,18 @@ test("create:unknownState", (t) => {
 	t.truthy(obj);
 	t.is(obj.state, InstructionStates.Unknown);
 });
+
+test("create:noDates", (t) => {
+	const now = new Date();
+	const info: InstructionInfo = {
+		id: 1,
+		nodeId: 2,
+		topic: "Foo",
+		state: InstructionStates.Completed,
+	} as any;
+	const obj = new Instruction(info);
+	t.truthy(obj);
+	t.true(obj.created >= now, "Creation date defaulted to now");
+	t.true(obj.instructionDate >= now, "Instruction date defaulted to now");
+	t.true(obj.statusDate >= now, "Status date defaulted to now");
+});
