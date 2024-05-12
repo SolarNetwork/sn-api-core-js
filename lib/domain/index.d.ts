@@ -2,6 +2,7 @@ export { default as Aggregations, Aggregation, type AggregationEnumsType, Aggreg
 export { default as AuthTokenStatuses, AuthTokenStatus, type AuthTokenStatusEnumsType, AuthTokenStatusNames, } from "./authTokenStatus.js";
 export { default as AuthTokenTypes, AuthTokenType, type AuthTokenTypeEnumsType, AuthTokenTypeNames, } from "./authTokenType.js";
 export { default as CombiningTypes, CombiningType, type CombiningTypeEnumsType, CombiningTypeNames, } from "./combiningType.js";
+export { default as Datum, type DatumInfo } from "./datum.js";
 export { default as DatumAuxiliaryTypes, DatumAuxiliaryType, type DatumAuxiliaryTypeEnumsType, DatumAuxiliaryTypeNames, } from "./datumAuxiliaryType.js";
 export { default as DatumFilter, DatumFilterKeys, type DatumFilterProperties, DatumFilterPropertyNames, DatumFilterPropertyNamesSet, } from "./datumFilter.js";
 export { default as DatumReadingTypes, DatumReadingType, type DatumReadingTypeEnumsType, DatumReadingTypeNames, } from "./datumReadingType.js";
