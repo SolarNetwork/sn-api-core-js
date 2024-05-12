@@ -61,10 +61,10 @@ export {
 	DeviceOperatingStateNames,
 } from "./deviceOperatingState.js";
 export { default as GeneralMetadata } from "./generalMetadata.js";
-export type {
+export {
 	CommonInstructionTopicName,
 	default as Instruction,
-	InstructionInfo,
+	type InstructionInfo,
 } from "./instruction.js";
 export type {
 	default as InstructionParameter,
