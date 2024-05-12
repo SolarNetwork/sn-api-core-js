@@ -25,15 +25,14 @@ test("create", (t) => {
 	const obj = new Instruction(info);
 	t.truthy(obj);
 	t.is(obj.id, info.id);
-	t.is(obj.created.getTime(), new Date(info.created).getTime());
+	t.is(obj.created, info.created);
 	t.is(obj.nodeId, info.nodeId);
 	t.is(obj.topic, info.topic);
-	t.is(
-		obj.instructionDate.getTime(),
-		new Date(info.instructionDate).getTime()
-	);
-	t.is(obj.state, InstructionStates.Completed);
-	t.is(obj.statusDate.getTime(), new Date(info.statusDate).getTime());
+	t.is(obj.date.getTime(), new Date(info.instructionDate).getTime());
+	t.is(obj.state, info.state);
+	t.is(obj.instructionState, InstructionStates.Completed);
+	t.is(obj.statusDate, info.statusDate);
+	t.is(obj.updateDate.getTime(), new Date(info.statusDate).getTime());
 	t.deepEqual(obj.parameters, info.parameters);
 	t.deepEqual(obj.resultParameters, info.resultParameters);
 });
@@ -50,7 +49,7 @@ test("create:unknownState", (t) => {
 	};
 	const obj = new Instruction(info);
 	t.truthy(obj);
-	t.is(obj.state, InstructionStates.Unknown);
+	t.is(obj.instructionState, InstructionStates.Unknown);
 });
 
 test("create:noDates", (t) => {
@@ -63,7 +62,6 @@ test("create:noDates", (t) => {
 	} as any;
 	const obj = new Instruction(info);
 	t.truthy(obj);
-	t.true(obj.created >= now, "Creation date defaulted to now");
-	t.true(obj.instructionDate >= now, "Instruction date defaulted to now");
-	t.true(obj.statusDate >= now, "Status date defaulted to now");
+	t.true(obj.date >= now, "Creation date defaulted to now");
+	t.is(obj.updateDate, obj.date, "Update date defaulted to date");
 });

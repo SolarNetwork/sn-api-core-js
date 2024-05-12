@@ -1,4 +1,4 @@
-import { dateParser } from "../util/dates.js";
+import { dateParser, timestampFormat } from "../util/dates.js";
 import InstructionParameter from "./instructionParameter.js";
 import {
 	InstructionState,
@@ -41,12 +41,9 @@ export interface InstructionInfo {
 /**
  * An instruction object.
  */
-export default class Instruction {
+export default class Instruction implements InstructionInfo {
 	/** A unique identifier. */
 	id: number;
-
-	/** The instruction creation date. */
-	created: Date;
 
 	/** The ID of the node the instruction targets. */
 	nodeId: number;
@@ -54,14 +51,26 @@ export default class Instruction {
 	/** The instruction topic. */
 	topic: string;
 
+	/** The instruction creation date. */
+	created: string;
+
 	/** The instruction action date. */
-	instructionDate: Date;
+	date: Date;
+
+	/** The instruction action date. */
+	instructionDate: string;
 
 	/** The instruction state. */
-	state: InstructionState;
+	state: keyof typeof InstructionStateNames;
+
+	/** The instruction state. */
+	instructionState: InstructionState;
 
 	/** The last instruction status change date. */
-	statusDate: Date;
+	statusDate: string;
+
+	/** The last instruction status date. */
+	updateDate: Date;
 
 	/** Parameters for the instruction. */
 	parameters?: InstructionParameter[];
@@ -75,13 +84,16 @@ export default class Instruction {
 	 */
 	constructor(info: InstructionInfo) {
 		this.id = info.id;
-		this.created = dateParser(info.created) || new Date();
+		this.date = dateParser(info.instructionDate) || new Date();
+		this.created = info.created || timestampFormat(this.date);
 		this.nodeId = info.nodeId;
 		this.topic = info.topic;
-		this.instructionDate = dateParser(info.instructionDate) || new Date();
-		this.state =
+		this.instructionDate = info.instructionDate || this.created;
+		this.state = info.state;
+		this.instructionState =
 			InstructionState.valueOf(info.state) || InstructionStates.Unknown;
-		this.statusDate = dateParser(info.statusDate) || new Date();
+		this.updateDate = dateParser(info.statusDate) || this.date;
+		this.statusDate = info.statusDate || timestampFormat(this.date);
 		this.parameters = info.parameters;
 		this.resultParameters = info.resultParameters;
 	}
