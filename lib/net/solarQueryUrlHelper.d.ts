@@ -118,8 +118,8 @@ export default class SolarQueryApi extends SolarQueryApi_base {
 }
 declare const SolarQueryLocationApi_base: {
     new (...args: any[]): {
-        "__#17@#baseLocationDatumMetadataUrl"(locationId?: number | undefined): string;
-        "__#17@#locationDatumMetadataUrlWithSource"(locationId?: number | undefined, sourceId?: string | undefined): string;
+        "__#18@#baseLocationDatumMetadataUrl"(locationId?: number | undefined): string;
+        "__#18@#locationDatumMetadataUrlWithSource"(locationId?: number | undefined, sourceId?: string | undefined): string;
         viewLocationDatumMetadataUrl(locationId?: number | undefined, sourceId?: string | undefined): string;
         addLocationDatumMetadataUrl(locationId?: number | undefined, sourceId?: string | undefined): string;
         replaceLocationDatumMetadataUrl(locationId?: number | undefined, sourceId?: string | undefined): string;

@@ -16,7 +16,7 @@ declare const UserMetadataUrlHelperMixin: <T extends UrlHelperConstructor>(super
          * @returns the URL
          */
         findUserMetadataUrl(filter: UserMetadataFilter): string;
-        "__#19@#userMetadataUrl"(userId?: number): string;
+        "__#20@#userMetadataUrl"(userId?: number): string;
         /**
          * Generate a URL for viewing a specific user's metadata via a `GET` request.
          *

@@ -31,7 +31,7 @@ declare const UserAuthTokenUrlHelperMixin: <T extends UrlHelperConstructor>(supe
          * @param tokenId - the token ID
          * @returns the URL
          */
-        "__#20@#authTokenUrl"(tokenId: string): string;
+        "__#21@#authTokenUrl"(tokenId: string): string;
         /**
          * Generate a URL for deleting an auth token, via a `DELETE` request.
          *

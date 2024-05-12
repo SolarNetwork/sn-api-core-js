@@ -17,8 +17,8 @@ declare const LocationDatumMetadataUrlHelperMixin: <T extends UrlHelperConstruct
          * @param locationId a specific location ID to use; if not provided the `locationId` parameter of this instance will be used
          * @returns the base URL
          */
-        "__#17@#baseLocationDatumMetadataUrl"(locationId?: number): string;
-        "__#17@#locationDatumMetadataUrlWithSource"(locationId?: number, sourceId?: string): string;
+        "__#18@#baseLocationDatumMetadataUrl"(locationId?: number): string;
+        "__#18@#locationDatumMetadataUrlWithSource"(locationId?: number, sourceId?: string): string;
         /**
          * Generate a URL for viewing datum metadata.
          *
