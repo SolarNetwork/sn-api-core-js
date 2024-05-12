@@ -37,7 +37,7 @@ interface QueueInstructionSimpleRequest extends QueueInstructionRequestBase {
 }
 
 /**
- * Create a NodeInstructionUrlHelperMixin class.
+ * Create a InstructionUrlHelperMixin class.
  *
  * @param superclass - the UrlHelper class to mix onto
  * @return the mixin class
