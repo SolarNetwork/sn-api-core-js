@@ -140,7 +140,7 @@ test("queueInstructionsUrl:noNodeIds", (t) => {
 	const helper = new NodeInstructionUrlHelper();
 	t.is(
 		helper.queueInstructionsUrl("foo"),
-		"https://data.solarnetwork.net/instr/add/foo?nodeIds="
+		"https://data.solarnetwork.net/instr/add/foo"
 	);
 });
 
@@ -149,7 +149,7 @@ test("queueInstructionsUrl:nodeIds:empty", (t) => {
 	helper.parameter(DatumFilterKeys.NodeIds, [123, 234]);
 	t.is(
 		helper.queueInstructionsUrl("foo", undefined, []),
-		"https://data.solarnetwork.net/instr/add/foo?nodeIds="
+		"https://data.solarnetwork.net/instr/add/foo"
 	);
 });
 
@@ -194,6 +194,16 @@ test("queueInstructionsUrl:parameter:nodeId", (t) => {
 		"https://data.solarnetwork.net/instr/add/foo?" +
 			"nodeIds=345,456" +
 			"&parameters%5B0%5D.name=bim" +
+			"&parameters%5B0%5D.value=bam"
+	);
+});
+
+test("queueInstructionsUrl:parameter:noNodeIds", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	t.is(
+		helper.queueInstructionsUrl("foo", [{ name: "bim", value: "bam" }]),
+		"https://data.solarnetwork.net/instr/add/foo" +
+			"?parameters%5B0%5D.name=bim" +
 			"&parameters%5B0%5D.value=bam"
 	);
 });
@@ -418,5 +428,144 @@ test("canUseSimpleRequest:duplicateNames", (t) => {
 	t.false(
 		NodeInstructionUrlHelper.canUseSimpleRequest(parameters),
 		"duplicate names is not simple"
+	);
+});
+
+test("execInstructionUrl", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeId, 123);
+	t.is(
+		helper.execInstructionUrl("foo"),
+		"https://data.solarnetwork.net/instr/exec/foo?nodeId=123"
+	);
+});
+
+test("execInstructionUrl:nodeId", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeId, 123);
+	t.is(
+		helper.execInstructionUrl("foo", undefined, 234),
+		"https://data.solarnetwork.net/instr/exec/foo?nodeId=234"
+	);
+});
+
+test("execInstructionUrl:parameter", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeId, 123);
+	t.is(
+		helper.execInstructionUrl("foo", [{ name: "bim", value: "bam" }]),
+		"https://data.solarnetwork.net/instr/exec/foo?" +
+			"nodeId=123" +
+			"&parameters%5B0%5D.name=bim" +
+			"&parameters%5B0%5D.value=bam"
+	);
+});
+
+test("execInstructionUrl:parameters", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeId, 123);
+	t.is(
+		helper.execInstructionUrl("foo", [
+			{ name: "bim", value: "bam" },
+			{ name: "ding", value: "dong" },
+		]),
+		"https://data.solarnetwork.net/instr/exec/foo?" +
+			"nodeId=123" +
+			"&parameters%5B0%5D.name=bim" +
+			"&parameters%5B0%5D.value=bam" +
+			"&parameters%5B1%5D.name=ding" +
+			"&parameters%5B1%5D.value=dong"
+	);
+});
+
+test("execInstructionUrl:parameter:nodeId", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeId, 123);
+	t.is(
+		helper.execInstructionUrl("foo", [{ name: "bim", value: "bam" }], 234),
+		"https://data.solarnetwork.net/instr/exec/foo?" +
+			"nodeId=234" +
+			"&parameters%5B0%5D.name=bim" +
+			"&parameters%5B0%5D.value=bam"
+	);
+});
+
+test("execInstructionUrl:nodeIds:param", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeIds, [123, 234]);
+	t.is(
+		helper.execInstructionUrl("foo"),
+		"https://data.solarnetwork.net/instr/exec/foo?nodeIds=123,234"
+	);
+});
+
+test("execInstructionUrl:nodeIds", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeIds, [123, 234]);
+	t.is(
+		helper.execInstructionUrl("foo", undefined, [345, 456]),
+		"https://data.solarnetwork.net/instr/exec/foo?nodeIds=345,456"
+	);
+});
+
+test("execInstructionUrl:noNodeIds", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	t.is(
+		helper.execInstructionUrl("foo"),
+		"https://data.solarnetwork.net/instr/exec/foo"
+	);
+});
+
+test("execInstructionUrl:nodeIds:empty", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeIds, [123, 234]);
+	t.is(
+		helper.execInstructionUrl("foo", undefined, []),
+		"https://data.solarnetwork.net/instr/exec/foo"
+	);
+});
+
+test("execInstructionUrl:parameter:nodeIds", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeIds, [123, 234]);
+	t.is(
+		helper.execInstructionUrl("foo", [{ name: "bim", value: "bam" }]),
+		"https://data.solarnetwork.net/instr/exec/foo?" +
+			"nodeIds=123,234" +
+			"&parameters%5B0%5D.name=bim" +
+			"&parameters%5B0%5D.value=bam"
+	);
+});
+
+test("execInstructionUrl:parameters:nodeIds:arg", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeIds, [123, 234]);
+	t.is(
+		helper.execInstructionUrl("foo", [
+			{ name: "bim", value: "bam" },
+			{ name: "ding", value: "dong" },
+		]),
+		"https://data.solarnetwork.net/instr/exec/foo?" +
+			"nodeIds=123,234" +
+			"&parameters%5B0%5D.name=bim" +
+			"&parameters%5B0%5D.value=bam" +
+			"&parameters%5B1%5D.name=ding" +
+			"&parameters%5B1%5D.value=dong"
+	);
+});
+
+test("execInstructionUrl:parameter:nodeIds:arg", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeIds, [123, 234]);
+	t.is(
+		helper.execInstructionUrl(
+			"foo",
+			[{ name: "bim", value: "bam" }],
+			[345, 456]
+		),
+		"https://data.solarnetwork.net/instr/exec/foo?" +
+			"nodeIds=345,456" +
+			"&parameters%5B0%5D.name=bim" +
+			"&parameters%5B0%5D.value=bam"
 	);
 });

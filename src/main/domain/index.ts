@@ -22,6 +22,7 @@ export {
 	type CombiningTypeEnumsType,
 	CombiningTypeNames,
 } from "./combiningType.js";
+export { default as Datum, type DatumInfo } from "./datum.js";
 export {
 	default as DatumAuxiliaryTypes,
 	DatumAuxiliaryType,
@@ -61,6 +62,11 @@ export {
 	DeviceOperatingStateNames,
 } from "./deviceOperatingState.js";
 export { default as GeneralMetadata } from "./generalMetadata.js";
+export {
+	CommonInstructionTopicName,
+	default as Instruction,
+	type InstructionInfo,
+} from "./instruction.js";
 export type {
 	default as InstructionParameter,
 	CommonInstructionParameterName,
@@ -85,6 +91,7 @@ export {
 	LocationPrecisionNames,
 } from "./locationPrecision.js";
 export { default as Pagination } from "./pagination.js";
+export { type ErrorDetail, type FilterResults, type Result } from "./result.js";
 export {
 	default as SecurityPolicy,
 	SecurityPolicyBuilder,

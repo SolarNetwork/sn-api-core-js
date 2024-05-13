@@ -29,6 +29,11 @@ export const SolarQueryPublicPathKey = "publicQuery";
 
 /**
  * Extension of `UrlHelper` for SolarQuery APIs.
+ *
+ * The base URL uses the configured environment to resolve
+ * the `hostUrl`, the `solarQueryPath` context path,
+ * and the `publicQuery` boolean flag. If the context path is not
+ * available, it will default to `/solarquery`.
  */
 export class SolarQueryUrlHelper extends UrlHelper {
 	/**
@@ -42,17 +47,6 @@ export class SolarQueryUrlHelper extends UrlHelper {
 		this.env(SolarQueryPublicPathKey, !!value);
 	}
 
-	/**
-	 * Get the base URL to the SolarQuery v1 REST API.
-	 *
-	 * The returned URL uses the configured environment to resolve
-	 * the `hostUrl`, the `solarQueryPath` context path,
-	 * and the `publicQuery` boolean flag. If the context path is not
-	 * available, it will default to `/solarquery`.
-	 *
-	 * @returns the base URL to SolarQuery
-	 * @override
-	 */
 	baseUrl(): string {
 		const path = this.env(SolarQueryPathKey) || SolarQueryDefaultPath;
 		const isPubPath = this.publicQuery;

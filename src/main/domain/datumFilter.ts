@@ -296,7 +296,10 @@ class DatumFilter extends PropMap implements DatumFilterProperties {
 	}
 
 	set startDate(date: Date | null) {
-		this.prop(DatumFilterKeys.StartDate, date);
+		this.prop(
+			DatumFilterKeys.StartDate,
+			date && !isNaN(date.getTime()) ? date : null
+		);
 	}
 
 	/**
@@ -307,7 +310,10 @@ class DatumFilter extends PropMap implements DatumFilterProperties {
 	}
 
 	set endDate(date: Date | null) {
-		this.prop(DatumFilterKeys.EndDate, date);
+		this.prop(
+			DatumFilterKeys.EndDate,
+			date && !isNaN(date.getTime()) ? date : null
+		);
 	}
 
 	/**
@@ -318,7 +324,10 @@ class DatumFilter extends PropMap implements DatumFilterProperties {
 	}
 
 	set localStartDate(date: Date | null) {
-		this.prop(DatumFilterKeys.LocalStartDate, date);
+		this.prop(
+			DatumFilterKeys.LocalStartDate,
+			date && !isNaN(date.getTime()) ? date : null
+		);
 	}
 
 	/**
@@ -329,7 +338,10 @@ class DatumFilter extends PropMap implements DatumFilterProperties {
 	}
 
 	set localEndDate(date: Date | null) {
-		this.prop(DatumFilterKeys.LocalEndDate, date);
+		this.prop(
+			DatumFilterKeys.LocalEndDate,
+			date && !isNaN(date.getTime()) ? date : null
+		);
 	}
 
 	/**
