@@ -57,3 +57,30 @@ test("createWithConfig:proxyUrlPrefix", (t) => {
 	t.is(env.port, 443);
 	t.is(env.proxyUrlPrefix, prefix);
 });
+
+test("createWithURL:http", (t) => {
+	const env = new Environment(new URL("http://example.com:1234/some/place"));
+	t.truthy(env);
+	t.is(env.protocol, "http");
+	t.is(env.host, "example.com");
+	t.is(env.port, 1234);
+	t.false(env.useTls());
+});
+
+test("createWithURL:https:defaultPort", (t) => {
+	const env = new Environment(new URL("https://example.com"));
+	t.truthy(env);
+	t.is(env.protocol, "https");
+	t.is(env.host, "example.com");
+	t.is(env.port, 443);
+	t.true(env.useTls());
+});
+
+test("createWithURL:https:explicitPort", (t) => {
+	const env = new Environment(new URL("https://example.com:4444"));
+	t.truthy(env);
+	t.is(env.protocol, "https");
+	t.is(env.host, "example.com");
+	t.is(env.port, 4444);
+	t.true(env.useTls());
+});

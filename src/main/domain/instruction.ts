@@ -97,6 +97,17 @@ export default class Instruction implements InstructionInfo {
 		this.parameters = info.parameters;
 		this.resultParameters = info.resultParameters;
 	}
+
+	/**
+	 * Create an instruction parameter instance.
+	 *
+	 * @param name the parameter name
+	 * @param value the parameter value
+	 * @returns the parameter object
+	 */
+	static parameter(name: string, value: string): InstructionParameter {
+		return { name: name, value: value };
+	}
 }
 
 /**

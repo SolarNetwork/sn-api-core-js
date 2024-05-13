@@ -37,6 +37,14 @@ test("create", (t) => {
 	t.deepEqual(obj.resultParameters, info.resultParameters);
 });
 
+test("create:parameter", (t) => {
+	const name = "foo";
+	const val = "bar";
+	const obj = Instruction.parameter(name, val);
+	t.is(obj.name, name);
+	t.is(obj.value, val);
+});
+
 test("create:unknownState", (t) => {
 	const info: InstructionInfo = {
 		id: 1,

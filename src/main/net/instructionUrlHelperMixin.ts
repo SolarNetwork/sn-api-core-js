@@ -1,5 +1,6 @@
 import {} from "../util/dates.js";
 import { DatumFilterKeys } from "../domain/datumFilter.js";
+import Instruction from "../domain/instruction.js";
 import {
 	default as InstructionParameter,
 	CommonInstructionParameterName,
@@ -331,17 +332,18 @@ const InstructionUrlHelperMixin = <T extends UrlHelperConstructor>(
 		}
 
 		/**
-		 * Create an instruction parameter suitable to passing to {@link Net.InstructionUrlHelperMixin#queueInstructionUrl}.
+		 * Create an instruction parameter.
 		 *
 		 * @param name the parameter name
 		 * @param value the parameter value
 		 * @returns the parameter object
+		 * @see {@link Domain.Instruction.parameter}
 		 */
 		static instructionParameter(
 			name: string,
 			value: string
 		): InstructionParameter {
-			return { name: name, value: value };
+			return Instruction.parameter(name, value);
 		}
 	};
 

@@ -63,25 +63,18 @@ function normalizedProtocol(val?: string): string {
 /**
  * Normalize the environment configuration.
  *
- * Passing a browser `Location` object, like `window.location`, is supported. The
+ * Passing a browser `Location` object, like `window.location`, or a `URL`, is supported. The
  * `protocol`, `hostname`, and `port` values will be used.
  *
  * @param config - the initial configuration
  * @returns a new object with normalized configuration values
  */
 function normalizedConfig(config?: Partial<HostConfigInfo>): HostConfig {
-	const result = Object.assign(
-		{
-			host: "data.solarnetwork.net",
-		},
-		config
-	) as HostConfig;
-	result.protocol = normalizedProtocol(result.protocol);
+	const result: HostConfig = Object.assign({} as HostConfig, config);
+	result.host = config?.hostname || config?.host || "data.solarnetwork.net";
+	result.protocol = normalizedProtocol(config?.protocol);
 	result.port =
-		Number(result.port) || (result.protocol === "https" ? 443 : 80);
-	if (result.port && config?.hostname) {
-		result.host = config.hostname;
-	}
+		Number(config?.port) || (result.protocol === "https" ? 443 : 80);
 	return result;
 }
 

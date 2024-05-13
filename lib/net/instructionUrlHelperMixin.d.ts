@@ -136,11 +136,12 @@ declare const InstructionUrlHelperMixin: <T extends UrlHelperConstructor>(superc
      */
     canUseSimpleRequest(parameters?: InstructionParameter[]): boolean;
     /**
-     * Create an instruction parameter suitable to passing to {@link Net.InstructionUrlHelperMixin#queueInstructionUrl}.
+     * Create an instruction parameter.
      *
      * @param name the parameter name
      * @param value the parameter value
      * @returns the parameter object
+     * @see {@link Domain.Instruction.parameter}
      */
     instructionParameter(name: string, value: string): InstructionParameter;
 } & T;
