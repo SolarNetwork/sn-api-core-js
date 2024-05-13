@@ -3,6 +3,7 @@ import {
 	default as Environment,
 	EnvironmentConfig,
 	HostConfig,
+	HostConfigInfo,
 } from "./environment.js";
 import { Constructor } from "../util/objects.js";
 import {
@@ -37,11 +38,11 @@ class UrlHelper {
 	/**
 	 * Constructor.
 	 *
-	 * @param environment - the optional initial environment to use;
+	 * @param environment the optional initial environment to use;
 	 *        if a non-`Environment` object is passed then the properties of that object will
 	 *        be used to construct a new `Environment` instance
 	 */
-	constructor(environment?: HostConfig) {
+	constructor(environment?: HostConfigInfo) {
 		const env =
 			environment instanceof Environment
 				? (environment as typeof Environment)
