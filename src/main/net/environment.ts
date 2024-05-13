@@ -3,6 +3,30 @@ import Configuration from "../util/configuration.js";
 /**
  * Network environment configuration.
  */
+interface HostConfigInfo {
+	/** The hostname. */
+	host: string;
+
+	/** The protocol. */
+	protocol: string;
+
+	/**
+	 * The port number.
+	 *
+	 * Can be a number or string, to support a browser `Location` object.
+	 */
+	port?: number | string;
+
+	/** An optional proxy URL prefix, for example `https://query.solarnetwork.net/1m`. */
+	proxyUrlPrefix?: string;
+
+	/** Arbitrary additional properties. */
+	[k: string]: any;
+}
+
+/**
+ * Network environment configuration.
+ */
 interface HostConfig {
 	/** The hostname. */
 	host: string;
@@ -45,7 +69,7 @@ function normalizedProtocol(val?: string): string {
  * @param config - the initial configuration
  * @returns a new object with normalized configuration values
  */
-function normalizedConfig(config?: Partial<HostConfig>): HostConfig {
+function normalizedConfig(config?: Partial<HostConfigInfo>): HostConfig {
 	const result = Object.assign(
 		{
 			host: "data.solarnetwork.net",
@@ -53,7 +77,8 @@ function normalizedConfig(config?: Partial<HostConfig>): HostConfig {
 		config
 	) as HostConfig;
 	result.protocol = normalizedProtocol(result.protocol);
-	result.port = result.port || (result.protocol === "https" ? 443 : 80);
+	result.port =
+		Number(result.port) || (result.protocol === "https" ? 443 : 80);
 	if (result.port && config?.hostname) {
 		result.host = config.hostname;
 	}
@@ -89,7 +114,7 @@ class EnvironmentConfig extends Configuration {
 	 *
 	 * @param config - an optional set of properties to start with
 	 */
-	constructor(config?: Partial<HostConfig>) {
+	constructor(config?: Partial<HostConfigInfo>) {
 		super(normalizedConfig(config));
 	}
 
@@ -109,10 +134,15 @@ interface EnvironmentConstructor {
 	 * Constructor.
 	 * @param config - an optional set of properties to start with
 	 */
-	new (config?: Partial<HostConfig>): EnvironmentConfig & HostConfig;
+	new (config?: Partial<HostConfigInfo>): EnvironmentConfig & HostConfig;
 }
 
 export default EnvironmentConfig as unknown as EnvironmentConfig &
 	HostConfig &
 	EnvironmentConstructor;
-export { EnvironmentConfig, type HostConfig, type EnvironmentConstructor };
+export {
+	EnvironmentConfig,
+	type HostConfig,
+	type HostConfigInfo,
+	type EnvironmentConstructor,
+};
