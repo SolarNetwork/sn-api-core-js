@@ -7,6 +7,7 @@ export {
 	default as Environment,
 	EnvironmentConfig,
 	type HostConfig,
+	type HostConfigInfo,
 	type EnvironmentConstructor,
 } from "./environment.js";
 export {
