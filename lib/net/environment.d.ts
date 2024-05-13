@@ -2,6 +2,25 @@ import Configuration from "../util/configuration.js";
 /**
  * Network environment configuration.
  */
+interface HostConfigInfo {
+    /** The hostname. */
+    host: string;
+    /** The protocol. */
+    protocol: string;
+    /**
+     * The port number.
+     *
+     * Can be a number or string, to support a browser `Location` object.
+     */
+    port?: number | string;
+    /** An optional proxy URL prefix, for example `https://query.solarnetwork.net/1m`. */
+    proxyUrlPrefix?: string;
+    /** Arbitrary additional properties. */
+    [k: string]: any;
+}
+/**
+ * Network environment configuration.
+ */
 interface HostConfig {
     /** The hostname. */
     host: string;
@@ -43,7 +62,7 @@ declare class EnvironmentConfig extends Configuration {
      *
      * @param config - an optional set of properties to start with
      */
-    constructor(config?: Partial<HostConfig>);
+    constructor(config?: Partial<HostConfigInfo>);
     /**
      * Check if TLS is in use via the `https` protocol.
      *
@@ -57,9 +76,9 @@ interface EnvironmentConstructor {
      * Constructor.
      * @param config - an optional set of properties to start with
      */
-    new (config?: Partial<HostConfig>): EnvironmentConfig & HostConfig;
+    new (config?: Partial<HostConfigInfo>): EnvironmentConfig & HostConfig;
 }
 declare const _default: EnvironmentConfig & HostConfig & EnvironmentConstructor;
 export default _default;
-export { EnvironmentConfig, type HostConfig, type EnvironmentConstructor };
+export { EnvironmentConfig, type HostConfig, type HostConfigInfo, type EnvironmentConstructor, };
 //# sourceMappingURL=environment.d.ts.map

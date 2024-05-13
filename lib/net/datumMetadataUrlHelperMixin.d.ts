@@ -86,13 +86,6 @@ declare const DatumMetadataUrlHelperMixin: <T extends UrlHelperConstructor>(supe
         env(key: string, newValue: any): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         parameter(key: string): any;
         parameter(key: string, newValue: any): import("../util/configuration.js").default;
-        /**
-         * Generate a URL for deleting datum metadata via a `DELETE` request.
-         *
-         * @param nodeId - a specific node ID to use; if not provided the `nodeId` parameter of this instance will be used
-         * @param sourceId - a specific source ID to use; if not provided the `sourceId` parameter of this instance will be used
-         * @returns the URL
-         */
         param<T_1>(key: string): T_1 | undefined;
         hostUrl(): string;
         hostRequestUrl(): string;

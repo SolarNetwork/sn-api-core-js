@@ -1,5 +1,5 @@
 import Configuration from "../util/configuration.js";
-import { EnvironmentConfig, HostConfig } from "./environment.js";
+import { EnvironmentConfig, HostConfig, HostConfigInfo } from "./environment.js";
 import { Constructor } from "../util/objects.js";
 import { default as DatumFilter } from "../domain/datumFilter.js";
 /**
@@ -22,11 +22,11 @@ declare class UrlHelper {
     /**
      * Constructor.
      *
-     * @param environment - the optional initial environment to use;
+     * @param environment the optional initial environment to use;
      *        if a non-`Environment` object is passed then the properties of that object will
      *        be used to construct a new `Environment` instance
      */
-    constructor(environment?: HostConfig);
+    constructor(environment?: HostConfigInfo);
     /**
      * Get the environment configuration.
      */
