@@ -56,6 +56,14 @@ export default class Instruction implements InstructionInfo {
      * @param info the info to construct with
      */
     constructor(info: InstructionInfo);
+    /**
+     * Create an instruction parameter instance.
+     *
+     * @param name the parameter name
+     * @param value the parameter value
+     * @returns the parameter object
+     */
+    static parameter(name: string, value: string): InstructionParameter;
 }
 /**
  * Common instruction topic names.
