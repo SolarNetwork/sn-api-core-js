@@ -5,6 +5,8 @@ import Configuration from "../util/configuration.js";
 interface HostConfigInfo {
     /** The hostname. */
     host: string;
+    /** The hostname, in preference to the `host` value if provided. */
+    hostname?: string;
     /** The protocol. */
     protocol: string;
     /**
