@@ -3,7 +3,7 @@ export { default as AuthTokenUrlHelperMixin } from "./authTokenUrlHelperMixin.js
 export { default as AuthorizationV2Builder } from "./authV2.js";
 export { default as DatumUrlHelperMixin } from "./datumUrlHelperMixin.js";
 export { default as DatumMetadataUrlHelperMixin } from "./datumMetadataUrlHelperMixin.js";
-export { default as Environment, EnvironmentConfig, type HostConfig, type EnvironmentConstructor, } from "./environment.js";
+export { default as Environment, EnvironmentConfig, type HostConfig, type HostConfigInfo, type EnvironmentConstructor, } from "./environment.js";
 export { default as HttpHeaders, HttpContentType, HttpMethod, } from "./httpHeaders.js";
 export { default as InstructionUrlHelperMixin, type QueueInstructionRequest, type QueueInstructionSimpleRequest, } from "./instructionUrlHelperMixin.js";
 export { default as NodesUrlHelperMixin } from "./nodesUrlHelperMixin.js";
