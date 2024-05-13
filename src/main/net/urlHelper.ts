@@ -127,7 +127,8 @@ class UrlHelper {
 	 * helper.param('nodeId');  // 1
 	 * ```
 	 *
-	 * @param key - the parameter name to get
+	 * @template T the expected type
+	 * @param key the parameter name to get
 	 * @returns the parameter value
 	 */
 	param<T>(key: string): T | undefined {

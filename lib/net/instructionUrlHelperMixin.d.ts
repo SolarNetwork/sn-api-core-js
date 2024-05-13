@@ -27,7 +27,7 @@ interface QueueInstructionSimpleRequest extends QueueInstructionRequestBase {
     params?: Record<string, string>;
 }
 /**
- * Create a NodeInstructionUrlHelperMixin class.
+ * Create a InstructionUrlHelperMixin class.
  *
  * @param superclass - the UrlHelper class to mix onto
  * @return the mixin class
@@ -65,6 +65,7 @@ declare const InstructionUrlHelperMixin: <T extends UrlHelperConstructor>(superc
          * @see the {@link Domain.InstructionStates} enum for possible state values
          */
         updateInstructionStateUrl(instructionId: number, state: InstructionState): string;
+        "__#17@#instructionUrl"(exec: boolean, topic: string, parameters?: InstructionParameter[], nodeIds?: number[] | number): string;
         /**
          * Generate a URL for posting an instruction request.
          *
@@ -83,6 +84,15 @@ declare const InstructionUrlHelperMixin: <T extends UrlHelperConstructor>(superc
          * @returns the URL
          */
         queueInstructionsUrl(topic: string, parameters?: InstructionParameter[], nodeIds?: number[]): string;
+        /**
+         * Generate a URL for posting an instruction execution request.
+         *
+         * @param topic - the instruction topic
+         * @param parameters - an array of parameter objects
+         * @param nodeIds - the specific node ID(s) to use; if not provided the `nodeIds` parameter of this class will be used
+         * @returns the URL
+         */
+        execInstructionUrl(topic: string, parameters?: InstructionParameter[], nodeIds?: number[] | number): string;
         /**
          * Create a queue instruction request object, suitable for submitting as JSON content.
          *

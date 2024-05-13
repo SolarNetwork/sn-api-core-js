@@ -22,6 +22,7 @@ export {
 	type CombiningTypeEnumsType,
 	CombiningTypeNames,
 } from "./combiningType.js";
+export { default as Datum, type DatumInfo } from "./datum.js";
 export {
 	default as DatumAuxiliaryTypes,
 	DatumAuxiliaryType,

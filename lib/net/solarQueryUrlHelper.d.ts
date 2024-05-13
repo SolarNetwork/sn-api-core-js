@@ -18,6 +18,11 @@ export declare const SolarQueryApiPathV1 = "/api/v1";
 export declare const SolarQueryPublicPathKey = "publicQuery";
 /**
  * Extension of `UrlHelper` for SolarQuery APIs.
+ *
+ * The base URL uses the configured environment to resolve
+ * the `hostUrl`, the `solarQueryPath` context path,
+ * and the `publicQuery` boolean flag. If the context path is not
+ * available, it will default to `/solarquery`.
  */
 export declare class SolarQueryUrlHelper extends UrlHelper {
     /**
@@ -25,17 +30,6 @@ export declare class SolarQueryUrlHelper extends UrlHelper {
      */
     get publicQuery(): boolean;
     set publicQuery(value: boolean);
-    /**
-     * Get the base URL to the SolarQuery v1 REST API.
-     *
-     * The returned URL uses the configured environment to resolve
-     * the `hostUrl`, the `solarQueryPath` context path,
-     * and the `publicQuery` boolean flag. If the context path is not
-     * available, it will default to `/solarquery`.
-     *
-     * @returns the base URL to SolarQuery
-     * @override
-     */
     baseUrl(): string;
 }
 declare const SolarQueryApi_base: {
@@ -124,8 +118,8 @@ export default class SolarQueryApi extends SolarQueryApi_base {
 }
 declare const SolarQueryLocationApi_base: {
     new (...args: any[]): {
-        "__#17@#baseLocationDatumMetadataUrl"(locationId?: number | undefined): string;
-        "__#17@#locationDatumMetadataUrlWithSource"(locationId?: number | undefined, sourceId?: string | undefined): string;
+        "__#18@#baseLocationDatumMetadataUrl"(locationId?: number | undefined): string;
+        "__#18@#locationDatumMetadataUrlWithSource"(locationId?: number | undefined, sourceId?: string | undefined): string;
         viewLocationDatumMetadataUrl(locationId?: number | undefined, sourceId?: string | undefined): string;
         addLocationDatumMetadataUrl(locationId?: number | undefined, sourceId?: string | undefined): string;
         replaceLocationDatumMetadataUrl(locationId?: number | undefined, sourceId?: string | undefined): string;

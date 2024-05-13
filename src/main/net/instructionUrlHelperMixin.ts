@@ -37,7 +37,7 @@ interface QueueInstructionSimpleRequest extends QueueInstructionRequestBase {
 }
 
 /**
- * Create a NodeInstructionUrlHelperMixin class.
+ * Create a InstructionUrlHelperMixin class.
  *
  * @param superclass - the UrlHelper class to mix onto
  * @return the mixin class
@@ -143,6 +143,45 @@ const InstructionUrlHelperMixin = <T extends UrlHelperConstructor>(
 			return url;
 		}
 
+		#instructionUrl(
+			exec: boolean,
+			topic: string,
+			parameters?: InstructionParameter[],
+			nodeIds?: number[] | number
+		) {
+			const nodes: number[] | undefined = Array.isArray(nodeIds)
+				? nodeIds
+				: nodeIds !== undefined
+				? [nodeIds]
+				: this.param(DatumFilterKeys.NodeIds);
+			let url =
+				this.baseUrl() +
+				"/instr/" +
+				(exec ? "exec" : "add") +
+				"/" +
+				encodeURIComponent(topic);
+			if (nodes && nodes.length) {
+				url += "?";
+				if (nodes.length > 1) {
+					url += "nodeIds=" + nodes.join(",");
+				} else {
+					url += "nodeId=" + nodes[0];
+				}
+			}
+			if (Array.isArray(parameters) && parameters.length > 0) {
+				if (nodes && nodes.length) {
+					url += "&";
+				} else {
+					url += "?";
+				}
+				url +=
+					InstructionUrlHelperMixin.urlEncodeInstructionParameters(
+						parameters
+					);
+			}
+			return url;
+		}
+
 		/**
 		 * Generate a URL for posting an instruction request.
 		 *
@@ -156,20 +195,7 @@ const InstructionUrlHelperMixin = <T extends UrlHelperConstructor>(
 			parameters?: InstructionParameter[],
 			nodeId?: number
 		) {
-			let url =
-				this.baseUrl() +
-				"/instr/add/" +
-				encodeURIComponent(topic) +
-				"?nodeId=" +
-				(nodeId || this.param(DatumFilterKeys.NodeId));
-			if (Array.isArray(parameters) && parameters.length > 0) {
-				url +=
-					"&" +
-					InstructionUrlHelperMixin.urlEncodeInstructionParameters(
-						parameters
-					);
-			}
-			return url;
+			return this.#instructionUrl(false, topic, parameters, nodeId);
 		}
 
 		/**
@@ -185,24 +211,23 @@ const InstructionUrlHelperMixin = <T extends UrlHelperConstructor>(
 			parameters?: InstructionParameter[],
 			nodeIds?: number[]
 		) {
-			const nodes: number[] | undefined =
-				nodeIds || this.param(DatumFilterKeys.NodeIds);
-			let url =
-				this.baseUrl() +
-				"/instr/add/" +
-				encodeURIComponent(topic) +
-				"?nodeIds=" +
-				(Array.isArray(nodes) && nodes.length > 0
-					? nodes.join(",")
-					: "");
-			if (Array.isArray(parameters) && parameters.length > 0) {
-				url +=
-					"&" +
-					InstructionUrlHelperMixin.urlEncodeInstructionParameters(
-						parameters
-					);
-			}
-			return url;
+			return this.#instructionUrl(false, topic, parameters, nodeIds);
+		}
+
+		/**
+		 * Generate a URL for posting an instruction execution request.
+		 *
+		 * @param topic - the instruction topic
+		 * @param parameters - an array of parameter objects
+		 * @param nodeIds - the specific node ID(s) to use; if not provided the `nodeIds` parameter of this class will be used
+		 * @returns the URL
+		 */
+		execInstructionUrl(
+			topic: string,
+			parameters?: InstructionParameter[],
+			nodeIds?: number[] | number
+		) {
+			return this.#instructionUrl(true, topic, parameters, nodeIds);
 		}
 
 		/**

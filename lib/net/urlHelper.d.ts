@@ -88,7 +88,8 @@ declare class UrlHelper {
      * helper.param('nodeId');  // 1
      * ```
      *
-     * @param key - the parameter name to get
+     * @template T the expected type
+     * @param key the parameter name to get
      * @returns the parameter value
      */
     param<T>(key: string): T | undefined;
@@ -110,12 +111,10 @@ declare class UrlHelper {
     /**
      * Get a URL for just the SolarNet host, without any path to be used for actual requests.
      *
-     * This will return the same as {@link Net.UrlHelper#hostUrl hostUrl()} unless an
-     * {@link Net.HostConfig#proxyUrlPrefix environment.proxyUrlPrefix} value is configured,
-     * in which case the proxy version of the host URL will be returned.
+     * Calls the {@link Net.UrlHelper.toRequestUrl toRequestUrl()} with
+     * {@link Net.UrlHelper.hostUrl hostUrl()} as the argument.
      *
      * @returns the URL to make reqeusts to the SolarNet host
-     * @see {@link Net.UrlHelper#toReqeustUrl}
      */
     hostRequestUrl(): string;
     /**
