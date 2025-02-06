@@ -78,7 +78,7 @@
     "preapidoc": "npm run build",
     "apidoc": "typedoc",
     "release": "generate-release --current-version \"$(bin/remove-preid.cjs)\"",
-    "lint": "eslint --ext .ts --fix src/main",
+    "lint": "eslint --fix src/main",
     "prettier": "prettier --config .prettierrc.json \"src/**/*.ts\" --check",
     "prettier:write": "prettier --config .prettierrc.json \"src/**/*.ts\" --write"
   },
@@ -91,6 +91,7 @@
   },
   "devDependencies": {
     "@ava/typescript": "^4.1.0",
+    "@eslint/js": "^9.19.0",
     "@rollup/plugin-typescript": "^11.1.5",
     "@tsconfig/node17": "^17.1.1",
     "@types/crypto-js": "^4.1.2",
@@ -103,7 +104,7 @@
     "@typescript-eslint/parser": "^6.7.2",
     "ava": "^5.3.1",
     "c8": "^8.0.1",
-    "eslint": "^8.49.0",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "generate-release": "^1.1.1",
@@ -114,7 +115,8 @@
     "semver": "^7.5.4",
     "tslib": "^2.6.2",
     "typedoc": "^0.25.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "typescript-eslint": "^8.23.0"
   },
   "overrides": {
     "json5": "2.2.3",
