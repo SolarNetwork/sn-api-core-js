@@ -188,7 +188,7 @@ export default class DatumIdentifier {
 	}
 
 	/**
-	 * Get this object as a standard JSON encoded string value.
+	 * Get this object in standard JSON form.
 	 *
 	 * An example result looks like this:
 	 *
@@ -203,9 +203,9 @@ export default class DatumIdentifier {
 	 * }
 	 * ```
 	 *
-	 * @return the JSON encoded string
+	 * @return an object, ready for JSON encoding
 	 */
-	toJsonEncoding(): string {
+	toJsonObject(): object {
 		const result = {
 			kind: this.kind.key,
 			timestamp: timestampFormat(this.timestamp),
@@ -222,7 +222,20 @@ export default class DatumIdentifier {
 		if (this.aggregation != null) {
 			result.aggregation = this.aggregation.name;
 		}
-		return JSON.stringify(result);
+		return result;
+	}
+
+	/**
+	 * Get this object as a standard JSON encoded string value.
+	 *
+	 * This method calls {@link Domain.DatumIdentifier#toJsonEncoding} and then
+	 * turns that into a JSON string.
+	 *
+	 * @return the JSON encoded string
+	 * @see {@link Domain.DatumIdentifier#toJsonObject}
+	 */
+	toJsonEncoding(): string {
+		return JSON.stringify(this.toJsonObject());
 	}
 
 	/**
