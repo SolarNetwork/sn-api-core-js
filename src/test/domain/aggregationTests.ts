@@ -32,6 +32,7 @@ test("compare:eq", (t) => {
 });
 
 test("aggregations", (t) => {
+	t.is(Aggregations.None.name, AggregationNames.None);
 	t.is(Aggregations.Minute.name, AggregationNames.Minute);
 	t.is(Aggregations.FiveMinute.name, AggregationNames.FiveMinute);
 	t.is(Aggregations.TenMinute.name, AggregationNames.TenMinute);

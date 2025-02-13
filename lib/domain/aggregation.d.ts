@@ -3,6 +3,8 @@ import ComparableEnum from "../util/comparableEnum.js";
  * An enumeration of supported aggregation names.
  */
 declare enum AggregationNames {
+    /** No aggregation. */
+    None = "None",
     /** One minute. */
     Minute = "Minute",
     /** Five minute. */
