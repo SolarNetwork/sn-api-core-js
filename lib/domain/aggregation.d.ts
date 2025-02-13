@@ -71,7 +71,7 @@ type AggregationEnumsType = {
  * The supported Aggregation values as an object mapping.
  *
  * Use this object like:
- *a
+ *
  * ```
  * import Aggregations from "solarnetwork-api-core";
  *
