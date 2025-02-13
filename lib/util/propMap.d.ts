@@ -31,7 +31,7 @@ declare class PropMap implements Iterable<readonly [string, any]> {
      * Get an iterator over the property entries.
      * @returns iterator over `[k, v]` values
      */
-    [Symbol.iterator](): IterableIterator<[string, any]>;
+    [Symbol.iterator](): MapIterator<[string, any]>;
     /**
      * Get the number of properties configured.
      */
