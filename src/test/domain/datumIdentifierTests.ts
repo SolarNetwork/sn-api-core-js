@@ -3,6 +3,7 @@ import test from "ava";
 import DatumIdentifier from "../../main/domain/datumIdentifier.js";
 import DatumStreamTypes from "../../main/domain/datumStreamType.js";
 import Aggregations from "../../main/domain/aggregation.js";
+import { timestampFormat } from "../../main/util/dates.js";
 
 test("create:all", (t) => {
 	// GIVEN
@@ -266,6 +267,28 @@ test("fromJsonEncoding:noKind", (t) => {
 	t.is(ident.aggregation, undefined);
 });
 
+test("toJsonObject", (t) => {
+	// GIVEN
+	const streamId = "7714f762-2361-4ec2-98ab-7e96807b32a6";
+	const nodeId = 123;
+	const sourceId = "test/source";
+	const ts = "2025-01-02 03:04:05.678Z";
+	const agg = Aggregations.None;
+
+	const ident = DatumIdentifier.nodeId(ts, sourceId, nodeId, agg, streamId);
+
+	// WHEN
+	const obj = ident.toJsonObject();
+	t.deepEqual(obj, {
+		kind: "n",
+		timestamp: ts,
+		streamId: streamId,
+		objectId: nodeId,
+		sourceId: sourceId,
+		aggregation: agg.name,
+	});
+});
+
 test("toJsonEncoding", (t) => {
 	// GIVEN
 	const streamId = "7714f762-2361-4ec2-98ab-7e96807b32a6";
@@ -437,4 +460,31 @@ test("fullySpeced:noTimestamp", (t) => {
 	t.is(ident.sourceId, undefined);
 	t.is(ident.streamId, streamId);
 	t.is(ident.isFullySpecified(), false, "no timestamp");
+});
+
+test("jsonArrayRoundtrip", (t) => {
+	// GIVEN
+	const ts = new Date();
+	const data = [
+		DatumIdentifier.nodeId(ts, "meter/1", 327),
+		DatumIdentifier.nodeId(ts, "meter/2", 327),
+	];
+
+	// WHEN
+	const reqBodyJson = `[${data.map((id) => id.toJsonEncoding()).join(",")}]`;
+
+	// THEN
+	t.is(
+		reqBodyJson,
+		`[{"kind":"n","timestamp":"${timestampFormat(
+			ts
+		)}","objectId":327,"sourceId":"meter/1"},{"kind":"n","timestamp":"${timestampFormat(
+			ts
+		)}","objectId":327,"sourceId":"meter/2"}]`
+	);
+
+	const roundTrip = (JSON.parse(reqBodyJson) as object[]).map((o) =>
+		DatumIdentifier.fromJsonObject(o)
+	);
+	t.deepEqual(roundTrip, data);
 });
