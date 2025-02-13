@@ -97,7 +97,7 @@ export default class DatumIdentifier {
      */
     isFullySpecified(): boolean;
     /**
-     * Get this object as a standard JSON encoded string value.
+     * Get this object in standard JSON form.
      *
      * An example result looks like this:
      *
@@ -112,7 +112,17 @@ export default class DatumIdentifier {
      * }
      * ```
      *
+     * @return an object, ready for JSON encoding
+     */
+    toJsonObject(): object;
+    /**
+     * Get this object as a standard JSON encoded string value.
+     *
+     * This method calls {@link Domain.DatumIdentifier#toJsonEncoding} and then
+     * turns that into a JSON string.
+     *
      * @return the JSON encoded string
+     * @see {@link Domain.DatumIdentifier#toJsonObject}
      */
     toJsonEncoding(): string;
     /**
