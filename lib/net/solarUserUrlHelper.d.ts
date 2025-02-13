@@ -44,7 +44,7 @@ declare const SolarUserApi_base: {
     };
 } & {
     new (...args: any[]): {
-        refreshTokenV2Url(date?: Date | undefined): string;
+        refreshTokenV2Url(date?: Date): string;
         readonly "__#13@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         readonly "__#13@#parameters": import("../util/configuration.js").default;
         readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
@@ -66,14 +66,14 @@ declare const SolarUserApi_base: {
 } & {
     new (...args: any[]): {
         viewInstructionUrl(instructionId: number): string;
-        viewActiveInstructionsUrl(nodeId?: number | undefined): string;
-        viewPendingInstructionsUrl(nodeId?: number | undefined): string;
+        viewActiveInstructionsUrl(nodeId?: number): string;
+        viewPendingInstructionsUrl(nodeId?: number): string;
         updateInstructionStateUrl(instructionId: number, state: import("../domain/instructionState.js").InstructionState): string;
-        "__#17@#instructionUrl"(exec: boolean, topic: string, parameters?: import("../domain/instructionParameter.js").default[] | undefined, nodeIds?: number | number[] | undefined): string;
-        queueInstructionUrl(topic: string, parameters?: import("../domain/instructionParameter.js").default[] | undefined, nodeId?: number | undefined): string;
-        queueInstructionsUrl(topic: string, parameters?: import("../domain/instructionParameter.js").default[] | undefined, nodeIds?: number[] | undefined): string;
-        execInstructionUrl(topic: string, parameters?: import("../domain/instructionParameter.js").default[] | undefined, nodeIds?: number | number[] | undefined): string;
-        queueInstructionRequest(topic?: string | undefined, parameters?: import("../domain/instructionParameter.js").default[] | undefined, nodeId?: number | undefined, executionDate?: Date | undefined): import("./instructionUrlHelperMixin.js").QueueInstructionRequest | import("./instructionUrlHelperMixin.js").QueueInstructionSimpleRequest;
+        "__#17@#instructionUrl"(exec: boolean, topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeIds?: number[] | number): string;
+        queueInstructionUrl(topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeId?: number): string;
+        queueInstructionsUrl(topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeIds?: number[]): string;
+        execInstructionUrl(topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeIds?: number[] | number): string;
+        queueInstructionRequest(topic?: string, parameters?: import("../domain/instructionParameter.js").default[], nodeId?: number, executionDate?: Date): import("./instructionUrlHelperMixin.js").QueueInstructionRequest | import("./instructionUrlHelperMixin.js").QueueInstructionSimpleRequest;
         readonly "__#13@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         readonly "__#13@#parameters": import("../util/configuration.js").default;
         readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
@@ -92,8 +92,8 @@ declare const SolarUserApi_base: {
         resolveTemplateUrl(template: string): string;
         datumFilter(): import("../domain/datumFilter.js").default;
     };
-    urlEncodeInstructionParameters(parameters?: import("../domain/instructionParameter.js").default[] | undefined): string;
-    canUseSimpleRequest(parameters?: import("../domain/instructionParameter.js").default[] | undefined): boolean;
+    urlEncodeInstructionParameters(parameters?: import("../domain/instructionParameter.js").default[]): string;
+    canUseSimpleRequest(parameters?: import("../domain/instructionParameter.js").default[]): boolean;
     instructionParameter(name: string, value: string): import("../domain/instructionParameter.js").default;
 } & {
     new (...args: any[]): {
@@ -125,11 +125,11 @@ declare const SolarUserApi_base: {
 } & {
     new (...args: any[]): {
         findUserMetadataUrl(filter: import("../domain/userMetadataFilter.js").default): string;
-        "__#20@#userMetadataUrl"(userId?: number | undefined): string;
-        viewUserMetadataUrl(userId?: number | undefined): string;
-        addUserMetadataUrl(userId?: number | undefined): string;
-        replaceUserMetadataUrl(userId?: number | undefined): string;
-        deleteUserMetadataUrl(userId?: number | undefined): string;
+        "__#20@#userMetadataUrl"(userId?: number): string;
+        viewUserMetadataUrl(userId?: number): string;
+        addUserMetadataUrl(userId?: number): string;
+        replaceUserMetadataUrl(userId?: number): string;
+        deleteUserMetadataUrl(userId?: number): string;
         readonly "__#13@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         readonly "__#13@#parameters": import("../util/configuration.js").default;
         readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
@@ -153,7 +153,7 @@ declare const SolarUserApi_base: {
         viewNodesUrl(): string;
         viewPendingNodesUrl(): string;
         viewArchivedNodesUrl(): string;
-        updateNodeArchivedStatusUrl(archived: boolean, nodeId?: number | number[] | undefined): string;
+        updateNodeArchivedStatusUrl(archived: boolean, nodeId?: number | number[]): string;
         readonly "__#13@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         readonly "__#13@#parameters": import("../util/configuration.js").default;
         readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;

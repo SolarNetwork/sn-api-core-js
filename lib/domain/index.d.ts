@@ -5,6 +5,7 @@ export { default as CombiningTypes, CombiningType, type CombiningTypeEnumsType, 
 export { default as Datum, type DatumInfo } from "./datum.js";
 export { default as DatumAuxiliaryTypes, DatumAuxiliaryType, type DatumAuxiliaryTypeEnumsType, DatumAuxiliaryTypeNames, } from "./datumAuxiliaryType.js";
 export { default as DatumFilter, DatumFilterKeys, type DatumFilterProperties, DatumFilterPropertyNames, DatumFilterPropertyNamesSet, } from "./datumFilter.js";
+export { default as DatumIdentifier } from "./datumIdentifier.js";
 export { default as DatumReadingTypes, DatumReadingType, type DatumReadingTypeEnumsType, DatumReadingTypeNames, } from "./datumReadingType.js";
 export { default as DatumSamplesTypes, DatumSamplesType, type DatumSamplesTypeEnumsType, DatumSamplesTypeNames, } from "./datumSamplesType.js";
 export { default as DatumStreamMetadata } from "./datumStreamMetadata.js";

@@ -36,6 +36,7 @@ export {
 	DatumFilterPropertyNames,
 	DatumFilterPropertyNamesSet,
 } from "./datumFilter.js";
+export { default as DatumIdentifier } from "./datumIdentifier.js";
 export {
 	default as DatumReadingTypes,
 	DatumReadingType,
