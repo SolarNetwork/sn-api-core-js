@@ -4,6 +4,9 @@ import ComparableEnum from "../util/comparableEnum.js";
  * An enumeration of supported aggregation names.
  */
 enum AggregationNames {
+	/** No aggregation. */
+	None = "None",
+
 	/** One minute. */
 	Minute = "Minute",
 
@@ -97,6 +100,7 @@ type AggregationEnumsType = { [key in AggregationNames]: Aggregation };
  * The aggregation enum values array.
  */
 const AggregationValues = Object.freeze([
+	new Aggregation(AggregationNames.None, 0),
 	new Aggregation(AggregationNames.Minute, 60),
 	new Aggregation(AggregationNames.FiveMinute, 60 * 5),
 	new Aggregation(AggregationNames.TenMinute, 60 * 10),
@@ -119,7 +123,7 @@ const AggregationValues = Object.freeze([
  * The supported Aggregation values as an object mapping.
  *
  * Use this object like:
- *
+ *a
  * ```
  * import Aggregations from "solarnetwork-api-core";
  *
