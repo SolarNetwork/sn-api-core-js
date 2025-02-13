@@ -3,6 +3,8 @@ import ComparableEnum from "../util/comparableEnum.js";
  * An enumeration of supported aggregation names.
  */
 declare enum AggregationNames {
+    /** No aggregation. */
+    None = "None",
     /** One minute. */
     Minute = "Minute",
     /** Five minute. */
@@ -69,7 +71,7 @@ type AggregationEnumsType = {
  * The supported Aggregation values as an object mapping.
  *
  * Use this object like:
- *
+ *a
  * ```
  * import Aggregations from "solarnetwork-api-core";
  *
