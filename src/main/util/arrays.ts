@@ -32,6 +32,7 @@ export function lowercaseSortedArray(items: string[]): string[] {
 /**
  * Create a set that contains values that occur in two different sets.
  *
+ * @param <T> the value type
  * @param s1 the first set (or array)
  * @param s2  the second set (or array)
  * @returns a new set with only values that occur in both `s1` and `s2`
