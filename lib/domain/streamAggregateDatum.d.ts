@@ -157,7 +157,7 @@ declare class StreamAggregateDatum implements StreamedDatum {
      */
     static fromJsonEncoding(json: string, meta: DatumStreamMetadata | DatumStreamMetadataRegistry): StreamAggregateDatum | undefined;
     /**
-     * Create a new {@link module:domain~StreamAggregateDatum StreamAggregateDatum}
+     * Create a new {@link Domain.StreamAggregateDatum StreamAggregateDatum}
      * instance from an array parsed from a stream datum JSON string.
      *
      * The array must have been parsed from JSON that was encoded the same way
