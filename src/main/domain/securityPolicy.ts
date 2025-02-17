@@ -274,7 +274,7 @@ class SecurityPolicy implements JsonEncodable {
 	 * The JSON must be encoded the same way {@link Domain.SecurityPolicy#toJsonEncoding} does.
 	 *
 	 * @param json the JSON to parse
-	 * @returns the datum identifier instance, or `undefined` if `json` is `undefined`
+	 * @returns the new instance, or `undefined` if `json` is `undefined`
 	 */
 	static fromJsonEncoding(
 		json: string | undefined
@@ -286,12 +286,11 @@ class SecurityPolicy implements JsonEncodable {
 	}
 
 	/**
-	 * Create an identifier instance from an object parsed from a JSON string.
+	 * Create a new instance from an object in standard JSON form.
 	 *
-	 * The object must have been parsed from JSON that was encoded the same way
-	 * {@link Domain.SecurityPolicy#toJsonEncoding} does.
+	 * The object must be in the same style as {@link Domain.SecurityPolicy#toJsonObject} produces.
 	 *
-	 * @param obj the object parsed from JSON
+	 * @param obj the object in standard JSON form
 	 * @returns the new instance, or `undefined` if `obj` is `undefined`
 	 */
 	static fromJsonObject(obj: any): SecurityPolicy | undefined {
