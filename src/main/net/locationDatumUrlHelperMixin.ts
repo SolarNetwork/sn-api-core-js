@@ -47,7 +47,7 @@ const LocationDatumUrlHelperMixin = <T extends UrlHelperConstructor>(
 		/**
 		 * Generate a URL for finding the available source IDs for a location or metadata filter.
 		 *
-		 * @param ocationId - a specific location ID to use; if not provided the `locationId`
+		 * @param locationId - a specific location ID to use; if not provided the `locationId`
 		 *     parameter of this instance will be used
 		 * @param startDate - a start date to limit the search to
 		 * @param endDate - an end date to limit the search to

@@ -113,7 +113,7 @@ const UserDatumAuxiliaryUrlHelperMixin = <T extends UrlHelperConstructor>(
 		/**
 		 * Generate a URL for storing a `DatumAuxiliaryType` via a `POST` request.
 		 *
-		 * The {@link module:net~UserDatumAuxiliaryUrlHelperMixin#userDatumAuxiliaryIdUrl} method is used
+		 * The {@link Net.SolarUserApi#userDatumAuxiliaryIdUrl} method is used
 		 * to generate the URL.
 		 *
 		 * @param type - the datum auxiliary type

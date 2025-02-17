@@ -370,7 +370,7 @@ class StreamAggregateDatum implements StreamedDatum {
 	}
 
 	/**
-	 * Create a new {@link module:domain~StreamAggregateDatum StreamAggregateDatum}
+	 * Create a new {@link Domain.StreamAggregateDatum StreamAggregateDatum}
 	 * instance from an array parsed from a stream datum JSON string.
 	 *
 	 * The array must have been parsed from JSON that was encoded the same way

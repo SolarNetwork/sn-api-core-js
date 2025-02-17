@@ -68,37 +68,57 @@ class UrlHelper {
 	}
 
 	/**
-	 * Get or set an environment parameter.
+	 * Get an environment parameter.
 	 *
 	 * This is a shortcut for calling {@link Util.Configuration#value} on the
 	 * `environment` object.
 	 *
-	 * @param key - the environment parameter name to get
-	 * @param val - the optional value to set
-	 * @returns when called as a getter, the environment parameter value;
-	 *          when called as a setter, the environment object
+	 * @param key the environment parameter name to get
+	 * @returns the environment parameter value
 	 */
 	env(key: string): any;
-	env(key: string, newValue: any): EnvironmentConfig & HostConfig;
-	env(key: string, newValue?: any): any | (EnvironmentConfig & HostConfig) {
-		return this.#environment.value(key, newValue);
+
+	/**
+	 * Set an environment parameter.
+	 *
+	 * This is a shortcut for calling {@link Util.Configuration#value} on the
+	 * `environment` object.
+	 *
+	 * @param key the environment parameter name to set
+	 * @param val the value to set
+	 * @returns the environment object
+	 */
+	env(key: string, val: any): EnvironmentConfig & HostConfig;
+
+	env(key: string, val?: any): any | (EnvironmentConfig & HostConfig) {
+		return this.#environment.value(key, val);
 	}
 
 	/**
-	 * Get or set a parameter.
+	 * Get a parameter.
 	 *
 	 * This is a shortcut for calling {@link Util.Configuration#value} on the
 	 * `parameters` object.
 	 *
-	 * @param key - the parameter name to get
-	 * @param val - the optional value to set
-	 * @returns when called as a getter, the parameter value;
-	 *          when called as a setter, the parameters object
+	 * @param key the parameter name to get
+	 * @returns the parameter value
 	 */
 	parameter(key: string): any;
-	parameter(key: string, newValue: any): Configuration;
-	parameter(key: string, newValue?: any): any | Configuration {
-		return this.#parameters.value(key, newValue);
+
+	/**
+	 * Set a parameter.
+	 *
+	 * This is a shortcut for calling {@link Util.Configuration#value} on the
+	 * `parameters` object.
+	 *
+	 * @param key the parameter name to set
+	 * @param val the value to set
+	 * @returns the parameters object
+	 */
+	parameter(key: string, val: any): Configuration;
+
+	parameter(key: string, val?: any): any | Configuration {
+		return this.#parameters.value(key, val);
 	}
 
 	/**

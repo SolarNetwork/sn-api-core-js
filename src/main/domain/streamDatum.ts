@@ -246,13 +246,13 @@ class StreamDatum implements StreamedDatum {
 	}
 
 	/**
-	 * Create a new {@link module:domain~StreamDatum StreamDatum} instance from an array parsed from a stream datum JSON string.
+	 * Create a new {@link Domain.StreamDatum StreamDatum} instance from an array parsed from a stream datum JSON string.
 	 *
-	 * The array must have been parsed from JSON that was encoded the same way {@link module:domain~StreamDatum#toJsonEncoding StreamDatum#toJsonEncoding()} does.
+	 * The array must have been parsed from JSON that was encoded the same way {@link Domain.StreamDatum#toJsonEncoding StreamDatum#toJsonEncoding()} does.
 	 *
-	 * @param {Array} data the array parsed from JSON
-	 * @param {module:domain~DatumStreamMetadata|module:util~DatumStreamMetadataRegistry} meta a metadata instance or metadata registry to decode with
-	 * @returns {module:domain~StreamDatum} the stream datum instance
+	 * @param data the array parsed from JSON
+	 * @param meta a metadata instance or metadata registry to decode with
+	 * @returns the stream datum instance
 	 */
 	static fromJsonObject(
 		data: any[],
