@@ -1,7 +1,17 @@
 import { Aggregation } from "./aggregation.js";
 import { LocationPrecision } from "./locationPrecision.js";
+import { intersection } from "../util/arrays.js";
+import { wildcardPatternToRegExp } from "../util/datum.js";
 import JsonEncodable from "../util/jsonEncodable.js";
 import { nonEmptySet, nonEmptyMergedSets } from "../util/objects.js";
+
+interface SecurityPolicyFilter {
+	/** The node IDs. */
+	nodeIds?: Set<number>;
+
+	/** The source IDs. */
+	sourceIds?: Set<string>;
+}
 
 /**
  * An immutable set of security restrictions that can be attached to other objects, like auth tokens.
@@ -127,6 +137,59 @@ class SecurityPolicy implements JsonEncodable {
 	 */
 	get userMetadataPaths(): Set<string> | undefined {
 		return this.#userMetadataPaths;
+	}
+
+	/**
+	 * Apply this policy's restrictions on a filter.
+	 *
+	 * You can use this method to enforce aspects of a security policy on a `SecurityPolicyFilter`.
+	 * For example:
+	 *
+	 * ```
+	 * const policy = SecurityPolicy.fromJsonObject({
+	 *   nodeIds:   [1, 2],
+	 *   sourceIds: ["/s1/**"]
+	 * });
+	 *
+	 * const filter = policy.restrict({
+	 *   nodeIds:   new Set([2, 3, 4]),
+	 *   sourceIds: new Set(["/s1/a", "/s1/a/b", "/s2/a", "/s3/a"])
+	 * });
+	 *
+	 * // now filter contains only the node/source IDs allowed by the policy:
+	 * {
+	 *   nodeIds:   new Set([2]),
+	 *   sourceIds: new Set(["/s1/a", "/s1/a/b"])
+	 * };
+	 * ```
+	 *
+	 * @param filter the filter to enforce this policy's restrictions on
+	 * @returns a new filter instance
+	 */
+	restrict(filter: SecurityPolicyFilter): SecurityPolicyFilter {
+		const result = {} as SecurityPolicyFilter;
+		if (filter.nodeIds) {
+			result.nodeIds = this.#nodeIds
+				? intersection(this.#nodeIds, filter.nodeIds)
+				: filter.nodeIds;
+		}
+		if (filter.sourceIds) {
+			if (this.#sourceIds) {
+				const filteredSourceIds = new Set<string>();
+				this.#sourceIds.forEach((pat) => {
+					const regex = wildcardPatternToRegExp(pat)!;
+					for (const sourceId of filter.sourceIds!) {
+						if (regex.test(sourceId)) {
+							filteredSourceIds.add(sourceId);
+						}
+					}
+				});
+				result.sourceIds = filteredSourceIds;
+			} else {
+				result.sourceIds = filter.sourceIds;
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -661,4 +724,4 @@ class SecurityPolicyBuilder {
 }
 
 export default SecurityPolicy;
-export { SecurityPolicyBuilder };
+export { SecurityPolicyBuilder, type SecurityPolicyFilter };

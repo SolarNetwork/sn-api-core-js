@@ -1131,3 +1131,95 @@ test("addPolicy:mins", (t) => {
 	t.is(result.minAggregation, Aggregations.Month);
 	t.is(result.minLocationPrecision, LocationPrecisions.Region);
 });
+
+test("restrict:empty", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({
+		nodeIds: [1, 2],
+		sourceIds: ["a", "b"],
+	})!;
+
+	t.deepEqual(policy.restrict({}), {});
+});
+
+test("restrict:nodes", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({
+		nodeIds: [1, 2],
+	})!;
+
+	t.deepEqual(policy.restrict({ nodeIds: new Set([1, 2, 3, 4]) }), {
+		nodeIds: new Set([1, 2]),
+	});
+});
+
+test("restrict:nodes:noRestrictions", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({})!;
+
+	t.deepEqual(policy.restrict({ nodeIds: new Set([1, 2, 3, 4]) }), {
+		nodeIds: new Set([1, 2, 3, 4]),
+	});
+});
+
+test("restrict:sources", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({
+		sourceIds: ["a", "b"],
+	})!;
+
+	t.deepEqual(policy.restrict({ sourceIds: new Set(["a", "b", "c", "d"]) }), {
+		sourceIds: new Set(["a", "b"]),
+	});
+});
+
+test("restrict:sources:noRestrictions", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({})!;
+
+	t.deepEqual(policy.restrict({ sourceIds: new Set(["a", "b", "c", "d"]) }), {
+		sourceIds: new Set(["a", "b", "c", "d"]),
+	});
+});
+
+test("restrict:sources:pattern", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({
+		sourceIds: ["/s1/**", "/s2/*"],
+	})!;
+
+	t.deepEqual(
+		policy.restrict({
+			sourceIds: new Set([
+				"/s1",
+				"/s1/a",
+				"/s1/a/b",
+				"/s2/a",
+				"/s2/a/b",
+				"/s3/a",
+			]),
+		}),
+		{
+			sourceIds: new Set(["/s1/a", "/s1/a/b", "/s2/a"]),
+		}
+	);
+});
+
+test("restrict:nodesAndSources", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({
+		nodeIds: [1, 2, 3],
+		sourceIds: ["/s1/**", "/s2/*"],
+	})!;
+
+	t.deepEqual(
+		policy.restrict({
+			nodeIds: new Set([2, 3, 4, 5, 6]),
+			sourceIds: new Set([
+				"/s1",
+				"/s1/a",
+				"/s1/a/b",
+				"/s2/a",
+				"/s2/a/b",
+				"/s3/a",
+			]),
+		}),
+		{
+			nodeIds: new Set([2, 3]),
+			sourceIds: new Set(["/s1/a", "/s1/a/b", "/s2/a"]),
+		}
+	);
+});
