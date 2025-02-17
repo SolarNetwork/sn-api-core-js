@@ -534,8 +534,8 @@ export function wildcardPatternToRegExp(pat?: string): RegExp | undefined {
 	// Convert '**' to '.*'
 	regex = regex.replace(/\*\*/g, ".*");
 
-	// Convert '/.*/' to '/.*' to allow missing path segment to match
-	regex = regex.replace(/\/\.\*\//g, "/.*");
+	// Convert '/.*/' to allow missing path segment to match
+	regex = regex.replace(/\/\.\*\//g, "(/|/.*/)");
 
 	return new RegExp(`^${regex}$`);
 }

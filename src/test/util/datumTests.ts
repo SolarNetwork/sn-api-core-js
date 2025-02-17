@@ -789,6 +789,21 @@ test("wildcardPatToRegExp:double asterisk", (t) => {
 	t.false(regex.test("nah/subdir/file.js"));
 });
 
+test("wildcardPatToRegExp:double asterisk:2", (t) => {
+	const regex = wildcardPatternToRegExp("src/**/foo")!;
+	t.true(regex.test("src/foo"));
+	t.true(regex.test("src/subdir/foo"));
+	t.true(regex.test("src/subdir/nested/foo"));
+	t.false(regex.test("nah"));
+	t.false(regex.test("src/foo.nah"));
+	t.false(regex.test("src/subdir/foo.nah"));
+	t.false(regex.test("src/subdir/nested/foo.nah"));
+	t.false(regex.test("nah/foo"));
+	t.false(regex.test("nah/subdir/foo"));
+	t.false(regex.test("src/nahfoo"));
+	t.false(regex.test("src/subdir/nahfoo"));
+});
+
 test("wildcardPatToRegExp:double asterisk:start", (t) => {
 	const regex = wildcardPatternToRegExp("**/*.js")!;
 	t.true(regex.test("src/file.js"));
