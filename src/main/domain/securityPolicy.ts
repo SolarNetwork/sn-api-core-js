@@ -8,6 +8,7 @@ import { nonEmptySet, nonEmptyMergedSets } from "../util/objects.js";
 /**
  * An object with properties that can be restricted by a {@link Domain.SecurityPolicy}.
  *
+ * @public
  * @see {@link Domain.SecurityPolicy#restrict}
  */
 interface SecurityPolicyFilter {
