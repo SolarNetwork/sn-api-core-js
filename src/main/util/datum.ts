@@ -508,3 +508,34 @@ export function groupedBySourceMetricDataArray(
 		return combined;
 	}, null) as any;
 }
+
+/**
+ * Convert a path wildcard pattern into a regular expression.
+ *
+ * This can be used to convert source ID wildcard patterns into regular expressions.
+ *
+ * @param pat the wildcard pattern to convert into a regular expression
+ * @returns the regular expression, or `undefined` if `pat` is `undefined`
+ */
+export function wildcardPatternToRegExp(pat?: string): RegExp | undefined {
+	if (!pat) {
+		return undefined;
+	}
+
+	// Escape special regex characters
+	let regex = pat.replace(/([!$()+.:<=>\[\]^{|}-])/g, "\\$1");
+
+	// Convert '?' to '[^/]'
+	regex = regex.replace(/\?/g, "[^/]");
+
+	// Convert single '*' to '[^/]*'
+	regex = regex.replace(/(?<!\*)\*(?!\*)/g, "[^/]*");
+
+	// Convert '**' to '.*'
+	regex = regex.replace(/\*\*/g, ".*");
+
+	// Convert '/.*/' to '/.*' to allow missing path segment to match
+	regex = regex.replace(/\/\.\*\//g, "/.*");
+
+	return new RegExp(`^${regex}$`);
+}
