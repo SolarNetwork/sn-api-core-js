@@ -4,6 +4,7 @@ import JsonEncodable from "../util/jsonEncodable.js";
 /**
  * An object with properties that can be restricted by a {@link Domain.SecurityPolicy}.
  *
+ * @public
  * @see {@link Domain.SecurityPolicy#restrict}
  */
 interface SecurityPolicyFilter {
