@@ -28,3 +28,33 @@ export function lowercaseSortedArray(items: string[]): string[] {
 	sortedItems.sort();
 	return sortedItems;
 }
+
+/**
+ * Create a set that contains values that occur in two different sets.
+ *
+ * @param s1 the first set (or array)
+ * @param s2  the second set (or array)
+ * @returns a new set with only values that occur in both `s1` and `s2`
+ */
+export function intersection<T>(s1?: Set<T> | T[], s2?: Set<T> | T[]): Set<T> {
+	const result = new Set<T>();
+
+	const a = s1 instanceof Set ? (s1 as Set<T>) : new Set(s1 as T[]);
+	const b = s2 instanceof Set ? (s2 as Set<T>) : new Set(s2 as T[]);
+
+	let l: Set<T>;
+	let r: Set<T>;
+	if (a.size > b.size) {
+		l = b;
+		r = a;
+	} else {
+		l = a;
+		r = b;
+	}
+	l.forEach((v) => {
+		if (r.has(v)) {
+			result.add(v);
+		}
+	});
+	return result;
+}
