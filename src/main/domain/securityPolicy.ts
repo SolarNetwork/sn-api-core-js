@@ -5,6 +5,11 @@ import { wildcardPatternToRegExp } from "../util/datum.js";
 import JsonEncodable from "../util/jsonEncodable.js";
 import { nonEmptySet, nonEmptyMergedSets } from "../util/objects.js";
 
+/**
+ * An object with properties that can be restricted by a {@link Domain.SecurityPolicy}.
+ *
+ * @see {@link Domain.SecurityPolicy#restrict}
+ */
 interface SecurityPolicyFilter {
 	/** The node IDs. */
 	nodeIds?: Set<number>;
