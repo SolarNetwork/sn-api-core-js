@@ -128,7 +128,7 @@ declare class SecurityPolicy implements JsonEncodable {
     /**
      * Get this object as a standard JSON encoded string value.
      *
-     * This method calls {@link Domain.SecurityPolicy#toJsonEncoding} and then
+     * This method calls {@link Domain.SecurityPolicy#toJsonObject} and then
      * turns that into a JSON string.
      *
      * @return the JSON encoded string
