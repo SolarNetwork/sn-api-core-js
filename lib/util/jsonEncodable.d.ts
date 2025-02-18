@@ -6,10 +6,10 @@ export default interface JsonEncodable {
     /**
      * Get this object in standard JSON form.
      *
-     * This method will return a "plain" object, suitable for passing to `JSON.stringify()`.
+     * This method will return a "plain" object or array, suitable for passing to `JSON.stringify()`.
      *
-     * @return an object, ready for JSON encoding
+     * @return an object or array, ready for JSON encoding
      */
-    toJsonObject(): Record<string, any>;
+    toJsonObject(): Record<string, any> | any[];
 }
 //# sourceMappingURL=jsonEncodable.d.ts.map

@@ -1,7 +1,8 @@
 import { DatumSamplesType } from "./datumSamplesType.js";
 import DatumStreamMetadata from "./datumStreamMetadata.js";
-import DatumStreamMetadataRegistry from "../util/datumStreamMetadataRegistry.js";
 import StreamedDatum from "./streamedDatum.js";
+import DatumStreamMetadataRegistry from "../util/datumStreamMetadataRegistry.js";
+import JsonEncodable from "../util/jsonEncodable.js";
 /**
  * A stream datum entity.
  *
@@ -10,7 +11,7 @@ import StreamedDatum from "./streamedDatum.js";
  * fields `iProps`, `aProps`, and `sProps`. A {@link Domain.DatumStreamMetadata DatumStreamMetadata}
  * object is required to associate names with these arrays.
  */
-declare class StreamDatum implements StreamedDatum {
+declare class StreamDatum implements StreamedDatum, JsonEncodable {
     /** The stream ID. */
     readonly streamId: string;
     /** The timestamp. */
@@ -73,7 +74,7 @@ declare class StreamDatum implements StreamedDatum {
      *
      * This method returns the JSON form of the result of {@link Domain.StreamDatum#toJsonObject #toJsonObject()}.
      *
-     * @param registry - a stream metadata registry to encode as a registry-indexed stream datum
+     * @param registry a stream metadata registry to encode as a registry-indexed stream datum
      * @return the JSON encoded string
      */
     toJsonEncoding(registry?: DatumStreamMetadataRegistry): string;
@@ -97,7 +98,7 @@ declare class StreamDatum implements StreamedDatum {
      * ["7714f762-2361-4ec2-98ab-7e96807b32a6", 1650667326308, 12326, null, 230.19719, 50.19501, 6472722]
      * ```
      *
-     * @param registry - a stream metadata registry to encode as a registry-indexed stream datum
+     * @param registry a stream metadata registry to encode as a registry-indexed stream datum
      * @return the datum stream array object
      */
     toJsonObject(registry?: DatumStreamMetadataRegistry): any[];

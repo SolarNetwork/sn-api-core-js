@@ -1,1 +1,1 @@
-{"version":3,"file":"jsonEncodable.d.ts","sourceRoot":"","sources":["../../src/main/util/jsonEncodable.ts"],"names":[],"mappings":"AAAA;;;GAGG;AACH,MAAM,CAAC,OAAO,WAAW,aAAa;IACrC;;;;;;OAMG;IACH,YAAY,IAAI,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,CAAC;CACpC"}
+{"version":3,"file":"jsonEncodable.d.ts","sourceRoot":"","sources":["../../src/main/util/jsonEncodable.ts"],"names":[],"mappings":"AAAA;;;GAGG;AACH,MAAM,CAAC,OAAO,WAAW,aAAa;IACrC;;;;;;OAMG;IACH,YAAY,IAAI,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,GAAG,GAAG,EAAE,CAAC;CAC5C"}
