@@ -17,6 +17,19 @@
   },
   "type": "module",
   "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/solarnetwork-api-core.es.cjs"
+    },
+    "./lib/domain": "./lib/domain/index.js",
+    "./lib/domain/*": "./lib/domain/*.js",
+    "./lib/net": "./lib/net/index.js",
+    "./lib/net/*": "./lib/net/*.js",
+    "./lib/util": "./lib/util/index.js",
+    "./lib/util/*": "./lib/util/*.js",
+    "./package.json": "./package.json"
+  },
   "engines": {
     "node": ">=17"
   },
@@ -54,7 +67,8 @@
         "npm run lint",
         "npm run build",
         "npm run build:dist",
-        "npm run build:bundle"
+        "npm run build:bundle",
+        "npm run build:bundle:cjs"
       ],
       "post_commit_commands": [
         "npm test"
@@ -72,6 +86,7 @@
     "build": "tsc",
     "build:dist": "tsc --build tsconfig.dist.json",
     "build:bundle": "rollup --config rollup.config.mjs --banner \"$(preamble)\" -m -o lib/solarnetwork-api-core.es.js",
+    "build:bundle:cjs": "rollup --config rollup.config.cjs.mjs --format cjs --banner \"$(preamble)\" -m -o lib/solarnetwork-api-core.es.cjs",
     "pretest": "npm run build",
     "test": "c8 ava",
     "coverage": "c8 --reporter=lcov ava",
@@ -92,6 +107,8 @@
   "devDependencies": {
     "@ava/typescript": "^5.0.0",
     "@eslint/js": "^9.20.0",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-typescript": "^12.1.2",
     "@tsconfig/node17": "^17.1.5",
     "@types/crypto-js": "^4.2.2",
