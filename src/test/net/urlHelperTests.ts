@@ -20,6 +20,23 @@ test("static:resolveTemplateUrl:uirEncoded", (t) => {
 	t.is(result, "/some/crazy%2Fcool/path?foo=bar%26grille");
 });
 
+test("static:resolveTemplateUrl:tooLong", (t) => {
+	let str = "";
+	for (let i = 0; i < 1000; i++) {
+		str += "/some/{mode}/path?foo={foo}";
+	}
+	const error = t.throws(() => {
+		UrlHelper.resolveTemplateUrl(str, {
+			mode: "crazy",
+			foo: "bar",
+		});
+	});
+	t.is(
+		error.message,
+		"The template argument must be no more than 1024 characters."
+	);
+});
+
 test("create", (t) => {
 	const helper = new UrlHelper();
 	t.truthy(helper);
