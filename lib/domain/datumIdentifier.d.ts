@@ -1,5 +1,6 @@
 import { Aggregation } from "./aggregation.js";
 import { DatumStreamType } from "./datumStreamType.js";
+import JsonEncodable from "../util/jsonEncodable.js";
 /**
  * A general datum identifier class.
  *
@@ -34,7 +35,7 @@ import { DatumStreamType } from "./datumStreamType.js";
  * let ident = DatumIdentifier.nodeId(ts, sourceId, nodeId, agg, streamId);
  * ```
  */
-export default class DatumIdentifier {
+export default class DatumIdentifier implements JsonEncodable {
     /** The datum stream kind (node, location). */
     readonly kind: DatumStreamType;
     /** The datum creation/capture date. */
@@ -114,7 +115,7 @@ export default class DatumIdentifier {
      *
      * @return an object, ready for JSON encoding
      */
-    toJsonObject(): object;
+    toJsonObject(): Record<string, any>;
     /**
      * Get this object as a standard JSON encoded string value.
      *

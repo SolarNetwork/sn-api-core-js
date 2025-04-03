@@ -1,13 +1,30 @@
 import { Aggregation } from "./aggregation.js";
 import { LocationPrecision } from "./locationPrecision.js";
+import { intersection } from "../util/arrays.js";
+import { wildcardPatternToRegExp } from "../util/datum.js";
+import JsonEncodable from "../util/jsonEncodable.js";
 import { nonEmptySet, nonEmptyMergedSets } from "../util/objects.js";
+
+/**
+ * An object with properties that can be restricted by a {@link Domain.SecurityPolicy}.
+ *
+ * @public
+ * @see {@link Domain.SecurityPolicy#restrict}
+ */
+interface SecurityPolicyFilter {
+	/** The node IDs. */
+	nodeIds?: Set<number>;
+
+	/** The source IDs. */
+	sourceIds?: Set<string>;
+}
 
 /**
  * An immutable set of security restrictions that can be attached to other objects, like auth tokens.
  *
  * Use the {@link Domain.SecurityPolicyBuilder} to create instances of this class with a fluent API.
  */
-class SecurityPolicy {
+class SecurityPolicy implements JsonEncodable {
 	readonly #nodeIds?: Set<number>;
 	readonly #sourceIds?: Set<string>;
 	readonly #aggregations?: Set<Aggregation>;
@@ -129,11 +146,74 @@ class SecurityPolicy {
 	}
 
 	/**
-	 * Get this object as a standard JSON encoded string value.
+	 * Apply this policy's restrictions on a filter.
 	 *
-	 * @return the JSON encoded string
+	 * You can use this method to enforce aspects of a security policy on a `SecurityPolicyFilter`.
+	 * For example:
+	 *
+	 * ```
+	 * const policy = SecurityPolicy.fromJsonObject({
+	 *   nodeIds:   [1, 2],
+	 *   sourceIds: ["/s1/**"]
+	 * });
+	 *
+	 * const filter = policy.restrict({
+	 *   nodeIds:   new Set([2, 3, 4]),
+	 *   sourceIds: new Set(["/s1/a", "/s1/a/b", "/s2/a", "/s3/a"])
+	 * });
+	 *
+	 * // now filter contains only the node/source IDs allowed by the policy:
+	 * {
+	 *   nodeIds:   new Set([2]),
+	 *   sourceIds: new Set(["/s1/a", "/s1/a/b"])
+	 * };
+	 * ```
+	 *
+	 * @param filter the filter to enforce this policy's restrictions on
+	 * @returns a new filter instance
 	 */
-	toJsonEncoding(): string {
+	restrict(filter: SecurityPolicyFilter): SecurityPolicyFilter {
+		const result = {} as SecurityPolicyFilter;
+		if (filter.nodeIds) {
+			result.nodeIds = this.#nodeIds
+				? intersection(this.#nodeIds, filter.nodeIds)
+				: filter.nodeIds;
+		}
+		if (filter.sourceIds) {
+			if (this.#sourceIds) {
+				const filteredSourceIds = new Set<string>();
+				this.#sourceIds.forEach((pat) => {
+					const regex = wildcardPatternToRegExp(pat)!;
+					for (const sourceId of filter.sourceIds!) {
+						if (regex.test(sourceId)) {
+							filteredSourceIds.add(sourceId);
+						}
+					}
+				});
+				result.sourceIds = filteredSourceIds;
+			} else {
+				result.sourceIds = filter.sourceIds;
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Get this object in standard JSON form.
+	 *
+	 * An example result looks like this:
+	 *
+	 * ```
+	 * {
+	 *   "nodeIds": [1,2,3],
+	 *   "sourceIds": ["a", "b", "c"]
+	 *   "aggregations": ["Hour"]
+	 * }
+	 * ```
+	 *
+	 * @return an object, ready for JSON encoding
+	 */
+	toJsonObject(): Record<string, any> {
 		const result: Record<string, any> = {};
 
 		if (this.#nodeIds) {
@@ -172,7 +252,77 @@ class SecurityPolicy {
 			result.userMetadataPaths = Array.from(this.#userMetadataPaths);
 		}
 
-		return JSON.stringify(result);
+		return result;
+	}
+
+	/**
+	 * Get this object as a standard JSON encoded string value.
+	 *
+	 * This method calls {@link Domain.SecurityPolicy#toJsonObject} and then
+	 * turns that into a JSON string.
+	 *
+	 * @return the JSON encoded string
+	 * @see {@link Domain.SecurityPolicy#toJsonObject}
+	 */
+	toJsonEncoding(): string {
+		return JSON.stringify(this.toJsonObject());
+	}
+
+	/**
+	 * Parse a JSON string into a {@link Domain.SecurityPolicy} instance.
+	 *
+	 * The JSON must be encoded the same way {@link Domain.SecurityPolicy#toJsonEncoding} does.
+	 *
+	 * @param json the JSON to parse
+	 * @returns the new instance, or `undefined` if `json` is `undefined`
+	 */
+	static fromJsonEncoding(
+		json: string | undefined
+	): SecurityPolicy | undefined {
+		if (json === undefined) {
+			return undefined;
+		}
+		return this.fromJsonObject(JSON.parse(json));
+	}
+
+	/**
+	 * Create a new instance from an object in standard JSON form.
+	 *
+	 * The object must be in the same style as {@link Domain.SecurityPolicy#toJsonObject} produces.
+	 *
+	 * @param obj the object in standard JSON form
+	 * @returns the new instance, or `undefined` if `obj` is `undefined`
+	 */
+	static fromJsonObject(obj: any): SecurityPolicy | undefined {
+		if (!obj) {
+			return undefined;
+		}
+		const builder = new SecurityPolicyBuilder();
+		if (obj.nodeIds) {
+			builder.withNodeIds(obj.nodeIds);
+		}
+		if (obj.sourceIds) {
+			builder.withSourceIds(obj.sourceIds);
+		}
+		if (obj.aggregations) {
+			builder.withAggregations(obj.aggregations);
+		}
+		if (obj.minAggregation) {
+			builder.withMinAggregation(obj.minAggregation);
+		}
+		if (obj.locationPrecisions) {
+			builder.withLocationPrecisions(obj.locationPrecisions);
+		}
+		if (obj.minLocationPrecision) {
+			builder.withMinLocationPrecision(obj.minLocationPrecision);
+		}
+		if (obj.nodeMetadataPaths) {
+			builder.withNodeMetadataPaths(obj.nodeMetadataPaths);
+		}
+		if (obj.userMetadataPaths) {
+			builder.withUserMetadataPaths(obj.userMetadataPaths);
+		}
+		return builder.build();
 	}
 }
 
@@ -341,10 +491,41 @@ class SecurityPolicyBuilder {
 	 * @returns this object
 	 */
 	withAggregations(
-		aggregations?: Set<Aggregation> | Aggregation[] | Aggregation
+		aggregations?:
+			| Set<Aggregation | string>
+			| Aggregation[]
+			| Aggregation
+			| string[]
+			| string
 	): this {
-		this.aggregations = nonEmptySet(aggregations);
+		this.aggregations = this.#resolveAggregations(aggregations);
 		return this;
+	}
+
+	#resolveAggregations(
+		aggregations?:
+			| Set<Aggregation | string>
+			| Aggregation[]
+			| Aggregation
+			| string[]
+			| string
+	): Set<Aggregation> | undefined {
+		let aggs = nonEmptySet(aggregations);
+		if (aggs !== undefined) {
+			if (!(aggs.values().next().value instanceof Aggregation)) {
+				const aggObjs = new Set<Aggregation>();
+				aggs.forEach((val) => {
+					const agg = Aggregation.valueOf(
+						val.toString()
+					) as Aggregation;
+					if (agg) {
+						aggObjs.add(agg);
+					}
+				});
+				aggs = aggObjs;
+			}
+		}
+		return aggs as Set<Aggregation> | undefined;
 	}
 
 	/**
@@ -354,10 +535,18 @@ class SecurityPolicyBuilder {
 	 * @returns this object
 	 */
 	addAggregations(
-		aggregations?: Set<Aggregation> | Aggregation[] | Aggregation
+		aggregations?:
+			| Set<Aggregation | string>
+			| Aggregation[]
+			| Aggregation
+			| string[]
+			| string
 	): this {
 		return this.withAggregations(
-			nonEmptyMergedSets(this.aggregations, aggregations)
+			nonEmptyMergedSets(
+				this.aggregations,
+				this.#resolveAggregations(aggregations)
+			)
 		);
 	}
 
@@ -369,12 +558,41 @@ class SecurityPolicyBuilder {
 	 */
 	withLocationPrecisions(
 		locationPrecisions?:
-			| Set<LocationPrecision>
+			| Set<LocationPrecision | string>
 			| LocationPrecision[]
 			| LocationPrecision
+			| string[]
+			| string
 	): this {
-		this.locationPrecisions = nonEmptySet(locationPrecisions);
+		this.locationPrecisions =
+			this.#resolveLocationPrecisions(locationPrecisions);
 		return this;
+	}
+
+	#resolveLocationPrecisions(
+		locationPrecisions?:
+			| Set<LocationPrecision | string>
+			| LocationPrecision[]
+			| LocationPrecision
+			| string[]
+			| string
+	): Set<LocationPrecision> | undefined {
+		let lPrecs = nonEmptySet(locationPrecisions);
+		if (lPrecs !== undefined) {
+			if (!(lPrecs.values().next().value instanceof LocationPrecision)) {
+				const lPrecsObjs = new Set<LocationPrecision>();
+				lPrecs.forEach((val) => {
+					const agg = LocationPrecision.valueOf(
+						val.toString()
+					) as LocationPrecision;
+					if (agg) {
+						lPrecsObjs.add(agg);
+					}
+				});
+				lPrecs = lPrecsObjs;
+			}
+		}
+		return lPrecs as Set<LocationPrecision> | undefined;
 	}
 
 	/**
@@ -385,12 +603,17 @@ class SecurityPolicyBuilder {
 	 */
 	addLocationPrecisions(
 		locationPrecisions?:
-			| Set<LocationPrecision>
+			| Set<LocationPrecision | string>
 			| LocationPrecision[]
 			| LocationPrecision
+			| string[]
+			| string
 	): this {
 		return this.withLocationPrecisions(
-			nonEmptyMergedSets(this.locationPrecisions, locationPrecisions)
+			nonEmptyMergedSets(
+				this.locationPrecisions,
+				this.#resolveLocationPrecisions(locationPrecisions)
+			)
 		);
 	}
 
@@ -400,8 +623,11 @@ class SecurityPolicyBuilder {
 	 * @param minAggregation - the minimum aggregation level to set
 	 * @returns this object
 	 */
-	withMinAggregation(minAggregation?: Aggregation): this {
-		this.minAggregation = minAggregation;
+	withMinAggregation(minAggregation?: Aggregation | string): this {
+		this.minAggregation =
+			minAggregation instanceof Aggregation
+				? minAggregation
+				: Aggregation.valueOf(minAggregation as string);
 		return this;
 	}
 
@@ -446,8 +672,13 @@ class SecurityPolicyBuilder {
 	 *        as-is, or else the minimum threshold
 	 * @returns this object
 	 */
-	withMinLocationPrecision(minLocationPrecision?: LocationPrecision): this {
-		this.minLocationPrecision = minLocationPrecision;
+	withMinLocationPrecision(
+		minLocationPrecision?: LocationPrecision | string
+	): this {
+		this.minLocationPrecision =
+			minLocationPrecision instanceof LocationPrecision
+				? minLocationPrecision
+				: LocationPrecision.valueOf(minLocationPrecision as string);
 		return this;
 	}
 
@@ -498,4 +729,4 @@ class SecurityPolicyBuilder {
 }
 
 export default SecurityPolicy;
-export { SecurityPolicyBuilder };
+export { SecurityPolicyBuilder, type SecurityPolicyFilter };

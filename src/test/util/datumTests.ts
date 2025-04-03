@@ -12,6 +12,7 @@ import {
 	groupedBySourceMetricDataArray,
 	normalizeNestedStackDataByDate,
 	timeNormalizeDataArray,
+	wildcardPatternToRegExp,
 } from "../../main/util/datum.js";
 import StreamAggregateDatum from "../../main/domain/streamAggregateDatum.js";
 import StreamDatum from "../../main/domain/streamDatum.js";
@@ -762,4 +763,89 @@ test("groupedBySourceMetricDataArray:nullGroup", (t) => {
 		],
 		"First consumption 0 because of agg on existing input; second null because created after rollup by normalizeNestedStackDataByDate"
 	);
+});
+
+test("wildcardPatToRegExp:undefined", (t) => {
+	const regex = wildcardPatternToRegExp(undefined);
+	t.is(regex, undefined);
+});
+
+test("wildcardPatToRegExp:single asterisk", (t) => {
+	const regex = wildcardPatternToRegExp("src/*.js")!;
+	t.true(regex.test("src/file.js"));
+	t.false(regex.test("src/subdir/file.js"));
+});
+
+test("wildcardPatToRegExp:double asterisk", (t) => {
+	const regex = wildcardPatternToRegExp("src/**/*.js")!;
+	t.true(regex.test("src/file.js"));
+	t.true(regex.test("src/subdir/file.js"));
+	t.true(regex.test("src/subdir/nested/file.js"));
+	t.false(regex.test("nah"));
+	t.false(regex.test("src/file.nah"));
+	t.false(regex.test("src/subdir/file.nah"));
+	t.false(regex.test("src/subdir/nested/file.nah"));
+	t.false(regex.test("nah/file.js"));
+	t.false(regex.test("nah/subdir/file.js"));
+});
+
+test("wildcardPatToRegExp:double asterisk:2", (t) => {
+	const regex = wildcardPatternToRegExp("src/**/foo")!;
+	t.true(regex.test("src/foo"));
+	t.true(regex.test("src/subdir/foo"));
+	t.true(regex.test("src/subdir/nested/foo"));
+	t.false(regex.test("nah"));
+	t.false(regex.test("src/foo.nah"));
+	t.false(regex.test("src/subdir/foo.nah"));
+	t.false(regex.test("src/subdir/nested/foo.nah"));
+	t.false(regex.test("nah/foo"));
+	t.false(regex.test("nah/subdir/foo"));
+	t.false(regex.test("src/nahfoo"));
+	t.false(regex.test("src/subdir/nahfoo"));
+});
+
+test("wildcardPatToRegExp:double asterisk:start", (t) => {
+	const regex = wildcardPatternToRegExp("**/*.js")!;
+	t.true(regex.test("src/file.js"));
+	t.true(regex.test("src/subdir/file.js"));
+	t.true(regex.test("src/subdir/nested/file.js"));
+	t.false(regex.test("nah"));
+	t.false(regex.test("src/file.nah"));
+	t.false(regex.test("src/subdir/file.nah"));
+	t.false(regex.test("src/subdir/nested/file.nah"));
+	t.true(regex.test("nah/file.js"));
+	t.true(regex.test("nah/subdir/file.js"));
+});
+
+test("wildcardPatToRegExp:double asterisk:end", (t) => {
+	const regex = wildcardPatternToRegExp("src/**")!;
+	t.true(regex.test("src/file.js"));
+	t.true(regex.test("src/subdir/file.js"));
+	t.true(regex.test("src/subdir/nested/file.js"));
+	t.false(regex.test("nah"));
+	t.true(regex.test("src/file.nah"));
+	t.true(regex.test("src/subdir/file.nah"));
+	t.true(regex.test("src/subdir/nested/file.nah"));
+	t.false(regex.test("nah/file.js"));
+	t.false(regex.test("nah/subdir/file.js"));
+});
+
+test("wildcardPatToRegExp:question mark", (t) => {
+	const regex = wildcardPatternToRegExp("src/?.js")!;
+	t.true(regex.test("src/a.js"));
+	t.false(regex.test("src/abc.js"));
+	t.false(regex.test("src/nested/a.js"));
+});
+
+test("wildcardPatToRegExp:escaped special characters", (t) => {
+	const regex = wildcardPatternToRegExp("src/[abc].js")!;
+	t.true(regex.test("src/[abc].js"));
+	t.false(regex.test("src/a.js"));
+});
+
+test("wildcardPatToRegExp:mixed patterns", (t) => {
+	const regex = wildcardPatternToRegExp("src/*/test?.js")!;
+	t.true(regex.test("src/dir/test1.js"));
+	t.false(regex.test("src/test1.js"));
+	t.false(regex.test("src/dir/subdir/test1.js"));
 });

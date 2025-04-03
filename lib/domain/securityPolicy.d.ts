@@ -1,11 +1,24 @@
 import { Aggregation } from "./aggregation.js";
 import { LocationPrecision } from "./locationPrecision.js";
+import JsonEncodable from "../util/jsonEncodable.js";
+/**
+ * An object with properties that can be restricted by a {@link Domain.SecurityPolicy}.
+ *
+ * @public
+ * @see {@link Domain.SecurityPolicy#restrict}
+ */
+interface SecurityPolicyFilter {
+    /** The node IDs. */
+    nodeIds?: Set<number>;
+    /** The source IDs. */
+    sourceIds?: Set<string>;
+}
 /**
  * An immutable set of security restrictions that can be attached to other objects, like auth tokens.
  *
  * Use the {@link Domain.SecurityPolicyBuilder} to create instances of this class with a fluent API.
  */
-declare class SecurityPolicy {
+declare class SecurityPolicy implements JsonEncodable {
     #private;
     /**
      * Constructor.
@@ -69,11 +82,77 @@ declare class SecurityPolicy {
      */
     get userMetadataPaths(): Set<string> | undefined;
     /**
+     * Apply this policy's restrictions on a filter.
+     *
+     * You can use this method to enforce aspects of a security policy on a `SecurityPolicyFilter`.
+     * For example:
+     *
+     * ```
+     * const policy = SecurityPolicy.fromJsonObject({
+     *   nodeIds:   [1, 2],
+     *   sourceIds: ["/s1/**"]
+     * });
+     *
+     * const filter = policy.restrict({
+     *   nodeIds:   new Set([2, 3, 4]),
+     *   sourceIds: new Set(["/s1/a", "/s1/a/b", "/s2/a", "/s3/a"])
+     * });
+     *
+     * // now filter contains only the node/source IDs allowed by the policy:
+     * {
+     *   nodeIds:   new Set([2]),
+     *   sourceIds: new Set(["/s1/a", "/s1/a/b"])
+     * };
+     * ```
+     *
+     * @param filter the filter to enforce this policy's restrictions on
+     * @returns a new filter instance
+     */
+    restrict(filter: SecurityPolicyFilter): SecurityPolicyFilter;
+    /**
+     * Get this object in standard JSON form.
+     *
+     * An example result looks like this:
+     *
+     * ```
+     * {
+     *   "nodeIds": [1,2,3],
+     *   "sourceIds": ["a", "b", "c"]
+     *   "aggregations": ["Hour"]
+     * }
+     * ```
+     *
+     * @return an object, ready for JSON encoding
+     */
+    toJsonObject(): Record<string, any>;
+    /**
      * Get this object as a standard JSON encoded string value.
      *
+     * This method calls {@link Domain.SecurityPolicy#toJsonObject} and then
+     * turns that into a JSON string.
+     *
      * @return the JSON encoded string
+     * @see {@link Domain.SecurityPolicy#toJsonObject}
      */
     toJsonEncoding(): string;
+    /**
+     * Parse a JSON string into a {@link Domain.SecurityPolicy} instance.
+     *
+     * The JSON must be encoded the same way {@link Domain.SecurityPolicy#toJsonEncoding} does.
+     *
+     * @param json the JSON to parse
+     * @returns the new instance, or `undefined` if `json` is `undefined`
+     */
+    static fromJsonEncoding(json: string | undefined): SecurityPolicy | undefined;
+    /**
+     * Create a new instance from an object in standard JSON form.
+     *
+     * The object must be in the same style as {@link Domain.SecurityPolicy#toJsonObject} produces.
+     *
+     * @param obj the object in standard JSON form
+     * @returns the new instance, or `undefined` if `obj` is `undefined`
+     */
+    static fromJsonObject(obj: any): SecurityPolicy | undefined;
 }
 /**
  * A mutable builder object for {@link Domain.SecurityPolicy} instances.
@@ -164,35 +243,35 @@ declare class SecurityPolicyBuilder {
      * @param aggregations - the aggregations to use
      * @returns this object
      */
-    withAggregations(aggregations?: Set<Aggregation> | Aggregation[] | Aggregation): this;
+    withAggregations(aggregations?: Set<Aggregation | string> | Aggregation[] | Aggregation | string[] | string): this;
     /**
      * Set the aggregations.
      *
      * @param aggregations - the aggregations to add
      * @returns this object
      */
-    addAggregations(aggregations?: Set<Aggregation> | Aggregation[] | Aggregation): this;
+    addAggregations(aggregations?: Set<Aggregation | string> | Aggregation[] | Aggregation | string[] | string): this;
     /**
      * Set the location precisions.
      *
      * @param locationPrecisions - the precisions to use
      * @returns this object
      */
-    withLocationPrecisions(locationPrecisions?: Set<LocationPrecision> | LocationPrecision[] | LocationPrecision): this;
+    withLocationPrecisions(locationPrecisions?: Set<LocationPrecision | string> | LocationPrecision[] | LocationPrecision | string[] | string): this;
     /**
      * Add location precisions.
      *
      * @param locationPrecisions - the precisions to add
      * @returns this object
      */
-    addLocationPrecisions(locationPrecisions?: Set<LocationPrecision> | LocationPrecision[] | LocationPrecision): this;
+    addLocationPrecisions(locationPrecisions?: Set<LocationPrecision | string> | LocationPrecision[] | LocationPrecision | string[] | string): this;
     /**
      * Set a minimum aggregation level.
      *
      * @param minAggregation - the minimum aggregation level to set
      * @returns this object
      */
-    withMinAggregation(minAggregation?: Aggregation): this;
+    withMinAggregation(minAggregation?: Aggregation | string): this;
     /**
      * Treat the configured `locationPrecisions` set as a single
      * minimum value or a list of exact values.
@@ -211,7 +290,7 @@ declare class SecurityPolicyBuilder {
      *        as-is, or else the minimum threshold
      * @returns this object
      */
-    withMinLocationPrecision(minLocationPrecision?: LocationPrecision): this;
+    withMinLocationPrecision(minLocationPrecision?: LocationPrecision | string): this;
     /**
      * Create a new {@link SecurityPolicy} out of the properties configured on this builder.
      *
@@ -220,5 +299,5 @@ declare class SecurityPolicyBuilder {
     build(): SecurityPolicy;
 }
 export default SecurityPolicy;
-export { SecurityPolicyBuilder };
+export { SecurityPolicyBuilder, type SecurityPolicyFilter };
 //# sourceMappingURL=securityPolicy.d.ts.map

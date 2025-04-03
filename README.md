@@ -180,6 +180,9 @@ That will produce ES2022 modules with an entry point in `lib/index.js`.
 You can also produce an ES2022 bundle by running `npm run build:bundle`. That will produce a single
 bundled file at `lib/solarnetwork-api-core.es.js`.
 
+You can also produce an CJS bundle by running `npm run build:bundle:cjs`. That will produce a single
+bundled file at `lib/solarnetwork-api-core.es.cjs`.
+
 # Releases
 
 Releases are done using the gitflow branching model. Gitflow must be installed on your host system.
