@@ -1,11 +1,12 @@
-import { pushValues } from "../util/arrays.js";
 import {
 	default as DatumSamplesTypes,
 	DatumSamplesType,
 } from "./datumSamplesType.js";
 import DatumStreamMetadata from "./datumStreamMetadata.js";
-import DatumStreamMetadataRegistry from "../util/datumStreamMetadataRegistry.js";
 import StreamedDatum from "./streamedDatum.js";
+import { pushValues } from "../util/arrays.js";
+import DatumStreamMetadataRegistry from "../util/datumStreamMetadataRegistry.js";
+import JsonEncodable from "../util/jsonEncodable.js";
 
 /**
  * Instantaneous property statistics.
@@ -122,7 +123,7 @@ function populateProperties(
  *  2. starting property value
  *  3. ending property value
  */
-class StreamAggregateDatum implements StreamedDatum {
+class StreamAggregateDatum implements StreamedDatum, JsonEncodable {
 	/** The stream ID. */
 	readonly streamId: string;
 
@@ -333,8 +334,8 @@ class StreamAggregateDatum implements StreamedDatum {
 	 * ["7714f762-2361-4ec2-98ab-7e96807b32a6", [1650945600000,1651032000000],[3.6,2,0,7.2],[19.1,2,18.1, 20.1],[1.422802,1138.446687,1139.869489]]
 	 * ```
 	 *
-	 * @param registry - a stream metadata registry to encode as a registry-indexed stream datum
-	 * @return {Array} the datum stream array object
+	 * @param registry a stream metadata registry to encode as a registry-indexed stream datum
+	 * @return the datum stream array object
 	 */
 	toJsonObject(registry?: DatumStreamMetadataRegistry): any[] {
 		const result = [
@@ -370,7 +371,7 @@ class StreamAggregateDatum implements StreamedDatum {
 	}
 
 	/**
-	 * Create a new {@link module:domain~StreamAggregateDatum StreamAggregateDatum}
+	 * Create a new {@link Domain.StreamAggregateDatum StreamAggregateDatum}
 	 * instance from an array parsed from a stream datum JSON string.
 	 *
 	 * The array must have been parsed from JSON that was encoded the same way

@@ -4,6 +4,7 @@ import {
 	default as DatumStreamTypes,
 } from "./datumStreamType.js";
 import { timestampFormat } from "../util/dates.js";
+import JsonEncodable from "../util/jsonEncodable.js";
 
 /**
  * A general datum identifier class.
@@ -39,7 +40,7 @@ import { timestampFormat } from "../util/dates.js";
  * let ident = DatumIdentifier.nodeId(ts, sourceId, nodeId, agg, streamId);
  * ```
  */
-export default class DatumIdentifier {
+export default class DatumIdentifier implements JsonEncodable {
 	/** The datum stream kind (node, location). */
 	readonly kind: DatumStreamType;
 
@@ -205,7 +206,7 @@ export default class DatumIdentifier {
 	 *
 	 * @return an object, ready for JSON encoding
 	 */
-	toJsonObject(): object {
+	toJsonObject(): Record<string, any> {
 		const result = {
 			kind: this.kind.key,
 			timestamp: timestampFormat(this.timestamp),

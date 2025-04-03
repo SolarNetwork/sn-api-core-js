@@ -11,7 +11,7 @@ declare abstract class BitmaskEnum extends Enum {
      * Constructor.
      *
      * @param name - the name
-     * @param {bitNumber - the bit offset, starting from `1` for the least significant bit
+     * @param bitNumber - the bit offset, starting from `1` for the least significant bit
      */
     constructor(name: string, bitNumber: number);
     /**

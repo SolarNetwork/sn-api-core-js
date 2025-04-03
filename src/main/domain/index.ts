@@ -96,6 +96,7 @@ export { type ErrorDetail, type FilterResults, type Result } from "./result.js";
 export {
 	default as SecurityPolicy,
 	SecurityPolicyBuilder,
+	type SecurityPolicyFilter,
 } from "./securityPolicy.js";
 export {
 	default as SkyConditions,

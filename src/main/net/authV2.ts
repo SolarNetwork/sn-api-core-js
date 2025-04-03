@@ -205,7 +205,14 @@ class AuthorizationV2Builder {
 	}
 
 	/**
-	 * Get or set the signing key.
+	 * Get the saved signing key.
+	 *
+	 * @returns the current saved signing key value
+	 */
+	key(): CryptoJS.lib.WordArray | undefined;
+
+	/**
+	 * Set the signing key.
 	 *
 	 * Use this method to save an existing signing key, for example one received via a refresh
 	 * request. The `date` parameter is used to track the expirataion date of the key, as
@@ -216,14 +223,14 @@ class AuthorizationV2Builder {
 	 * {@link Net.AuthorizationV2Builder#saveSigningKey saveSigningKey()} method to save it
 	 * rather than this method.
 	 *
-	 * @param key - the signing key to save
-	 * @param date - an optional date the signing key was generated with; if not provided
+	 * @param key the signing key to save
+	 * @param date an optional date the signing key was generated with; if not provided
 	 *     the configured {@link Net.AuthorizationV2Builder#date date()} value will be used
-	 * @returns when called as a getter the current saved signing key value, otherwise this object
+	 * @returns this object
 	 * @see Net.AuthorizationV2Builder#signingKeyExpirationDate
 	 */
-	key(): CryptoJS.lib.WordArray | undefined;
 	key(key: CryptoJS.lib.WordArray, date?: Date): this;
+
 	key(
 		key?: CryptoJS.lib.WordArray,
 		date?: Date
@@ -267,13 +274,20 @@ class AuthorizationV2Builder {
 	}
 
 	/**
+	 * Get the HTTP method (verb) to use.
+	 *
+	 * @returns the HTTP method to use
+	 */
+	method(): string;
+
+	/**
 	 * Set the HTTP method (verb) to use.
 	 *
 	 * @param val - the method to use; see the {@link Net.HttpMethod} enum for possible values
 	 * @returns this object
 	 */
-	method(): string;
 	method(val: string): this;
+
 	method(val?: string): string | this {
 		if (val === undefined) {
 			return this.#httpMethod;
@@ -303,13 +317,20 @@ class AuthorizationV2Builder {
 	}
 
 	/**
+	 * Get the HTTP request path to use.
+	 *
+	 * @returns the request path to use
+	 */
+	path(): string;
+
+	/**
 	 * Set the HTTP request path to use.
 	 *
 	 * @param val - the request path to use
 	 * @returns this object
 	 */
-	path(): string;
 	path(val: string): this;
+
 	path(val?: string): string | this {
 		if (val === undefined) {
 			return this.#requestPath;
@@ -367,13 +388,20 @@ class AuthorizationV2Builder {
 	}
 
 	/**
-	 * Set the authorization request date.
+	 * Get the authorization request date.
 	 *
-	 * @param val - the date to use; typically the current time, e.g. `new Date()`
-	 * @returns when called as a getter the request date, otherwise this object
+	 * @returns the request date
 	 */
 	date(): Date;
+
+	/**
+	 * Set the authorization request date.
+	 *
+	 * @param val the date to use; typically the current time, e.g. `new Date()`
+	 * @returns this object
+	 */
 	date(val: Date): this;
+
 	date(val?: Date): Date | this {
 		if (val === undefined) {
 			return this.#requestDate;
@@ -475,7 +503,7 @@ class AuthorizationV2Builder {
 	 * Set the HTTP `GET` query parameters, or `POST` form-encoded
 	 * parameters.
 	 *
-	 * @param params - the parameters to use, as either a {@link MultiMap} or simple `Object`
+	 * @param params the parameters to use, as either a {@link MultiMap} or simple `Object`
 	 * @returns this object
 	 */
 	queryParams(params: MultiMap | Record<string, any>): this {
@@ -488,13 +516,20 @@ class AuthorizationV2Builder {
 	}
 
 	/**
-	 * Set additional HTTP header names to sign with the authentication.
+	 * Get additional HTTP header names to sign with the authentication.
 	 *
-	 * @param signedHeaderNames - additional HTTP header names to include in the signature
-	 * @returns when called as a getter, the current signed header names, otherwise this object
+	 * @returns the current signed header names
 	 */
 	signedHttpHeaders(): string[] | undefined;
+
+	/**
+	 * Set additional HTTP header names to sign with the authentication.
+	 *
+	 * @param signedHeaderNames additional HTTP header names to include in the signature
+	 * @returns this object
+	 */
 	signedHttpHeaders(signedHeaderNames: string[]): this;
+
 	signedHttpHeaders(
 		signedHeaderNames?: string[]
 	): string[] | undefined | this {
@@ -508,7 +543,7 @@ class AuthorizationV2Builder {
 	/**
 	 * Set the HTTP request body content SHA-256 digest value.
 	 *
-	 * @param digest - the digest value to use; if a string it is assumed to be Hex encoded
+	 * @param digest the digest value to use; if a string it is assumed to be Hex encoded
 	 * @returns this object
 	 */
 	contentSHA256(digest: string | CryptoJS.lib.WordArray) {

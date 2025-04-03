@@ -235,4 +235,13 @@ export declare function aggregateNestedDataLayers(layerData: {
 export declare function groupedBySourceMetricDataArray(data: Record<string, any>, metricName: string, sourceIdMap?: Map<string, string>, aggFn?: (iterable: Iterable<number | undefined | null>) => number | undefined | null): ({
     date: Date;
 } & Record<string, any>)[];
+/**
+ * Convert a path wildcard pattern into a regular expression.
+ *
+ * This can be used to convert source ID wildcard patterns into regular expressions.
+ *
+ * @param pat the wildcard pattern to convert into a regular expression
+ * @returns the regular expression, or `undefined` if `pat` is `undefined`
+ */
+export declare function wildcardPatternToRegExp(pat?: string): RegExp | undefined;
 //# sourceMappingURL=datum.d.ts.map

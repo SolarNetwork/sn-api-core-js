@@ -7,6 +7,7 @@ export * as Dates from "./dates.js";
 export * as Datum from "./datum.js";
 export { default as DatumStreamMetadataRegistry } from "./datumStreamMetadataRegistry.js";
 export { default as Enum } from "./enum.js";
+export type { default as JsonEncodable } from "./jsonEncodable.js";
 export { default as KeyedEnum } from "./keyedEnum.js";
 export { default as Logger, LogLevel } from "./logger.js";
 export { default as MultiMap, type MultiMapValue } from "./multiMap.js";
