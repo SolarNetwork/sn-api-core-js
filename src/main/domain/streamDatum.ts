@@ -1,8 +1,9 @@
-import { pushValues } from "../util/arrays.js";
 import DatumSamplesTypes, { DatumSamplesType } from "./datumSamplesType.js";
 import DatumStreamMetadata from "./datumStreamMetadata.js";
-import DatumStreamMetadataRegistry from "../util/datumStreamMetadataRegistry.js";
 import StreamedDatum from "./streamedDatum.js";
+import { pushValues } from "../util/arrays.js";
+import DatumStreamMetadataRegistry from "../util/datumStreamMetadataRegistry.js";
+import JsonEncodable from "../util/jsonEncodable.js";
 
 function populateProperties(
 	obj: Record<string, any>,
@@ -36,7 +37,7 @@ function populateProperties(
  * fields `iProps`, `aProps`, and `sProps`. A {@link Domain.DatumStreamMetadata DatumStreamMetadata}
  * object is required to associate names with these arrays.
  */
-class StreamDatum implements StreamedDatum {
+class StreamDatum implements StreamedDatum, JsonEncodable {
 	/** The stream ID. */
 	readonly streamId: string;
 
@@ -185,7 +186,7 @@ class StreamDatum implements StreamedDatum {
 	 *
 	 * This method returns the JSON form of the result of {@link Domain.StreamDatum#toJsonObject #toJsonObject()}.
 	 *
-	 * @param registry - a stream metadata registry to encode as a registry-indexed stream datum
+	 * @param registry a stream metadata registry to encode as a registry-indexed stream datum
 	 * @return the JSON encoded string
 	 */
 	toJsonEncoding(registry?: DatumStreamMetadataRegistry): string {
@@ -212,7 +213,7 @@ class StreamDatum implements StreamedDatum {
 	 * ["7714f762-2361-4ec2-98ab-7e96807b32a6", 1650667326308, 12326, null, 230.19719, 50.19501, 6472722]
 	 * ```
 	 *
-	 * @param registry - a stream metadata registry to encode as a registry-indexed stream datum
+	 * @param registry a stream metadata registry to encode as a registry-indexed stream datum
 	 * @return the datum stream array object
 	 */
 	toJsonObject(registry?: DatumStreamMetadataRegistry): any[] {
@@ -246,13 +247,13 @@ class StreamDatum implements StreamedDatum {
 	}
 
 	/**
-	 * Create a new {@link module:domain~StreamDatum StreamDatum} instance from an array parsed from a stream datum JSON string.
+	 * Create a new {@link Domain.StreamDatum StreamDatum} instance from an array parsed from a stream datum JSON string.
 	 *
-	 * The array must have been parsed from JSON that was encoded the same way {@link module:domain~StreamDatum#toJsonEncoding StreamDatum#toJsonEncoding()} does.
+	 * The array must have been parsed from JSON that was encoded the same way {@link Domain.StreamDatum#toJsonEncoding StreamDatum#toJsonEncoding()} does.
 	 *
-	 * @param {Array} data the array parsed from JSON
-	 * @param {module:domain~DatumStreamMetadata|module:util~DatumStreamMetadataRegistry} meta a metadata instance or metadata registry to decode with
-	 * @returns {module:domain~StreamDatum} the stream datum instance
+	 * @param data the array parsed from JSON
+	 * @param meta a metadata instance or metadata registry to decode with
+	 * @returns the stream datum instance
 	 */
 	static fromJsonObject(
 		data: any[],

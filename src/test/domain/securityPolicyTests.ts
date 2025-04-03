@@ -234,6 +234,30 @@ test("build:aggregations:setValue", (t) => {
 	);
 });
 
+test("build:aggregations:string:singleValue", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.withAggregations("Hour");
+	t.deepEqual(b.aggregations, new Set([Aggregations.Hour]));
+});
+
+test("build:aggregations:string:arrayValue", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.withAggregations(["Hour", "Month"]);
+	t.deepEqual(
+		b.aggregations,
+		new Set([Aggregations.Hour, Aggregations.Month])
+	);
+});
+
+test("build:aggregations:string:setValue", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.withAggregations(new Set(["Hour", "Month"]));
+	t.deepEqual(
+		b.aggregations,
+		new Set([Aggregations.Hour, Aggregations.Month])
+	);
+});
+
 test("build:aggregations:emptyArrayValue", (t) => {
 	const b = new SecurityPolicyBuilder();
 	b.withAggregations([]);
@@ -279,6 +303,39 @@ test("build:aggregations:add:setValue", (t) => {
 	t.deepEqual(b.aggregations, new Set([Aggregations.Hour, Aggregations.Day]));
 
 	b.addAggregations(new Set([Aggregations.Day, Aggregations.Month]));
+	t.deepEqual(
+		b.aggregations,
+		new Set([Aggregations.Hour, Aggregations.Day, Aggregations.Month])
+	);
+});
+
+test("build:aggregations:add:string:singleValue", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.addAggregations("Hour");
+	t.deepEqual(b.aggregations, new Set([Aggregations.Hour]));
+
+	b.addAggregations("Day");
+	t.deepEqual(b.aggregations, new Set([Aggregations.Hour, Aggregations.Day]));
+});
+
+test("build:aggregations:add:string:arrayValue", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.addAggregations(["Hour", "Day"]);
+	t.deepEqual(b.aggregations, new Set([Aggregations.Hour, Aggregations.Day]));
+
+	b.addAggregations(["Day", "Month"]);
+	t.deepEqual(
+		b.aggregations,
+		new Set([Aggregations.Hour, Aggregations.Day, Aggregations.Month])
+	);
+});
+
+test("build:aggregations:add:string:setValue", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.addAggregations(new Set(["Hour", "Day"]));
+	t.deepEqual(b.aggregations, new Set([Aggregations.Hour, Aggregations.Day]));
+
+	b.addAggregations(new Set(["Day", "Month"]));
 	t.deepEqual(
 		b.aggregations,
 		new Set([Aggregations.Hour, Aggregations.Day, Aggregations.Month])
@@ -668,6 +725,12 @@ test("build:minAggregation", (t) => {
 	t.is(b.minAggregation, Aggregations.Month);
 });
 
+test("build:minAggregation:string", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.withMinAggregation("Month");
+	t.is(b.minAggregation, Aggregations.Month);
+});
+
 test("build:buildAggregations:min", (t) => {
 	const b = new SecurityPolicyBuilder();
 	b.withMinAggregation(Aggregations.Month);
@@ -716,6 +779,12 @@ test("build:minLocationPrecision", (t) => {
 	t.is(b.minLocationPrecision, LocationPrecisions.Country);
 });
 
+test("build:minLocationPrecision:string", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.withMinLocationPrecision("Country");
+	t.is(b.minLocationPrecision, LocationPrecisions.Country);
+});
+
 test("build:buildLocationPrecisions:min", (t) => {
 	const b = new SecurityPolicyBuilder();
 	b.withMinLocationPrecision(LocationPrecisions.TimeZone);
@@ -727,7 +796,7 @@ test("build:buildLocationPrecisions:min", (t) => {
 	);
 });
 
-test("build:buildLocationPrecisions:region", (t) => {
+test("build:buildLocationPrecisions:singleValue", (t) => {
 	const b = new SecurityPolicyBuilder();
 	b.withLocationPrecisions(LocationPrecisions.Region);
 
@@ -735,6 +804,90 @@ test("build:buildLocationPrecisions:region", (t) => {
 	t.deepEqual(
 		policy.locationPrecisions,
 		new Set([LocationPrecisions.Region])
+	);
+});
+
+test("build:buildLocationPrecisions:arrayValue", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.withLocationPrecisions([
+		LocationPrecisions.Region,
+		LocationPrecisions.TimeZone,
+	]);
+
+	const policy = b.build();
+	t.deepEqual(
+		policy.locationPrecisions,
+		new Set([LocationPrecisions.Region, LocationPrecisions.TimeZone])
+	);
+});
+
+test("build:buildLocationPrecisions:setValue", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.withLocationPrecisions(
+		new Set([LocationPrecisions.Region, LocationPrecisions.TimeZone])
+	);
+
+	const policy = b.build();
+	t.deepEqual(
+		policy.locationPrecisions,
+		new Set([LocationPrecisions.Region, LocationPrecisions.TimeZone])
+	);
+});
+
+test("build:buildLocationPrecisions:undefinedValue", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.withLocationPrecisions(undefined);
+
+	const policy = b.build();
+	t.is(policy.locationPrecisions, undefined);
+});
+
+test("build:buildLocationPrecisions:emptySetValue", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.withLocationPrecisions(new Set());
+
+	const policy = b.build();
+	t.is(policy.locationPrecisions, undefined);
+});
+
+test("build:buildLocationPrecisions:emptyArrayValue", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.withLocationPrecisions([]);
+
+	const policy = b.build();
+	t.is(policy.locationPrecisions, undefined);
+});
+
+test("build:buildLocationPrecisions::string:singleValue", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.withLocationPrecisions("Region");
+
+	const policy = b.build();
+	t.deepEqual(
+		policy.locationPrecisions,
+		new Set([LocationPrecisions.Region])
+	);
+});
+
+test("build:buildLocationPrecisions:string:arrayValue", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.withLocationPrecisions(["Region", "TimeZone"]);
+
+	const policy = b.build();
+	t.deepEqual(
+		policy.locationPrecisions,
+		new Set([LocationPrecisions.Region, LocationPrecisions.TimeZone])
+	);
+});
+
+test("build:buildLocationPrecisions:string:setValue", (t) => {
+	const b = new SecurityPolicyBuilder();
+	b.withLocationPrecisions(new Set(["Region", "TimeZone"]));
+
+	const policy = b.build();
+	t.deepEqual(
+		policy.locationPrecisions,
+		new Set([LocationPrecisions.Region, LocationPrecisions.TimeZone])
 	);
 });
 
@@ -835,6 +988,92 @@ test("toJsonEncoding", (t) => {
 	});
 });
 
+test("fromJsonEncoding", (t) => {
+	const json = JSON.stringify({
+		nodeIds: [1, 2],
+		sourceIds: ["a", "b"],
+		minAggregation: "Week",
+		aggregations: ["Week", "WeekOfYear", "Month", "Year", "RunningTotal"],
+		minLocationPrecision: "TimeZone",
+		locationPrecisions: ["TimeZone", "Country"],
+		nodeMetadataPaths: ["c", "d"],
+		userMetadataPaths: ["e", "f"],
+	});
+
+	const result = SecurityPolicy.fromJsonEncoding(json);
+
+	t.deepEqual(
+		result,
+		new SecurityPolicyBuilder()
+			.withNodeIds([1, 2])
+			.withSourceIds(["a", "b"])
+			.withMinAggregation(Aggregations.Week)
+			.withMinLocationPrecision(LocationPrecisions.TimeZone)
+			.withNodeMetadataPaths(["c", "d"])
+			.withUserMetadataPaths(["e", "f"])
+			.build()
+	);
+});
+
+test("fromJsonEncoding:undefinedValue", (t) => {
+	const result = SecurityPolicy.fromJsonEncoding(undefined);
+	t.is(result, undefined);
+});
+
+test("toJsonObject", (t) => {
+	const result = new SecurityPolicyBuilder()
+		.withNodeIds([1, 2])
+		.withSourceIds(["a", "b"])
+		.withMinAggregation(Aggregations.Week)
+		.withMinLocationPrecision(LocationPrecisions.TimeZone)
+		.withNodeMetadataPaths(["c", "d"])
+		.withUserMetadataPaths(["e", "f"])
+		.build()
+		.toJsonObject();
+	t.deepEqual(result, {
+		nodeIds: [1, 2],
+		sourceIds: ["a", "b"],
+		minAggregation: "Week",
+		aggregations: ["Week", "WeekOfYear", "Month", "Year", "RunningTotal"],
+		minLocationPrecision: "TimeZone",
+		locationPrecisions: ["TimeZone", "Country"],
+		nodeMetadataPaths: ["c", "d"],
+		userMetadataPaths: ["e", "f"],
+	});
+});
+
+test("fromJsonObject", (t) => {
+	const obj = {
+		nodeIds: [1, 2],
+		sourceIds: ["a", "b"],
+		minAggregation: "Week",
+		aggregations: ["Week", "WeekOfYear", "Month", "Year", "RunningTotal"],
+		minLocationPrecision: "TimeZone",
+		locationPrecisions: ["TimeZone", "Country"],
+		nodeMetadataPaths: ["c", "d"],
+		userMetadataPaths: ["e", "f"],
+	};
+
+	const result = SecurityPolicy.fromJsonObject(obj);
+
+	t.deepEqual(
+		result,
+		new SecurityPolicyBuilder()
+			.withNodeIds([1, 2])
+			.withSourceIds(["a", "b"])
+			.withMinAggregation(Aggregations.Week)
+			.withMinLocationPrecision(LocationPrecisions.TimeZone)
+			.withNodeMetadataPaths(["c", "d"])
+			.withUserMetadataPaths(["e", "f"])
+			.build()
+	);
+});
+
+test("fromJsonObject:undefinedValue", (t) => {
+	const result = SecurityPolicy.fromJsonObject(undefined);
+	t.is(result, undefined);
+});
+
 test("addPolicy", (t) => {
 	const policy1 = new SecurityPolicyBuilder()
 		.withNodeIds([1, 2])
@@ -891,4 +1130,96 @@ test("addPolicy:mins", (t) => {
 	const result = b.build();
 	t.is(result.minAggregation, Aggregations.Month);
 	t.is(result.minLocationPrecision, LocationPrecisions.Region);
+});
+
+test("restrict:empty", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({
+		nodeIds: [1, 2],
+		sourceIds: ["a", "b"],
+	})!;
+
+	t.deepEqual(policy.restrict({}), {});
+});
+
+test("restrict:nodes", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({
+		nodeIds: [1, 2],
+	})!;
+
+	t.deepEqual(policy.restrict({ nodeIds: new Set([1, 2, 3, 4]) }), {
+		nodeIds: new Set([1, 2]),
+	});
+});
+
+test("restrict:nodes:noRestrictions", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({})!;
+
+	t.deepEqual(policy.restrict({ nodeIds: new Set([1, 2, 3, 4]) }), {
+		nodeIds: new Set([1, 2, 3, 4]),
+	});
+});
+
+test("restrict:sources", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({
+		sourceIds: ["a", "b"],
+	})!;
+
+	t.deepEqual(policy.restrict({ sourceIds: new Set(["a", "b", "c", "d"]) }), {
+		sourceIds: new Set(["a", "b"]),
+	});
+});
+
+test("restrict:sources:noRestrictions", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({})!;
+
+	t.deepEqual(policy.restrict({ sourceIds: new Set(["a", "b", "c", "d"]) }), {
+		sourceIds: new Set(["a", "b", "c", "d"]),
+	});
+});
+
+test("restrict:sources:pattern", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({
+		sourceIds: ["/s1/**", "/s2/*"],
+	})!;
+
+	t.deepEqual(
+		policy.restrict({
+			sourceIds: new Set([
+				"/s1",
+				"/s1/a",
+				"/s1/a/b",
+				"/s2/a",
+				"/s2/a/b",
+				"/s3/a",
+			]),
+		}),
+		{
+			sourceIds: new Set(["/s1/a", "/s1/a/b", "/s2/a"]),
+		}
+	);
+});
+
+test("restrict:nodesAndSources", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({
+		nodeIds: [1, 2, 3],
+		sourceIds: ["/s1/**", "/s2/*"],
+	})!;
+
+	t.deepEqual(
+		policy.restrict({
+			nodeIds: new Set([2, 3, 4, 5, 6]),
+			sourceIds: new Set([
+				"/s1",
+				"/s1/a",
+				"/s1/a/b",
+				"/s2/a",
+				"/s2/a/b",
+				"/s3/a",
+			]),
+		}),
+		{
+			nodeIds: new Set([2, 3]),
+			sourceIds: new Set(["/s1/a", "/s1/a/b", "/s2/a"]),
+		}
+	);
 });

@@ -26,7 +26,7 @@ declare const LocationDatumUrlHelperMixin: <T extends UrlHelperConstructor>(supe
         /**
          * Generate a URL for finding the available source IDs for a location or metadata filter.
          *
-         * @param ocationId - a specific location ID to use; if not provided the `locationId`
+         * @param locationId - a specific location ID to use; if not provided the `locationId`
          *     parameter of this instance will be used
          * @param startDate - a start date to limit the search to
          * @param endDate - an end date to limit the search to
@@ -59,9 +59,9 @@ declare const LocationDatumUrlHelperMixin: <T extends UrlHelperConstructor>(supe
         readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         readonly parameters: import("../util/configuration.js").default;
         env(key: string): any;
-        env(key: string, newValue: any): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        env(key: string, val: any): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         parameter(key: string): any;
-        parameter(key: string, newValue: any): import("../util/configuration.js").default;
+        parameter(key: string, val: any): import("../util/configuration.js").default;
         param<T_1>(key: string): T_1 | undefined;
         hostUrl(): string;
         hostRequestUrl(): string;

@@ -1,6 +1,7 @@
 /**
  * Push values onto an array.
  *
+ * @param <T> the value type
  * @param result the array to push value onto
  * @param values the values to add
  */
@@ -27,4 +28,35 @@ export function lowercaseSortedArray(items: string[]): string[] {
 	}
 	sortedItems.sort();
 	return sortedItems;
+}
+
+/**
+ * Create a set that contains only values that occur in two different sets.
+ *
+ * @param <T> the value type
+ * @param s1 the first set of values
+ * @param s2  the second set of values
+ * @returns a new set with only values that occur in both `s1` and `s2`
+ */
+export function intersection<T>(s1?: Iterable<T>, s2?: Iterable<T>): Set<T> {
+	const result = new Set<T>();
+
+	const a = s1 instanceof Set ? (s1 as Set<T>) : new Set(s1 as Iterable<T>);
+	const b = s2 instanceof Set ? (s2 as Set<T>) : new Set(s2 as Iterable<T>);
+
+	let l: Set<T>;
+	let r: Set<T>;
+	if (a.size > b.size) {
+		l = b;
+		r = a;
+	} else {
+		l = a;
+		r = b;
+	}
+	l.forEach((v) => {
+		if (r.has(v)) {
+			result.add(v);
+		}
+	});
+	return result;
 }

@@ -19,7 +19,7 @@ export { default as Location, LocationKeys, type LocationProperties, LocationPro
 export { default as LocationPrecisions, LocationPrecision, type LocationPrecisionEnumsType, LocationPrecisionNames, } from "./locationPrecision.js";
 export { default as Pagination } from "./pagination.js";
 export { type ErrorDetail, type FilterResults, type Result } from "./result.js";
-export { default as SecurityPolicy, SecurityPolicyBuilder, } from "./securityPolicy.js";
+export { default as SecurityPolicy, SecurityPolicyBuilder, type SecurityPolicyFilter, } from "./securityPolicy.js";
 export { default as SkyConditions, SkyCondition, type SkyConditionEnumsType, SkyConditionNames, } from "./skyCondition.js";
 export { default as SortDescriptor } from "./sortDescriptor.js";
 export { default as StreamAggregateDatum, type AccumulatingPropertyStatistics, type InstantaneousPropertyStatistics, } from "./streamAggregateDatum.js";
