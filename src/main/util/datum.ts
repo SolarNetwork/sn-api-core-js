@@ -523,7 +523,7 @@ export function wildcardPatternToRegExp(pat?: string): RegExp | undefined {
 	}
 
 	// Escape special regex characters
-	let regex = pat.replace(/([!$()+.:<=>\[\]^{|}-])/g, "\\$1");
+	let regex = pat.replace(/([!$()+.:<=>[\]^{|}-])/g, "\\$1");
 
 	// Convert '?' to '[^/]'
 	regex = regex.replace(/\?/g, "[^/]");
