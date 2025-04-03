@@ -110,7 +110,7 @@
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-typescript": "^12.1.2",
-    "@tsconfig/node17": "^17.1.5",
+    "@tsconfig/node20": "^20.1.5",
     "@types/crypto-js": "^4.2.2",
     "@types/d3-array": "^3.2.1",
     "@types/d3-collection": "^1.0.13",
