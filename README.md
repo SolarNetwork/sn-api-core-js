@@ -31,18 +31,18 @@ import {
 	DatumReadingTypes,
 	DatumStreamMetadataInfo,
 	Result,
-} from "solarnetwork-api-core/lib/domain";
+} from "solarnetwork-api-core/domain";
 import {
 	AuthorizationV2Builder,
 	HttpContentType,
 	HttpHeaders,
 	HttpMethod,
 	SolarQueryApi,
-} from "solarnetwork-api-core/lib/net";
+} from "solarnetwork-api-core/net";
 import {
 	DatumStreamMetadataRegistry,
 	Datum as DatumUtil,
-} from "solarnetwork-api-core/lib/util";
+} from "solarnetwork-api-core/util";
 
 /**
  * Fetch hourly reading data for a datum stream using the stream API.
@@ -275,13 +275,13 @@ import {
 	Aggregations,
 	DatumFilter,
 	DatumReadingTypes,
-} from "solarnetwork-api-core/lib/domain";
+} from "solarnetwork-api-core/domain";
 import {
 	AuthorizationV2Builder,
 	SolarQueryApi, // <-- this replaces the NodeDatumUrlHelper!
-} from "solarnetwork-api-core/lib/net";
-import { DatumStreamMetadataRegistry } from "solarnetwork-api-core/lib/util";
-import { datumForStreamData } from "solarnetwork-api-core/lib/util/datum";
+} from "solarnetwork-api-core/net";
+import { DatumStreamMetadataRegistry } from "solarnetwork-api-core/util";
+import { datumForStreamData } from "solarnetwork-api-core/util/datum";
 ```
 
 One area that has changed somewhat significantly is the `net` namespace. The
