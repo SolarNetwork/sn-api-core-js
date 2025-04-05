@@ -299,7 +299,7 @@ test("propertyNames", (t) => {
 });
 
 test("fromJsonObject:undefined", (t) => {
-	const meta = DatumStreamMetadata.fromJsonObject(undefined);
+	const meta = DatumStreamMetadata.fromJsonObject(undefined as any);
 	t.is(meta, undefined, "undefined returned on undefined input");
 });
 

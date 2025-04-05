@@ -200,6 +200,7 @@ declare class UrlHelper {
      * @param template - a URL template
      * @param params - an object whose properties should serve as template variables
      * @returns the URL
+     * @throws Error if `template` length is too long
      */
     static resolveTemplateUrl(template: string, params: Record<string, any>): string;
     /**
