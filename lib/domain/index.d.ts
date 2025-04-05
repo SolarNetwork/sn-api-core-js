@@ -8,7 +8,7 @@ export { default as DatumFilter, DatumFilterKeys, type DatumFilterProperties, Da
 export { default as DatumIdentifier } from "./datumIdentifier.js";
 export { default as DatumReadingTypes, DatumReadingType, type DatumReadingTypeEnumsType, DatumReadingTypeNames, } from "./datumReadingType.js";
 export { default as DatumSamplesTypes, DatumSamplesType, type DatumSamplesTypeEnumsType, DatumSamplesTypeNames, } from "./datumSamplesType.js";
-export { default as DatumStreamMetadata } from "./datumStreamMetadata.js";
+export { default as DatumStreamMetadata, type DatumStreamMetadataInfo, } from "./datumStreamMetadata.js";
 export { default as DatumStreamTypes, DatumStreamType, type DatumStreamTypeEnumsType, DatumStreamTypeNames, } from "./datumStreamType.js";
 export { default as DeviceOperatingStates, DeviceOperatingState, type DeviceOperatingStateEnumsType, DeviceOperatingStateNames, } from "./deviceOperatingState.js";
 export { default as GeneralMetadata } from "./generalMetadata.js";

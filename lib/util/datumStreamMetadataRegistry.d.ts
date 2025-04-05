@@ -1,4 +1,4 @@
-import DatumStreamMetadata from "../domain/datumStreamMetadata.js";
+import { default as DatumStreamMetadata, DatumStreamMetadataInfo } from "../domain/datumStreamMetadata.js";
 import { DatumStreamType } from "../domain/datumStreamType.js";
 /**
  * A registry of datum stream metadata instances for object (node or location) and source ID combinations.
@@ -104,7 +104,7 @@ declare class DatumStreamMetadataRegistry {
      * @param data - the array data to parse
      * @returns the stream metadata registry instance, or `undefined` if `data` is not a valid array
      */
-    static fromJsonObject(data: any[]): DatumStreamMetadataRegistry | undefined;
+    static fromJsonObject(data: DatumStreamMetadataInfo[] | undefined): DatumStreamMetadataRegistry | undefined;
 }
 export default DatumStreamMetadataRegistry;
 //# sourceMappingURL=datumStreamMetadataRegistry.d.ts.map

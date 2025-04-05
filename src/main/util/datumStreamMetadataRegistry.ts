@@ -1,4 +1,7 @@
-import DatumStreamMetadata from "../domain/datumStreamMetadata.js";
+import {
+	default as DatumStreamMetadata,
+	DatumStreamMetadataInfo,
+} from "../domain/datumStreamMetadata.js";
 import { DatumStreamType } from "../domain/datumStreamType.js";
 
 /**
@@ -186,7 +189,7 @@ class DatumStreamMetadataRegistry {
 	 * @returns the stream metadata registry instance, or `undefined` if `data` is not a valid array
 	 */
 	static fromJsonObject(
-		data: any[]
+		data: DatumStreamMetadataInfo[] | undefined
 	): DatumStreamMetadataRegistry | undefined {
 		if (!Array.isArray(data)) {
 			return undefined;

@@ -1,3 +1,5 @@
+import { DatumStreamMetadataInfo } from "./datumStreamMetadata.js";
+
 /**
  * Details on a request error, such as a validation failure message.
  */
@@ -17,6 +19,8 @@ export interface ErrorDetail {
 
 /**
  * A request result wrapper object.
+ *
+ * @typeParam T the result data type
  */
 export interface Result<T> {
 	/** Flag indicating if the request was successfully processed. */
@@ -27,6 +31,9 @@ export interface Result<T> {
 
 	/** A message, such as an error message. */
 	message?: string;
+
+	/** Optional datum stream metadata. */
+	meta?: DatumStreamMetadataInfo[];
 
 	/** Error details, such as input validation failures. */
 	errors?: ErrorDetail[];
