@@ -1,13 +1,11 @@
 import anyTest, { TestFn } from "ava";
 import { MockAgent, setGlobalDispatcher } from "undici";
 
-import { Instruction } from "../../main/domain/index.js";
-import { Logger as log, LogLevel } from "../../main/util/index.js";
-import {
-	AuthorizationV2Builder,
-	SolarQueryApi,
-	SolarUserApi,
-} from "../../main/net/index.js";
+import { default as Instruction } from "../../main/domain/instruction.js";
+import { default as log, LogLevel } from "../../main/util/logger.js";
+import AuthorizationV2Builder from "../../main/net/authV2.js";
+import SolarQueryApi from "../../main/net/solarQueryUrlHelper.js";
+import SolarUserApi from "../../main/net/solarUserUrlHelper.js";
 import { timestampFormat } from "../../main/util/dates.js";
 
 import ControlTogger, {

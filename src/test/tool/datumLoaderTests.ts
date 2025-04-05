@@ -1,10 +1,12 @@
 import anyTest, { ExecutionContext, TestFn } from "ava";
 import { promisify } from "node:util";
 import { MockAgent, setGlobalDispatcher } from "undici";
-
-import { Aggregations, Datum, DatumFilter } from "../../main/domain/index.js";
-import { Logger as log, LogLevel } from "../../main/util/index.js";
-import { LoaderDataCallbackFn, SolarQueryApi } from "../../main/net/index.js";
+import Aggregations from "../../main/domain/aggregation.js";
+import Datum from "../../main/domain/datum.js";
+import DatumFilter from "../../main/domain/datumFilter.js";
+import { default as log, LogLevel } from "../../main/util/logger.js";
+import { LoaderDataCallbackFn } from "../../main/net/loader.js";
+import SolarQueryApi from "../../main/net/solarQueryUrlHelper.js";
 
 import {
 	default as DatumLoader,
