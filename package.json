@@ -22,16 +22,26 @@
       "import": "./lib/index.js",
       "require": "./lib/solarnetwork-api-core.es.cjs"
     },
+    "./domain": "./lib/domain/index.js",
+    "./domain/*": "./lib/domain/*.js",
+    "./net": "./lib/net/index.js",
+    "./net/*": "./lib/net/*.js",
+    "./tool": "./lib/tool/index.js",
+    "./tool/*": "./lib/tool/*.js",
+    "./util": "./lib/util/index.js",
+    "./util/*": "./lib/util/*.js",
     "./lib/domain": "./lib/domain/index.js",
     "./lib/domain/*": "./lib/domain/*.js",
     "./lib/net": "./lib/net/index.js",
     "./lib/net/*": "./lib/net/*.js",
+    "./lib/tool": "./lib/tool/index.js",
+    "./lib/tool/*": "./lib/tool/*.js",
     "./lib/util": "./lib/util/index.js",
     "./lib/util/*": "./lib/util/*.js",
     "./package.json": "./package.json"
   },
   "engines": {
-    "node": ">=17"
+    "node": ">=20"
   },
   "files": [
     "lib"
