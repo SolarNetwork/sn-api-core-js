@@ -18,6 +18,14 @@ import {
 type UrlHelperConstructor = Constructor<UrlHelper>;
 
 /**
+ * The maximum string length allowed for template expansion.
+ *
+ * This limit is used to mitigate against "Polynomial regular expression used on uncontrolled data"
+ * style linter warnings.
+ */
+const TEMPLATE_MAX_LENGTH: number = 1024;
+
+/**
  * A utility class for helping to compose SolarNet URLs for the REST API.
  *
  * The various URL methods in extending classes are meant to support both explicit
@@ -311,8 +319,14 @@ class UrlHelper {
 	 * @param template - a URL template
 	 * @param params - an object whose properties should serve as template variables
 	 * @returns the URL
+	 * @throws Error if `template` length is too long
 	 */
 	static resolveTemplateUrl(template: string, params: Record<string, any>) {
+		if (template.length > TEMPLATE_MAX_LENGTH) {
+			throw new Error(
+				`The template argument must be no more than ${TEMPLATE_MAX_LENGTH} characters.`
+			);
+		}
 		return template
 			.replace(/\{([^}]+)\}/g, function (match, variableName) {
 				const variableValue = params[variableName];

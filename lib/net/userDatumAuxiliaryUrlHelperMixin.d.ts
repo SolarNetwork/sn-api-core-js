@@ -10,7 +10,7 @@ import { UrlHelperConstructor } from "./urlHelper.js";
  */
 declare const UserDatumAuxiliaryUrlHelperMixin: <T extends UrlHelperConstructor>(superclass: T) => {
     new (...args: any[]): {
-        "__#19@#userDatumAuxiliaryBaseUrl"(): string;
+        "__#20@#userDatumAuxiliaryBaseUrl"(): string;
         /**
          * Generate a URL for viewing the configured user's metadata via a `GET` request.
          *

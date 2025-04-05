@@ -97,7 +97,7 @@ declare const SolarUserApi_base: {
     instructionParameter(name: string, value: string): import("../domain/instructionParameter.js").default;
 } & {
     new (...args: any[]): {
-        "__#19@#userDatumAuxiliaryBaseUrl"(): string;
+        "__#20@#userDatumAuxiliaryBaseUrl"(): string;
         listUserDatumAuxiliaryUrl(filter: import("../domain/datumFilter.js").default): string;
         userDatumAuxiliaryIdUrl(type: import("../domain/datumAuxiliaryType.js").DatumAuxiliaryType, nodeId: number, date: Date, sourceId: string): string;
         userDatumAuxiliaryIdQueryUrl(type: import("../domain/datumAuxiliaryType.js").DatumAuxiliaryType, nodeId: number, date: Date, sourceId: string): string;
@@ -125,7 +125,7 @@ declare const SolarUserApi_base: {
 } & {
     new (...args: any[]): {
         findUserMetadataUrl(filter: import("../domain/userMetadataFilter.js").default): string;
-        "__#20@#userMetadataUrl"(userId?: number): string;
+        "__#21@#userMetadataUrl"(userId?: number): string;
         viewUserMetadataUrl(userId?: number): string;
         addUserMetadataUrl(userId?: number): string;
         replaceUserMetadataUrl(userId?: number): string;

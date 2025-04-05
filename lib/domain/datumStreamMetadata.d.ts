@@ -1,9 +1,33 @@
 import { DatumStreamType } from "./datumStreamType.js";
 import { DatumSamplesType } from "./datumSamplesType.js";
+import JsonEncodable from "../util/jsonEncodable.js";
+/**
+ * The basic DatumStreamMetadata type.
+ */
+export interface DatumStreamMetadataInfo {
+    /** The datum stream unique identifier. */
+    streamId: string;
+    /** The object (node or location) ID. */
+    objectId: number;
+    /** The source ID. */
+    sourceId: string;
+    /** The time zone identifier the stream is associated with. */
+    zone: string;
+    /** The stream kind, `n` for node or `l` for location. */
+    kind: string;
+    /** An optional location object. */
+    location?: Record<string, any>;
+    /** The instantaneous property names. */
+    i?: string[];
+    /** The accumulating property names. */
+    a?: string[];
+    /** The status property names. */
+    s?: string[];
+}
 /**
  * Metadata about a datum stream.
  */
-declare class DatumStreamMetadata {
+export default class DatumStreamMetadata implements JsonEncodable {
     #private;
     /**
      * Constructor.
@@ -108,6 +132,26 @@ declare class DatumStreamMetadata {
      */
     propertyNamesForType(samplesType: DatumSamplesType): string[] | undefined;
     /**
+     * Get this object in standard JSON form.
+     *
+     * An example result looks like this:
+     *
+     * ```
+     * {
+     *   "streamId": "7714f762-2361-4ec2-98ab-7e96807b32a6",
+     *   "zone": "Pacific/Auckland",
+     *   "kind": "n",
+     *   "objectId": 123,
+     *   "sourceId": "/power/1",
+     *   "i": ["watts", "current",  "voltage", "frequency"],
+     *   "a": ["wattHours"]
+     * }
+     * ```
+     *
+     * @return an object, ready for JSON encoding
+     */
+    toJsonObject(): DatumStreamMetadataInfo;
+    /**
      * Get this object as a standard JSON encoded string value.
      *
      * An example result looks like this:
@@ -145,7 +189,6 @@ declare class DatumStreamMetadata {
      * @param obj the object parsed from JSON
      * @returns the stream metadata instance
      */
-    static fromJsonObject(obj: any): DatumStreamMetadata | undefined;
+    static fromJsonObject(obj: DatumStreamMetadataInfo): DatumStreamMetadata | undefined;
 }
-export default DatumStreamMetadata;
 //# sourceMappingURL=datumStreamMetadata.d.ts.map

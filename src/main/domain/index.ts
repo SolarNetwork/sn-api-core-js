@@ -49,7 +49,10 @@ export {
 	type DatumSamplesTypeEnumsType,
 	DatumSamplesTypeNames,
 } from "./datumSamplesType.js";
-export { default as DatumStreamMetadata } from "./datumStreamMetadata.js";
+export {
+	default as DatumStreamMetadata,
+	type DatumStreamMetadataInfo,
+} from "./datumStreamMetadata.js";
 export {
 	default as DatumStreamTypes,
 	DatumStreamType,
