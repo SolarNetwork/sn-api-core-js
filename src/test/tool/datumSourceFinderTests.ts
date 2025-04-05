@@ -1,13 +1,11 @@
 import anyTest, { TestFn } from "ava";
 import { MockAgent, setGlobalDispatcher } from "undici";
 
-import { DatumFilter } from "../../main/domain/index.js";
-import { Logger as log, LogLevel } from "../../main/util/index.js";
-import {
-	AuthorizationV2Builder,
-	HttpHeaders,
-	SolarQueryApi,
-} from "../../main/net/index.js";
+import DatumFilter from "../../main/domain/datumFilter.js";
+import { default as log, LogLevel } from "../../main/util/logger.js";
+import AuthorizationV2Builder from "../../main/net/authV2.js";
+import HttpHeaders from "../../main/net/httpHeaders.js";
+import SolarQueryApi from "../../main/net/solarQueryUrlHelper.js";
 
 import DatumSourceFinder from "../../main/tool/datumSourceFinder.js";
 
