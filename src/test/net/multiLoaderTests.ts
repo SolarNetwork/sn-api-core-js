@@ -1,15 +1,13 @@
 import anyTest, { TestFn } from "ava";
 import { MockAgent, setGlobalDispatcher } from "undici";
-
-import { Aggregations, Datum, DatumFilter } from "../../main/domain/index.js";
-import { Logger as log, LogLevel } from "../../main/util/index.js";
-import {
-	JsonClientSupport,
-	Loader,
-	LoaderDataCallbackFn,
-	MultiLoader,
-	SolarQueryApi,
-} from "../../main/net/index.js";
+import Aggregations from "../../main/domain/aggregation.js";
+import Datum from "../../main/domain/datum.js";
+import DatumFilter from "../../main/domain/datumFilter.js";
+import { default as log, LogLevel } from "../../main/util/logger.js";
+import JsonClientSupport from "../../main/net/jsonClientSupport.js";
+import { Loader, LoaderDataCallbackFn } from "../../main/net/loader.js";
+import MultiLoader from "../../main/net/multiLoader.js";
+import SolarQueryApi from "../../main/net/solarQueryUrlHelper.js";
 
 import DatumLoader from "../../main/tool/datumLoader.js";
 

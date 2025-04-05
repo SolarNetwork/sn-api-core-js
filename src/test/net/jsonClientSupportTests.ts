@@ -1,8 +1,8 @@
 import anyTest, { TestFn } from "ava";
 import { MockAgent, setGlobalDispatcher } from "undici";
 
-import { Logger as log, LogLevel } from "../../main/util/index.js";
-import { SolarQueryApi } from "../../main/net/index.js";
+import { default as log, LogLevel } from "../../main/util/logger.js";
+import SolarQueryApi from "../../main/net/solarQueryUrlHelper.js";
 
 import JsonClientSupport from "../../main/net/jsonClientSupport.js";
 
