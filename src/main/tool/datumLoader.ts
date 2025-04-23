@@ -21,6 +21,7 @@ interface QueryResultsData {
 }
 
 const DEFAULT_PAGE_SIZE: number = 1000;
+const DEFAULT_JITTER: number = 150;
 
 /**
  * An enumeration of loader state values.
@@ -89,6 +90,12 @@ export default class DatumLoader
 	#concurrency: number;
 
 	/**
+	 * When > 0 then add a random amount of milliseconds up to this amount before initiating
+	 * parallel requests (thus #concurrency must also be configured).
+	 */
+	#jitter: number;
+
+	/**
 	 * A queue to use for parallel mode, when `concurrency` configured > 0.
 	 */
 	#queue?: Queue;
@@ -123,6 +130,7 @@ export default class DatumLoader
 		this.#readingsMode = false;
 		this.#proxyUrl = null;
 		this.#concurrency = 0;
+		this.#jitter = DEFAULT_JITTER;
 		this.#state = DatumLoaderState.Ready;
 	}
 
@@ -152,8 +160,37 @@ export default class DatumLoader
 		if (value === undefined) {
 			return this.#concurrency;
 		}
-		if (!isNaN(value) && Number(value) > 0) {
+		if (!isNaN(value) && Number(value) >= 0) {
 			this.#concurrency = Number(value);
+		}
+		return this;
+	}
+
+	/**
+	 * Get the concurrency jitter value to use for parallel requests.
+	 *
+	 * @returns the current concurrency jitter value (milliseconds); defaults to `150`
+	 */
+	jitter(): number;
+
+	/**
+	 * Set the concurrency jitter amount to use for parallel requests.
+	 *
+	 * When parallel mode is enabled by setting `concurrency()` to a positive value, a random amount
+	 * of "pause" time can be added before parallel requests are made by configuring this
+	 * to a positive value. This can be helpful to avoid API rate limiting errors.
+	 *
+	 * @param value the concurrency jitter amount to use, in milliseconds, or `0` to disable
+	 * @returns this object
+	 */
+	jitter(value: number): this;
+
+	jitter(value?: number): number | this {
+		if (value === undefined) {
+			return this.#jitter;
+		}
+		if (!isNaN(value) && Number(value) >= 0) {
+			this.#jitter = Number(value);
 		}
 		return this;
 	}
@@ -485,7 +522,13 @@ export default class DatumLoader
 			? url.replace(/^[^:]+:\/\/[^/]+/, this.#proxyUrl)
 			: url;
 
-		const query = this.requestor<QueryResultsData>(reqUrl, url);
+		// add delay for parallel mode if jitter configured
+		const delay =
+			q && this.#jitter > 0
+				? Math.floor(Math.random() * this.#jitter) + 1
+				: 0;
+
+		const query = this.requestor<QueryResultsData>(reqUrl, url, delay);
 
 		const handler = (error?: Error, data?: QueryResultsData) => {
 			if (error) {
