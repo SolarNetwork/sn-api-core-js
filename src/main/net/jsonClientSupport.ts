@@ -55,14 +55,16 @@ export default abstract class JsonClientSupport<API extends UrlHelper, T> {
 	 *
 	 * @param url the URL to request.
 	 * @param signUrl the URL to sign (might be different to `url` if a proxy is used)
+	 * @param delay an optional number of milliseconds to sleep before initiating the request
 	 * @returns a function that accepts a callback argument
 	 */
 	protected requestor<V>(
 		url: string,
-		signUrl?: string
+		signUrl?: string,
+		delay?: number
 	): (cb: LoaderDataCallbackFn<V>) => void {
 		const auth = this.authBuilder;
-		return (cb: LoaderDataCallbackFn<V>) => {
+		const fn = (cb: LoaderDataCallbackFn<V>) => {
 			const headers: any = {
 				Accept: "application/json",
 			};
@@ -101,5 +103,13 @@ export default abstract class JsonClientSupport<API extends UrlHelper, T> {
 				}, errorHandler);
 			}, errorHandler);
 		};
+		if (delay && delay > 0) {
+			return (cb: LoaderDataCallbackFn<V>) => {
+				setTimeout(() => {
+					fn.call(this, cb);
+				}, delay);
+			};
+		}
+		return fn;
 	}
 }

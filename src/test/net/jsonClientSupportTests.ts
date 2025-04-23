@@ -15,10 +15,12 @@ log.level = LogLevel.DEBUG;
 
 class TestClient extends JsonClientSupport<SolarQueryApi, any> {
 	#url: string;
+	#jitter?: number;
 
-	constructor(api: SolarQueryApi, url: string) {
+	constructor(api: SolarQueryApi, url: string, jitter?: number) {
 		super(api);
 		this.#url = url;
+		this.#jitter = jitter;
 	}
 
 	/**
@@ -28,7 +30,11 @@ class TestClient extends JsonClientSupport<SolarQueryApi, any> {
 	 */
 	fetch(): Promise<any> {
 		return new Promise((resolve, reject) => {
-			this.requestor(this.#url)((error, results) => {
+			this.requestor(
+				this.#url,
+				undefined,
+				this.#jitter
+			)((error, results) => {
 				if (error) {
 					reject(error);
 				} else {
@@ -68,6 +74,31 @@ test.serial("fetch:http404", async (t) => {
 	t.is(
 		error.message,
 		"Error requesting data for http://localhost/foo: Not Found"
+	);
+});
+
+test.serial("fetch:jitter", async (t) => {
+	// GIVEN
+	const url = "http://localhost/foo";
+	const http = t.context.agent.get("http://localhost");
+	http.intercept({
+		path: "/foo",
+		method: "GET",
+	}).reply(200, {
+		success: true,
+		data: "hi",
+	});
+
+	// WHEN
+	const client = new TestClient(t.context.api, url, 1000);
+	const start = new Date();
+	const result = await client.fetch();
+	const end = new Date();
+
+	t.is(result, "hi", "Requested URL with delay returned data result.");
+	t.true(
+		end.getTime() - start.getTime() >= 1000,
+		"At least delay ms has elapsed."
 	);
 });
 

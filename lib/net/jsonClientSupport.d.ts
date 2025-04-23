@@ -40,8 +40,9 @@ export default abstract class JsonClientSupport<API extends UrlHelper, T> {
      *
      * @param url the URL to request.
      * @param signUrl the URL to sign (might be different to `url` if a proxy is used)
+     * @param delay an optional number of milliseconds to sleep before initiating the request
      * @returns a function that accepts a callback argument
      */
-    protected requestor<V>(url: string, signUrl?: string): (cb: LoaderDataCallbackFn<V>) => void;
+    protected requestor<V>(url: string, signUrl?: string, delay?: number): (cb: LoaderDataCallbackFn<V>) => void;
 }
 //# sourceMappingURL=jsonClientSupport.d.ts.map
