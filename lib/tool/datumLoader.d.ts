@@ -67,6 +67,23 @@ export default class DatumLoader extends JsonClientSupport<SolarQueryApi, Datum[
      */
     concurrency(value: number): this;
     /**
+     * Get the concurrency jitter value to use for parallel requests.
+     *
+     * @returns the current concurrency jitter value (milliseconds); defaults to `150`
+     */
+    jitter(): number;
+    /**
+     * Set the concurrency jitter amount to use for parallel requests.
+     *
+     * When parallel mode is enabled by setting `concurrency()` to a positive value, a random amount
+     * of "pause" time can be added before parallel requests are made by configuring this
+     * to a positive value. This can be helpful to avoid API rate limiting errors.
+     *
+     * @param value the concurrency jitter amount to use, in milliseconds, or `0` to disable
+     * @returns this object
+     */
+    jitter(value: number): this;
+    /**
      * Get the optional callback function.
      *
      * @returns the current callback function or `null` if not defined

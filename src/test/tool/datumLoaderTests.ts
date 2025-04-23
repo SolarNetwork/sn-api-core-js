@@ -1008,6 +1008,20 @@ test.serial("load:parallel:multiPage:gapDataFirstPage", async (t) => {
 	t.deepEqual(results, allResults.slice(0, 4));
 });
 
+test.serial("jitter", (t) => {
+	const filter = testFilter();
+	const loader = new DatumLoader(t.context.api, filter);
+	t.truthy(loader);
+	t.is(loader.jitter("Ten" as any).jitter(), 150, "NaN ignored");
+	t.is(loader.jitter(-1).jitter(), 150, "Negative ignored");
+	t.is(
+		loader.jitter("500" as any).jitter(),
+		500,
+		"Number string parsed as number"
+	);
+	t.is(loader.jitter(1).jitter(), 1, "Positive set");
+});
+
 test.serial("load:proxy:multiPage:parallel", (t) => {
 	const http = t.context.agent.get("https://query-proxy");
 	const allResults = [
@@ -1092,6 +1106,111 @@ test.serial("load:proxy:multiPage:parallel", (t) => {
 		.proxyUrl(proxyUrl)
 		.paginationSize(2)
 		.concurrency(Infinity)
+		.jitter(500)
+		.includeTotalResultsCount(true);
+	t.truthy(loader);
+	t.is(loader.jitter(), 500);
+	t.is(loader.proxyUrl(), proxyUrl);
+	t.is(loader.includeTotalResultsCount(), true);
+
+	return new Promise((resolve, reject) => {
+		loader.load((error, results) => {
+			try {
+				t.falsy(error, "No error generated.");
+				t.deepEqual(results, allResults, "All pages returned.");
+				resolve();
+			} catch (error) {
+				reject(error);
+			}
+		});
+	});
+});
+
+test.serial("load:proxy:multiPage:parallel:noJitter", (t) => {
+	const http = t.context.agent.get("https://query-proxy");
+	const allResults = [
+		{
+			created: "2017-07-04 12:00:00.000Z",
+			nodeId: 123,
+			sourceId: "test-source",
+			val: 0,
+		},
+		{
+			created: "2017-07-04 13:00:00.000Z",
+			nodeId: 123,
+			sourceId: "test-source",
+			val: 1,
+		},
+		{
+			created: "2017-07-04 14:00:00.000Z",
+			nodeId: 123,
+			sourceId: "test-source",
+			val: 0,
+		},
+		{
+			created: "2017-07-04 15:00:00.000Z",
+			nodeId: 123,
+			sourceId: "test-source",
+			val: 1,
+		},
+		{
+			created: "2017-07-04 16:00:00.000Z",
+			nodeId: 123,
+			sourceId: "test-source",
+			val: 0,
+		},
+		{
+			created: "2017-07-04 17:00:00.000Z",
+			nodeId: 123,
+			sourceId: "test-source",
+			val: 1,
+		},
+	];
+	// expect 3 page queries: one for first page and total result count, 2 more for remaining pages
+	http.intercept({
+		path: "/path/solarquery/api/v1/pub/datum/list?nodeId=123&sourceId=test-source&startDate=2017-04-01T12%3A00&endDate=2017-05-01T12%3A00&aggregation=Hour&withoutTotalResultsCount=false&max=2",
+		method: "GET",
+	}).reply(200, {
+		success: true,
+		data: {
+			totalResults: 6,
+			startingOffset: 0,
+			returnedResultCount: 2,
+			results: allResults.slice(0, 2),
+		},
+	});
+	http.intercept({
+		path: "/path/solarquery/api/v1/pub/datum/list?nodeId=123&sourceId=test-source&startDate=2017-04-01T12%3A00&endDate=2017-05-01T12%3A00&aggregation=Hour&withoutTotalResultsCount=true&max=2&offset=2",
+		method: "GET",
+	}).reply(200, {
+		success: true,
+		data: {
+			totalResults: null,
+			startingOffset: 2,
+			returnedResultCount: 2,
+			results: allResults.slice(2, 4),
+		},
+	});
+	http.intercept({
+		path: "/path/solarquery/api/v1/pub/datum/list?nodeId=123&sourceId=test-source&startDate=2017-04-01T12%3A00&endDate=2017-05-01T12%3A00&aggregation=Hour&withoutTotalResultsCount=true&max=2&offset=4",
+		method: "GET",
+	}).reply(200, {
+		success: true,
+		data: {
+			totalResults: null,
+			startingOffset: 4,
+			returnedResultCount: 2,
+			results: allResults.slice(4, 6),
+		},
+	});
+
+	const proxyUrl = "https://query-proxy/path";
+	const filter = testFilter();
+	const loader = new DatumLoader(t.context.api, filter)
+		.proxyUrl(proxyUrl)
+		.paginationSize(2)
+		.concurrency(Infinity)
+		.jitter(0)
 		.includeTotalResultsCount(true);
 	t.truthy(loader);
 	t.is(loader.proxyUrl(), proxyUrl);
