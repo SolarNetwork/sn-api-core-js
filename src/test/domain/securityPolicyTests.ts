@@ -1223,3 +1223,27 @@ test("restrict:nodesAndSources", (t) => {
 		}
 	);
 });
+
+test("restrict:nodesAndSources:wild", (t) => {
+	const policy = SecurityPolicy.fromJsonObject({
+		nodeIds: [1, 2, 3],
+		sourceIds: ["/s1/**", "/s2/*"],
+	})!;
+
+	t.deepEqual(
+		policy.restrict({
+			nodeIds: new Set([2, 3, 4, 5, 6]),
+			sourceIds: new Set([
+				"/s1/**",
+				"/s1/*/*/*",
+				"/s2/a",
+				"/s2/a/b",
+				"/s3/a",
+			]),
+		}),
+		{
+			nodeIds: new Set([2, 3]),
+			sourceIds: new Set(["/s1/**", "/s1/*/*/*", "/s2/a"]),
+		}
+	);
+});
