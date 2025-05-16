@@ -34,17 +34,17 @@ export declare class SolarQueryUrlHelper extends UrlHelper {
 }
 declare const SolarQueryApi_base: {
     new (...args: any[]): {
-        "__#16@#baseDatumMetadataUrl"(nodeId?: number): string;
-        "__#16@#datumMetadataUrlWithSource"(nodeId?: number, sourceId?: string): string;
+        "__#17@#baseDatumMetadataUrl"(nodeId?: number): string;
+        "__#17@#datumMetadataUrlWithSource"(nodeId?: number, sourceId?: string): string;
         viewNodeDatumMetadataUrl(nodeId?: number, sourceId?: string): string;
         addNodeDatumMetadataUrl(nodeId?: number, sourceId?: string): string;
         replaceNodeDatumMetadataUrl(nodeId?: number, sourceId?: string): string;
         deleteNodeDatumMetadataUrl(nodeId?: number, sourceId?: string): string;
         findNodeDatumMetadataUrl(nodeId?: number, sourceId?: string, sorts?: import("../domain/sortDescriptor.js").default[], pagination?: import("../domain/pagination.js").default): string;
-        "__#16@#userMetadataUrl"(userId?: number): string;
+        "__#17@#userMetadataUrl"(userId?: number): string;
         viewUserMetadataUrl(userId?: number): string;
-        readonly "__#13@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly "__#13@#parameters": import("../util/configuration.js").default;
+        readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#14@#parameters": import("../util/configuration.js").default;
         readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         readonly parameters: import("../util/configuration.js").default;
         env(key: string): any;
@@ -70,8 +70,8 @@ declare const SolarQueryApi_base: {
         streamDatumUrl(datumFilter?: import("../domain/datumFilter.js").default, sorts?: import("../domain/sortDescriptor.js").default[], pagination?: import("../domain/pagination.js").default): string;
         streamReadingUrl(readingType: import("../domain/datumReadingType.js").DatumReadingType, datumFilter?: import("../domain/datumFilter.js").default, tolerance?: string, sorts?: import("../domain/sortDescriptor.js").default[], pagination?: import("../domain/pagination.js").default): string;
         mostRecentDatumUrl(datumFilter?: import("../domain/datumFilter.js").default, sorts?: import("../domain/sortDescriptor.js").default[], pagination?: import("../domain/pagination.js").default): string;
-        readonly "__#13@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly "__#13@#parameters": import("../util/configuration.js").default;
+        readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#14@#parameters": import("../util/configuration.js").default;
         readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         readonly parameters: import("../util/configuration.js").default;
         env(key: string): any;
@@ -92,8 +92,33 @@ declare const SolarQueryApi_base: {
     new (...args: any[]): {
         listAllNodeIdsUrl(): string;
         findSourcesUrl(datumFilter?: import("../domain/datumFilter.js").default): string;
-        readonly "__#13@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly "__#13@#parameters": import("../util/configuration.js").default;
+        readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#14@#parameters": import("../util/configuration.js").default;
+        readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly parameters: import("../util/configuration.js").default;
+        env(key: string): any;
+        env(key: string, val: any): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        parameter(key: string): any;
+        parameter(key: string, val: any): import("../util/configuration.js").default;
+        param<T>(key: string): T | undefined;
+        hostUrl(): string;
+        hostRequestUrl(): string;
+        toRequestUrl(url: string): string;
+        hostWebSocketUrl(): string;
+        baseUrl(): string;
+        resolveTemplatePath(template: string): string;
+        resolveTemplateUrl(template: string): string;
+        datumFilter(): import("../domain/datumFilter.js").default;
+    };
+} & {
+    new (...args: any[]): {
+        viewNodeMetadataUrl(nodeId?: number): string;
+        addNodeMetadataUrl(nodeId?: number): string;
+        replaceNodeMetadataUrl(nodeId?: number): string;
+        deleteNodeMetadataUrl(nodeId?: number): string;
+        findNodeMetadataUrl(nodeId?: number | number[] | null, sorts?: import("../domain/sortDescriptor.js").default[], pagination?: import("../domain/pagination.js").default): string;
+        readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#14@#parameters": import("../util/configuration.js").default;
         readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         readonly parameters: import("../util/configuration.js").default;
         env(key: string): any;
@@ -118,15 +143,15 @@ export default class SolarQueryApi extends SolarQueryApi_base {
 }
 declare const SolarQueryLocationApi_base: {
     new (...args: any[]): {
-        "__#18@#baseLocationDatumMetadataUrl"(locationId?: number): string;
-        "__#18@#locationDatumMetadataUrlWithSource"(locationId?: number, sourceId?: string): string;
+        "__#19@#baseLocationDatumMetadataUrl"(locationId?: number): string;
+        "__#19@#locationDatumMetadataUrlWithSource"(locationId?: number, sourceId?: string): string;
         viewLocationDatumMetadataUrl(locationId?: number, sourceId?: string): string;
         addLocationDatumMetadataUrl(locationId?: number, sourceId?: string): string;
         replaceLocationDatumMetadataUrl(locationId?: number, sourceId?: string): string;
         deleteLocationDatumMetadataUrl(locationId?: number, sourceId?: string): string;
         findLocationDatumMetadataUrl(filter: import("../domain/datumFilter.js").default, sorts?: import("../domain/sortDescriptor.js").default[], pagination?: import("../domain/pagination.js").default): string;
-        readonly "__#13@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly "__#13@#parameters": import("../util/configuration.js").default;
+        readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#14@#parameters": import("../util/configuration.js").default;
         readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         readonly parameters: import("../util/configuration.js").default;
         env(key: string): any;
@@ -149,8 +174,8 @@ declare const SolarQueryLocationApi_base: {
         availableSourcesUrl(locationId?: number, startDate?: Date, endDate?: Date): string;
         listDatumUrl(datumFilter?: import("../domain/datumFilter.js").default, sorts?: import("../domain/sortDescriptor.js").default[], pagination?: import("../domain/pagination.js").default): string;
         mostRecentDatumUrl(datumFilter?: import("../domain/datumFilter.js").default, sorts?: import("../domain/sortDescriptor.js").default[], pagination?: import("../domain/pagination.js").default): string;
-        readonly "__#13@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly "__#13@#parameters": import("../util/configuration.js").default;
+        readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#14@#parameters": import("../util/configuration.js").default;
         readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         readonly parameters: import("../util/configuration.js").default;
         env(key: string): any;
@@ -170,8 +195,8 @@ declare const SolarQueryLocationApi_base: {
 } & {
     new (...args: any[]): {
         findLocationsUrl(filter: import("../domain/location.js").default, sorts?: import("../domain/sortDescriptor.js").default[], pagination?: import("../domain/pagination.js").default): string;
-        readonly "__#13@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly "__#13@#parameters": import("../util/configuration.js").default;
+        readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#14@#parameters": import("../util/configuration.js").default;
         readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         readonly parameters: import("../util/configuration.js").default;
         env(key: string): any;

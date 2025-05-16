@@ -63,7 +63,7 @@ export default class Instruction implements InstructionInfo {
      * @param value the parameter value
      * @returns the parameter object
      */
-    static parameter(name: string, value: string): InstructionParameter;
+    static parameter(name: string, value: any): InstructionParameter;
 }
 /**
  * Common instruction topic names.

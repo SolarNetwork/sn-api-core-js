@@ -65,7 +65,7 @@ declare const InstructionUrlHelperMixin: <T extends UrlHelperConstructor>(superc
          * @see the {@link Domain.InstructionStates} enum for possible state values
          */
         updateInstructionStateUrl(instructionId: number, state: InstructionState): string;
-        "__#17@#instructionUrl"(exec: boolean, topic: string, parameters?: InstructionParameter[], nodeIds?: number[] | number): string;
+        "__#18@#instructionUrl"(exec: boolean, topic: string, parameters?: InstructionParameter[], nodeIds?: number[] | number): string;
         /**
          * Generate a URL for posting an instruction request.
          *
@@ -104,8 +104,8 @@ declare const InstructionUrlHelperMixin: <T extends UrlHelperConstructor>(superc
          * @returns the request, encoded as a {@link Net.QueueInstructionSimpleRequest} if possible
          */
         queueInstructionRequest(topic?: string, parameters?: InstructionParameter[], nodeId?: number, executionDate?: Date): QueueInstructionRequest | QueueInstructionSimpleRequest;
-        readonly "__#13@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly "__#13@#parameters": import("../util/configuration.js").default;
+        readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#14@#parameters": import("../util/configuration.js").default;
         readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         readonly parameters: import("../util/configuration.js").default;
         env(key: string): any;
