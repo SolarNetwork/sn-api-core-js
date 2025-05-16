@@ -109,6 +109,11 @@ export {
 } from "./skyCondition.js";
 export { default as SortDescriptor } from "./sortDescriptor.js";
 export {
+	default as SshCommand,
+	SolarSshCommandAttachSsh,
+} from "./sshCommand.js";
+export { default as SshTerminalSettings } from "./sshTerminalSettings.js";
+export {
 	default as StreamAggregateDatum,
 	type AccumulatingPropertyStatistics,
 	type InstantaneousPropertyStatistics,
