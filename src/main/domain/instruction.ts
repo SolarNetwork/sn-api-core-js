@@ -105,8 +105,8 @@ export default class Instruction implements InstructionInfo {
 	 * @param value the parameter value
 	 * @returns the parameter object
 	 */
-	static parameter(name: string, value: string): InstructionParameter {
-		return { name: name, value: value };
+	static parameter(name: string, value: any): InstructionParameter {
+		return { name: name, value: String(value) };
 	}
 }
 
