@@ -18,8 +18,8 @@ class SshCloseCode extends ComparableEnum {
 	 * @param name the name
 	 * @param value a value
 	 */
-	constructor(name: string, level: number) {
-		super(name, level);
+	constructor(name: string, value: number) {
+		super(name, value);
 		if (this.constructor === SshCloseCode) {
 			Object.freeze(this);
 		}

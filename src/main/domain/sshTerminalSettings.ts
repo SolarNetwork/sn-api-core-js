@@ -115,7 +115,6 @@ export default class SshTerminalSettings implements JsonEncodable {
 	 * The JSON must be encoded the same way {@link Domain.SshTerminalSettings#toJsonEncoding} does.
 	 *
 	 * @param json the JSON to parse
-	 * @param dataDecodeFn an optional function to decode the `obj.data` property with
 	 * @returns the new instance, or `undefined` if `json` is `undefined`
 	 */
 	static fromJsonEncoding(
