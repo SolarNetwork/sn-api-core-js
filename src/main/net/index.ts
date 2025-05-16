@@ -43,6 +43,7 @@ export {
 } from "./solarQueryUrlHelper.js";
 export {
 	default as SolarSshApi,
+	SolarSshUrlHelper,
 	SolarSshDefaultHost,
 	SolarSshDefaultPort,
 	SolarSshTerminalWebSocketSubProtocol,
