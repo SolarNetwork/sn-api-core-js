@@ -1,6 +1,4 @@
 import * as FetchApi from "./fetch.js";
-import { SolarSshCommandAttachSsh } from "../domain/sshCommand";
-import { SolarSshPathKey } from "./solarSshUrlHelperMixin";
 export { default as AuthUrlHelperMixin } from "./authUrlHelperMixin.js";
 export { default as AuthTokenUrlHelperMixin } from "./authTokenUrlHelperMixin.js";
 export { default as AuthorizationV2Builder } from "./authV2.js";
