@@ -1,4 +1,6 @@
 import * as FetchApi from "./fetch.js";
+import { SolarSshCommandAttachSsh } from "../domain/sshCommand";
+import { SolarSshPathKey } from "./solarSshUrlHelperMixin";
 export { default as AuthUrlHelperMixin } from "./authUrlHelperMixin.js";
 export { default as AuthTokenUrlHelperMixin } from "./authTokenUrlHelperMixin.js";
 export { default as AuthorizationV2Builder } from "./authV2.js";
@@ -41,6 +43,22 @@ export {
 	SolarQueryApiPathV1,
 	SolarQueryPublicPathKey,
 } from "./solarQueryUrlHelper.js";
+export {
+	default as SolarSshApi,
+	SolarSshDefaultHost,
+	SolarSshDefaultPort,
+	SolarSshTerminalWebSocketSubProtocol,
+	SolarSshApiPathV1,
+	StartRemoteSshInstructionName,
+	StopRemoteSshInstructionName,
+	SshSessionKey,
+} from "./solarSshUrlHelper.js";
+export {
+	default as SolarSshUrlHelperMixin,
+	SolarSshPathKey,
+	SolarSshDefaultPath,
+	SolarSshTerminalWebSocketPath,
+} from "./solarSshUrlHelperMixin.js";
 export {
 	default as SolarUserApi,
 	SolarUserUrlHelper,
