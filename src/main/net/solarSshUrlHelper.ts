@@ -128,7 +128,7 @@ export class SolarSshUrlHelper extends UrlHelper {
 	 * The returned builder will be configured for a `POST` request using the
 	 * `queueInstructionUrl()` URL  with the `StartRemoteSsh` instruction.
 	 *
-	 * @param sshSession the session to use; if not provided the {@link Net.SolarSshUrlHelper#sshSession} property of this object will be used
+	 * @param sshSession the session to use; if not provided the {@link Net.SolarSshApi#sshSession} property of this object will be used
 	 * @returns the builder
 	 * @throws Error if no session or node ID available
 	 */
@@ -167,7 +167,7 @@ export class SolarSshUrlHelper extends UrlHelper {
 	 * The returned builder will be configured for a `POST` request using the
 	 * `queueInstructionUrl()` URL with the `StopRemoteSsh` instruction.
 	 *
-	 * @param sshSession the session to use; if not provided the {@link Net.SolarSshUrlHelper#sshSession} property of this object will be used
+	 * @param sshSession the session to use; if not provided the {@link Net.SolarSshApi#sshSession} property of this object will be used
 	 * @returns the builder
 	 * @throws Error if no session or node ID available
 	 */
@@ -201,7 +201,7 @@ export class SolarSshUrlHelper extends UrlHelper {
 	/**
 	 * Generate a URL for viewing the `StartRemoteSsh` instruction.
 	 *
-	 * @param sshSession the session to use; if not provided the {@link Net.SolarSshUrlHelper#sshSession} property of this object will be used
+	 * @param sshSession the session to use; if not provided the {@link Net.SolarSshApi#sshSession} property of this object will be used
 	 * @returns the URL
 	 * @throws Error if no instruction ID available
 	 */
@@ -222,9 +222,9 @@ export class SolarSshUrlHelper extends UrlHelper {
 	 * `StartRemoteSsh` instruction.
 	 *
 	 * <p>The returned builder will be configured with the same URL returned from
-	 * {@link Net.SshUrlHelperMixin#viewStartRemoteSshInstructionUrl}.
+	 * {@link Net.SolarSshApi#viewStartRemoteSshInstructionUrl}.
 	 *
-	 * @param sshSession the session to use; if not provided the {@link Net.SolarSshUrlHelper#sshSession} property of this object will be used
+	 * @param sshSession the session to use; if not provided the {@link Net.SolarSshApi#sshSession} property of this object will be used
 	 * @returns the builder
 	 * @throws Error if no instruction ID available
 	 */
@@ -239,7 +239,7 @@ export class SolarSshUrlHelper extends UrlHelper {
 	/**
 	 * Generate a URL for viewing the `StopRemoteSsh` instruction.
 	 *
-	 * @param sshSession the session to use; if not provided the {@link Net.SolarSshUrlHelper#sshSession} property of this object will be used
+	 * @param sshSession the session to use; if not provided the {@link Net.SolarSshApi#sshSession} property of this object will be used
 	 * @returns the URL
 	 * @throws Error if no instruction ID available
 	 */
@@ -260,9 +260,9 @@ export class SolarSshUrlHelper extends UrlHelper {
 	 * `StopRemoteSsh` instruction.
 	 *
 	 * The returned builder will be configured with the same URL returned from
-	 * {@link Net.SshUrlHelperMixin#viewStopRemoteSshInstructionUrl}.
+	 * {@link Net.SolarSshApi#viewStopRemoteSshInstructionUrl}.
 	 *
-	 * @param sshSession the session to use; if not provided the {@link Net.SolarSshUrlHelper#sshSession} property of this object will be used
+	 * @param sshSession the session to use; if not provided the {@link Net.SolarSshApi#sshSession} property of this object will be used
 	 * @returns the builder
 	 * @throws Error if no instruction ID available
 	 */
