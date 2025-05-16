@@ -32,3 +32,11 @@ test("listAllNodeIdsUrl", (t) => {
 		"https://data.solarnetwork.net/solaruser/api/v1/sec/whoami"
 	);
 });
+
+test("viewNodeMetadataUrl", (t) => {
+	const helper = new UserUrlHelper();
+	t.is(
+		helper.viewNodeMetadataUrl(123),
+		"https://data.solarnetwork.net/solaruser/api/v1/sec/nodes/meta/123"
+	);
+});
