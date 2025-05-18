@@ -10,8 +10,8 @@ class ComparableNumber extends Number implements Comparable<ComparableNumber> {
 		return this.valueOf() < o.valueOf()
 			? -1
 			: this.valueOf() > o.valueOf()
-			? 1
-			: 0;
+				? 1
+				: 0;
 	}
 }
 

@@ -173,3 +173,33 @@ test("containsKey", (t) => {
 	t.true(map.containsKey("FoO"), "case insensitive match");
 	t.false(map.containsKey("bar"));
 });
+
+test("mapValue:empty", (t) => {
+	const map = new MultiMap();
+	t.deepEqual(map.mapValue(), new Map());
+});
+
+test("mapValue:onlySingleValuedKeys", (t) => {
+	const map = new MultiMap({ a: 1, b: 2 });
+	t.deepEqual(
+		map.mapValue(),
+		new Map([
+			["a", 1],
+			["b", 2],
+		])
+	);
+});
+
+test("mapValue:multiValued", (t) => {
+	const map = new MultiMap();
+	map.add("a", 1);
+	map.add("a", 2);
+	map.add("b", 3);
+	t.deepEqual(
+		map.mapValue(),
+		new Map([
+			["a", 1],
+			["b", 3],
+		])
+	);
+});

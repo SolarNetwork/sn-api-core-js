@@ -430,7 +430,7 @@ class AuthorizationV2Builder {
 		const existingIndex = Array.isArray(signedHeaders)
 			? signedHeaders.findIndex(
 					caseInsensitiveEqualsFn(HttpHeaders.X_SN_DATE)
-			  )
+				)
 			: -1;
 		return (
 			existingIndex >= 0 ||
@@ -443,7 +443,7 @@ class AuthorizationV2Builder {
 		const existingIndex = Array.isArray(signedHeaders)
 			? signedHeaders.findIndex(
 					caseInsensitiveEqualsFn(HttpHeaders.X_SN_DATE)
-			  )
+				)
 			: -1;
 		if (enabled && existingIndex < 0) {
 			signedHeaders = signedHeaders

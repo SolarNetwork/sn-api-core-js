@@ -109,6 +109,18 @@ export {
 } from "./skyCondition.js";
 export { default as SortDescriptor } from "./sortDescriptor.js";
 export {
+	default as SshCloseCodes,
+	SshCloseCode,
+	type SshCloseCodeEnumsType,
+	SshCloseCodeNames,
+} from "./sshCloseCode.js";
+export {
+	default as SshCommand,
+	SolarSshCommandAttachSsh,
+} from "./sshCommand.js";
+export { default as SshSession } from "./sshSession.js";
+export { default as SshTerminalSettings } from "./sshTerminalSettings.js";
+export {
 	default as StreamAggregateDatum,
 	type AccumulatingPropertyStatistics,
 	type InstantaneousPropertyStatistics,

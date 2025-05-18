@@ -138,8 +138,8 @@ class Configuration implements Record<string, any> {
 				newMap instanceof PropMap
 					? newMap.props
 					: newMap instanceof Map
-					? newMap
-					: Object.entries(newMap);
+						? newMap
+						: Object.entries(newMap);
 			for (const [k, v] of itr) {
 				this.value(k, v);
 			}

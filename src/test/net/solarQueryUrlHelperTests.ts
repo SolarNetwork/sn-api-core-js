@@ -99,3 +99,11 @@ test("listAllNodeIdsUrl:toRequestUrl:proxy", (t) => {
 		proxy + "/solarquery/api/v1/sec/nodes"
 	);
 });
+
+test("viewNodeMetadataUrl", (t) => {
+	const helper = new QueryUrlHelper();
+	t.is(
+		helper.viewNodeMetadataUrl(123),
+		"https://data.solarnetwork.net/solarquery/api/v1/sec/nodes/meta/123"
+	);
+});

@@ -452,7 +452,7 @@ export function groupedBySourceMetricDataArray(
 						index: number,
 						array: Iterable<T>
 					) => number | undefined | null
-			  ) => number);
+				) => number);
 	const layerData = nest()
 		// group first by source
 		.key((d) => {
