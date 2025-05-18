@@ -200,6 +200,23 @@ class MultiMap {
 		}
 		return result;
 	}
+
+	/**
+	 * Get the entire mapping as a single-valued `Map` instance.
+	 *
+	 * This will return the first avaialble value for every key in the mapping.
+	 *
+	 * @returns a new `Map` instance
+	 */
+	mapValue(): Map<string, any> {
+		const result = new Map<string, any>();
+		const len = this.size();
+		for (let i = 0; i < len; i += 1) {
+			const val = this.#mappings[this.#mappingNames[i]];
+			result.set(val.key, val.val[0]);
+		}
+		return result;
+	}
 }
 
 export default MultiMap;

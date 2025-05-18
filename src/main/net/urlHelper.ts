@@ -338,7 +338,7 @@ class UrlHelper {
 	}
 
 	/**
-	 * Get a new configured with parameters of this instance.
+	 * Get a new `DatumFilter` configured with parameters of this instance.
 	 *
 	 * This will look for the following parameters:
 	 *

@@ -15,5 +15,9 @@ test("constants", (t) => {
 	t.is(HttpHeaders.DATE, "Date");
 	t.is(HttpHeaders.DIGEST, "Digest");
 	t.is(HttpHeaders.HOST, "Host");
+	t.is(
+		HttpHeaders.X_SN_PRE_SIGNED_AUTHORIZATION,
+		"X-SN-PreSignedAuthorization"
+	);
 	t.is(HttpHeaders.X_SN_DATE, "X-SN-Date");
 });

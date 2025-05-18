@@ -2,6 +2,7 @@ import UrlHelper from "./urlHelper.js";
 import AuthUrlHelperMixin from "./authUrlHelperMixin.js";
 import AuthTokenUrlHelperMixin from "./authTokenUrlHelperMixin.js";
 import InstructionUrlHelperMixin from "./instructionUrlHelperMixin.js";
+import NodeMetadataUrlHelperMixin from "./nodeMetadataUrlHelperMixin.js";
 import UserDatumAuxiliaryUrlHelperMixin from "./userDatumAuxiliaryUrlHelperMixin.js";
 import UserMetadataUrlHelperMixin from "./userMetadataUrlHelperMixin.js";
 import UserNodesUrlHelperMixin from "./userNodesUrlHelperMixin.js";
@@ -40,10 +41,12 @@ export class SolarUserUrlHelper extends UrlHelper {
  */
 export default class SolarUserApi extends AuthUrlHelperMixin(
 	AuthTokenUrlHelperMixin(
-		InstructionUrlHelperMixin(
-			UserDatumAuxiliaryUrlHelperMixin(
-				UserMetadataUrlHelperMixin(
-					UserNodesUrlHelperMixin(SolarUserUrlHelper)
+		NodeMetadataUrlHelperMixin(
+			InstructionUrlHelperMixin(
+				UserDatumAuxiliaryUrlHelperMixin(
+					UserMetadataUrlHelperMixin(
+						UserNodesUrlHelperMixin(SolarUserUrlHelper)
+					)
 				)
 			)
 		)

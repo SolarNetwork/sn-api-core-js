@@ -27,8 +27,8 @@ declare const NodesUrlHelperMixin: <T extends UrlHelperConstructor>(superclass: 
          * @returns {string} the URL
          */
         findSourcesUrl(datumFilter?: DatumFilter): string;
-        readonly "__#13@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly "__#13@#parameters": import("../util/configuration.js").default;
+        readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#14@#parameters": import("../util/configuration.js").default;
         readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         readonly parameters: import("../util/configuration.js").default;
         env(key: string): any;

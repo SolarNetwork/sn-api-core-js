@@ -204,7 +204,7 @@ declare class UrlHelper {
      */
     static resolveTemplateUrl(template: string, params: Record<string, any>): string;
     /**
-     * Get a new configured with parameters of this instance.
+     * Get a new `DatumFilter` configured with parameters of this instance.
      *
      * This will look for the following parameters:
      *
