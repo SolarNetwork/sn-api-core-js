@@ -94,9 +94,9 @@ declare const SolarUserApi_base: {
         viewActiveInstructionsUrl(nodeId?: number): string;
         viewPendingInstructionsUrl(nodeId?: number): string;
         updateInstructionStateUrl(instructionId: number, state: import("../domain/instructionState.js").InstructionState): string;
-        "__#18@#instructionUrl"(exec: boolean, topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeIds?: number[] | number): string;
-        queueInstructionUrl(topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeId?: number): string;
-        queueInstructionsUrl(topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeIds?: number[]): string;
+        "__#18@#instructionUrl"(exec: boolean, topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeIds?: number[] | number, topicAsParam?: boolean): string;
+        queueInstructionUrl(topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeId?: number, topicAsParam?: boolean): string;
+        queueInstructionsUrl(topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeIds?: number[], topicAsParam?: boolean): string;
         execInstructionUrl(topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeIds?: number[] | number): string;
         queueInstructionRequest(topic?: string, parameters?: import("../domain/instructionParameter.js").default[], nodeId?: number, executionDate?: Date): import("./instructionUrlHelperMixin.js").QueueInstructionRequest | import("./instructionUrlHelperMixin.js").QueueInstructionSimpleRequest;
         readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;

@@ -65,25 +65,27 @@ declare const InstructionUrlHelperMixin: <T extends UrlHelperConstructor>(superc
          * @see the {@link Domain.InstructionStates} enum for possible state values
          */
         updateInstructionStateUrl(instructionId: number, state: InstructionState): string;
-        "__#18@#instructionUrl"(exec: boolean, topic: string, parameters?: InstructionParameter[], nodeIds?: number[] | number): string;
+        "__#18@#instructionUrl"(exec: boolean, topic: string, parameters?: InstructionParameter[], nodeIds?: number[] | number, topicAsParam?: boolean): string;
         /**
          * Generate a URL for posting an instruction request.
          *
          * @param topic - the instruction topic
          * @param parameters - an array of parameter objects
-         * @param nodeId - the specific node ID to use; if not provided the `nodeId` parameter of this class will be used
+         * @param nodeId the specific node ID to use; if not provided the `nodeId` parameter of this class will be used
+         * @param topicAsParam `true` to encode topic as request parameter, `false` as the final URL path segment
          * @returns the URL
          */
-        queueInstructionUrl(topic: string, parameters?: InstructionParameter[], nodeId?: number): string;
+        queueInstructionUrl(topic: string, parameters?: InstructionParameter[], nodeId?: number, topicAsParam?: boolean): string;
         /**
          * Generate a URL for posting instruction requests for multiple nodes.
          *
          * @param topic the instruction topic
          * @param parameters an array of parameter objects
-         * @param nodeIds - a list of node IDs to use; if not provided the `nodeIds` parameter of this class will be used
+         * @param nodeIds a list of node IDs to use; if not provided the `nodeIds` parameter of this class will be used
+         * @param topicAsParam `true` to encode topic as request parameter, `false` as the final URL path segment
          * @returns the URL
          */
-        queueInstructionsUrl(topic: string, parameters?: InstructionParameter[], nodeIds?: number[]): string;
+        queueInstructionsUrl(topic: string, parameters?: InstructionParameter[], nodeIds?: number[], topicAsParam?: boolean): string;
         /**
          * Generate a URL for posting an instruction execution request.
          *
