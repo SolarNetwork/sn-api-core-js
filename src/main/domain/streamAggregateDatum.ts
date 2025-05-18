@@ -181,8 +181,8 @@ class StreamAggregateDatum implements StreamedDatum, JsonEncodable {
 			meta instanceof DatumStreamMetadataRegistry
 				? meta.metadataForStreamId(streamId)
 				: meta instanceof DatumStreamMetadata
-				? meta
-				: undefined;
+					? meta
+					: undefined;
 		if (this.constructor === StreamAggregateDatum) {
 			Object.freeze(this);
 		}
@@ -256,8 +256,8 @@ class StreamAggregateDatum implements StreamedDatum, JsonEncodable {
 			meta instanceof DatumStreamMetadataRegistry
 				? meta.metadataForStreamId(this.streamId)
 				: meta instanceof DatumStreamMetadata
-				? meta
-				: this.meta;
+					? meta
+					: this.meta;
 		if (!m) {
 			return undefined;
 		}
@@ -401,16 +401,16 @@ class StreamAggregateDatum implements StreamedDatum, JsonEncodable {
 				meta instanceof DatumStreamMetadata
 					? meta
 					: meta instanceof DatumStreamMetadataRegistry
-					? meta.metadataForStreamId(data[0])
-					: undefined;
+						? meta.metadataForStreamId(data[0])
+						: undefined;
 		} else {
 			// treat as a registry-indexed stream datum
 			m =
 				meta instanceof DatumStreamMetadata
 					? meta
 					: meta instanceof DatumStreamMetadataRegistry
-					? meta.metadataAt(data[0])
-					: undefined;
+						? meta.metadataAt(data[0])
+						: undefined;
 		}
 		if (!m) {
 			return undefined;

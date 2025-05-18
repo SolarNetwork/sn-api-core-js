@@ -48,9 +48,9 @@ export function displayUnitsForScale(baseUnit: string, scale: number) {
 		(scale === 1000000000
 			? "G"
 			: scale === 1000000
-			? "M"
-			: scale === 1000
-			? "k"
-			: "") + baseUnit
+				? "M"
+				: scale === 1000
+					? "k"
+					: "") + baseUnit
 	);
 }

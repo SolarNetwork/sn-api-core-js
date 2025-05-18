@@ -84,10 +84,10 @@ const NodeMetadataUrlHelperMixin = <T extends UrlHelperConstructor>(
 			const nodeIds: number[] | null | undefined = Array.isArray(nodeId)
 				? nodeId
 				: nodeId
-				? [nodeId]
-				: nodeId !== null
-				? this.param("nodeIds")
-				: undefined;
+					? [nodeId]
+					: nodeId !== null
+						? this.param("nodeIds")
+						: undefined;
 			let result = this.baseUrl() + "/nodes/meta";
 			let params = "";
 			if (Array.isArray(nodeIds)) {

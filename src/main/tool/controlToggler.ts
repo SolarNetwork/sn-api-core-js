@@ -171,7 +171,7 @@ export default class ControlToggler {
 			? new AuthorizationV2Builder(
 					auth.tokenId,
 					queryApi.environment
-			  ).key(auth.key()!)
+				).key(auth.key()!)
 			: auth;
 	}
 
@@ -292,9 +292,9 @@ export default class ControlToggler {
 		return statusDate > instructionDate
 			? controlDatum.val
 			: Array.isArray(instruction.parameters) &&
-			  instruction.parameters.length > 0
-			? instruction.parameters[0].value
-			: undefined;
+				  instruction.parameters.length > 0
+				? instruction.parameters[0].value
+				: undefined;
 	}
 
 	/**
@@ -566,8 +566,8 @@ export default class ControlToggler {
 					execInstruction
 						? execInstruction
 						: pendingInstruction
-						? pendingInstruction
-						: this.#lastKnownInstruction
+							? pendingInstruction
+							: this.#lastKnownInstruction
 				);
 				const currValue = this.value();
 				// note != (loose) comparison for string to number coersion
