@@ -118,10 +118,11 @@ test("startSshSessionAuthBuilder", (t) => {
 		auth.httpHeaders.firstValue(HttpHeaders.CONTENT_TYPE),
 		HttpContentType.FORM_URLENCODED
 	);
-	t.is(auth.path(), "/solaruser/api/v1/sec/instr/add/StartRemoteSsh");
+	t.is(auth.path(), "/solaruser/api/v1/sec/instr/add");
 	t.deepEqual(
 		auth.parameters.mapValue(),
 		new Map<string, string>([
+			["topic", "StartRemoteSsh"],
 			["nodeId", "1"],
 			["parameters[0].name", "user"],
 			["parameters[0].value", "a"],
@@ -150,10 +151,11 @@ test("startSshSessionAuthBuilder:parameter", (t) => {
 		auth.httpHeaders.firstValue(HttpHeaders.CONTENT_TYPE),
 		HttpContentType.FORM_URLENCODED
 	);
-	t.is(auth.path(), "/solaruser/api/v1/sec/instr/add/StartRemoteSsh");
+	t.is(auth.path(), "/solaruser/api/v1/sec/instr/add");
 	t.deepEqual(
 		auth.parameters.mapValue(),
 		new Map<string, string>([
+			["topic", "StartRemoteSsh"],
 			["nodeId", "1"],
 			["parameters[0].name", "user"],
 			["parameters[0].value", "a"],
@@ -203,10 +205,11 @@ test("stopSshSessionAuthBuilder", (t) => {
 		auth.httpHeaders.firstValue(HttpHeaders.CONTENT_TYPE),
 		HttpContentType.FORM_URLENCODED
 	);
-	t.is(auth.path(), "/solaruser/api/v1/sec/instr/add/StopRemoteSsh");
+	t.is(auth.path(), "/solaruser/api/v1/sec/instr/add");
 	t.deepEqual(
 		auth.parameters.mapValue(),
 		new Map<string, string>([
+			["topic", "StopRemoteSsh"],
 			["nodeId", "1"],
 			["parameters[0].name", "user"],
 			["parameters[0].value", "a"],
@@ -235,10 +238,11 @@ test("stopSshSessionAuthBuilder:parameter", (t) => {
 		auth.httpHeaders.firstValue(HttpHeaders.CONTENT_TYPE),
 		HttpContentType.FORM_URLENCODED
 	);
-	t.is(auth.path(), "/solaruser/api/v1/sec/instr/add/StopRemoteSsh");
+	t.is(auth.path(), "/solaruser/api/v1/sec/instr/add");
 	t.deepEqual(
 		auth.parameters.mapValue(),
 		new Map<string, string>([
+			["topic", "StopRemoteSsh"],
 			["nodeId", "1"],
 			["parameters[0].name", "user"],
 			["parameters[0].value", "a"],

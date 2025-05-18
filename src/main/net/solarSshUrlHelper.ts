@@ -156,7 +156,8 @@ export class SolarSshUrlHelper extends UrlHelper {
 						Instruction.parameter("port", session.sshPort),
 						Instruction.parameter("rport", session.reverseSshPort),
 					],
-					node
+					node,
+					true
 				)
 			);
 	}
@@ -193,7 +194,8 @@ export class SolarSshUrlHelper extends UrlHelper {
 						Instruction.parameter("port", session.sshPort),
 						Instruction.parameter("rport", session.reverseSshPort),
 					],
-					node
+					node,
+					true
 				)
 			);
 	}
