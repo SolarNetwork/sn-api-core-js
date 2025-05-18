@@ -147,21 +147,26 @@ const InstructionUrlHelperMixin = <T extends UrlHelperConstructor>(
 			exec: boolean,
 			topic: string,
 			parameters?: InstructionParameter[],
-			nodeIds?: number[] | number
+			nodeIds?: number[] | number,
+			topicAsParam?: boolean
 		) {
 			const nodes: number[] | undefined = Array.isArray(nodeIds)
 				? nodeIds
 				: nodeIds !== undefined
-				? [nodeIds]
-				: this.param(DatumFilterKeys.NodeIds);
-			let url =
-				this.baseUrl() +
-				"/instr/" +
-				(exec ? "exec" : "add") +
-				"/" +
-				encodeURIComponent(topic);
+					? [nodeIds]
+					: this.param(DatumFilterKeys.NodeIds);
+			let url = this.baseUrl() + "/instr/" + (exec ? "exec" : "add");
+			if (!topicAsParam) {
+				url += "/" + encodeURIComponent(topic);
+			} else {
+				url += "?topic=" + encodeURIComponent(topic);
+			}
 			if (nodes && nodes.length) {
-				url += "?";
+				if (topicAsParam) {
+					url += "&";
+				} else {
+					url += "?";
+				}
 				if (nodes.length > 1) {
 					url += "nodeIds=" + nodes.join(",");
 				} else {
@@ -169,7 +174,7 @@ const InstructionUrlHelperMixin = <T extends UrlHelperConstructor>(
 				}
 			}
 			if (Array.isArray(parameters) && parameters.length > 0) {
-				if (nodes && nodes.length) {
+				if (topicAsParam || (nodes && nodes.length)) {
 					url += "&";
 				} else {
 					url += "?";
@@ -187,15 +192,23 @@ const InstructionUrlHelperMixin = <T extends UrlHelperConstructor>(
 		 *
 		 * @param topic - the instruction topic
 		 * @param parameters - an array of parameter objects
-		 * @param nodeId - the specific node ID to use; if not provided the `nodeId` parameter of this class will be used
+		 * @param nodeId the specific node ID to use; if not provided the `nodeId` parameter of this class will be used
+		 * @param topicAsParam `true` to encode topic as request parameter, `false` as the final URL path segment
 		 * @returns the URL
 		 */
 		queueInstructionUrl(
 			topic: string,
 			parameters?: InstructionParameter[],
-			nodeId?: number
+			nodeId?: number,
+			topicAsParam?: boolean
 		) {
-			return this.#instructionUrl(false, topic, parameters, nodeId);
+			return this.#instructionUrl(
+				false,
+				topic,
+				parameters,
+				nodeId,
+				topicAsParam
+			);
 		}
 
 		/**
@@ -203,15 +216,23 @@ const InstructionUrlHelperMixin = <T extends UrlHelperConstructor>(
 		 *
 		 * @param topic the instruction topic
 		 * @param parameters an array of parameter objects
-		 * @param nodeIds - a list of node IDs to use; if not provided the `nodeIds` parameter of this class will be used
+		 * @param nodeIds a list of node IDs to use; if not provided the `nodeIds` parameter of this class will be used
+		 * @param topicAsParam `true` to encode topic as request parameter, `false` as the final URL path segment
 		 * @returns the URL
 		 */
 		queueInstructionsUrl(
 			topic: string,
 			parameters?: InstructionParameter[],
-			nodeIds?: number[]
+			nodeIds?: number[],
+			topicAsParam?: boolean
 		) {
-			return this.#instructionUrl(false, topic, parameters, nodeIds);
+			return this.#instructionUrl(
+				false,
+				topic,
+				parameters,
+				nodeIds,
+				topicAsParam
+			);
 		}
 
 		/**
