@@ -98,6 +98,14 @@ declare class MultiMap {
      * @returns array of keys in this map, or an empty array if the map is empty
      */
     keySet(): string[];
+    /**
+     * Get the entire mapping as a single-valued `Map` instance.
+     *
+     * This will return the first avaialble value for every key in the mapping.
+     *
+     * @returns a new `Map` instance
+     */
+    mapValue(): Map<string, any>;
 }
 export default MultiMap;
 export { type MultiMapValue };

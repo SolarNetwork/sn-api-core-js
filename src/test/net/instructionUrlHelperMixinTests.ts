@@ -77,6 +77,15 @@ test("queueInstructionUrl:nodeId", (t) => {
 	);
 });
 
+test("queueInstructionUrl:nodeId:topicRequestParam", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeId, 123);
+	t.is(
+		helper.queueInstructionUrl("foo", undefined, 234, true),
+		"https://data.solarnetwork.net/instr/add?topic=foo&nodeId=234"
+	);
+});
+
 test("queueInstructionUrl:parameter", (t) => {
 	const helper = new NodeInstructionUrlHelper();
 	helper.parameter(DatumFilterKeys.NodeId, 123);
@@ -118,6 +127,23 @@ test("queueInstructionUrl:parameter:nodeId", (t) => {
 	);
 });
 
+test("queueInstructionUrl:parameter:nodeId:topicRequestParam", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeId, 123);
+	t.is(
+		helper.queueInstructionUrl(
+			"foo",
+			[{ name: "bim", value: "bam" }],
+			234,
+			true
+		),
+		"https://data.solarnetwork.net/instr/add?topic=foo" +
+			"&nodeId=234" +
+			"&parameters%5B0%5D.name=bim" +
+			"&parameters%5B0%5D.value=bam"
+	);
+});
+
 test("queueInstructionsUrl", (t) => {
 	const helper = new NodeInstructionUrlHelper();
 	helper.parameter(DatumFilterKeys.NodeIds, [123, 234]);
@@ -133,6 +159,15 @@ test("queueInstructionsUrl:nodeIds", (t) => {
 	t.is(
 		helper.queueInstructionsUrl("foo", undefined, [345, 456]),
 		"https://data.solarnetwork.net/instr/add/foo?nodeIds=345,456"
+	);
+});
+
+test("queueInstructionsUrl:nodeIds:topicRequestParam", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeIds, [123, 234]);
+	t.is(
+		helper.queueInstructionsUrl("foo", undefined, [345, 456], true),
+		"https://data.solarnetwork.net/instr/add?topic=foo&nodeIds=345,456"
 	);
 });
 
@@ -160,6 +195,23 @@ test("queueInstructionsUrl:parameter", (t) => {
 		helper.queueInstructionsUrl("foo", [{ name: "bim", value: "bam" }]),
 		"https://data.solarnetwork.net/instr/add/foo?" +
 			"nodeIds=123,234" +
+			"&parameters%5B0%5D.name=bim" +
+			"&parameters%5B0%5D.value=bam"
+	);
+});
+
+test("queueInstructionsUrl:parameter:topicRequestParam", (t) => {
+	const helper = new NodeInstructionUrlHelper();
+	helper.parameter(DatumFilterKeys.NodeIds, [123, 234]);
+	t.is(
+		helper.queueInstructionsUrl(
+			"foo",
+			[{ name: "bim", value: "bam" }],
+			undefined,
+			true
+		),
+		"https://data.solarnetwork.net/instr/add?topic=foo" +
+			"&nodeIds=123,234" +
 			"&parameters%5B0%5D.name=bim" +
 			"&parameters%5B0%5D.value=bam"
 	);

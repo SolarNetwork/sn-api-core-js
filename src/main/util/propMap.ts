@@ -38,10 +38,10 @@ class PropMap implements Iterable<readonly [string, any]> {
 			props instanceof PropMap
 				? new Map(props.props)
 				: props instanceof Map
-				? new Map(props)
-				: typeof props === "object"
-				? new Map(Object.entries(props))
-				: new Map();
+					? new Map(props)
+					: typeof props === "object"
+						? new Map(Object.entries(props))
+						: new Map();
 	}
 
 	/**

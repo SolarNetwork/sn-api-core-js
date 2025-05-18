@@ -43,6 +43,8 @@ declare class HttpHeaders extends MultiMap {
     static readonly DIGEST = "Digest";
     /** The `Host` header.  */
     static readonly HOST = "Host";
+    /** The `X-SN-PreSignedAuthorization` header. */
+    static readonly X_SN_PRE_SIGNED_AUTHORIZATION = "X-SN-PreSignedAuthorization";
     /**  The `X-SN-Date` header. */
     static readonly X_SN_DATE = "X-SN-Date";
 }

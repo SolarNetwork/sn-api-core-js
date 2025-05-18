@@ -153,8 +153,8 @@ export default class DatumIdentifier implements JsonEncodable {
 				objectIdOrAgg instanceof Aggregation
 					? objectIdOrAgg
 					: aggregation !== undefined
-					? aggregation
-					: undefined;
+						? aggregation
+						: undefined;
 		}
 		if (this.constructor === DatumIdentifier) {
 			Object.freeze(this);

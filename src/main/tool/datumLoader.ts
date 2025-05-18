@@ -510,7 +510,7 @@ export default class DatumLoader
 					undefined,
 					undefined,
 					page
-			  )
+				)
 			: this.api.listDatumUrl(queryFilter, undefined, page);
 		if (this.#urlParameters) {
 			const queryParams = urlQueryEncode(this.#urlParameters);

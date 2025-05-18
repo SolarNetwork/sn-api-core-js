@@ -34,8 +34,8 @@ class GeneralMetadata {
 			tags instanceof Set
 				? tags
 				: Array.isArray(tags)
-				? new Set(tags)
-				: undefined;
+					? new Set(tags)
+					: undefined;
 	}
 
 	/**

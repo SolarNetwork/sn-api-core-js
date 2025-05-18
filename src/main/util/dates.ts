@@ -277,13 +277,13 @@ export function iso8601Date(date: Date, includeTime?: boolean): string {
 		date.getUTCDate() +
 		(includeTime
 			? "T" +
-			  (date.getUTCHours() < 10 ? "0" : "") +
-			  date.getUTCHours() +
-			  (date.getUTCMinutes() < 10 ? "0" : "") +
-			  date.getUTCMinutes() +
-			  (date.getUTCSeconds() < 10 ? "0" : "") +
-			  date.getUTCSeconds() +
-			  "Z"
+				(date.getUTCHours() < 10 ? "0" : "") +
+				date.getUTCHours() +
+				(date.getUTCMinutes() < 10 ? "0" : "") +
+				date.getUTCMinutes() +
+				(date.getUTCSeconds() < 10 ? "0" : "") +
+				date.getUTCSeconds() +
+				"Z"
 			: "")
 	);
 }

@@ -20,8 +20,8 @@ declare const LocationsUrlHelperMixin: <T extends UrlHelperConstructor>(supercla
          * @returns the generated URL
          */
         findLocationsUrl(filter: Location, sorts?: SortDescriptor[], pagination?: Pagination): string;
-        readonly "__#13@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly "__#13@#parameters": import("../util/configuration.js").default;
+        readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#14@#parameters": import("../util/configuration.js").default;
         readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         readonly parameters: import("../util/configuration.js").default;
         env(key: string): any;

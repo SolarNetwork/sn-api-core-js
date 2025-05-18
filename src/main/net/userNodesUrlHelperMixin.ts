@@ -56,8 +56,8 @@ const UserUrlHelperMixin = <T extends UrlHelperConstructor>(superclass: T) =>
 			const nodes: number[] | undefined = Array.isArray(nodeId)
 				? nodeId
 				: nodeId
-				? [nodeId]
-				: this.param(DatumFilterKeys.NodeIds);
+					? [nodeId]
+					: this.param(DatumFilterKeys.NodeIds);
 			const result =
 				this.baseUrl() +
 				"/nodes/archived?nodeIds=" +

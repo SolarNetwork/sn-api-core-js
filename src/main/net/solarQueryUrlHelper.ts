@@ -4,6 +4,7 @@ import DatumUrlHelperMixin from "./datumUrlHelperMixin.js";
 import LocationDatumMetadataUrlHelperMixin from "./locationDatumMetadataUrlHelperMixin.js";
 import LocationDatumUrlHelperMixin from "./locationDatumUrlHelperMixin.js";
 import LocationsUrlHelperMixin from "./locationsUrlHelperMixin.js";
+import NodeMetadataUrlHelperMixin from "./nodeMetadataUrlHelperMixin.js";
 import NodesUrlHelperMixin from "./nodesUrlHelperMixin.js";
 
 /**
@@ -63,7 +64,9 @@ export class SolarQueryUrlHelper extends UrlHelper {
  * The SolarQuery API URL helper.
  */
 export default class SolarQueryApi extends DatumMetadataUrlHelperMixin(
-	DatumUrlHelperMixin(NodesUrlHelperMixin(SolarQueryUrlHelper))
+	DatumUrlHelperMixin(
+		NodesUrlHelperMixin(NodeMetadataUrlHelperMixin(SolarQueryUrlHelper))
+	)
 ) {}
 
 /**
