@@ -151,8 +151,8 @@ export class SolarSshUrlHelper extends UrlHelper {
 				this.#userApi.queueInstructionUrl(
 					StartRemoteSshInstructionName,
 					[
-						Instruction.parameter("user", session.sessionId),
 						Instruction.parameter("host", session.sshHost),
+						Instruction.parameter("user", session.sessionId),
 						Instruction.parameter("port", session.sshPort),
 						Instruction.parameter("rport", session.reverseSshPort),
 					],
@@ -189,8 +189,8 @@ export class SolarSshUrlHelper extends UrlHelper {
 				this.#userApi.queueInstructionUrl(
 					StopRemoteSshInstructionName,
 					[
-						Instruction.parameter("user", session.sessionId),
 						Instruction.parameter("host", session.sshHost),
+						Instruction.parameter("user", session.sessionId),
 						Instruction.parameter("port", session.sshPort),
 						Instruction.parameter("rport", session.reverseSshPort),
 					],
