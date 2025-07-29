@@ -7,6 +7,7 @@ export { default as DatumAuxiliaryTypes, DatumAuxiliaryType, type DatumAuxiliary
 export { default as DatumFilter, DatumFilterKeys, type DatumFilterProperties, DatumFilterPropertyNames, DatumFilterPropertyNamesSet, } from "./datumFilter.js";
 export { default as DatumIdentifier } from "./datumIdentifier.js";
 export { default as DatumReadingTypes, DatumReadingType, type DatumReadingTypeEnumsType, DatumReadingTypeNames, } from "./datumReadingType.js";
+export { default as DatumRollupTypes, DatumRollupType, type DatumRollupTypeEnumsType, DatumRollupTypeNames, } from "./datumRollupType.js";
 export { default as DatumSamplesTypes, DatumSamplesType, type DatumSamplesTypeEnumsType, DatumSamplesTypeNames, } from "./datumSamplesType.js";
 export { default as DatumStreamMetadata, type DatumStreamMetadataInfo, } from "./datumStreamMetadata.js";
 export { default as DatumStreamTypes, DatumStreamType, type DatumStreamTypeEnumsType, DatumStreamTypeNames, } from "./datumStreamType.js";

@@ -6,6 +6,7 @@ import {
 } from "../../main/domain/datumFilter.js";
 import Aggregations from "../../main/domain/aggregation.js";
 import CombiningTypes from "../../main/domain/combiningType.js";
+import DatumRollupTypes from "../../main/domain/datumRollupType.js";
 import Location from "../../main/domain/location.js";
 import { dateTimeUrlFormat } from "../../main/util/dates.js";
 
@@ -741,4 +742,74 @@ test("statusPropertyNames", (t) => {
 	filter.statusPropertyNames = null;
 	t.is(filter.statusPropertyName, undefined);
 	t.is(filter.statusPropertyNames, undefined);
+});
+
+test("rollupType", (t) => {
+	const filter = new DatumFilter();
+	filter.rollupType = DatumRollupTypes.All;
+	t.is(filter.rollupType, DatumRollupTypes.All);
+	t.deepEqual(
+		filter.props,
+		new Map(Object.entries({ rollupTypes: [DatumRollupTypes.All] }))
+	);
+
+	filter.rollupType = null;
+	t.is(filter.rollupType, undefined);
+	t.is(filter.rollupTypes, undefined);
+
+	filter[DatumFilterKeys.RollupTypes] = [
+		DatumRollupTypes.Node,
+		DatumRollupTypes.Source,
+	];
+	t.deepEqual(filter.rollupTypes, [
+		DatumRollupTypes.Node,
+		DatumRollupTypes.Source,
+	]);
+});
+
+test("rollupTypes", (t) => {
+	const filter = new DatumFilter();
+	filter.rollupTypes = [DatumRollupTypes.Node, DatumRollupTypes.Source];
+	t.is(filter.rollupType, DatumRollupTypes.Node);
+	t.deepEqual(filter.rollupTypes, [
+		DatumRollupTypes.Node,
+		DatumRollupTypes.Source,
+	]);
+	t.deepEqual(
+		filter.props,
+		new Map(
+			Object.entries({
+				rollupTypes: [DatumRollupTypes.Node, DatumRollupTypes.Source],
+			})
+		)
+	);
+});
+
+test("rollupTypes:reset", (t) => {
+	const filter = new DatumFilter();
+	filter.rollupTypes = [DatumRollupTypes.Node, DatumRollupTypes.Source];
+	t.deepEqual(filter.rollupTypes, [
+		DatumRollupTypes.Node,
+		DatumRollupTypes.Source,
+	]);
+	filter.rollupType = DatumRollupTypes.All;
+	t.deepEqual(
+		filter.rollupTypes,
+		[DatumRollupTypes.All],
+		"rollupTypes array reset to just rollupType"
+	);
+});
+
+test("rollupType:toUriEncoding", (t) => {
+	const filter = new DatumFilter();
+	t.is(filter.rollupType, undefined);
+	filter.rollupType = DatumRollupTypes.All;
+	t.is(filter.toUriEncoding(), "rollupType=All");
+});
+
+test("rollupTypes:toUriEncoding", (t) => {
+	const filter = new DatumFilter();
+	t.is(filter.rollupType, undefined);
+	filter.rollupTypes = [DatumRollupTypes.Node, DatumRollupTypes.Source];
+	t.is(filter.toUriEncoding(), "rollupTypes=Node,Source");
 });

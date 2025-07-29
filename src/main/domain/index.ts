@@ -44,6 +44,12 @@ export {
 	DatumReadingTypeNames,
 } from "./datumReadingType.js";
 export {
+	default as DatumRollupTypes,
+	DatumRollupType,
+	type DatumRollupTypeEnumsType,
+	DatumRollupTypeNames,
+} from "./datumRollupType.js";
+export {
 	default as DatumSamplesTypes,
 	DatumSamplesType,
 	type DatumSamplesTypeEnumsType,

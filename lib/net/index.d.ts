@@ -11,6 +11,7 @@ export { default as InstructionUrlHelperMixin, type QueueInstructionRequest, typ
 export { default as JsonClientSupport } from "./jsonClientSupport.js";
 export { type Loader, type LoaderDataCallbackFn } from "./loader.js";
 export { default as MultiLoader, type MultiLoaderDataCallbackFn, } from "./multiLoader.js";
+export { default as NodeMetadataUrlHelperMixin } from "./nodeMetadataUrlHelperMixin.js";
 export { default as NodesUrlHelperMixin } from "./nodesUrlHelperMixin.js";
 export { default as LocationDatumMetadataUrlHelperMixin } from "./locationDatumMetadataUrlHelperMixin.js";
 export { default as LocationDatumUrlHelperMixin } from "./locationDatumUrlHelperMixin.js";
