@@ -1,6 +1,7 @@
 import { Aggregation } from "./aggregation.js";
 import { CombiningType } from "./combiningType.js";
 import Location from "./location.js";
+import { DatumRollupType } from "../domain/datumRollupType.js";
 import {
 	default as PropMap,
 	PropMapUriEncodingCallbackFn,
@@ -31,6 +32,8 @@ enum DatumFilterKeys {
 	PropertyName = "propertyName",
 	PropertyNames = "propertyNames",
 	Query = "query",
+	RollupType = "rollupType",
+	RollupTypes = "rollupTypes",
 	SourceIdMaps = "sourceIdMaps",
 	SourceId = "sourceId",
 	SourceIds = "sourceIds",
@@ -499,6 +502,41 @@ class DatumFilter extends PropMap implements DatumFilterProperties {
 	}
 
 	/**
+	 * Get the rollup type.
+	 *
+	 * Use this with reading queries on aggregate values to rollup the results.
+	 * Set to `null` to remove.
+	 */
+	get rollupType(): DatumRollupType | undefined {
+		const rollups = this.rollupTypes;
+		return Array.isArray(rollups) && rollups.length > 0
+			? rollups[0]
+			: undefined;
+	}
+
+	set rollupType(rollup: DatumRollupType | null) {
+		if (rollup instanceof DatumRollupType) {
+			this.rollupTypes = [rollup];
+		} else {
+			this.rollupTypes = null;
+		}
+	}
+
+	/**
+	 * An array of rollup types. Set to `null` to remove.
+	 */
+	get rollupTypes(): DatumRollupType[] | undefined {
+		return this.prop(DatumFilterKeys.RollupTypes);
+	}
+
+	set rollupTypes(rollups: DatumRollupType[] | null) {
+		this.prop(
+			DatumFilterKeys.RollupTypes,
+			Array.isArray(rollups) ? rollups : null
+		);
+	}
+
+	/**
 	 * A property name.
 	 *
 	 * This manages the first available value from the `propertyNames` property.
@@ -660,6 +698,7 @@ function datumFilterUriEncodingPropertyMapper(
 	if (
 		key === DatumFilterKeys.NodeIds ||
 		key === DatumFilterKeys.LocationIds ||
+		key === DatumFilterKeys.RollupTypes ||
 		key === DatumFilterKeys.SourceIds ||
 		key === DatumFilterKeys.UserIds ||
 		key === DatumFilterKeys.PropertyNames ||
