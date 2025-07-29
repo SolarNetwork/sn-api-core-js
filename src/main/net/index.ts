@@ -28,6 +28,7 @@ export {
 	default as MultiLoader,
 	type MultiLoaderDataCallbackFn,
 } from "./multiLoader.js";
+export { default as NodeMetadataUrlHelperMixin } from "./nodeMetadataUrlHelperMixin.js";
 export { default as NodesUrlHelperMixin } from "./nodesUrlHelperMixin.js";
 export { default as LocationDatumMetadataUrlHelperMixin } from "./locationDatumMetadataUrlHelperMixin.js";
 export { default as LocationDatumUrlHelperMixin } from "./locationDatumUrlHelperMixin.js";

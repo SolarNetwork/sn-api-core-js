@@ -1,6 +1,7 @@
 import { Aggregation } from "./aggregation.js";
 import { CombiningType } from "./combiningType.js";
 import Location from "./location.js";
+import { DatumRollupType } from "../domain/datumRollupType.js";
 import { default as PropMap, PropMapUriEncodingCallbackFn } from "../util/propMap.js";
 /** An enumeration of datum filter keys. */
 declare enum DatumFilterKeys {
@@ -26,6 +27,8 @@ declare enum DatumFilterKeys {
     PropertyName = "propertyName",
     PropertyNames = "propertyNames",
     Query = "query",
+    RollupType = "rollupType",
+    RollupTypes = "rollupTypes",
     SourceIdMaps = "sourceIdMaps",
     SourceId = "sourceId",
     SourceIds = "sourceIds",
@@ -220,6 +223,19 @@ declare class DatumFilter extends PropMap implements DatumFilterProperties {
      */
     get sourceIdMaps(): Map<string, Set<string>> | undefined;
     set sourceIdMaps(map: Map<string, Set<string>> | null);
+    /**
+     * Get the rollup type.
+     *
+     * Use this with reading queries on aggregate values to rollup the results.
+     * Set to `null` to remove.
+     */
+    get rollupType(): DatumRollupType | undefined;
+    set rollupType(rollup: DatumRollupType | null);
+    /**
+     * An array of rollup types. Set to `null` to remove.
+     */
+    get rollupTypes(): DatumRollupType[] | undefined;
+    set rollupTypes(rollups: DatumRollupType[] | null);
     /**
      * A property name.
      *
