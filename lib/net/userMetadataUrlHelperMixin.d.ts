@@ -16,7 +16,7 @@ declare const UserMetadataUrlHelperMixin: <T extends UrlHelperConstructor>(super
          * @returns the URL
          */
         findUserMetadataUrl(filter: UserMetadataFilter): string;
-        #userMetadataUrl(userId?: number): string;
+        "__#private@#userMetadataUrl"(userId?: number): string;
         /**
          * Generate a URL for viewing a specific user's metadata via a `GET` request.
          *
@@ -53,8 +53,8 @@ declare const UserMetadataUrlHelperMixin: <T extends UrlHelperConstructor>(super
          * @returns the URL
          */
         deleteUserMetadataUrl(userId?: number): string;
-        readonly #environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly #parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
         get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         get parameters(): import("../util/configuration.js").default;
         env(key: string): any;

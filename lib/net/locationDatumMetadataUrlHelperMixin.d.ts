@@ -17,8 +17,8 @@ declare const LocationDatumMetadataUrlHelperMixin: <T extends UrlHelperConstruct
          * @param locationId a specific location ID to use; if not provided the `locationId` parameter of this instance will be used
          * @returns the base URL
          */
-        #baseLocationDatumMetadataUrl(locationId?: number): string;
-        #locationDatumMetadataUrlWithSource(locationId?: number, sourceId?: string): string;
+        "__#private@#baseLocationDatumMetadataUrl"(locationId?: number): string;
+        "__#private@#locationDatumMetadataUrlWithSource"(locationId?: number, sourceId?: string): string;
         /**
          * Generate a URL for viewing datum metadata.
          *
@@ -65,8 +65,8 @@ declare const LocationDatumMetadataUrlHelperMixin: <T extends UrlHelperConstruct
          * @returns the URL
          */
         findLocationDatumMetadataUrl(filter: DatumFilter, sorts?: SortDescriptor[], pagination?: Pagination): string;
-        readonly #environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly #parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
         get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         get parameters(): import("../util/configuration.js").default;
         env(key: string): any;

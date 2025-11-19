@@ -24,8 +24,8 @@ export declare class SolarUserUrlHelper extends UrlHelper {
 declare const SolarUserApi_base: {
     new (...args: any[]): {
         whoamiUrl(): string;
-        readonly #environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly #parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
         get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         get parameters(): import("../util/configuration.js").default;
         env(key: string): any;
@@ -45,8 +45,8 @@ declare const SolarUserApi_base: {
 } & {
     new (...args: any[]): {
         refreshTokenV2Url(date?: Date): string;
-        readonly #environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly #parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
         get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         get parameters(): import("../util/configuration.js").default;
         env(key: string): any;
@@ -70,8 +70,8 @@ declare const SolarUserApi_base: {
         replaceNodeMetadataUrl(nodeId?: number): string;
         deleteNodeMetadataUrl(nodeId?: number): string;
         findNodeMetadataUrl(nodeId?: number | number[] | null, sorts?: import("../domain/sortDescriptor.js").default[], pagination?: import("../domain/pagination.js").default): string;
-        readonly #environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly #parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
         get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         get parameters(): import("../util/configuration.js").default;
         env(key: string): any;
@@ -94,13 +94,13 @@ declare const SolarUserApi_base: {
         viewActiveInstructionsUrl(nodeId?: number): string;
         viewPendingInstructionsUrl(nodeId?: number): string;
         updateInstructionStateUrl(instructionId: number, state: import("../domain/instructionState.js").InstructionState): string;
-        #instructionUrl(exec: boolean, topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeIds?: number[] | number, topicAsParam?: boolean): string;
+        "__#private@#instructionUrl"(exec: boolean, topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeIds?: number[] | number, topicAsParam?: boolean): string;
         queueInstructionUrl(topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeId?: number, topicAsParam?: boolean): string;
         queueInstructionsUrl(topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeIds?: number[], topicAsParam?: boolean): string;
         execInstructionUrl(topic: string, parameters?: import("../domain/instructionParameter.js").default[], nodeIds?: number[] | number): string;
         queueInstructionRequest(topic?: string, parameters?: import("../domain/instructionParameter.js").default[], nodeId?: number, executionDate?: Date): import("./instructionUrlHelperMixin.js").QueueInstructionRequest | import("./instructionUrlHelperMixin.js").QueueInstructionSimpleRequest;
-        readonly #environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly #parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
         get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         get parameters(): import("../util/configuration.js").default;
         env(key: string): any;
@@ -122,15 +122,15 @@ declare const SolarUserApi_base: {
     instructionParameter(name: string, value: string): import("../domain/instructionParameter.js").default;
 } & {
     new (...args: any[]): {
-        #userDatumAuxiliaryBaseUrl(): string;
+        "__#private@#userDatumAuxiliaryBaseUrl"(): string;
         listUserDatumAuxiliaryUrl(filter: import("../domain/datumFilter.js").default): string;
         userDatumAuxiliaryIdUrl(type: import("../domain/datumAuxiliaryType.js").DatumAuxiliaryType, nodeId: number, date: Date, sourceId: string): string;
         userDatumAuxiliaryIdQueryUrl(type: import("../domain/datumAuxiliaryType.js").DatumAuxiliaryType, nodeId: number, date: Date, sourceId: string): string;
         storeUserDatumAuxiliaryUrl(type: import("../domain/datumAuxiliaryType.js").DatumAuxiliaryType, nodeId: number, date: Date, sourceId: string): string;
         viewUserDatumAuxiliaryUrl(type: import("../domain/datumAuxiliaryType.js").DatumAuxiliaryType, nodeId: number, date: Date, sourceId: string): string;
         deleteUserDatumAuxiliaryUrl(type: import("../domain/datumAuxiliaryType.js").DatumAuxiliaryType, nodeId: number, date: Date, sourceId: string): string;
-        readonly #environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly #parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
         get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         get parameters(): import("../util/configuration.js").default;
         env(key: string): any;
@@ -150,13 +150,13 @@ declare const SolarUserApi_base: {
 } & {
     new (...args: any[]): {
         findUserMetadataUrl(filter: import("../domain/userMetadataFilter.js").default): string;
-        #userMetadataUrl(userId?: number): string;
+        "__#private@#userMetadataUrl"(userId?: number): string;
         viewUserMetadataUrl(userId?: number): string;
         addUserMetadataUrl(userId?: number): string;
         replaceUserMetadataUrl(userId?: number): string;
         deleteUserMetadataUrl(userId?: number): string;
-        readonly #environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly #parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
         get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         get parameters(): import("../util/configuration.js").default;
         env(key: string): any;
@@ -179,8 +179,8 @@ declare const SolarUserApi_base: {
         viewPendingNodesUrl(): string;
         viewArchivedNodesUrl(): string;
         updateNodeArchivedStatusUrl(archived: boolean, nodeId?: number | number[]): string;
-        readonly #environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly #parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
         get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         get parameters(): import("../util/configuration.js").default;
         env(key: string): any;

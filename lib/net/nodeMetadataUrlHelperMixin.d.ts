@@ -54,8 +54,8 @@ declare const NodeMetadataUrlHelperMixin: <T extends UrlHelperConstructor>(super
          * @throws Error if no node ID available
          */
         findNodeMetadataUrl(nodeId?: number | number[] | null, sorts?: SortDescriptor[], pagination?: Pagination): string;
-        readonly #environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly #parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
         get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         get parameters(): import("../util/configuration.js").default;
         env(key: string): any;

@@ -16,8 +16,8 @@ declare const DatumMetadataUrlHelperMixin: <T extends UrlHelperConstructor>(supe
          * @param nodeId - a specific node ID to use; if not provided the`nodeId` parameter of this instance will be used
          * @returns the base URL
          */
-        #baseDatumMetadataUrl(nodeId?: number): string;
-        #datumMetadataUrlWithSource(nodeId?: number, sourceId?: string): string;
+        "__#private@#baseDatumMetadataUrl"(nodeId?: number): string;
+        "__#private@#datumMetadataUrlWithSource"(nodeId?: number, sourceId?: string): string;
         /**
          * Generate a URL for viewing datum metadata.
          *
@@ -66,7 +66,7 @@ declare const DatumMetadataUrlHelperMixin: <T extends UrlHelperConstructor>(supe
          * @returns the URL
          */
         findNodeDatumMetadataUrl(nodeId?: number, sourceId?: string, sorts?: SortDescriptor[], pagination?: Pagination): string;
-        #userMetadataUrl(userId?: number): string;
+        "__#private@#userMetadataUrl"(userId?: number): string;
         /**
          * Generate a URL for viewing a specific user's metadata via a `GET` request.
          *
@@ -78,8 +78,8 @@ declare const DatumMetadataUrlHelperMixin: <T extends UrlHelperConstructor>(supe
          * @returns the URL
          */
         viewUserMetadataUrl(userId?: number): string;
-        readonly #environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly #parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
         get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         get parameters(): import("../util/configuration.js").default;
         env(key: string): any;
