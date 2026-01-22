@@ -150,7 +150,7 @@
   },
   "overrides": {
     "json5": "2.2.3",
-    "lodash": "4.17.21",
+    "lodash": "4.17.23",
     "minimist": "1.2.8",
     "semver": "$semver",
     "tar": "7.5.6",
