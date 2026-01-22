@@ -153,6 +153,7 @@
     "lodash": "4.17.21",
     "minimist": "1.2.8",
     "semver": "$semver",
+    "tar": "7.5.6",
     "tmp": "0.2.5"
   }
 }
