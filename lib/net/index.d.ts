@@ -7,6 +7,7 @@ export { default as DatumMetadataUrlHelperMixin } from "./datumMetadataUrlHelper
 export { default as Environment, EnvironmentConfig, type HostConfig, type HostConfigInfo, type EnvironmentConstructor, } from "./environment.js";
 export { FetchApi };
 export { default as HttpHeaders, HttpContentType, HttpMethod, } from "./httpHeaders.js";
+export { default as HttpMessageSignatureBuilder, HttpSignatureAlgorithm, SignatureComponent, type SignatureBaseResult, ACCEPT_SIGNATURE_HEADER, CONTENT_DIGEST_HEADER, SIGNATURE_HEADER, SIGNATURE_INPUT_HEADER, } from "./httpSignatures.js";
 export { default as InstructionUrlHelperMixin, type QueueInstructionRequest, type QueueInstructionSimpleRequest, } from "./instructionUrlHelperMixin.js";
 export { default as JsonClientSupport } from "./jsonClientSupport.js";
 export { type Loader, type LoaderDataCallbackFn } from "./loader.js";
