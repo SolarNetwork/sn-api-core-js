@@ -308,6 +308,74 @@ test("contentDigest", (t) => {
 	);
 });
 
+test("contentDigestHeaderValue", (t) => {
+	const builder = new HttpMessageSignatureBuilder("abc123").contentDigest(
+		TEST_CONTENT
+	);
+
+	t.is(
+		builder.contentDigestHeaderValue(),
+		"sha-256=:X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE=:",
+		"the computed Content-Digest field value is returned"
+	);
+});
+
+test("contentDigestHeaderValue:notSet", (t) => {
+	const builder = new HttpMessageSignatureBuilder("abc123");
+
+	t.is(
+		builder.contentDigestHeaderValue(),
+		undefined,
+		"undefined is returned when no content digest has been computed"
+	);
+});
+
+test("contentDigestHeaderValue:explicitHeader", (t) => {
+	const builder = new HttpMessageSignatureBuilder("abc123").header(
+		"Content-Digest",
+		TEST_CONTENT_DIGEST
+	);
+
+	t.is(
+		builder.contentDigestHeaderValue(),
+		TEST_CONTENT_DIGEST,
+		"a Content-Digest field set directly on the builder is returned, even a sha-512 one"
+	);
+});
+
+test("contentDigestHeaderValue:reset", (t) => {
+	const builder = new HttpMessageSignatureBuilder("abc123").contentDigest(
+		TEST_CONTENT
+	);
+
+	builder.reset();
+
+	t.is(
+		builder.contentDigestHeaderValue(),
+		undefined,
+		"the content digest is cleared along with the other HTTP headers"
+	);
+});
+
+test("contentDigestHeaderValue:matchesSignedValue", (t) => {
+	const builder = new HttpMessageSignatureBuilder("abc123")
+		.method("POST")
+		.url("https://data.solarnetwork.net/solaruser/api/v1/sec/nodes")
+		.contentType("application/json")
+		.contentDigest(TEST_CONTENT)
+		.date(TEST_CREATED)
+		.coverRequiredComponents();
+
+	const base = builder.signatureBase();
+
+	t.true(
+		base.lines.includes(
+			'"content-digest": ' + builder.contentDigestHeaderValue()
+		),
+		"the value returned is the one the signature covers, so sending it on the request verifies"
+	);
+});
+
 test("coverRequiredComponents:get", (t) => {
 	const builder = new HttpMessageSignatureBuilder("abc123")
 		.url(
