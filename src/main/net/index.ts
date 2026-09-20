@@ -76,6 +76,7 @@ export {
 	SolarUserPathKey,
 	SolarUserApiPathV1,
 } from "./solarUserUrlHelper.js";
+export * as StructuredFields from "./structuredFields.js";
 export {
 	default as UrlHelper,
 	type UrlHelperConstructor,
