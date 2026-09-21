@@ -21,11 +21,11 @@
     ],
     "before:git:release": "npm test",
     "after:release": [
-      "git flow release finish --no-fetch --no-ff --push --message \"Release ${version}\" ${version}",
+      "git flow release finish -s --no-fetch --no-ff --push --message \"Release ${version}\" ${version}",
       "npm publish",
       "git checkout develop",
       "npm version prepatch --preid dev --no-git-tag-version",
-      "git commit -am \"Bump to dev version: $(node -p \"require('./package.json').version\")\"",
+      "git commit -S -am \"Bump to dev version: $(node -p \"require('./package.json').version\")\"",
       "git push origin develop"
     ]
   },
