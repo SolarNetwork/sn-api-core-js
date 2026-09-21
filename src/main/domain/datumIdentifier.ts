@@ -133,8 +133,7 @@ export default class DatumIdentifier implements JsonEncodable {
 			kind instanceof DatumStreamType
 				? kind
 				: (DatumStreamType.valueOf(kind) as
-						| DatumStreamType
-						| undefined);
+						DatumStreamType | undefined);
 		this.kind = k !== undefined ? k : DatumStreamTypes.Node;
 
 		// if a string date provided but the string is not a valid date set timestamp to undefined

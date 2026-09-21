@@ -7,6 +7,7 @@ export { default as DatumMetadataUrlHelperMixin } from "./datumMetadataUrlHelper
 export { default as Environment, EnvironmentConfig, type HostConfig, type HostConfigInfo, type EnvironmentConstructor, } from "./environment.js";
 export { FetchApi };
 export { default as HttpHeaders, HttpContentType, HttpMethod, } from "./httpHeaders.js";
+export { default as HttpMessageSignatureBuilder, HttpSignatureAlgorithm, SignatureComponent, type SignatureBaseResult, ACCEPT_SIGNATURE_HEADER, CONTENT_DIGEST_HEADER, SIGNATURE_HEADER, SIGNATURE_INPUT_HEADER, } from "./httpSignatures.js";
 export { default as InstructionUrlHelperMixin, type QueueInstructionRequest, type QueueInstructionSimpleRequest, } from "./instructionUrlHelperMixin.js";
 export { default as JsonClientSupport } from "./jsonClientSupport.js";
 export { type Loader, type LoaderDataCallbackFn } from "./loader.js";
@@ -20,6 +21,7 @@ export { default as SolarQueryApi, SolarQueryLocationApi, SolarQueryUrlHelper, S
 export { default as SolarSshApi, SolarSshUrlHelper, SolarSshDefaultHost, SolarSshDefaultPort, SolarSshTerminalWebSocketSubProtocol, SolarSshApiPathV1, StartRemoteSshInstructionName, StopRemoteSshInstructionName, SshSessionKey, } from "./solarSshUrlHelper.js";
 export { default as SolarSshUrlHelperMixin, SolarSshPathKey, SolarSshDefaultPath, SolarSshTerminalWebSocketPath, } from "./solarSshUrlHelperMixin.js";
 export { default as SolarUserApi, SolarUserUrlHelper, SolarUserDefaultPath, SolarUserPathKey, SolarUserApiPathV1, } from "./solarUserUrlHelper.js";
+export * as StructuredFields from "./structuredFields.js";
 export { default as UrlHelper, type UrlHelperConstructor, } from "./urlHelper.js";
 export * as Urls from "./urls.js";
 export { default as UserAuthTokenurlHelperMixin } from "./userAuthTokenUrlHelperMixin.js";
