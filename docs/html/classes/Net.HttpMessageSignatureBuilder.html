@@ -1,0 +1,635 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>HttpMessageSignatureBuilder | solarnetwork-api-core</title><meta name="description" content="Documentation for solarnetwork-api-core"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">solarnetwork-api-core</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="../modules/Net.html">Net</a></li>
+<li><a href="" aria-current="page">HttpMessageSignatureBuilder</a></li></ul>
+<h1>Class HttpMessageSignatureBuilder</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>A builder for RFC 9421 HTTP message signatures on a SolarNetwork API request.</p>
+<p>This is the RFC 9421 counterpart to <a href="Net.AuthorizationV2Builder.html" class="tsd-kind-class">Net.AuthorizationV2Builder</a>, and uses the
+same security token credentials. A request is signed by covering a set of message
+components; SolarNetwork requires a minimum set of them, which
+<a href="#coverrequiredcomponents" class="tsd-kind-method">coverRequiredComponents()</a>
+configures:</p>
+<pre><code><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">builder</span><span class="hl-1"> = </span><span class="hl-6">new</span><span class="hl-1"> </span><span class="hl-0">HttpMessageSignatureBuilder</span><span class="hl-1">(</span><span class="hl-2">&quot;my-token&quot;</span><span class="hl-1">)</span><br/><span class="hl-1">    .</span><span class="hl-0">method</span><span class="hl-1">(</span><span class="hl-4">HttpMethod</span><span class="hl-1">.</span><span class="hl-8">GET</span><span class="hl-1">)</span><br/><span class="hl-1">    .</span><span class="hl-0">url</span><span class="hl-1">(</span><span class="hl-2">&quot;https://data.solarnetwork.net/solarquery/api/v1/sec/datum/stream/datum?nodeId=123&quot;</span><span class="hl-1">)</span><br/><span class="hl-1">    .</span><span class="hl-0">coverRequiredComponents</span><span class="hl-1">();</span><br/><br/><span class="hl-4">headers</span><span class="hl-1">.</span><span class="hl-0">set</span><span class="hl-1">(</span><span class="hl-2">&quot;Signature-Input&quot;</span><span class="hl-1">, </span><span class="hl-4">builder</span><span class="hl-1">.</span><span class="hl-0">signatureInputHeaderValue</span><span class="hl-1">());</span><br/><span class="hl-4">headers</span><span class="hl-1">.</span><span class="hl-0">set</span><span class="hl-1">(</span><span class="hl-2">&quot;Signature&quot;</span><span class="hl-1">, </span><span class="hl-4">builder</span><span class="hl-1">.</span><span class="hl-0">signatureHeaderValue</span><span class="hl-1">(</span><span class="hl-2">&quot;my-token-secret&quot;</span><span class="hl-1">));</span>
+</code><button>Copy</button></pre>
+
+<p>By default the signing key is derived from the token secret and the signing date,
+which works like the SNWS2 signing key in that it expires, and so can be handed to a
+signer without disclosing the secret. To sign with the token secret itself instead,
+which is what any RFC 9421 implementation can do with only the token ID and secret:</p>
+<pre><code><span class="hl-4">builder</span><span class="hl-1">.</span><span class="hl-0">derivedSigningKey</span><span class="hl-1">(</span><span class="hl-6">false</span><span class="hl-1">);</span>
+</code><button>Copy</button></pre>
+
+<h2 id="post-requests" class="tsd-anchor-link">Post requests<a href="#post-requests" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>RFC 9421 has no notion of message content: a request body is covered by covering a
+<code>Content-Digest</code> field that digests it. Use
+<a href="#contentdigest" class="tsd-kind-method">contentDigest()</a> to compute that
+field, and pass the same value on the request.</p>
+<pre><code><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">body</span><span class="hl-1"> = </span><span class="hl-8">JSON</span><span class="hl-1">.</span><span class="hl-0">stringify</span><span class="hl-1">({</span><span class="hl-4">foo:</span><span class="hl-1"> </span><span class="hl-2">&quot;bar&quot;</span><span class="hl-1">});</span><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">builder</span><span class="hl-1"> = </span><span class="hl-6">new</span><span class="hl-1"> </span><span class="hl-0">HttpMessageSignatureBuilder</span><span class="hl-1">(</span><span class="hl-2">&quot;my-token&quot;</span><span class="hl-1">)</span><br/><span class="hl-1">    .</span><span class="hl-0">method</span><span class="hl-1">(</span><span class="hl-4">HttpMethod</span><span class="hl-1">.</span><span class="hl-8">POST</span><span class="hl-1">)</span><br/><span class="hl-1">    .</span><span class="hl-0">url</span><span class="hl-1">(</span><span class="hl-2">&quot;https://data.solarnetwork.net/solaruser/api/v1/sec/...&quot;</span><span class="hl-1">)</span><br/><span class="hl-1">    .</span><span class="hl-0">contentType</span><span class="hl-1">(</span><span class="hl-2">&quot;application/json&quot;</span><span class="hl-1">)</span><br/><span class="hl-1">    .</span><span class="hl-0">contentDigest</span><span class="hl-1">(</span><span class="hl-4">body</span><span class="hl-1">)</span><br/><span class="hl-1">    .</span><span class="hl-0">coverRequiredComponents</span><span class="hl-1">();</span>
+</code><button>Copy</button></pre>
+
+</div></section><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L160">src/main/net/httpSignatures.ts:160</a></li></ul></aside>
+<section class="tsd-panel-group tsd-index-group">
+<section class="tsd-panel tsd-index-panel">
+<details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h5 class="tsd-index-heading uppercase">Index</h5></summary>
+<div class="tsd-accordion-details">
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading tsd-anchor-link" id="constructors">Constructors<a href="#constructors" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-index-list"><a href="#constructor" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Constructor"><use href="../assets/icons.svg#icon-512"></use></svg><span>constructor</span></a>
+</div></section>
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading tsd-anchor-link" id="properties">Properties<a href="#properties" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-index-list"><a href="#httpheaders" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>http<wbr/>Headers</span></a>
+<a href="#tokenid" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>token<wbr/>Id</span></a>
+</div></section>
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading tsd-anchor-link" id="accessors">Accessors<a href="#accessors" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-index-list"><a href="#coveredcomponents" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>covered<wbr/>Components</span></a>
+<a href="#keyid" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>key<wbr/>Id</span></a>
+</div></section>
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading tsd-anchor-link" id="methods">Methods<a href="#methods" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-index-list"><a href="#algorithm" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>algorithm</span></a>
+<a href="#computesigningkey" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>compute<wbr/>Signing<wbr/>Key</span></a>
+<a href="#contentdigest" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>content<wbr/>Digest</span></a>
+<a href="#contentdigestheadervalue" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>content<wbr/>Digest<wbr/>Header<wbr/>Value</span></a>
+<a href="#contenttype" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>content<wbr/>Type</span></a>
+<a href="#covered" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>covered</span></a>
+<a href="#coverrequiredcomponents" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>cover<wbr/>Required<wbr/>Components</span></a>
+<a href="#date" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>date</span></a>
+<a href="#derivedsigningkey" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>derived<wbr/>Signing<wbr/>Key</span></a>
+<a href="#expires" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>expires</span></a>
+<a href="#header" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>header</span></a>
+<a href="#label" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>label</span></a>
+<a href="#method" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>method</span></a>
+<a href="#nonce" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>nonce</span></a>
+<a href="#reset" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>reset</span></a>
+<a href="#sign" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>sign</span></a>
+<a href="#signaturebase" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>signature<wbr/>Base</span></a>
+<a href="#signatureheadervalue" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>signature<wbr/>Header<wbr/>Value</span></a>
+<a href="#signatureheadervaluewithkey" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>signature<wbr/>Header<wbr/>Value<wbr/>With<wbr/>Key</span></a>
+<a href="#signatureinputheadervalue" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>signature<wbr/>Input<wbr/>Header<wbr/>Value</span></a>
+<a href="#signatureparams" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>signature<wbr/>Params</span></a>
+<a href="#signwithkey" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>sign<wbr/>With<wbr/>Key</span></a>
+<a href="#tag" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>tag</span></a>
+<a href="#url" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>url</span></a>
+</div></section></div></details></section></section>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Constructors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="constructors-1">Constructors<a href="#constructors-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
+<section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="constructor"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="constructorhttpmessagesignaturebuilder"><span class="tsd-signature-keyword">new</span> <span class="tsd-kind-constructor-signature">HttpMessageSignatureBuilder</span><span class="tsd-signature-symbol">(</span><br/>    <span class="tsd-kind-parameter">token</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">url</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type tsd-kind-class">HttpMessageSignatureBuilder</a><a href="#constructorhttpmessagesignaturebuilder" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Constructor.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">token</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the auth token to use</p>
+</div></li>
+<li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">url</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the request URL to use</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="" class="tsd-signature-type tsd-kind-class">HttpMessageSignatureBuilder</a></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L184">src/main/net/httpSignatures.ts:184</a></li></ul></aside></div></li></ul></section></section></details>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Properties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="properties-1">Properties<a href="#properties-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
+<section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="httpheaders"><span>http<wbr/>Headers</span><a href="#httpheaders" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">httpHeaders</span><span class="tsd-signature-symbol">:</span> <a href="Net.HttpHeaders.html" class="tsd-signature-type tsd-kind-class">HttpHeaders</a></div>
+<div class="tsd-comment tsd-typography"><p>The signed HTTP headers.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L165">src/main/net/httpSignatures.ts:165</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="tokenid"><span>token<wbr/>Id</span><a href="#tokenid" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">tokenId</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>The SolarNet auth token value.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L162">src/main/net/httpSignatures.ts:162</a></li></ul></aside></section></section></details>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Accessors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="accessors-1">Accessors<a href="#accessors-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
+<section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="coveredcomponents"><span>covered<wbr/>Components</span><a href="#coveredcomponents" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="coveredcomponentscoveredcomponents"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">coveredComponents</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <a href="Net.SignatureComponent.html" class="tsd-signature-type tsd-kind-class">SignatureComponent</a><span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get the covered components, in signing order.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="Net.SignatureComponent.html" class="tsd-signature-type tsd-kind-class">SignatureComponent</a><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L454">src/main/net/httpSignatures.ts:454</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="keyid"><span>key<wbr/>Id</span><a href="#keyid" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="keyidkeyid"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">keyId</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get the <code>keyid</code> signature parameter value.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L459">src/main/net/httpSignatures.ts:459</a></li></ul></aside></div></li></ul></section></section></details>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Methods"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="methods-1">Methods<a href="#methods-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
+<section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="algorithm"><span>algorithm</span><a href="#algorithm" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="algorithm-1"><span class="tsd-kind-call-signature">algorithm</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">val</span><span class="tsd-signature-symbol">?:</span> <a href="../enums/Net.HttpSignatureAlgorithm.html#hmacsha256" class="tsd-signature-type tsd-kind-enum-member">HmacSha256</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#algorithm-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Set the signature algorithm.</p>
+<p>The <code>alg</code> signature parameter is optional in RFC 9421, and is omitted unless set
+here.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">val</span>: <a href="../enums/Net.HttpSignatureAlgorithm.html#hmacsha256" class="tsd-signature-type tsd-kind-enum-member">HmacSha256</a></span>
+<div class="tsd-comment tsd-typography"><p>the algorithm, or <code>undefined</code> to omit the parameter</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L377">src/main/net/httpSignatures.ts:377</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="computesigningkey"><span>compute<wbr/>Signing<wbr/>Key</span><a href="#computesigningkey" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="computesigningkey-1"><span class="tsd-kind-call-signature">computeSigningKey</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">tokenSecret</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">WordArray</span><a href="#computesigningkey-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Compute the signing key from a token secret.</p>
+<p>When a derived signing key is configured this is
+<code>HMAC(HMAC(&quot;SNWS3&quot;+secret, &quot;YYYYMMDD&quot;), &quot;snws3_request&quot;)</code>, which expires like an
+SNWS2 signing key does. Otherwise it is the token secret itself.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">tokenSecret</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the token secret</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">WordArray</span></h4><p>the signing key</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L476">src/main/net/httpSignatures.ts:476</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="contentdigest"><span>content<wbr/>Digest</span><a href="#contentdigest" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="contentdigest-1"><span class="tsd-kind-call-signature">contentDigest</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">content</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#contentdigest-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Compute a <code>Content-Digest</code> HTTP header for the request content.</p>
+<p>The computed header value is saved on <a href="#httpheaders" class="tsd-kind-property">Net.HttpMessageSignatureBuilder#httpHeaders</a>,
+and <em>must</em> also be passed on the HTTP request for the signature to verify. The
+<a href="#contentdigestheadervalue" class="tsd-kind-method">Net.HttpMessageSignatureBuilder#contentDigestHeaderValue</a> method can be used to
+obtain the header value after calling this method.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">content</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the request body content to digest</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L306">src/main/net/httpSignatures.ts:306</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="contentdigestheadervalue"><span>content<wbr/>Digest<wbr/>Header<wbr/>Value</span><a href="#contentdigestheadervalue" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="contentdigestheadervalue-1"><span class="tsd-kind-call-signature">contentDigestHeaderValue</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><a href="#contentdigestheadervalue-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get the <code>Content-Digest</code> HTTP header value.</p>
+<p>The <a href="#contentdigest" class="tsd-kind-method">Net.HttpMessageSignatureBuilder#contentDigest</a> method should
+be called to compute the header value before calling this method.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span></h4><p>the header value, or <code>undefined</code> if none set</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L319">src/main/net/httpSignatures.ts:319</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="contenttype"><span>content<wbr/>Type</span><a href="#contenttype" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="contenttype-1"><span class="tsd-kind-call-signature">contentType</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">val</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#contenttype-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Set the HTTP <code>Content-Type</code> header.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">val</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the content type to use</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L291">src/main/net/httpSignatures.ts:291</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="covered"><span>covered</span><a href="#covered" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="covered-1"><span class="tsd-kind-call-signature">covered</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span><span class="tsd-kind-parameter">components</span><span class="tsd-signature-symbol">:</span> (<span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <a href="Net.SignatureComponent.html" class="tsd-signature-type tsd-kind-class">SignatureComponent</a>)<span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#covered-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Add covered components, in signing order.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-signature-symbol">...</span><span class="tsd-kind-parameter">components</span>: (<span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <a href="Net.SignatureComponent.html" class="tsd-signature-type tsd-kind-class">SignatureComponent</a>)<span class="tsd-signature-symbol">[]</span></span>
+<div class="tsd-comment tsd-typography"><p>the components to cover, either names or component objects</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L416">src/main/net/httpSignatures.ts:416</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="coverrequiredcomponents"><span>cover<wbr/>Required<wbr/>Components</span><a href="#coverrequiredcomponents" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="coverrequiredcomponents-1"><span class="tsd-kind-call-signature">coverRequiredComponents</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#coverrequiredcomponents-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Cover the minimum set of components SolarNetwork requires.</p>
+<p>That is the request method, authority, and path, along with the query when the
+request has one, the content type and content digest when the request has content,
+and every <code>X-SN-*</code> header configured on this builder.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L434">src/main/net/httpSignatures.ts:434</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="date"><span>date</span><a href="#date" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="date-1"><span class="tsd-kind-call-signature">date</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span><a href="#date-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get the request date.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Date</span></h4><p>the signature creation date</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L328">src/main/net/httpSignatures.ts:328</a></li></ul></aside></div></li>
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="date-2"><span class="tsd-kind-call-signature">date</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">val</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#date-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Set the request date.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">val</span>: <span class="tsd-signature-type">Date</span></span>
+<div class="tsd-comment tsd-typography"><p>the signature creation date to use</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L336">src/main/net/httpSignatures.ts:336</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="derivedsigningkey"><span>derived<wbr/>Signing<wbr/>Key</span><a href="#derivedsigningkey" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="derivedsigningkey-1"><span class="tsd-kind-call-signature">derivedSigningKey</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">val</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#derivedsigningkey-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Set whether to derive the signing key from the token secret and the signing date.</p>
+<p>This is enabled by default, so that a token secret need not be handed to whatever
+signs the request.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">val</span>: <span class="tsd-signature-type">boolean</span></span>
+<div class="tsd-comment tsd-typography"><p><code>true</code> to derive a signing key, <code>false</code> to use the token secret itself</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L405">src/main/net/httpSignatures.ts:405</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="expires"><span>expires</span><a href="#expires" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="expires-1"><span class="tsd-kind-call-signature">expires</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">val</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#expires-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Set the signature expiration date.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">val</span>: <span class="tsd-signature-type">Date</span></span>
+<div class="tsd-comment tsd-typography"><p>the expiration date, or <code>undefined</code> for none</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L352">src/main/net/httpSignatures.ts:352</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="header"><span>header</span><a href="#header" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="header-1"><span class="tsd-kind-call-signature">header</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">headerName</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-kind-parameter">headerValue</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#header-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Set an HTTP header value.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">headerName</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the header name</p>
+</div></li>
+<li><span><span class="tsd-kind-parameter">headerValue</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the header value</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L280">src/main/net/httpSignatures.ts:280</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="label"><span>label</span><a href="#label" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="label-1"><span class="tsd-kind-call-signature">label</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">val</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#label-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Set the signature label.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">val</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the label to use</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L222">src/main/net/httpSignatures.ts:222</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="method"><span>method</span><a href="#method" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="method-1"><span class="tsd-kind-call-signature">method</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><a href="#method-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get the HTTP method (verb) to use.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><p>the HTTP method to use</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L232">src/main/net/httpSignatures.ts:232</a></li></ul></aside></div></li>
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="method-2"><span class="tsd-kind-call-signature">method</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">val</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#method-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Set the HTTP method (verb) to use.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">val</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the method to use; see the <a href="../enums/Net.HttpMethod.html" class="tsd-kind-enum">Net.HttpMethod</a> enum for possible values</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L240">src/main/net/httpSignatures.ts:240</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="nonce"><span>nonce</span><a href="#nonce" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="nonce-1"><span class="tsd-kind-call-signature">nonce</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">val</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#nonce-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Set the signature nonce.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">val</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the nonce, or <code>undefined</code> for none</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L363">src/main/net/httpSignatures.ts:363</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="reset"><span>reset</span><a href="#reset" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="reset-1"><span class="tsd-kind-call-signature">reset</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#reset-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Reset to default property values.</p>
+<p>The token ID, label, tag, algorithm, and signing key mode are preserved.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L206">src/main/net/httpSignatures.ts:206</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="sign"><span>sign</span><a href="#sign" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="sign-1"><span class="tsd-kind-call-signature">sign</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">tokenSecret</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><a href="#sign-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Compute the signature value, using a token secret.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">tokenSecret</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the token secret</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><p>the Base64 encoded signature value</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L635">src/main/net/httpSignatures.ts:635</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="signaturebase"><span>signature<wbr/>Base</span><a href="#signaturebase" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="signaturebase-1"><span class="tsd-kind-call-signature">signatureBase</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/Net.SignatureBaseResult.html" class="tsd-signature-type tsd-kind-interface">SignatureBaseResult</a><a href="#signaturebase-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Compute the signature base.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="../interfaces/Net.SignatureBaseResult.html" class="tsd-signature-type tsd-kind-interface">SignatureBaseResult</a></h4><p>the signature base</p>
+
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-throws">
+<h4 class="tsd-anchor-link" id="throws">Throws<a href="#throws" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Error if a covered component value is not available</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L523">src/main/net/httpSignatures.ts:523</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="signatureheadervalue"><span>signature<wbr/>Header<wbr/>Value</span><a href="#signatureheadervalue" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="signatureheadervalue-1"><span class="tsd-kind-call-signature">signatureHeaderValue</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">tokenSecret</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><a href="#signatureheadervalue-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get the <code>Signature</code> HTTP header value, using a token secret.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">tokenSecret</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the token secret</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><p>the header value</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L654">src/main/net/httpSignatures.ts:654</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="signatureheadervaluewithkey"><span>signature<wbr/>Header<wbr/>Value<wbr/>With<wbr/>Key</span><a href="#signatureheadervaluewithkey" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="signatureheadervaluewithkey-1"><span class="tsd-kind-call-signature">signatureHeaderValueWithKey</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">signingKey</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">WordArray</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><a href="#signatureheadervaluewithkey-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get the <code>Signature</code> HTTP header value, using a signing key.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">signingKey</span>: <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">WordArray</span></span>
+<div class="tsd-comment tsd-typography"><p>the signing key</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><p>the header value</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L666">src/main/net/httpSignatures.ts:666</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="signatureinputheadervalue"><span>signature<wbr/>Input<wbr/>Header<wbr/>Value</span><a href="#signatureinputheadervalue" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="signatureinputheadervalue-1"><span class="tsd-kind-call-signature">signatureInputHeaderValue</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><a href="#signatureinputheadervalue-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get the <code>Signature-Input</code> HTTP header value.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><p>the header value</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L644">src/main/net/httpSignatures.ts:644</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="signatureparams"><span>signature<wbr/>Params</span><a href="#signatureparams" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="signatureparams-1"><span class="tsd-kind-call-signature">signatureParams</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><a href="#signatureparams-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Compute the serialized signature parameters.</p>
+<p>This is the value of the <code>@signature-params</code> line of the signature base, and also
+the <code>Signature-Input</code> member value.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><p>the serialized signature parameters</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L495">src/main/net/httpSignatures.ts:495</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="signwithkey"><span>sign<wbr/>With<wbr/>Key</span><a href="#signwithkey" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="signwithkey-1"><span class="tsd-kind-call-signature">signWithKey</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">signingKey</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">WordArray</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><a href="#signwithkey-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Compute the signature value, using a signing key.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">signingKey</span>: <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">WordArray</span></span>
+<div class="tsd-comment tsd-typography"><p>the signing key</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><p>the Base64 encoded signature value</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L623">src/main/net/httpSignatures.ts:623</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="tag"><span>tag</span><a href="#tag" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="tag-1"><span class="tsd-kind-call-signature">tag</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">val</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#tag-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Set the application tag.</p>
+<p>SolarNetwork uses this to pick the signature meant for authentication when a
+request carries more than one. It defaults to <code>solarnetwork</code>.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">val</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the tag, or <code>undefined</code> for none</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L391">src/main/net/httpSignatures.ts:391</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="url"><span>url</span><a href="#url" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="url-1"><span class="tsd-kind-call-signature">url</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><a href="#url-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Get the request URL.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><p>the request URL</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L255">src/main/net/httpSignatures.ts:255</a></li></ul></aside></div></li>
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="url-2"><span class="tsd-kind-call-signature">url</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">val</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">this</span><a href="#url-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Set the request URL.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">val</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>the absolute request URL to use</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4><p>this object</p>
+<aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/SolarNetwork/sn-api-core-js/blob/a7e04390d1c933920a4bec296913166adafc14b6/src/main/net/httpSignatures.ts#L263">src/main/net/httpSignatures.ts:263</a></li></ul></aside></div></li></ul></section></section></details></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#post-requests"><span>Post requests</span></a>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Constructors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Constructors</summary>
+<div><a href="#constructor"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Constructor"><use href="../assets/icons.svg#icon-512"></use></svg><span>constructor</span></a></div></details>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Properties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Properties</summary>
+<div><a href="#httpheaders"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>http<wbr/>Headers</span></a><a href="#tokenid"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>token<wbr/>Id</span></a></div></details>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Accessors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Accessors</summary>
+<div><a href="#coveredcomponents"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>covered<wbr/>Components</span></a><a href="#keyid"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>key<wbr/>Id</span></a></div></details>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Methods"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Methods</summary>
+<div><a href="#algorithm"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>algorithm</span></a><a href="#computesigningkey"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>compute<wbr/>Signing<wbr/>Key</span></a><a href="#contentdigest"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>content<wbr/>Digest</span></a><a href="#contentdigestheadervalue"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>content<wbr/>Digest<wbr/>Header<wbr/>Value</span></a><a href="#contenttype"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>content<wbr/>Type</span></a><a href="#covered"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>covered</span></a><a href="#coverrequiredcomponents"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>cover<wbr/>Required<wbr/>Components</span></a><a href="#date"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>date</span></a><a href="#derivedsigningkey"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>derived<wbr/>Signing<wbr/>Key</span></a><a href="#expires"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>expires</span></a><a href="#header"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>header</span></a><a href="#label"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>label</span></a><a href="#method"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>method</span></a><a href="#nonce"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>nonce</span></a><a href="#reset"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>reset</span></a><a href="#sign"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>sign</span></a><a href="#signaturebase"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>signature<wbr/>Base</span></a><a href="#signatureheadervalue"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>signature<wbr/>Header<wbr/>Value</span></a><a href="#signatureheadervaluewithkey"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>signature<wbr/>Header<wbr/>Value<wbr/>With<wbr/>Key</span></a><a href="#signatureinputheadervalue"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>signature<wbr/>Input<wbr/>Header<wbr/>Value</span></a><a href="#signatureparams"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>signature<wbr/>Params</span></a><a href="#signwithkey"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>sign<wbr/>With<wbr/>Key</span></a><a href="#tag"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>tag</span></a><a href="#url"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>url</span></a></div></details></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="../modules.html">solarnetwork-api-core</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer>
+<p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer>
+<div class="overlay"></div></body></html>
