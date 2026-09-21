@@ -178,12 +178,23 @@ declare class HttpMessageSignatureBuilder {
      * Compute a `Content-Digest` HTTP header for the request content.
      *
      * The computed header value is saved on {@link Net.HttpMessageSignatureBuilder#httpHeaders},
-     * and _must_ also be passed on the HTTP request for the signature to verify.
+     * and _must_ also be passed on the HTTP request for the signature to verify. The
+     * {@link Net.HttpMessageSignatureBuilder#contentDigestHeaderValue} method can be used to
+     * obtain the header value after calling this method.
      *
      * @param content - the request body content to digest
      * @returns this object
      */
     contentDigest(content: string): this;
+    /**
+     * Get the `Content-Digest` HTTP header value.
+     *
+     * The {@link Net.HttpMessageSignatureBuilder#contentDigest} method should
+     * be called to compute the header value before calling this method.
+     *
+     * @returns the header value, or `undefined` if none set
+     */
+    contentDigestHeaderValue(): string | undefined;
     /**
      * Get the request date.
      *
