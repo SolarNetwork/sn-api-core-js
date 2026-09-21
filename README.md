@@ -444,7 +444,7 @@ to version, build, test, commit, and publish the release interactively. The rele
 by [release-it][release-it], configured in `.release-it.json`: it starts a `release/X.Y.Z` branch,
 writes the new version, rebuilds `lib/`, commits, then hands off to `git flow release finish` to
 merge into `master`, tag, merge back into `develop`, and push. Finally it publishes to [npm][npm]
-and bumps `develop` to the next `-dev.0` version.
+and bumps `develop` to the next `-dev.0` version. Release commits and tags are GPG signed.
 
 Pass `--dry-run` to see every step without changing anything:
 

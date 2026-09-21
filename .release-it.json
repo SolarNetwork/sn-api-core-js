@@ -2,6 +2,7 @@
   "$schema": "https://unpkg.com/release-it/schema/release-it.json",
   "hooks": {
     "before:init": [
+      "git diff --quiet HEAD || (echo 'Working dir must be clean.' >&2; exit 1)",
       "git fetch origin",
       "git checkout develop",
       "git merge --ff-only origin/develop",
@@ -21,7 +22,7 @@
     ],
     "before:git:release": "npm test",
     "after:release": [
-      "git flow release finish -s --no-fetch --no-ff --push --message \"Release ${version}\" ${version}",
+      "git -c commit.gpgSign=true flow release finish --sign --no-fetch --no-ff --push --message \"Release ${version}\" ${version}",
       "npm publish",
       "git checkout develop",
       "npm version prepatch --preid dev --no-git-tag-version",
@@ -31,8 +32,10 @@
   },
   "git": {
     "requireBranch": "develop",
+    "requireCleanWorkingDir": false,
     "requireUpstream": false,
     "commitMessage": "Release ${version}",
+    "commitArgs": ["-S"],
     "tag": false,
     "push": false
   },
