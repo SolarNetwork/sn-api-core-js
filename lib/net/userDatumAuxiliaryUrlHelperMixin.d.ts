@@ -10,7 +10,7 @@ import { UrlHelperConstructor } from "./urlHelper.js";
  */
 declare const UserDatumAuxiliaryUrlHelperMixin: <T extends UrlHelperConstructor>(superclass: T) => {
     new (...args: any[]): {
-        "__#21@#userDatumAuxiliaryBaseUrl"(): string;
+        "__#private@#userDatumAuxiliaryBaseUrl"(): string;
         /**
          * Generate a URL for viewing the configured user's metadata via a `GET` request.
          *
@@ -82,10 +82,10 @@ declare const UserDatumAuxiliaryUrlHelperMixin: <T extends UrlHelperConstructor>
          * @returns the URL
          */
         deleteUserDatumAuxiliaryUrl(type: DatumAuxiliaryType, nodeId: number, date: Date, sourceId: string): string;
-        readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly "__#14@#parameters": import("../util/configuration.js").default;
-        readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
+        get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        get parameters(): import("../util/configuration.js").default;
         env(key: string): any;
         env(key: string, val: any): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         parameter(key: string): any;

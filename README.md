@@ -114,6 +114,124 @@ async function fetchReadingDatumStream(
 }
 ```
 
+# Example: Query datum with HTTP message signatures
+
+Here's the same request as the previous example, authenticated with [RFC 9421][rfc9421] HTTP
+message signatures instead of SNWS2. The credentials are the same security token ID and
+secret; only the way the request is signed changes.
+
+RFC 9421 is not an HTTP authentication scheme, so there is no `Authorization` header: the
+signature travels in the `Signature-Input` and `Signature` headers. There is no `X-SN-Date`
+header either, as the signature carries its own `created` timestamp.
+
+```ts
+import {
+	Aggregations,
+	Datum,
+	DatumFilter,
+	DatumReadingTypes,
+	DatumStreamMetadataInfo,
+	Result,
+} from "solarnetwork-api-core/domain";
+import {
+	HttpContentType,
+	HttpMessageSignatureBuilder,
+	HttpMethod,
+	SIGNATURE_HEADER,
+	SIGNATURE_INPUT_HEADER,
+	SolarQueryApi,
+} from "solarnetwork-api-core/net";
+import {
+	DatumStreamMetadataRegistry,
+	Datum as DatumUtil,
+} from "solarnetwork-api-core/util";
+
+/**
+ * Fetch hourly reading data for a datum stream using the stream API.
+ *
+ * @param nodeId - the node ID to fetch data for
+ * @param sourceId  - the source ID to fetch data for
+ * @param startDate - the minimum date
+ * @param endDate - the maximum date
+ * @param token - the security token to authenticate with
+ * @param tokenSecret - the security token secret
+ * @returns the data, as an array of general datum
+ */
+async function fetchReadingDatumStream(
+	nodeId: number,
+	sourceId: string,
+	startDate: Date,
+	endDate: Date,
+	token: string,
+	tokenSecret: string
+): Promise<Datum[]> {
+	const filter = new DatumFilter();
+	filter.aggregation = Aggregations.Hour;
+	filter.nodeId = nodeId;
+	filter.sourceId = sourceId;
+	filter.startDate = startDate;
+	filter.endDate = endDate;
+
+	// encode the URL request for the /datum/stream/reading API
+	const urlHelper = new SolarQueryApi();
+	const streamDataUrl = urlHelper.streamReadingUrl(
+		DatumReadingTypes.Difference,
+		filter
+	);
+
+	// create signature headers for API request
+	const auth = new HttpMessageSignatureBuilder(token)
+		.method(HttpMethod.GET)
+		.url(streamDataUrl)
+		.coverRequiredComponents();
+	const headers = new Headers({
+		Accept: HttpContentType.APPLICATION_JSON,
+	});
+	headers.set(SIGNATURE_INPUT_HEADER, auth.signatureInputHeaderValue());
+	headers.set(SIGNATURE_HEADER, auth.signatureHeaderValue(tokenSecret));
+
+	// make API request and get response as JSON
+
+	// the remainder of this implementation is the same as in the previous example
+```
+
+The `coverRequiredComponents()` call covers the minimum set of message components
+SolarNetwork requires: the request method, authority and path, the query when the URL has
+one, and the content type, content digest and any `X-SN-*` headers that have been set on
+the builder. Call it last, as it inspects the configured URL and headers to decide what to
+cover.
+
+By default the signing key is derived from the token secret and the signing date, so that
+it expires the way an [SNWS2 signing key][snws2key] does and the secret itself need never
+reach whatever signs the request. To sign with the token secret directly instead — which
+is what any off-the-shelf RFC 9421 implementation can do, knowing only the token ID and
+secret:
+
+```ts
+const auth = new HttpMessageSignatureBuilder(token)
+	.method(HttpMethod.GET)
+	.url(streamDataUrl)
+	.derivedSigningKey(false)
+	.coverRequiredComponents();
+```
+
+Any request with body content must include an [RFC 9530][rfc9530] `Content-Digest` header
+that contains the digest of the content, and that header must be covered by the provided
+RFC 9421 signature. The `contentDigest()` method computes the header value, and then the
+same value must be sent on the request using the `CONTENT_DIGEST_HEADER` constant exported
+from `solarnetwork-api-core/net`:
+
+```ts
+const body = JSON.stringify({ foo: "bar" });
+const auth = new HttpMessageSignatureBuilder(token)
+	.method(HttpMethod.POST)
+	.url(someUrl)
+	.contentType(HttpContentType.APPLICATION_JSON)
+	.contentDigest(body)
+	.coverRequiredComponents();
+headers.set(CONTENT_DIGEST_HEADER, auth.contentDigestHeaderValue()!);
+```
+
 # Example: DatumLoader
 
 The `DatumLoader` class helps return data from the SolarQuery [/datum/list][api-datum-list]
@@ -315,15 +433,27 @@ bundled file at `lib/solarnetwork-api-core.es.cjs`. This bundle embeds 3rd party
 
 # Releases
 
-Releases are done using the gitflow branching model. Gitflow must be installed on your host system.
-Then you can run
+Releases are done using the gitflow branching model. [git-flow][git-flow] must be installed on your
+host system. Then you can run
 
 ```shell
 npm run release
 ```
 
-to version, build, commit, and publish the release. See the [generate-release][generate-release]
-site for more information.
+to version, build, test, commit, and publish the release interactively. The release is orchestrated
+by [release-it][release-it], configured in `.release-it.json`: it starts a `release/X.Y.Z` branch,
+writes the new version, rebuilds `lib/`, commits, then hands off to `git flow release finish` to
+merge into `master`, tag, merge back into `develop`, and push. Finally it publishes to [npm][npm]
+and bumps `develop` to the next `-dev.0` version.
+
+Pass `--dry-run` to see every step without changing anything:
+
+```shell
+npm run release -- --dry-run
+```
+
+The version to release is derived from the current `-dev.0` version in `package.json`; use
+`--increment minor` or `--increment major` (or pick from the prompt) for a non-patch release.
 
 # Unit tests
 
@@ -347,7 +477,11 @@ coverage is uploaded to [Codecov](https://codecov.io/github/SolarNetwork/sn-api-
 [api-datum-list]: https://github.com/SolarNetwork/solarnetwork/wiki/SolarQuery-API#datum-list
 [api-datum-recent]: https://github.com/SolarNetwork/solarnetwork/wiki/SolarQuery-API#most-recent-datum
 [fetch]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
-[generate-release]: https://github.com/mrkmg/node-generate-release
+[git-flow]: https://github.com/gittower/git-flow-next
 [npm]: https://www.npmjs.com/
+[release-it]: https://github.com/release-it/release-it
+[rfc9421]: https://www.rfc-editor.org/rfc/rfc9421.html
+[rfc9530]: https://www.rfc-editor.org/rfc/rfc9530.html
+[snws2key]: https://github.com/SolarNetwork/solarnetwork/wiki/SolarNet-API-authentication-scheme-V2#signing-key
 [solarnet-api]: https://github.com/SolarNetwork/solarnetwork/wiki/API-Developer-Guide
 [stream-reading]: https://github.com/SolarNetwork/solarnetwork/wiki/SolarQuery-Stream-API#datum-stream-reading-list

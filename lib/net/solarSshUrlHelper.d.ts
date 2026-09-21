@@ -138,10 +138,10 @@ export declare class SolarSshUrlHelper extends UrlHelper {
 declare const SolarSshApi_base: {
     new (...args: any[]): {
         whoamiUrl(): string;
-        readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly "__#14@#parameters": import("../util/configuration.js").default;
-        readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
+        get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        get parameters(): import("../util/configuration.js").default;
         env(key: string): any;
         env(key: string, val: any): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         parameter(key: string): any;
@@ -163,10 +163,10 @@ declare const SolarSshApi_base: {
         createSshSessionUrl(nodeId?: number): string;
         startSshSessionUrl(sessionId: string): string;
         stopSshSessionUrl(sessionId: string): string;
-        readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly "__#14@#parameters": import("../util/configuration.js").default;
-        readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
+        get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        get parameters(): import("../util/configuration.js").default;
         env(key: string): any;
         env(key: string, val: any): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         parameter(key: string): any;

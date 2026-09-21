@@ -394,7 +394,7 @@ export default class ControlToggler {
 			);
 		}
 		const currentValue = this.#lastKnownDatum?.val;
-		let pendingState = this.#lastKnownInstruction?.instructionState;
+		const pendingState = this.#lastKnownInstruction?.instructionState;
 		let pendingValue = this.#lastKnownInstructionValue();
 
 		let cancel: Promise<void> | undefined;
@@ -426,7 +426,6 @@ export default class ControlToggler {
 				this.#auth
 			);
 			this.#lastKnownInstruction = undefined;
-			pendingState = undefined;
 			pendingValue = undefined;
 		}
 

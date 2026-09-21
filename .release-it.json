@@ -1,0 +1,45 @@
+{
+  "$schema": "https://unpkg.com/release-it/schema/release-it.json",
+  "hooks": {
+    "before:init": [
+      "git fetch origin",
+      "git checkout develop",
+      "git merge --ff-only origin/develop",
+      "git checkout master",
+      "git merge --ff-only origin/master",
+      "git checkout develop"
+    ],
+    "before:bump": "git flow release start --no-fetch --quiet ${version}",
+    "after:bump": [
+      "npm run prettier:write",
+      "npm run lint",
+      "npm run build",
+      "npm run build:dist",
+      "npm run build:bundle",
+      "npm run build:bundle:cjs",
+      "git add --all lib"
+    ],
+    "before:git:release": "npm test",
+    "after:release": [
+      "git flow release finish --no-fetch --no-ff --push --message \"Release ${version}\" ${version}",
+      "npm publish",
+      "git checkout develop",
+      "npm version prepatch --preid dev --no-git-tag-version",
+      "git commit -am \"Bump to dev version: $(node -p \"require('./package.json').version\")\"",
+      "git push origin develop"
+    ]
+  },
+  "git": {
+    "requireBranch": "develop",
+    "requireUpstream": false,
+    "commitMessage": "Release ${version}",
+    "tag": false,
+    "push": false
+  },
+  "npm": {
+    "publish": false
+  },
+  "github": {
+    "release": false
+  }
+}

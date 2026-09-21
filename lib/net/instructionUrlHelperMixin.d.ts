@@ -65,7 +65,7 @@ declare const InstructionUrlHelperMixin: <T extends UrlHelperConstructor>(superc
          * @see the {@link Domain.InstructionStates} enum for possible state values
          */
         updateInstructionStateUrl(instructionId: number, state: InstructionState): string;
-        "__#18@#instructionUrl"(exec: boolean, topic: string, parameters?: InstructionParameter[], nodeIds?: number[] | number, topicAsParam?: boolean): string;
+        "__#private@#instructionUrl"(exec: boolean, topic: string, parameters?: InstructionParameter[], nodeIds?: number[] | number, topicAsParam?: boolean): string;
         /**
          * Generate a URL for posting an instruction request.
          *
@@ -106,10 +106,10 @@ declare const InstructionUrlHelperMixin: <T extends UrlHelperConstructor>(superc
          * @returns the request, encoded as a {@link Net.QueueInstructionSimpleRequest} if possible
          */
         queueInstructionRequest(topic?: string, parameters?: InstructionParameter[], nodeId?: number, executionDate?: Date): QueueInstructionRequest | QueueInstructionSimpleRequest;
-        readonly "__#14@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly "__#14@#parameters": import("../util/configuration.js").default;
-        readonly environment: import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
-        readonly parameters: import("../util/configuration.js").default;
+        readonly "__#private@#environment": import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        readonly "__#private@#parameters": import("../util/configuration.js").default;
+        get environment(): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
+        get parameters(): import("../util/configuration.js").default;
         env(key: string): any;
         env(key: string, val: any): import("./environment.js").EnvironmentConfig & import("./environment.js").HostConfig;
         parameter(key: string): any;

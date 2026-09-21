@@ -18,6 +18,16 @@ export {
 	HttpMethod,
 } from "./httpHeaders.js";
 export {
+	default as HttpMessageSignatureBuilder,
+	HttpSignatureAlgorithm,
+	SignatureComponent,
+	type SignatureBaseResult,
+	ACCEPT_SIGNATURE_HEADER,
+	CONTENT_DIGEST_HEADER,
+	SIGNATURE_HEADER,
+	SIGNATURE_INPUT_HEADER,
+} from "./httpSignatures.js";
+export {
 	default as InstructionUrlHelperMixin,
 	type QueueInstructionRequest,
 	type QueueInstructionSimpleRequest,
@@ -66,6 +76,7 @@ export {
 	SolarUserPathKey,
 	SolarUserApiPathV1,
 } from "./solarUserUrlHelper.js";
+export * as StructuredFields from "./structuredFields.js";
 export {
 	default as UrlHelper,
 	type UrlHelperConstructor,
