@@ -433,15 +433,27 @@ bundled file at `lib/solarnetwork-api-core.es.cjs`. This bundle embeds 3rd party
 
 # Releases
 
-Releases are done using the gitflow branching model. Gitflow must be installed on your host system.
-Then you can run
+Releases are done using the gitflow branching model. [git-flow][git-flow] must be installed on your
+host system. Then you can run
 
 ```shell
 npm run release
 ```
 
-to version, build, commit, and publish the release. See the [generate-release][generate-release]
-site for more information.
+to version, build, test, commit, and publish the release interactively. The release is orchestrated
+by [release-it][release-it], configured in `.release-it.json`: it starts a `release/X.Y.Z` branch,
+writes the new version, rebuilds `lib/`, commits, then hands off to `git flow release finish` to
+merge into `master`, tag, merge back into `develop`, and push. Finally it publishes to [npm][npm]
+and bumps `develop` to the next `-dev.0` version.
+
+Pass `--dry-run` to see every step without changing anything:
+
+```shell
+npm run release -- --dry-run
+```
+
+The version to release is derived from the current `-dev.0` version in `package.json`; use
+`--increment minor` or `--increment major` (or pick from the prompt) for a non-patch release.
 
 # Unit tests
 
@@ -465,8 +477,9 @@ coverage is uploaded to [Codecov](https://codecov.io/github/SolarNetwork/sn-api-
 [api-datum-list]: https://github.com/SolarNetwork/solarnetwork/wiki/SolarQuery-API#datum-list
 [api-datum-recent]: https://github.com/SolarNetwork/solarnetwork/wiki/SolarQuery-API#most-recent-datum
 [fetch]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
-[generate-release]: https://github.com/mrkmg/node-generate-release
+[git-flow]: https://github.com/gittower/git-flow-next
 [npm]: https://www.npmjs.com/
+[release-it]: https://github.com/release-it/release-it
 [rfc9421]: https://www.rfc-editor.org/rfc/rfc9421.html
 [rfc9530]: https://www.rfc-editor.org/rfc/rfc9530.html
 [snws2key]: https://github.com/SolarNetwork/solarnetwork/wiki/SolarNet-API-authentication-scheme-V2#signing-key

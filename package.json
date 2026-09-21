@@ -68,30 +68,6 @@
       "html"
     ]
   },
-  "config": {
-    "generateRelease": {
-      "no_confirm": false,
-      "remote": "origin",
-      "pre_commit_commands": [
-        "npm run prettier:write",
-        "npm run lint",
-        "npm run build",
-        "npm run build:dist",
-        "npm run build:bundle",
-        "npm run build:bundle:cjs"
-      ],
-      "post_commit_commands": [
-        "npm test"
-      ],
-      "post_complete_commands": [
-        "npm publish",
-        "npmversion --increment prepatch --preid dev --nogit-tag"
-      ],
-      "files_to_commit": [
-        "./lib/*"
-      ]
-    }
-  },
   "scripts": {
     "build": "tsc",
     "build:dist": "tsc --build tsconfig.dist.json",
@@ -102,7 +78,7 @@
     "coverage": "c8 --reporter=lcov ava",
     "preapidoc": "npm run build",
     "apidoc": "typedoc",
-    "release": "generate-release --current-version \"$(bin/remove-preid.cjs)\"",
+    "release": "release-it",
     "lint": "eslint --fix src/main",
     "prettier": "prettier --config .prettierrc.json \"src/**/*.ts\" --check",
     "prettier:write": "prettier --config .prettierrc.json \"src/**/*.ts\" --write"
@@ -136,11 +112,10 @@
     "eslint": "^10.11.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
-    "generate-release": "^1.1.1",
     "moment": "^2.31.0",
-    "npmversion": "^2.0.5",
     "package-preamble": "^0.1.0",
     "prettier": "3.9.8",
+    "release-it": "^21.1.0",
     "rollup": "^4.63.4",
     "semver": "^7.8.5",
     "tslib": "^2.8.1",
