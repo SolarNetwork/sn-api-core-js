@@ -72,7 +72,7 @@
     "build": "tsc",
     "build:dist": "tsc --build tsconfig.dist.json",
     "build:bundle": "rollup --config rollup.config.mjs --banner \"$(preamble)\" -m -o lib/solarnetwork-api-core.es.js",
-    "build:bundle:cjs": "rollup --config rollup.config.cjs.mjs --format cjs --banner \"$(preamble)\" -m -o lib/solarnetwork-api-core.es.cjs",
+    "build:bundle:cjs": "rollup --config rollup.config.cjs.mjs --format cjs --banner \"$(preamble)\" -m -o lib/solarnetwork-api-core.es.cjs && cp lib/index.d.ts lib/solarnetwork-api-core.es.d.cts",
     "pretest": "npm run build",
     "test": "c8 ava",
     "coverage": "c8 --reporter=lcov ava",
