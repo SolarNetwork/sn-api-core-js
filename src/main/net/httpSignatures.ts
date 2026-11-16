@@ -1,6 +1,7 @@
 import Base64 from "crypto-js/enc-base64.js";
 import HmacSHA256 from "crypto-js/hmac-sha256.js";
 import SHA256 from "crypto-js/sha256.js";
+import type CryptoJS from "crypto-js";
 
 import { iso8601Date } from "../util/dates.js";
 import { default as HttpHeaders, HttpMethod } from "./httpHeaders.js";

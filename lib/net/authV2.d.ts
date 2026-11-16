@@ -1,3 +1,4 @@
+import type CryptoJS from "crypto-js";
 import MultiMap from "../util/multiMap.js";
 import { HostConfig } from "./environment.js";
 import { default as HttpHeaders } from "./httpHeaders.js";

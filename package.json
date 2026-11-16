@@ -1,6 +1,6 @@
 {
   "name": "solarnetwork-api-core",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "description": "SolarNetwork Core API",
   "keywords": [
     "solarnetwork"
@@ -72,7 +72,7 @@
     "build": "tsc",
     "build:dist": "tsc --build tsconfig.dist.json",
     "build:bundle": "rollup --config rollup.config.mjs --banner \"$(preamble)\" -m -o lib/solarnetwork-api-core.es.js",
-    "build:bundle:cjs": "rollup --config rollup.config.cjs.mjs --format cjs --banner \"$(preamble)\" -m -o lib/solarnetwork-api-core.es.cjs",
+    "build:bundle:cjs": "rollup --config rollup.config.cjs.mjs --format cjs --banner \"$(preamble)\" -m -o lib/solarnetwork-api-core.es.cjs && cp lib/index.d.ts lib/solarnetwork-api-core.es.d.cts",
     "pretest": "npm run build",
     "test": "c8 ava",
     "coverage": "c8 --reporter=lcov ava",
@@ -84,6 +84,8 @@
     "prettier:write": "prettier --config .prettierrc.json \"src/**/*.ts\" --write"
   },
   "dependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "@types/d3-time-format": "^4.0.3",
     "crypto-js": "^4.2.0",
     "d3-array": "^3.2.4",
     "d3-collection": "^1.0.7",
@@ -98,12 +100,10 @@
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-typescript": "^12.3.0",
     "@tsconfig/node20": "^20.1.10",
-    "@types/crypto-js": "^4.2.2",
     "@types/d3-array": "^3.2.2",
     "@types/d3-collection": "^1.0.13",
     "@types/d3-queue": "^3.0.10",
     "@types/d3-time": "^3.0.4",
-    "@types/d3-time-format": "^4.0.3",
     "@types/node": "^26.6.2",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
     "@typescript-eslint/parser": "^8.70.0",
@@ -122,11 +122,17 @@
     "typedoc": "^0.28.20",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.70.0",
-    "undici": "^7.18.2"
+    "undici": "^7.30.2"
   },
   "overrides": {
+    "basic-ftp": "^6.2.6",
+    "glob": "^14.0.6",
     "lodash": "^4.18.1",
+    "minimatch": "^11.0.8",
     "semver": "$semver",
-    "tmp": "^0.2.7"
+    "tmp": "^0.2.7",
+    "typedoc": {
+      "minimatch": "^10.2.6"
+    }
   }
 }
