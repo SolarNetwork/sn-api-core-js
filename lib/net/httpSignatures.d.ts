@@ -1,3 +1,4 @@
+import type CryptoJS from "crypto-js";
 import { default as HttpHeaders } from "./httpHeaders.js";
 import { SfItem, SfParameters } from "./structuredFields.js";
 /**
